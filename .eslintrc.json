@@ -8,6 +8,40 @@
   "rules": {
     // I suggest you add those two rules:
     "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/no-explicit-any": "error"
+    "@typescript-eslint/no-explicit-any": "error",
+    //@todo
+    "import/no-restricted-paths": [
+      "error",
+      {
+        "zones": [
+          /**
+           * core
+           * 도메인과 관련이 없는 모든 것을 배치하는 곳
+           * 도메인 계층에서 아무 것도 가져올 수 없음
+           */
+          {
+            "target": "./core",
+            "from": "./components"
+          },
+          {
+            "target": "./core",
+            "from": "./lib"
+          },
+          {
+            "target": "./core",
+            "from": "./pages"
+          },
+
+          {
+            "target": "./lib",
+            "from": "./pages"
+          },
+          {
+            "target": "./components",
+            "from": "./pages"
+          }
+        ]
+      }
+    ]
   }
 }
