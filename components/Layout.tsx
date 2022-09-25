@@ -2,12 +2,10 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import Head from 'next/head'
 
-import Footer from './Footer'
 import Navbar from './Navbar'
+import Footer from './Footer'
 
 type LayoutStyle = {
-  exceptNavbar?: boolean
-  exceptFooter?: boolean
   isFitPage?: boolean
 }
 
@@ -17,21 +15,16 @@ type Props = LayoutStyle & {
 }
 
 export default function Layout({ children, title, ...rest }: Props) {
-  const { exceptFooter, exceptNavbar, ...restOfRest } = rest
-
   return (
-    <LayoutFrame {...restOfRest}>
-      {!exceptNavbar && <Navbar />}
-
+    <LayoutFrame {...rest}>
+      <Navbar />
       <Head>
         {!!title && <title>{title}</title>}
         {/* @todo add meta tag */}
         {/* <meta name="meta name" content="meta content" /> */}
       </Head>
-
       <Main>{children}</Main>
-
-      {!exceptFooter && <Footer />}
+      <Footer />
     </LayoutFrame>
   )
 }
@@ -53,4 +46,6 @@ const LayoutFrame = styled.div<LayoutStyle>`
 const Main = styled.main`
   display: flex;
   flex-direction: column;
+  height: 100%;
+  margin: 0 auto;
 `
