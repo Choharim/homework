@@ -11,6 +11,7 @@ export type FrontMatter = {
   description: Description
   createAt: DateString
   tags: Tag[]
+  thumbnail?: string
 }
 
-type Tag = '알고리즘' | '자료구조'
+export type Tag = '알고리즘' | '자료구조'

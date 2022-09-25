@@ -1,31 +1,15 @@
-import Link from 'next/link'
-
 import Post from 'entity/post/type'
 import { getAllPosts } from 'entity/post/util'
-import { Layout } from 'components'
+import { Layout, PostCard } from 'components'
+import styled from 'styled-components'
 
 const Home = ({ posts }: { posts: Pick<Post, 'slug' | 'data'>[] }) => {
   return (
-    <div>
-      {posts?.map(({ data: { title, description, createAt, tags }, slug }) => (
-        <article key={slug}>
-          <header>
-            <h3>
-              <Link href={'/posts/[slug]'} as={`/posts/${slug}`}>
-                <a>{title}</a>
-              </Link>
-            </h3>
-            <span>{createAt}</span>
-          </header>
-          <section>
-            <p>{description}</p>
-          </section>
-          {tags?.map((tag, i) => (
-            <div key={`${tag}_${i}`}>{tag}</div>
-          ))}
-        </article>
+    <CardList>
+      {posts?.map(({ data, slug }) => (
+        <PostCard key={slug} data={data} slug={slug} />
       ))}
-    </div>
+    </CardList>
   )
 }
 
@@ -42,3 +26,10 @@ export async function getStaticProps() {
     props: { posts },
   }
 }
+
+const CardList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  padding: 24px;
+`
