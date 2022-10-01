@@ -6,15 +6,15 @@ import { MDX_EXTENSION, POSTS_PATH } from './constant'
 import Post from './type'
 
 export const getFileSlug = (filePath: string) => {
-  if (filePath.endsWith(MDX_EXTENSION)) {
+  if (isMDX(filePath)) {
     return filePath.replace(MDX_REG_EXP, '')
   }
 
-  return filePath.split('.')[0]
+  return filePath
 }
 
 export const getFilePath = (slug: string) => {
-  if (!slug.endsWith(MDX_EXTENSION)) {
+  if (!isMDX(slug)) {
     return `${slug}.${MDX_EXTENSION}`
   }
 
