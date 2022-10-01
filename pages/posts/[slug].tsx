@@ -4,8 +4,12 @@ import ReactMarkdown from 'react-markdown'
 
 import Post from 'entity/post/type'
 import { getFileSlug, getPost, getPostsFilePaths } from 'entity/post/util'
+import { NextPageWithLayout } from 'pages/_app'
+import { Layout } from 'components'
 
-const PostDetail = ({ content }: Pick<Post, 'data' | 'content'>) => {
+const PostDetail: NextPageWithLayout<Pick<Post, 'data' | 'content'>> = ({
+  content,
+}) => {
   return (
     <article>
       <ReactMarkdown>{content}</ReactMarkdown>
@@ -14,6 +18,12 @@ const PostDetail = ({ content }: Pick<Post, 'data' | 'content'>) => {
 }
 
 export default PostDetail
+
+PostDetail.getLayout = function getLayout(
+  page: React.ReactElement<Pick<Post, 'data' | 'content'>>
+) {
+  return <Layout title={page.props.data.title}>{page}</Layout>
+}
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const filePaths = getPostsFilePaths()
