@@ -1,18 +1,32 @@
 import React from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import ReactMarkdown from 'react-markdown'
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
+import { serialize } from 'next-mdx-remote/serialize'
 
 import Post from 'entity/post/type'
 import { getFileSlug, getPost, getPostsFilePaths } from 'entity/post/util'
 import { NextPageWithLayout } from 'pages/_app'
-import { Layout } from 'components'
+import { Layout, Thumbnail } from 'components'
+import CodeSnippetHeader from 'components/CodeSnippetHeader'
+import CodeBlock from 'components/CodeBlock'
 
-const PostDetail: NextPageWithLayout<Pick<Post, 'data' | 'content'>> = ({
-  content,
-}) => {
+interface Props extends Pick<Post, 'data'> {
+  source: MDXRemoteSerializeResult
+}
+
+const PostDetail: NextPageWithLayout<Props> = ({ data, source }) => {
   return (
     <article>
-      <ReactMarkdown>{content}</ReactMarkdown>
+      {data.thumbnail && <Thumbnail src={data.thumbnail} />}
+      <h1>{data.title}</h1>
+      <p>{data.description}</p>
+      <MDXRemote
+        {...source}
+        components={{
+          CodeBlock,
+          CodeSnippetHeader,
+        }}
+      />
     </article>
   )
 }
@@ -49,10 +63,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   const { data, content } = getPost(slug)
 
+  const mdxSource = await serialize(content, {
+    scope: data,
+  })
+
   return {
     props: {
       data,
-      content,
+      source: mdxSource,
     },
   }
 }
