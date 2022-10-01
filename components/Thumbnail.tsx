@@ -24,5 +24,5 @@ const Container = styled.div`
   position: relative;
   width: 300px;
   height: 160px;
-  background-color: ${({ theme }) => theme.colors.black};
+  background-color: ${({ theme }) => theme.color.black};
 `
