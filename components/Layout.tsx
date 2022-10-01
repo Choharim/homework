@@ -14,23 +14,16 @@ type Props = {
 
 export default function Layout({ children, title }: Props) {
   return (
-    <>
+    <LayoutFrame>
       <Head>
-        {!!title && (
-          <title>
-            {KO_NAME.first} | {title}
-          </title>
-        )}
+        {!!title && <title>{`${title} | ${KO_NAME.first}`}</title>}
         {/* @todo add meta tag */}
         {/* <meta name="meta name" content="meta content" /> */}
       </Head>
-
-      <LayoutFrame>
-        <Navbar />
-        <Main>{children}</Main>
-        <Footer />
-      </LayoutFrame>
-    </>
+      <Navbar />
+      <Main>{children}</Main>
+      <Footer />
+    </LayoutFrame>
   )
 }
 
