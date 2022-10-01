@@ -39,7 +39,8 @@ const PostCard = (props: Pick<Post, 'data' | 'slug'>) => {
 export default PostCard
 
 const Card = styled.article`
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   height: 340px;
   border-radius: 10px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -59,5 +60,5 @@ const Header = styled.header`
 `
 
 const CreatedTime = styled.time`
-  color: ${({ theme }) => theme.colors.gray};
+  color: ${({ theme }) => theme.color.gray};
 `

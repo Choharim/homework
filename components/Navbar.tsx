@@ -1,13 +1,16 @@
-import Link from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
+import Link from 'next/link'
+import { KO_NAME } from 'entity/owner/constant'
+
+export const NAVBAR_HEIGHT = 56
 
 const Navbar = () => {
   return (
     <Navigation>
       <Link href="/" passHref>
         <a>
-          <Name>Harim</Name>
+          <Name>{KO_NAME.first}</Name>
         </a>
       </Link>
     </Navigation>
@@ -20,12 +23,12 @@ const Navigation = styled.nav`
   display: flex;
   align-items: center;
   width: 100%;
-  height: 56px;
+  height: ${NAVBAR_HEIGHT}px;
   padding: 0 24px;
 
-  background-color: ${({ theme }) => theme.colors.lightBlack};
+  background-color: ${({ theme }) => theme.color.lightBlack};
 `
 
 const Name = styled.span`
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.color.white};
 `
