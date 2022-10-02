@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components'
 
 import { GlobalStyles } from 'styles/GlobalStyles'
 import { theme } from 'styles/theme'
+
 import { Layout } from 'components'
 
 export type NextPageWithLayout<T = Record<string, unknown>> = NextPage<T> & {

@@ -1,8 +1,10 @@
+import styled from 'styled-components'
+
+import { NextPageWithLayout } from './_app'
 import Post from 'entity/post/type'
 import { getAllPosts } from 'entity/post/util'
+
 import { Layout, PostCard } from 'components'
-import styled from 'styled-components'
-import { NextPageWithLayout } from './_app'
 
 const Home: NextPageWithLayout<{
   posts: Pick<Post, 'slug' | 'data'>[]
@@ -31,14 +33,11 @@ export async function getStaticProps() {
 }
 
 const CardList = styled.div`
-  width: fit-content;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
 
   ${({ theme }) => theme.media.tablet} {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
   }
 
   ${({ theme }) => theme.media.mobile} {

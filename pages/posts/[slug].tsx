@@ -3,39 +3,33 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
 
+import { NextPageWithLayout } from 'pages/_app'
 import Post from 'entity/post/type'
 import { getFileSlug, getPost, getPostsFilePaths } from 'entity/post/util'
-import { NextPageWithLayout } from 'pages/_app'
-import { Layout, Thumbnail } from 'components'
-import CodeSnippetHeader from 'components/CodeSnippetHeader'
-import CodeBlock from 'components/CodeBlock'
 
+import { Layout, PostTemplate } from 'components'
+import H1 from 'components/mdx/H1'
+import CodeBlock from 'components/mdx/CodeBlock'
+import Block from 'components/mdx/Block'
+import H2 from 'components/mdx/H2'
+import Li from 'components/mdx/Li'
+
+const components = {
+  h1: H1,
+  h2: H2,
+  li: Li,
+  pre: CodeBlock,
+  Block,
+}
 interface Props extends Pick<Post, 'data'> {
-  source: MDXRemoteSerializeResult
+  mdxSource: MDXRemoteSerializeResult
 }
 
-const PostDetail: NextPageWithLayout<Props> = ({ data, source }) => {
+const PostDetail: NextPageWithLayout<Props> = ({ data, mdxSource }) => {
   return (
-    <article>
-      {data.thumbnail && (
-        <Thumbnail
-          src={data.thumbnail}
-          layout="responsive"
-          width="1000px"
-          height="300px"
-          objectFit="contain"
-        />
-      )}
-      <h1>{data.title}</h1>
-      <p>{data.description}</p>
-      <MDXRemote
-        {...source}
-        components={{
-          CodeBlock,
-          CodeSnippetHeader,
-        }}
-      />
-    </article>
+    <PostTemplate data={data}>
+      <MDXRemote {...mdxSource} components={components} />
+    </PostTemplate>
   )
 }
 
@@ -78,7 +72,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       data,
-      source: mdxSource,
+      mdxSource,
     },
   }
 }
