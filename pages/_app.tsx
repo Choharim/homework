@@ -4,9 +4,10 @@ import { ThemeProvider } from 'styled-components'
 
 import { GlobalStyles } from 'styles/GlobalStyles'
 import { theme } from 'styles/theme'
+
 import { Layout } from 'components'
 
-type NextPageWithLayout = NextPage & {
+export type NextPageWithLayout<T = Record<string, unknown>> = NextPage<T> & {
   getLayout?: (page: React.ReactElement) => JSX.Element
 }
 
@@ -14,8 +15,8 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-function CustomedApp({ Component, pageProps }: AppPropsWithLayout) {
-  const CustomedComponent = Component?.getLayout ? (
+function App({ Component, pageProps }: AppPropsWithLayout) {
+  const ComstomedComponent = Component?.getLayout ? (
     Component.getLayout(<Component {...pageProps} />)
   ) : (
     <Layout>
@@ -26,9 +27,9 @@ function CustomedApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      {CustomedComponent}
+      {ComstomedComponent}
     </ThemeProvider>
   )
 }
 
-export default CustomedApp
+export default App

@@ -1,3 +1,5 @@
+import { TAGS } from './constant'
+
 type Post = {
   data: FrontMatter
   content: string
@@ -14,4 +16,4 @@ export type FrontMatter = {
   thumbnail?: string
 }
 
-export type Tag = '알고리즘' | '자료구조'
+export type Tag = typeof TAGS[number]

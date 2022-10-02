@@ -18,5 +18,7 @@ const Chip = styled.div<{ color: string }>`
   border-radius: 4px;
   padding: 4px 12px;
   background-color: ${({ color }) => color};
-  color: ${({ theme }) => theme.colors.lightBlack};
+  color: ${({ theme }) => theme.color.lightBlack};
+  ${({ theme }) => theme.font.subtitle_5};
+  cursor: pointer;
 `

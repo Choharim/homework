@@ -1,9 +1,14 @@
-import Post from 'entity/post/type'
-import { getAllPosts } from 'entity/post/util'
-import { Layout, PostCard } from 'components'
 import styled from 'styled-components'
 
-const Home = ({ posts }: { posts: Pick<Post, 'slug' | 'data'>[] }) => {
+import { NextPageWithLayout } from './_app'
+import Post from 'entity/post/type'
+import { getAllPosts } from 'entity/post/util'
+
+import { Layout, PostCard } from 'components'
+
+const Home: NextPageWithLayout<{
+  posts: Pick<Post, 'slug' | 'data'>[]
+}> = ({ posts }) => {
   return (
     <CardList>
       {posts?.map(({ data, slug }) => (
@@ -30,6 +35,12 @@ export async function getStaticProps() {
 const CardList = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
-  padding: 24px;
+
+  ${({ theme }) => theme.media.tablet} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  ${({ theme }) => theme.media.mobile} {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `

@@ -1,8 +1,10 @@
 import 'styled-components'
-import { colors } from './theme'
+import { color, font, media } from './theme'
 
 declare module 'styled-components' {
   export interface DefaultTheme {
-    colors: { [key in keyof typeof colors]: string }
+    color: typeof color
+    font: typeof font
+    media: typeof media
   }
 }

@@ -1,20 +1,23 @@
 import fs from 'fs'
 import matter from 'gray-matter'
 import { join } from 'path'
-import { isMDX, MDX_REG_EXP } from 'utils/regExp'
 import { MDX_EXTENSION, POSTS_PATH } from './constant'
 import Post from './type'
 
+const MDX_REG_EXP = /\.mdx?$/
+
+const isMDX = (path: string) => MDX_REG_EXP.test(path)
+
 export const getFileSlug = (filePath: string) => {
-  if (filePath.endsWith(MDX_EXTENSION)) {
+  if (isMDX(filePath)) {
     return filePath.replace(MDX_REG_EXP, '')
   }
 
-  return filePath.split('.')[0]
+  return filePath
 }
 
 export const getFilePath = (slug: string) => {
-  if (!slug.endsWith(MDX_EXTENSION)) {
+  if (!isMDX(slug)) {
     return `${slug}.${MDX_EXTENSION}`
   }
 

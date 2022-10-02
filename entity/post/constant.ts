@@ -1,5 +1,5 @@
 import { join } from 'path'
-import { colors } from 'styles/theme'
+import { color } from 'styles/theme'
 import { Tag } from './type'
 
 const DIRECTORY = 'posts'
@@ -8,9 +8,11 @@ export const MDX_EXTENSION = 'mdx'
 
 export const POSTS_PATH = join(process.cwd(), DIRECTORY)
 
+export const TAGS = ['알고리즘', '자료구조'] as const
+
 export const TAG_COLOR_BY_TYPE: {
-  [key in Tag]: typeof colors[keyof typeof colors]
+  [key in Tag]: typeof color[keyof typeof color]
 } = {
-  알고리즘: colors.red,
-  자료구조: colors.yellow,
+  알고리즘: color.red,
+  자료구조: color.yellow,
 }

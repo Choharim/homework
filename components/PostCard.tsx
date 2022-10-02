@@ -1,9 +1,12 @@
 import Post from 'entity/post/type'
 import Link from 'next/link'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+
 import TagChip from './TagChip'
 import Thumbnail from './Thumbnail'
+
+const THUMBNAIL_HEIGHT = 160
 
 const PostCard = (props: Pick<Post, 'data' | 'slug'>) => {
   const {
@@ -12,27 +15,39 @@ const PostCard = (props: Pick<Post, 'data' | 'slug'>) => {
   } = props
 
   return (
-    <Card>
-      <Link href={'/posts/[slug]'} as={`/posts/${slug}`} passHref>
-        <a>
-          {thumbnail && <Thumbnail src={thumbnail} />}
-          <TextContent>
-            <Header>
-              <h3>{title}</h3>
-              <CreatedTime dateTime={createAt}>{createAt}</CreatedTime>
-            </Header>
-            <section>
-              <p>{description}</p>
-            </section>
-            {tags?.map((tag, i) => (
-              <TagChip key={`${tag}_${i}`} type={tag}>
-                {tag}
-              </TagChip>
-            ))}
-          </TextContent>
-        </a>
-      </Link>
-    </Card>
+    <Link href={'/posts/[slug]'} as={`/posts/${slug}`} passHref>
+      <LinkWrapper>
+        <Card>
+          {thumbnail && (
+            <Thumbnail
+              src={thumbnail}
+              layout="fill"
+              objectFit="contain"
+              height={`${THUMBNAIL_HEIGHT}px`}
+              width="300px"
+            />
+          )}
+
+          <Wrapper hasThumbnail={!!thumbnail}>
+            <Content>
+              <Header>
+                <CreatedTime dateTime={createAt}>{createAt}</CreatedTime>
+                <h3>{title}</h3>
+              </Header>
+              <Desc>{description}</Desc>
+            </Content>
+
+            <ChipContainer>
+              {tags?.map((tag, i) => (
+                <TagChip key={`${tag}_${i}`} type={tag}>
+                  {tag}
+                </TagChip>
+              ))}
+            </ChipContainer>
+          </Wrapper>
+        </Card>
+      </LinkWrapper>
+    </Link>
   )
 }
 
@@ -43,21 +58,52 @@ const Card = styled.article`
   height: 340px;
   border-radius: 10px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+  &:hover {
+    transform: translateY(-8px);
+    transition: transform 0.3s;
+  }
 `
 
-const TextContent = styled.div`
+const LinkWrapper = styled.a`
+  width: fit-content;
+`
+
+const Wrapper = styled.div<{ hasThumbnail: boolean }>`
   display: flex;
   flex-direction: column;
-  padding: 12px 16px;
+  padding: 24px;
+
+  ${({ hasThumbnail }) =>
+    hasThumbnail
+      ? css`
+          height: calc(100% - ${THUMBNAIL_HEIGHT}px);
+        `
+      : css`
+          height: calc(100%);
+        `};
 `
 
-const Header = styled.header`
+const Content = styled.div`
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  width: 100%;
+  flex-direction: column;
+  height: 100%;
+`
+
+const Header = styled.div`
+  display: grid;
+  gap: 4px;
+`
+
+const Desc = styled.p`
+  margin: 10px 0;
 `
 
 const CreatedTime = styled.time`
-  color: ${({ theme }) => theme.colors.gray};
+  ${({ theme }) => theme.font.body_3};
+  color: ${({ theme }) => theme.color.gray};
+`
+const ChipContainer = styled.div`
+  display: flex;
+  align-self: flex-end;
 `
