@@ -4,11 +4,13 @@ import { DefaultTheme } from 'styled-components'
 export const color = {
   white: '#ffffff',
   lightGray: '#e6e6e6',
+  midleGray: '#bcbcbc',
   gray: '#707070',
   darkGray: '#4D4D4D',
   lightBlack: '#1a1b1e',
   black: '#000000',
   red: '#ffe2dd',
+  redLine: '#ec5b5b',
   blue: '#d3e4ef',
   green: '#dbeddb',
   orange: '#f9dec9',
@@ -28,8 +30,8 @@ export const font = {
   },
   header_3: {
     fontSize: '24px',
-    lineHeight: '38px',
-    fontWeight: 600,
+    lineHeight: '35px',
+    fontWeight: 700,
   },
   subtitle_1: {
     fontSize: '22px',
@@ -49,6 +51,11 @@ export const font = {
   subtitle_4: {
     fontSize: '16px',
     lineHeight: '25px',
+    fontWeight: 600,
+  },
+  subtitle_5: {
+    fontSize: '14px',
+    lineHeight: '22px',
     fontWeight: 600,
   },
   body_1: {

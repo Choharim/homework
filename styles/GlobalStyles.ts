@@ -39,11 +39,8 @@ export const GlobalStyles = createGlobalStyle`
     -webkit-user-drag: none;
   }
   ul,
-  ol,
-  li {
+  ol {
     margin: 0;
-    padding: 0;
-    list-style: none;
   }
   * {
     box-sizing: border-box;
