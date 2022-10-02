@@ -14,30 +14,16 @@
       "error",
       {
         "zones": [
-          /**
-           * core
-           * 도메인과 관련이 없는 모든 것을 배치하는 곳
-           * 도메인 계층에서 아무 것도 가져올 수 없음
-           */
           {
-            "target": "./core",
+            "target": "./entity",
             "from": "./components"
           },
           {
-            "target": "./core",
-            "from": "./lib"
+            "target": "./entity",
+            "from": "./constants"
           },
           {
-            "target": "./core",
-            "from": "./pages"
-          },
-
-          {
-            "target": "./lib",
-            "from": "./pages"
-          },
-          {
-            "target": "./components",
+            "target": "./entity",
             "from": "./pages"
           }
         ]
