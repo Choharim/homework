@@ -17,7 +17,15 @@ interface Props extends Pick<Post, 'data'> {
 const PostDetail: NextPageWithLayout<Props> = ({ data, source }) => {
   return (
     <article>
-      {data.thumbnail && <Thumbnail src={data.thumbnail} />}
+      {data.thumbnail && (
+        <Thumbnail
+          src={data.thumbnail}
+          layout="responsive"
+          width="1000px"
+          height="300px"
+          objectFit="contain"
+        />
+      )}
       <h1>{data.title}</h1>
       <p>{data.description}</p>
       <MDXRemote

@@ -2,8 +2,11 @@ import Post from 'entity/post/type'
 import Link from 'next/link'
 import React from 'react'
 import styled, { css } from 'styled-components'
+
 import TagChip from './TagChip'
 import Thumbnail from './Thumbnail'
+
+const THUMBNAIL_HEIGHT = 160
 
 const PostCard = (props: Pick<Post, 'data' | 'slug'>) => {
   const {
@@ -12,16 +15,24 @@ const PostCard = (props: Pick<Post, 'data' | 'slug'>) => {
   } = props
 
   return (
-    <Link href={'/posts/[slug]'} as={`/posts/${slug}`}>
-      <a>
+    <Link href={'/posts/[slug]'} as={`/posts/${slug}`} passHref>
+      <LinkWrapper>
         <Card>
-          {thumbnail && <Thumbnail src={thumbnail} />}
+          {thumbnail && (
+            <Thumbnail
+              src={thumbnail}
+              layout="fill"
+              objectFit="contain"
+              height={`${THUMBNAIL_HEIGHT}px`}
+              width="300px"
+            />
+          )}
 
-          <Wrapper fitHeight={!!thumbnail}>
+          <Wrapper hasThumbnail={!!thumbnail}>
             <Content>
               <Header>
-                <h3>{title}</h3>
                 <CreatedTime dateTime={createAt}>{createAt}</CreatedTime>
+                <h3>{title}</h3>
               </Header>
               <Desc>{description}</Desc>
             </Content>
@@ -35,7 +46,7 @@ const PostCard = (props: Pick<Post, 'data' | 'slug'>) => {
             </ChipContainer>
           </Wrapper>
         </Card>
-      </a>
+      </LinkWrapper>
     </Link>
   )
 }
@@ -43,22 +54,34 @@ const PostCard = (props: Pick<Post, 'data' | 'slug'>) => {
 export default PostCard
 
 const Card = styled.article`
-  width: 100%;
-  max-width: 300px;
+  width: 300px;
   height: 340px;
   border-radius: 10px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+  &:hover {
+    transform: translateY(-8px);
+    transition: transform 0.3s;
+  }
 `
-const Wrapper = styled.div<{ fitHeight: boolean }>`
+
+const LinkWrapper = styled.a`
+  width: fit-content;
+`
+
+const Wrapper = styled.div<{ hasThumbnail: boolean }>`
   display: flex;
   flex-direction: column;
   padding: 24px;
 
-  ${({ fitHeight }) =>
-    !fitHeight &&
-    css`
-      height: 100%;
-    `}
+  ${({ hasThumbnail }) =>
+    hasThumbnail
+      ? css`
+          height: calc(100% - ${THUMBNAIL_HEIGHT}px);
+        `
+      : css`
+          height: calc(100%);
+        `};
 `
 
 const Content = styled.div`
@@ -68,10 +91,8 @@ const Content = styled.div`
 `
 
 const Header = styled.div`
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  width: 100%;
+  display: grid;
+  gap: 4px;
 `
 
 const Desc = styled.p`
@@ -79,6 +100,7 @@ const Desc = styled.p`
 `
 
 const CreatedTime = styled.time`
+  ${({ theme }) => theme.font.body_3};
   color: ${({ theme }) => theme.color.gray};
 `
 const ChipContainer = styled.div`
