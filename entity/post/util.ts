@@ -40,18 +40,20 @@ export const getPost = (slug: string): Post => {
   return { slug: getFileSlug(slug), data: data as Post['data'], content }
 }
 
+export const sortByCreateDate = (posts: Post[]): Post[] => {
+  const postsArray = [...posts]
+
+  return postsArray.sort(
+    (firstPost, secondPost) =>
+      new Date(secondPost.data.createDate).valueOf() -
+      new Date(firstPost.data.createDate).valueOf()
+  )
+}
+
 export const getAllPosts = () => {
   const filePaths = getPostsFilePaths()
 
   const posts = filePaths.map((filePath) => getPost(filePath))
 
-  return posts
-}
-
-export const getAllPostSlugs = () => {
-  const filePaths = getPostsFilePaths()
-
-  const slugs = filePaths.map((filePath) => ({ slug: getFileSlug(filePath) }))
-
-  return slugs
+  return sortByCreateDate(posts)
 }
