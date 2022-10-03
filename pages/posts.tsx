@@ -1,14 +1,14 @@
-import { InferGetStaticPropsType } from 'next'
+import { InferGetStaticPropsType, NextPage } from 'next'
+import React from 'react'
 import styled from 'styled-components'
 
-import { NextPageWithLayout } from './_app'
 import { getAllPosts } from 'entity/post/util'
 
-import { Layout, PostCardLink } from 'components'
+import { PostCardLink } from 'components'
 
-const Home: NextPageWithLayout<
-  InferGetStaticPropsType<typeof getStaticProps>
-> = ({ posts }) => {
+const PostsPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  posts,
+}) => {
   return (
     <CardList>
       {posts?.map(({ data, slug }) => (
@@ -18,11 +18,7 @@ const Home: NextPageWithLayout<
   )
 }
 
-export default Home
-
-Home.getLayout = function getLayout(page: React.ReactElement) {
-  return <Layout title="홈">{page}</Layout>
-}
+export default PostsPage
 
 export async function getStaticProps() {
   const posts = getAllPosts()

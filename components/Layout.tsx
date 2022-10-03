@@ -3,16 +3,17 @@ import styled from 'styled-components'
 import Head from 'next/head'
 
 import { deviceSize } from 'constants/common'
+import { KO_NAME } from 'entity/owner/constant'
+
 import Navbar, { NAVBAR_HEIGHT } from './Navbar'
 import Footer, { FOOTER_HEIGHT } from './Footer'
-import { KO_NAME } from 'entity/owner/constant'
 
 type Props = {
   children: React.ReactNode
   title?: string
 }
 
-export default function Layout({ children, title }: Props) {
+const Layout = ({ children, title }: Props) => {
   return (
     <LayoutFrame>
       <Head>
@@ -26,6 +27,8 @@ export default function Layout({ children, title }: Props) {
     </LayoutFrame>
   )
 }
+
+export default Layout
 
 const LayoutFrame = styled.div`
   display: flex;

@@ -6,13 +6,14 @@ import { deviceSize } from 'constants/common'
 import { FrontMatter } from 'entity/post/type'
 
 import ShareLink from './ShareLink'
-import TagChip from './TagChip'
+import TagLink from './TagLink'
 import Thumbnail from './Thumbnail'
 
 type Props = {
   children: React.ReactNode
   data: FrontMatter
 }
+
 const PostTemplate = ({ data, children }: Props) => {
   const { title, createDate, tags, thumbnail } = data
 
@@ -26,13 +27,13 @@ const PostTemplate = ({ data, children }: Props) => {
         <Wrapper>
           <TitleWrapper>
             <Title>{title}</Title>
-            <ChipContainer>
+            <TagContainer>
               {tags?.map((tag, i) => (
-                <TagChip key={`${tag}_${i}`} type={tag}>
-                  {tag}
-                </TagChip>
+                <TagLink key={`${tag}_${i}`} tag={tag}>
+                  # {tag}
+                </TagLink>
               ))}
-            </ChipContainer>
+            </TagContainer>
           </TitleWrapper>
           <ShareLink onClick={shareLink} />
         </Wrapper>
@@ -88,7 +89,7 @@ const CreatedTime = styled.time`
   color: ${({ theme }) => theme.color.gray};
 `
 
-const ChipContainer = styled.div`
+const TagContainer = styled.div`
   display: flex;
   margin-left: 12px;
 

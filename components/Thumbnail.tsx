@@ -1,5 +1,5 @@
-import Image, { ImageProps } from 'next/image'
 import { HTMLAttributes } from 'react'
+import Image, { ImageProps } from 'next/image'
 import styled, { css } from 'styled-components'
 
 interface ThumbnailProps
@@ -20,11 +20,11 @@ const Thumbnail = ({
     <Container layout={layout} width={width} height={height} {...rest}>
       <Image
         src={src}
-        alt={`${src}_thumbnail`}
         layout={layout}
         objectFit={objectFit}
-        width={width}
-        height={height}
+        width={layout === 'responsive' ? width : undefined}
+        height={layout === 'responsive' ? height : undefined}
+        alt={`${src}_thumbnail`}
       />
     </Container>
   )
@@ -35,6 +35,8 @@ export default Thumbnail
 const Container = styled.div<
   Pick<ThumbnailProps, 'layout' | 'width' | 'height'>
 >`
+  background-color: ${({ theme }) => theme.color.black};
+
   ${({ layout, width, height }) => {
     switch (layout) {
       case 'fill':
@@ -51,14 +53,12 @@ const Container = styled.div<
             height: ${height};
           `}
         `
-      case 'responsive':
 
+      case 'responsive':
       default:
         return css`
           display: block;
         `
     }
   }}
-
-  background-color: ${({ theme }) => theme.color.black};
 `

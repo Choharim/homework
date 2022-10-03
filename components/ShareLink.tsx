@@ -2,6 +2,7 @@ import React, { DOMAttributes } from 'react'
 import styled from 'styled-components'
 
 type Props = Pick<DOMAttributes<HTMLDivElement>, 'onClick'>
+
 const ShareLink = (props: Props) => {
   return <LinkIcon {...props}>🔗</LinkIcon>
 }

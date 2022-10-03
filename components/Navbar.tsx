@@ -4,11 +4,12 @@ import Link from 'next/link'
 import Image, { StaticImageData } from 'next/image'
 
 import { EN_NAME, GITHUB_URL } from 'entity/owner/constant'
+import { POST_DIRECTORY } from 'entity/post/constant'
+import { deviceSize } from 'constants/common'
+import { Z_IDEX } from 'styles/constant'
+
 import Logo from 'public/logo.png'
 import GithubLogo from 'public/github_logo.png'
-import { deviceSize } from 'constants/common'
-import { POST_DIRECTORY } from 'entity/post/constant'
-import { Z_IDEX } from 'styles/constant'
 
 export const NAVBAR_HEIGHT = 58
 
@@ -47,51 +48,62 @@ const Navbar = () => {
   return (
     <Navigation>
       <Frame>
-        <Link href="/">
-          <a>
-            <LogWrapper>
-              <Image
-                layout="fixed"
-                height={35}
-                width={33}
-                src={Logo}
-                alt="logo_image"
-              />
-              <Name>{`${EN_NAME.first}'s log`}</Name>
-            </LogWrapper>
-          </a>
-        </Link>
-
-        <MenuContainer>
-          {MENUS.map((menu, i) => (
-            <Menu key={`menu_${i}`}>
-              <Link href={menu.href} passHref>
-                <LinkWrapper
-                  target={menu.isOutlink ? '_blank' : '_self'}
-                  rel="noopener noreferrer"
-                >
-                  {isTextMenu(menu) ? (
-                    <MenuText>{menu.label}</MenuText>
-                  ) : (
-                    <Image
-                      layout="fixed"
-                      height={25}
-                      width={25}
-                      src={menu.img_url}
-                      alt={menu.img_alt}
-                    />
-                  )}
-                </LinkWrapper>
-              </Link>
-            </Menu>
-          ))}
-        </MenuContainer>
+        <Navbar.Logo />
+        <Navbar.Menu />
       </Frame>
     </Navigation>
   )
 }
 
 export default Navbar
+
+Navbar.Logo = function Component() {
+  return (
+    <Link href="/">
+      <a>
+        <LogWrapper>
+          <Image
+            layout="fixed"
+            height={35}
+            width={33}
+            src={Logo}
+            alt="logo_image"
+          />
+          <Name>{`${EN_NAME.first}'s log`}</Name>
+        </LogWrapper>
+      </a>
+    </Link>
+  )
+}
+
+Navbar.Menu = function Component() {
+  return (
+    <MenuContainer>
+      {MENUS.map((menu, i) => (
+        <Menu key={`menu_${i}`}>
+          <Link href={menu.href} passHref>
+            <LinkWrapper
+              target={menu.isOutlink ? '_blank' : '_self'}
+              rel="noopener noreferrer"
+            >
+              {isTextMenu(menu) ? (
+                <MenuText>{menu.label}</MenuText>
+              ) : (
+                <Image
+                  layout="fixed"
+                  height={25}
+                  width={25}
+                  src={menu.img_url}
+                  alt={menu.img_alt}
+                />
+              )}
+            </LinkWrapper>
+          </Link>
+        </Menu>
+      ))}
+    </MenuContainer>
+  )
+}
 
 const Navigation = styled.nav`
   position: fixed;
