@@ -1,14 +1,14 @@
+import { InferGetStaticPropsType } from 'next'
 import styled from 'styled-components'
 
 import { NextPageWithLayout } from './_app'
-import Post from 'entity/post/type'
 import { getAllPosts } from 'entity/post/util'
 
 import { Layout, PostCard } from 'components'
 
-const Home: NextPageWithLayout<{
-  posts: Pick<Post, 'slug' | 'data'>[]
-}> = ({ posts }) => {
+const Home: NextPageWithLayout<
+  InferGetStaticPropsType<typeof getStaticProps>
+> = ({ posts }) => {
   return (
     <CardList>
       {posts?.map(({ data, slug }) => (

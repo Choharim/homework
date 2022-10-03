@@ -1,7 +1,13 @@
 import React from 'react'
-import { GetStaticPaths, GetStaticProps } from 'next'
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
+import {
+  GetStaticPaths,
+  GetStaticPropsContext,
+  InferGetStaticPropsType,
+  PreviewData,
+} from 'next'
+import { MDXRemote } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
+import { ParsedUrlQuery } from 'querystring'
 
 import { NextPageWithLayout } from 'pages/_app'
 import Post from 'entity/post/type'
@@ -21,11 +27,10 @@ const components = {
   pre: CodeBlock,
   Block,
 }
-interface Props extends Pick<Post, 'data'> {
-  mdxSource: MDXRemoteSerializeResult
-}
 
-const Detail: NextPageWithLayout<Props> = ({ data, mdxSource }) => {
+const Detail: NextPageWithLayout<
+  InferGetStaticPropsType<typeof getStaticProps>
+> = ({ data, mdxSource }) => {
   return (
     <PostTemplate data={data}>
       <MDXRemote {...mdxSource} components={components} />
@@ -60,7 +65,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 type Params = Pick<Post, 'slug'>
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps = async (
+  context: GetStaticPropsContext<ParsedUrlQuery, PreviewData>
+) => {
   const { slug } = context.params as Params
 
   const { data, content } = getPost(slug)
