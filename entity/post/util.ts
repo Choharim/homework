@@ -40,7 +40,7 @@ export const getPost = (slug: string): Post => {
   return { slug: getFileSlug(slug), data: data as Post['data'], content }
 }
 
-export const sortByCreateDate = (posts: Post[]): Post[] => {
+const sortByCreateDate = (posts: Post[]): Post[] => {
   const postsArray = [...posts]
 
   return postsArray.sort(
