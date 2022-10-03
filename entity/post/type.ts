@@ -11,7 +11,7 @@ export default Post
 export type FrontMatter = {
   title: Title
   description: Description
-  createAt: DateString
+  createDate: DateString
   tags: Tag[]
   thumbnail?: string
 }
