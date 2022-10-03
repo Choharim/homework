@@ -1,4 +1,4 @@
-import { DIRECTORY } from 'entity/post/constant'
+import { POST_DIRECTORY } from 'entity/post/constant'
 import Post from 'entity/post/type'
 import Link from 'next/link'
 import React from 'react'
@@ -11,16 +11,20 @@ const THUMBNAIL_HEIGHT = 160
 
 const PostCard = (props: Pick<Post, 'data' | 'slug'>) => {
   const {
-    data: { title, description, createAt, tags, thumbnail },
+    data: { title, description, createDate, tags, thumbnail },
     slug,
   } = props
 
   return (
-    <Link href={`/${DIRECTORY}/[slug]`} as={`/${DIRECTORY}/${slug}`} passHref>
+    <Link
+      href={`/${POST_DIRECTORY}/[slug]`}
+      as={`/${POST_DIRECTORY}/${slug}`}
+      passHref
+    >
       <LinkWrapper>
         <Card>
           {thumbnail && (
-            <Thumbnail
+            <CustomThumbnail
               src={thumbnail}
               layout="fill"
               objectFit="contain"
@@ -32,7 +36,7 @@ const PostCard = (props: Pick<Post, 'data' | 'slug'>) => {
           <Wrapper hasThumbnail={!!thumbnail}>
             <Content>
               <Header>
-                <CreatedTime dateTime={createAt}>{createAt}</CreatedTime>
+                <CreateDate dateTime={createDate}>{createDate}</CreateDate>
                 <h3>{title}</h3>
               </Header>
               <Desc>{description}</Desc>
@@ -66,6 +70,11 @@ const Card = styled.article`
     transform: translateY(-8px);
     transition: transform 0.3s;
   }
+`
+
+const CustomThumbnail = styled(Thumbnail)`
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 `
 
 const LinkWrapper = styled.a`
@@ -102,7 +111,7 @@ const Desc = styled.p`
   margin: 10px 0;
 `
 
-const CreatedTime = styled.time`
+const CreateDate = styled.time`
   ${({ theme }) => theme.font.body_3};
   color: ${({ theme }) => theme.color.gray};
 `

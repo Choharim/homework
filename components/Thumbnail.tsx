@@ -1,8 +1,10 @@
 import Image, { ImageProps } from 'next/image'
+import { HTMLAttributes } from 'react'
 import styled, { css } from 'styled-components'
 
 interface ThumbnailProps
-  extends Pick<ImageProps, 'src' | 'width' | 'height' | 'objectFit'> {
+  extends Pick<ImageProps, 'src' | 'width' | 'height' | 'objectFit'>,
+    HTMLAttributes<Pick<HTMLDivElement, 'className'>> {
   layout: 'fill' | 'responsive'
 }
 
@@ -12,9 +14,10 @@ const Thumbnail = ({
   width,
   height,
   objectFit,
+  ...rest
 }: ThumbnailProps) => {
   return (
-    <Container layout={layout} width={width} height={height}>
+    <Container layout={layout} width={width} height={height} {...rest}>
       <Image
         src={src}
         alt={`${src}_thumbnail`}

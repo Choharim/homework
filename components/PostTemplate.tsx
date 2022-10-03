@@ -1,7 +1,11 @@
-import { deviceSize } from 'constants/common'
-import { FrontMatter } from 'entity/post/type'
 import React from 'react'
 import styled from 'styled-components'
+
+import { copy } from 'utils/copy'
+import { deviceSize } from 'constants/common'
+import { FrontMatter } from 'entity/post/type'
+
+import ShareLink from './ShareLink'
 import TagChip from './TagChip'
 import Thumbnail from './Thumbnail'
 
@@ -10,22 +14,29 @@ type Props = {
   data: FrontMatter
 }
 const PostTemplate = ({ data, children }: Props) => {
-  const { title, createAt, tags, thumbnail } = data
+  const { title, createDate, tags, thumbnail } = data
+
+  const shareLink = () => {
+    copy(window.location.href)
+  }
 
   return (
     <Article>
       <Header>
         <Wrapper>
-          <Title>{title}</Title>
-          <ChipContainer>
-            {tags?.map((tag, i) => (
-              <TagChip key={`${tag}_${i}`} type={tag}>
-                {tag}
-              </TagChip>
-            ))}
-          </ChipContainer>
+          <TitleWrapper>
+            <Title>{title}</Title>
+            <ChipContainer>
+              {tags?.map((tag, i) => (
+                <TagChip key={`${tag}_${i}`} type={tag}>
+                  {tag}
+                </TagChip>
+              ))}
+            </ChipContainer>
+          </TitleWrapper>
+          <ShareLink onClick={shareLink} />
         </Wrapper>
-        <CreatedTime dateTime={createAt}>{createAt}</CreatedTime>
+        <CreatedTime dateTime={createDate}>{createDate}</CreatedTime>
         {thumbnail && (
           <Thumbnail
             src={thumbnail}
@@ -47,7 +58,6 @@ export default PostTemplate
 const Article = styled.article`
   display: flex;
   flex-direction: column;
-  padding: 50px 0;
 `
 
 const Header = styled.div`
@@ -55,6 +65,12 @@ const Header = styled.div`
   gap: 10px;
   margin: 20px 0 30px;
 `
+
+const TitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`
+
 const Title = styled.h1`
   ${({ theme }) => theme.font.header_1};
   color: ${({ theme }) => theme.color.lightBlack};
@@ -63,6 +79,8 @@ const Title = styled.h1`
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
 `
 
 const CreatedTime = styled.time`

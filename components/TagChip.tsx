@@ -16,9 +16,9 @@ export default TagChip
 const Chip = styled.div<{ color: string }>`
   width: fit-content;
   border-radius: 4px;
-  padding: 4px 12px;
+  padding: 4px 8px;
   background-color: ${({ color }) => color};
   color: ${({ theme }) => theme.color.lightBlack};
-  ${({ theme }) => theme.font.subtitle_5};
+  ${({ theme }) => theme.font.body_5};
   cursor: pointer;
 `
