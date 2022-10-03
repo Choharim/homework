@@ -2,7 +2,7 @@ import { join } from 'path'
 import { color } from 'styles/theme'
 import { Tag } from './type'
 
-const DIRECTORY = 'posts'
+export const DIRECTORY = 'posts'
 
 export const MDX_EXTENSION = 'mdx'
 

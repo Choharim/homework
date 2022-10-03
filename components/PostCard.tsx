@@ -1,3 +1,4 @@
+import { DIRECTORY } from 'entity/post/constant'
 import Post from 'entity/post/type'
 import Link from 'next/link'
 import React from 'react'
@@ -15,7 +16,7 @@ const PostCard = (props: Pick<Post, 'data' | 'slug'>) => {
   } = props
 
   return (
-    <Link href={'/posts/[slug]'} as={`/posts/${slug}`} passHref>
+    <Link href={`/${DIRECTORY}/[slug]`} as={`/${DIRECTORY}/${slug}`} passHref>
       <LinkWrapper>
         <Card>
           {thumbnail && (
@@ -37,13 +38,15 @@ const PostCard = (props: Pick<Post, 'data' | 'slug'>) => {
               <Desc>{description}</Desc>
             </Content>
 
-            <ChipContainer>
-              {tags?.map((tag, i) => (
-                <TagChip key={`${tag}_${i}`} type={tag}>
-                  {tag}
-                </TagChip>
-              ))}
-            </ChipContainer>
+            {!!tags?.length && (
+              <ChipContainer>
+                {tags.map((tag, i) => (
+                  <TagChip key={`${tag}_${i}`} type={tag}>
+                    {tag}
+                  </TagChip>
+                ))}
+              </ChipContainer>
+            )}
           </Wrapper>
         </Card>
       </LinkWrapper>

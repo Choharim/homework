@@ -25,7 +25,7 @@ interface Props extends Pick<Post, 'data'> {
   mdxSource: MDXRemoteSerializeResult
 }
 
-const PostDetail: NextPageWithLayout<Props> = ({ data, mdxSource }) => {
+const Detail: NextPageWithLayout<Props> = ({ data, mdxSource }) => {
   return (
     <PostTemplate data={data}>
       <MDXRemote {...mdxSource} components={components} />
@@ -33,9 +33,9 @@ const PostDetail: NextPageWithLayout<Props> = ({ data, mdxSource }) => {
   )
 }
 
-export default PostDetail
+export default Detail
 
-PostDetail.getLayout = function getLayout(
+Detail.getLayout = function getLayout(
   page: React.ReactElement<Pick<Post, 'data' | 'content'>>
 ) {
   return <Layout title={page.props.data.title}>{page}</Layout>
