@@ -7,3 +7,5 @@ export const EN_NAME = {
   first: 'harim',
   last: 'Cho',
 }
+
+export const GITHUB_URL = 'https://github.com/Choharim'

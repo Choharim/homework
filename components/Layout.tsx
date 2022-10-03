@@ -3,16 +3,17 @@ import styled from 'styled-components'
 import Head from 'next/head'
 
 import { deviceSize } from 'constants/common'
+import { KO_NAME } from 'entity/owner/constant'
+
 import Navbar, { NAVBAR_HEIGHT } from './Navbar'
 import Footer, { FOOTER_HEIGHT } from './Footer'
-import { KO_NAME } from 'entity/owner/constant'
 
 type Props = {
   children: React.ReactNode
   title?: string
 }
 
-export default function Layout({ children, title }: Props) {
+const Layout = ({ children, title }: Props) => {
   return (
     <LayoutFrame>
       <Head>
@@ -27,6 +28,8 @@ export default function Layout({ children, title }: Props) {
   )
 }
 
+export default Layout
+
 const LayoutFrame = styled.div`
   display: flex;
   flex-direction: column;
@@ -39,11 +42,11 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  padding: calc(${NAVBAR_HEIGHT}px + 20px) ${X_PADDING}px;
   height: 100%;
-  min-height: calc((100vh - ${NAVBAR_HEIGHT}px - ${FOOTER_HEIGHT}px));
+  min-height: calc((100vh - ${FOOTER_HEIGHT}px));
   width: 100%;
   max-width: calc(${deviceSize.pc}px + ${X_PADDING}px);
-  padding: 0 ${X_PADDING}px;
 
   ${({ theme }) => theme.media.tablet} {
     max-width: ${deviceSize.tablet}px;

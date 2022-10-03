@@ -10,11 +10,13 @@ export const color = {
   lightBlack: '#1a1b1e',
   black: '#000000',
   red: '#ffe2dd',
+  darkRed: '#ffdcd6',
   redLine: '#ec5b5b',
   blue: '#d3e4ef',
   green: '#dbeddb',
   orange: '#f9dec9',
   yellow: '#fdecc8',
+  darkYellow: '#fde7c8',
 } as const
 
 export const font = {
