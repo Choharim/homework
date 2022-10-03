@@ -22,8 +22,6 @@ const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
       passHref
     >
       <PostCardLink.Card thumbnail={thumbnail}>
-        <PostCardLink.Content {...content} />
-
         {!!tags?.length && (
           <TagContainer>
             {tags.map((tag, i) => (
@@ -33,6 +31,8 @@ const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
             ))}
           </TagContainer>
         )}
+
+        <PostCardLink.Content {...content} />
       </PostCardLink.Card>
     </Link>
   )
@@ -50,10 +50,10 @@ PostCardLink.Content = function Component(
   return (
     <Content>
       <Header>
-        <CreateDate dateTime={createDate}>{createDate}</CreateDate>
         <Title>{title}</Title>
+        <Desc>{description}</Desc>
       </Header>
-      <Desc>{description}</Desc>
+      <CreateDate dateTime={createDate}>{createDate}</CreateDate>
     </Content>
   )
 }
@@ -61,12 +61,14 @@ PostCardLink.Content = function Component(
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   height: 100%;
 `
 
 const Header = styled.div`
   display: grid;
   gap: 4px;
+  margin-top: 12px;
 `
 
 const Desc = styled.p`
@@ -75,6 +77,8 @@ const Desc = styled.p`
 `
 
 const CreateDate = styled.time`
+  display: flex;
+  justify-content: end;
   ${({ theme }) => theme.font.body_3};
   color: ${({ theme }) => theme.color.gray};
 `
@@ -84,5 +88,4 @@ const Title = styled.h3`
 `
 const TagContainer = styled.div`
   display: flex;
-  align-self: flex-end;
 `

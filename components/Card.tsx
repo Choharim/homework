@@ -55,14 +55,17 @@ const CustomThumbnail = styled(Thumbnail)`
 const Body = styled.div<{ hasThumbnail: boolean }>`
   display: flex;
   flex-direction: column;
-  padding: 12px 18px;
 
   ${({ hasThumbnail }) =>
     hasThumbnail
       ? css`
+          padding: 12px 24px 24px;
+
           height: calc(100% - ${THUMBNAIL_HEIGHT}px);
         `
       : css`
+          padding: 24px;
+
           height: calc(100%);
         `};
 `
