@@ -80,7 +80,7 @@ const CreateDate = styled.time`
   display: flex;
   justify-content: end;
   ${({ theme }) => theme.font.body_3};
-  color: ${({ theme }) => theme.color.gray};
+  color: ${({ theme }) => theme.color.darkGray};
 `
 
 const Title = styled.h3`

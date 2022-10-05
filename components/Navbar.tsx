@@ -1,7 +1,8 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import Link from 'next/link'
 import Image, { StaticImageData } from 'next/image'
+import { useRouter } from 'next/router'
 
 import { EN_NAME, GITHUB_URL } from 'entity/owner/constant'
 import { POST_DIRECTORY } from 'entity/post/constant'
@@ -77,10 +78,12 @@ Navbar.Logo = function Component() {
 }
 
 Navbar.Menu = function Component() {
+  const { pathname } = useRouter()
+
   return (
     <MenuContainer>
       {MENUS.map((menu, i) => (
-        <Menu key={`menu_${i}`}>
+        <Menu key={`menu_${i}`} $active={pathname.includes(menu.href)}>
           <Link href={menu.href} passHref>
             <LinkWrapper
               target={menu.isOutlink ? '_blank' : '_self'}
@@ -135,7 +138,7 @@ const LogWrapper = styled.div`
 
 const Name = styled.span`
   margin-left: 10px;
-  color: ${({ theme }) => theme.color.lightBlack};
+  color: ${({ theme }) => theme.color.black};
   ${({ theme }) => theme.font.header_3};
 `
 
@@ -144,20 +147,37 @@ const MenuContainer = styled.ul`
   padding-left: 0;
 `
 
-const Menu = styled.li`
-  display: flex;
-  align-items: center;
-
-  &:not(:first-child) {
-    margin-left: 10px;
-  }
+const MenuText = styled.span`
+  color: ${({ theme }) => theme.color.black};
+  ${({ theme }) => theme.font.subtitle_2};
 `
 
 const LinkWrapper = styled.a`
-  padding: 12px 10px;
+  display: flex;
+  align-items: center;
+  height: 46px;
+  padding: 0 10px;
+  border-radius: 4px;
 `
 
-const MenuText = styled.span`
-  color: ${({ theme }) => theme.color.lightBlack};
-  ${({ theme }) => theme.font.subtitle_2};
+const Menu = styled.li<{ $active: boolean }>`
+  &:not(:first-child) {
+    margin-left: 10px;
+  }
+
+  &:hover {
+    ${LinkWrapper} {
+      background-color: ${({ theme }) => theme.color.moreLightGray};
+    }
+  }
+
+  ${({ $active, theme }) =>
+    $active &&
+    css`
+      pointer-events: none;
+
+      ${LinkWrapper} {
+        background-color: ${theme.color.moreLightGray};
+      }
+    `}
 `

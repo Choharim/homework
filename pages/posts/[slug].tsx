@@ -14,18 +14,24 @@ import Post from 'entity/post/type'
 import { getFileSlug, getPost, getPostsFilePaths } from 'entity/post/util'
 
 import { Layout, PostTemplate } from 'components'
-import H1 from 'components/mdx/H1'
+import h1 from 'components/mdx/h11'
 import CodeBlock from 'components/mdx/CodeBlock'
-import Block from 'components/mdx/Block'
-import H2 from 'components/mdx/H2'
-import Li from 'components/mdx/Li'
+import h2 from 'components/mdx/h22'
+import li from 'components/mdx/lii'
+import p from 'components/mdx/p'
+import ul from 'components/mdx/ul'
+import blockquote from 'components/mdx/blockquote'
+import ol from 'components/mdx/ol'
 
 const components = {
-  h1: H1,
-  h2: H2,
-  li: Li,
+  h1,
+  h2,
+  li,
   pre: CodeBlock,
-  Block,
+  ul,
+  ol,
+  p,
+  blockquote,
 }
 
 const Detail: NextPageWithLayout<

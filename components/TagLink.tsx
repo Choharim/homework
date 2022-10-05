@@ -11,8 +11,9 @@ import { color } from 'styles/theme'
 const TAG_COLOR_BY_TYPE: {
   [key in Tag]: { [key in 'bg' | 'hover']: typeof color[keyof typeof color] }
 } = {
-  알고리즘: { bg: color.red, hover: color.darkRed },
+  알고리즘: { bg: color.pink, hover: color.darkPink },
   자료구조: { bg: color.yellow, hover: color.darkYellow },
+  FE: { bg: color.blue, hover: color.blue },
 }
 
 interface Props extends DOMAttributes<HTMLDivElement> {
