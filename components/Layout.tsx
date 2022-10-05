@@ -47,12 +47,4 @@ const Main = styled.main`
   min-height: calc((100vh - ${FOOTER_HEIGHT}px));
   width: 100%;
   max-width: calc(${deviceSize.pc}px + ${X_PADDING}px);
-
-  ${({ theme }) => theme.media.tablet} {
-    max-width: ${deviceSize.tablet}px;
-  }
-
-  ${({ theme }) => theme.media.mobile} {
-    max-width: ${deviceSize.mobile}px;
-  }
 `

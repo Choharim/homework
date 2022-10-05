@@ -11,17 +11,20 @@ import { getAllPosts } from 'entity/post/util'
 
 import { PostCardLink } from 'components'
 import { ParsedUrlQuery } from 'querystring'
-import { Tag } from 'entity/post/type'
+import TagFilter from 'components/TagFilter'
 
 const PostsPage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ posts }) => {
   return (
-    <CardList>
-      {posts?.map(({ data, slug }) => (
-        <PostCardLink key={slug} data={data} slug={slug} />
-      ))}
-    </CardList>
+    <Frame>
+      <TagFilter />
+      <CardList>
+        {posts?.map(({ data, slug }) => (
+          <PostCardLink key={slug} data={data} slug={slug} />
+        ))}
+      </CardList>
+    </Frame>
   )
 }
 
@@ -35,9 +38,11 @@ export async function getServerSideProps(
   let posts
 
   if (!!query.tag) {
-    posts = getAllPosts().filter((post) =>
-      post.data.tags.includes(query.tag as Tag)
-    )
+    posts = getAllPosts().filter((post) => {
+      const tags = (query.tag as string)?.split(',') || []
+
+      return tags.includes(post.data.tag)
+    })
   } else {
     posts = getAllPosts()
   }
@@ -47,14 +52,21 @@ export async function getServerSideProps(
   }
 }
 
-const CardList = styled.div`
+const Frame = styled.div`
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 30px;
   margin-top: 59px;
+`
 
+const CardList = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
 
   ${({ theme }) => theme.media.tablet} {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
   ${({ theme }) => theme.media.mobile} {

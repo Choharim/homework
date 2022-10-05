@@ -1,9 +1,7 @@
 import React, { DOMAttributes } from 'react'
 import styled from 'styled-components'
 
-interface Props extends DOMAttributes<HTMLDivElement> {
-  bgColor?: string
-}
+type Props = DOMAttributes<HTMLDivElement>
 
 const Chip = ({ children, ...rest }: Props) => {
   return <Wrapper {...rest}>{children}</Wrapper>

@@ -15,7 +15,7 @@ type Props = {
 }
 
 const PostTemplate = ({ data, children }: Props) => {
-  const { title, createDate, tags, thumbnail } = data
+  const { title, createDate, tag, thumbnail } = data
 
   const shareLink = () => {
     copy(window.location.href)
@@ -27,13 +27,11 @@ const PostTemplate = ({ data, children }: Props) => {
         <Wrapper>
           <TitleWrapper>
             <Title>{title}</Title>
-            <TagContainer>
-              {tags?.map((tag, i) => (
-                <TagLink key={`${tag}_${i}`} tag={tag}>
-                  # {tag}
-                </TagLink>
-              ))}
-            </TagContainer>
+            {!!tag && (
+              <TagLink tag={tag} type="hash">
+                {tag}
+              </TagLink>
+            )}
           </TitleWrapper>
           <ShareLink onClick={shareLink} />
         </Wrapper>
@@ -68,8 +66,10 @@ const Header = styled.div`
 `
 
 const TitleWrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
   align-items: center;
+  gap: 10px;
 `
 
 const Title = styled.h1`
@@ -86,16 +86,5 @@ const Wrapper = styled.div`
 
 const CreatedTime = styled.time`
   ${({ theme }) => theme.font.subtitle_2};
-  color: ${({ theme }) => theme.color.gray};
-`
-
-const TagContainer = styled.div`
-  display: flex;
-  margin-left: 12px;
-
-  & div {
-    &:not(:last-child) {
-      margin-right: 5px;
-    }
-  }
+  color: ${({ theme }) => theme.color.darkGray};
 `

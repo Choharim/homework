@@ -12,7 +12,7 @@ export type FrontMatter = {
   title: Title
   description: Description
   createDate: DateString
-  tags: Tag[]
+  tag: Tag
   thumbnail?: string
 }
 

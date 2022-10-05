@@ -34,12 +34,13 @@ export async function getStaticProps() {
 
 const CardList = styled.div`
   margin-top: 59px;
-
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
 
   ${({ theme }) => theme.media.tablet} {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
   ${({ theme }) => theme.media.mobile} {

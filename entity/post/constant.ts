@@ -6,4 +6,4 @@ export const MDX_EXTENSION = 'mdx'
 
 export const POSTS_PATH = join(process.cwd(), POST_DIRECTORY)
 
-export const TAGS = ['알고리즘', '자료구조'] as const
+export const TAGS = ['알고리즘', '자료구조', 'FE'] as const

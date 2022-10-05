@@ -3,16 +3,24 @@ import { DefaultTheme } from 'styled-components'
 
 export const color = {
   white: '#ffffff',
+
+  moreLightGray: '#F2F2F2',
   lightGray: '#e6e6e6',
-  midleGray: '#bcbcbc',
-  gray: '#707070',
-  darkGray: '#4D4D4D',
-  lightBlack: '#1a1b1e',
+  gray: '#bcbcbc',
+  darkGray: '#707070',
+  moreDarkGray: '#4D4D4D',
+
+  lightBlack: '#454545',
   black: '#000000',
-  red: '#ffe2dd',
-  darkRed: '#ffdcd6',
-  redLine: '#ec5b5b',
+
+  brown: '#b09b88',
+
+  pink: '#ffe2dd',
+  darkPink: '#ffdcd6',
+  red: '#ec5b5b',
+
   blue: '#d3e4ef',
+  darkBlue: '#c0d9e8',
   green: '#dbeddb',
   orange: '#f9dec9',
   yellow: '#fdecc8',
@@ -93,8 +101,8 @@ export const font = {
 } as const
 
 export const media = {
-  mobile: `@media screen and (max-width: ${deviceSize.mobile}px)`,
-  tablet: `@media screen and (max-width: ${deviceSize.tablet}px)`,
+  mobile: `@media screen and (max-width: ${deviceSize.tablet}px)`,
+  tablet: `@media screen and (max-width: ${deviceSize.pc}px)`,
 } as const
 
 export const theme: DefaultTheme = {
