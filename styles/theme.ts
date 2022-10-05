@@ -101,8 +101,8 @@ export const font = {
 } as const
 
 export const media = {
-  mobile: `@media screen and (max-width: ${deviceSize.mobile}px)`,
-  tablet: `@media screen and (max-width: ${deviceSize.tablet}px)`,
+  mobile: `@media screen and (max-width: ${deviceSize.tablet}px)`,
+  tablet: `@media screen and (max-width: ${deviceSize.pc}px)`,
 } as const
 
 export const theme: DefaultTheme = {

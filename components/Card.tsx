@@ -19,7 +19,6 @@ const Card = React.forwardRef<HTMLDivElement, Props>(
             layout="fill"
             objectFit="contain"
             height={`${THUMBNAIL_HEIGHT}px`}
-            width="300px"
           />
         )}
         <Body hasThumbnail={!!thumbnail}>{children}</Body>
@@ -35,7 +34,7 @@ Card.displayName = 'Card'
 const BORDER_RADIUS = '10px'
 
 const Wrapper = styled.article`
-  width: 300px;
+  width: 100%;
   height: 340px;
   border-radius: ${BORDER_RADIUS};
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;

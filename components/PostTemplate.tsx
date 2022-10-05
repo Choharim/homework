@@ -66,12 +66,10 @@ const Header = styled.div`
 `
 
 const TitleWrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
   align-items: center;
-
-  &:not(:first-child) {
-    margin-left: 12px;
-  }
+  gap: 10px;
 `
 
 const Title = styled.h1`

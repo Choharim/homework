@@ -54,7 +54,7 @@ export async function getServerSideProps(
 
 const Frame = styled.div`
   display: grid;
-  grid-template-columns: 150px auto;
+  grid-template-rows: auto auto;
   gap: 30px;
   margin-top: 59px;
 `
@@ -62,9 +62,11 @@ const Frame = styled.div`
 const CardList = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
 
   ${({ theme }) => theme.media.tablet} {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
   ${({ theme }) => theme.media.mobile} {
