@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export default styled.ul`
   margin: 10px 0 32px;
+  padding-inline-start: 40px;
 
   > li {
     position: relative;

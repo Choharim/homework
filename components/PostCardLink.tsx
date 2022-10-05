@@ -11,7 +11,7 @@ import Card from './Card'
 
 const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
   const {
-    data: { tags, thumbnail, ...content },
+    data: { tag, thumbnail, ...content },
     slug,
   } = props
 
@@ -22,16 +22,11 @@ const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
       passHref
     >
       <PostCardLink.Card thumbnail={thumbnail}>
-        {!!tags?.length && (
-          <TagContainer>
-            {tags.map((tag, i) => (
-              <TagLink key={`${tag}_${i}`} tag={tag}>
-                # {tag}
-              </TagLink>
-            ))}
-          </TagContainer>
+        {!!tag && (
+          <TagLink tag={tag} type="hash">
+            {tag}
+          </TagLink>
         )}
-
         <PostCardLink.Content {...content} />
       </PostCardLink.Card>
     </Link>
@@ -85,7 +80,4 @@ const CreateDate = styled.time`
 
 const Title = styled.h3`
   ${limitTextLine(1)}
-`
-const TagContainer = styled.div`
-  display: flex;
 `
