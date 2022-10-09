@@ -8,6 +8,8 @@ export const GlobalStyles = createGlobalStyle`
    
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: auto;
+
+    font-family: 'Montserrat', sans-serif;
   }
   a {
     color: inherit;

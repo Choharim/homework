@@ -74,7 +74,7 @@ const TitleWrapper = styled.div`
 
 const Title = styled.h1`
   ${({ theme }) => theme.font.header_1};
-  color: ${({ theme }) => theme.color.lightBlack};
+  color: ${({ theme }) => theme.color.black};
 `
 
 const Wrapper = styled.div`
