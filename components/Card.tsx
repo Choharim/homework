@@ -21,7 +21,7 @@ const Card = React.forwardRef<HTMLDivElement, Props>(
             height={`${THUMBNAIL_HEIGHT}px`}
           />
         )}
-        <Body hasThumbnail={!!thumbnail}>{children}</Body>
+        <Body $hasThumbnail={!!thumbnail}>{children}</Body>
       </Wrapper>
     )
   }
@@ -51,12 +51,12 @@ const CustomThumbnail = styled(Thumbnail)`
   border-top-right-radius: ${BORDER_RADIUS};
 `
 
-const Body = styled.div<{ hasThumbnail: boolean }>`
+const Body = styled.div<{ $hasThumbnail: boolean }>`
   display: flex;
   flex-direction: column;
 
-  ${({ hasThumbnail }) =>
-    hasThumbnail
+  ${({ $hasThumbnail }) =>
+    $hasThumbnail
       ? css`
           padding: 12px 24px 24px;
 

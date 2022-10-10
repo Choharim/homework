@@ -49,7 +49,7 @@ const Code = ({ className, children }: Props) => {
                 <TableLine
                   key={`code-line_${i}`}
                   {...getLineProps({ line, key: i })}
-                  isHighlight={isHighlightLine(i)}
+                  $isHighlight={isHighlightLine(i)}
                 >
                   <Td>
                     {line.map((token, key) => (
@@ -87,7 +87,7 @@ const TableBody = styled.tbody`
   white-space: pre;
 `
 
-const TableLine = styled.tr<{ isHighlight: boolean }>`
+const TableLine = styled.tr<{ $isHighlight: boolean }>`
   display: block;
   padding: 0 1.5rem;
 
@@ -95,8 +95,8 @@ const TableLine = styled.tr<{ isHighlight: boolean }>`
     margin-bottom: 2px;
   }
 
-  ${({ isHighlight }) =>
-    isHighlight &&
+  ${({ $isHighlight }) =>
+    $isHighlight &&
     css`
       background-color: rgb(47, 53, 60);
     `}
