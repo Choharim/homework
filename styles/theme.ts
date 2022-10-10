@@ -63,7 +63,7 @@ export const font = {
   },
   subtitle_4: {
     fontSize: '16px',
-    lineHeight: '25px',
+    lineHeight: '24px',
     fontWeight: 600,
   },
   subtitle_5: {
@@ -77,7 +77,7 @@ export const font = {
     fontWeight: 550,
   },
   body_2: {
-    fontSize: '14px',
+    fontSize: '15px',
     lineHeight: '24px',
     fontWeight: 500,
   },
@@ -88,13 +88,13 @@ export const font = {
   },
   body_4: {
     fontSize: '13px',
-    lineHeight: '20px',
-    fontWeight: 600,
+    lineHeight: '18px',
+    fontWeight: 500,
   },
   body_5: {
     fontSize: '12px',
     lineHeight: '16px',
-    fontWeight: 600,
+    fontWeight: 500,
   },
   body_6: {
     fontSize: '11px',
