@@ -16,18 +16,14 @@ type AppPropsWithLayout = AppProps & {
 }
 
 function App({ Component, pageProps }: AppPropsWithLayout) {
-  const ComstomedComponent = Component?.getLayout ? (
-    Component.getLayout(<Component {...pageProps} />)
-  ) : (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
-  )
+  const layout = Component?.getLayout
+    ? Component.getLayout
+    : (page: React.ReactElement) => <Layout>{page}</Layout>
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      {ComstomedComponent}
+      {layout(<Component {...pageProps} />)}
     </ThemeProvider>
   )
 }

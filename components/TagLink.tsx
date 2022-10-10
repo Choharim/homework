@@ -33,8 +33,9 @@ const TagLink = ({ tag, type = 'none', ...rest }: Props) => {
         pathname: `/${POST_DIRECTORY}`,
         query: !!updatedQueryPath ? { tag: updatedQueryPath } : {},
       }}
+      passHref
     >
-      <a>
+      <A>
         <TagLink.Chip
           bgColor={TAG_COLOR_BY_TYPE[tag].base}
           hoverColor={TAG_COLOR_BY_TYPE[tag].active}
@@ -43,7 +44,7 @@ const TagLink = ({ tag, type = 'none', ...rest }: Props) => {
           {type === 'hash' && '# '}
           {tag}
         </TagLink.Chip>
-      </a>
+      </A>
     </Link>
   )
 }
@@ -57,4 +58,8 @@ TagLink.Chip = styled(Chip)<{ bgColor: string; hoverColor: string }>`
     background-color: ${({ hoverColor }) => hoverColor};
     color: ${({ theme }) => theme.color.black};
   }
+`
+
+const A = styled.a`
+  width: fit-content;
 `

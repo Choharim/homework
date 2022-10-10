@@ -57,6 +57,8 @@ export default PostTemplate
 const Article = styled.article`
   display: flex;
   flex-direction: column;
+
+  color: ${({ theme }) => theme.color.black};
 `
 
 const Header = styled.div`
@@ -74,7 +76,6 @@ const TitleWrapper = styled.div`
 
 const Title = styled.h1`
   ${({ theme }) => theme.font.header_1};
-  color: ${({ theme }) => theme.color.lightBlack};
 `
 
 const Wrapper = styled.div`
@@ -85,6 +86,6 @@ const Wrapper = styled.div`
 `
 
 const CreatedTime = styled.time`
-  ${({ theme }) => theme.font.subtitle_2};
+  ${({ theme }) => theme.font.body_1};
   color: ${({ theme }) => theme.color.darkGray};
 `
