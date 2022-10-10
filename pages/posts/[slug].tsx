@@ -8,6 +8,7 @@ import {
 import { MDXRemote } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
 import { ParsedUrlQuery } from 'querystring'
+import * as mdx from '@mdx-js/react'
 
 import { NextPageWithLayout } from 'pages/_app'
 import Post from 'entity/post/type'
@@ -21,7 +22,14 @@ const Detail: NextPageWithLayout<
 > = ({ data, mdxSource }) => {
   return (
     <PostTemplate data={data}>
-      <MDXRemote {...mdxSource} components={{ ...MDX_STYLE }} />
+      <MDXRemote
+        {...mdxSource}
+        components={
+          { ...MDX_STYLE } as React.ComponentProps<
+            typeof mdx.MDXProvider
+          >['components']
+        }
+      />
     </PostTemplate>
   )
 }
