@@ -64,7 +64,7 @@ const Code = ({ className, children }: Props) => {
       </Highlight>
     </HighlightWrapper>
   ) : (
-    <code className={className} />
+    <code className={className}>{children}</code>
   )
 }
 export default Code
@@ -74,7 +74,8 @@ const HighlightWrapper = styled.pre`
   padding: 1.5rem 0;
   border-radius: 3px;
   background-color: #212121;
-  overflow-x: scroll;
+  overflow-x: auto;
+  overflow-y: hidden;
 `
 
 const Table = styled.table`
