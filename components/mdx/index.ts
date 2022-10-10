@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Code from './Code'
 import {
-  HighlightBox,
+  HighlightBlock,
   HighlightWord,
   ListContainer,
   ParagrahFont,
@@ -58,7 +58,7 @@ const MDX_STYLE = {
     margin: 10px 0;
   `,
   blockquote: styled.blockquote`
-    ${HighlightBox}
+    ${HighlightBlock}
   `,
   code: Code,
 }

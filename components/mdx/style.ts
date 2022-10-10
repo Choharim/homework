@@ -16,7 +16,7 @@ export const HighlightWord = css`
   border-radius: 2px;
 `
 
-export const HighlightBox = css`
+export const HighlightBlock = css`
   margin: 24px 0 32px;
   padding: 24px;
   background-color: ${({ theme }) => theme.color.moreLightGray};

@@ -17,14 +17,17 @@ export const color = {
 
   pink: '#ffe2dd',
   darkPink: '#ffdcd6',
+  moreDardPink: '#fbac9c',
   red: '#ec5b5b',
 
   blue: '#d3e4ef',
   darkBlue: '#c0d9e8',
+  moreDarkBlue: '#8fc5e7',
   green: '#dbeddb',
   orange: '#f9dec9',
   yellow: '#fdecc8',
   darkYellow: '#fde7c8',
+  moreDarkYellow: '#fdcb84',
 } as const
 
 export const font = {

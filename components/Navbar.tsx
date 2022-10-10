@@ -83,7 +83,7 @@ Navbar.Menu = function Component() {
   return (
     <MenuContainer>
       {MENUS.map((menu, i) => (
-        <Menu key={`menu_${i}`} $active={pathname.includes(menu.href)}>
+        <Menu key={`menu_${i}`} $active={pathname === menu.href}>
           <Link href={menu.href} passHref>
             <LinkWrapper
               target={menu.isOutlink ? '_blank' : '_self'}
@@ -115,7 +115,8 @@ const Navigation = styled.nav`
   width: 100%;
   height: ${NAVBAR_HEIGHT}px;
 
-  background-color: ${({ theme }) => theme.color.white};
+  background: hsla(0, 0%, 100%, 0.8);
+  backdrop-filter: saturate(180%) blur(5px);
   border-bottom: 1px solid ${({ theme }) => theme.color.lightGray};
   z-index: ${Z_IDEX.nav};
 `
