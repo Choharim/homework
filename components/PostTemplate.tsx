@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { copy } from 'utils/copy'
 import { deviceSize } from 'constants/common'
@@ -76,6 +76,12 @@ const TitleWrapper = styled.div`
 
 const Title = styled.h1`
   ${({ theme }) => theme.font.header_1};
+
+  ${({ theme }) =>
+    theme.media.tablet &&
+    css`
+      ${theme.font.header_2}
+    `}
 `
 
 const Wrapper = styled.div`
@@ -88,4 +94,10 @@ const Wrapper = styled.div`
 const CreatedTime = styled.time`
   ${({ theme }) => theme.font.body_1};
   color: ${({ theme }) => theme.color.darkGray};
+
+  ${({ theme }) =>
+    theme.media.tablet &&
+    css`
+      ${theme.font.body_2}
+    `}
 `

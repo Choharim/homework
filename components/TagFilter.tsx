@@ -29,15 +29,14 @@ export default TagFilter
 const TagButtonContainer = styled.nav`
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  margin: -4px;
 `
 const TagButton = styled.button`
   border: none;
   background-color: transparent;
   padding: 0;
-
-  &:not(:last-child) {
-    margin-right: 10px;
-  }
+  margin: 4px;
 `
 
 const CircleTagLink = styled(TagLink)<{ $active: boolean; tag?: Tag }>`
@@ -47,6 +46,7 @@ const CircleTagLink = styled(TagLink)<{ $active: boolean; tag?: Tag }>`
   ${({ theme }) => theme.font.subtitle_3}
   border-radius: 100px;
   padding: 12px 28px;
+  white-space: nowrap;
 
   ${({ $active, tag }) =>
     $active &&

@@ -64,7 +64,7 @@ const Code = ({ className, children }: Props) => {
       </Highlight>
     </HighlightWrapper>
   ) : (
-    <code className={className} />
+    <code className={className}>{children}</code>
   )
 }
 export default Code
@@ -74,7 +74,13 @@ const HighlightWrapper = styled.pre`
   padding: 1.5rem 0;
   border-radius: 3px;
   background-color: #212121;
-  overflow-x: scroll;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  ${({ theme }) => theme.media.tablet} {
+    margin: 10px 0;
+    padding: 1rem 0;
+  }
 `
 
 const Table = styled.table`
@@ -85,6 +91,14 @@ const Table = styled.table`
 const TableBody = styled.tbody`
   ${({ theme }) => theme.font.body_2};
   white-space: pre;
+
+  ${({ theme }) => theme.media.tablet} {
+    ${({ theme }) => theme.font.body_3};
+  }
+
+  ${({ theme }) => theme.media.mobile} {
+    ${({ theme }) => theme.font.body_4};
+  }
 `
 
 const TableLine = styled.tr<{ $isHighlight: boolean }>`
