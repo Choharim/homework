@@ -85,6 +85,6 @@ const Wrapper = styled.div`
 `
 
 const CreatedTime = styled.time`
-  ${({ theme }) => theme.font.subtitle_2};
+  ${({ theme }) => theme.font.body_1};
   color: ${({ theme }) => theme.color.darkGray};
 `

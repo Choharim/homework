@@ -44,12 +44,12 @@ export const font = {
     fontWeight: 700,
   },
   subtitle_1: {
-    fontSize: '22px',
+    fontSize: '21px',
     lineHeight: '27px',
     fontWeight: 600,
   },
   subtitle_2: {
-    fontSize: '18px',
+    fontSize: '19px',
     lineHeight: '26px',
     fontWeight: 600,
   },
