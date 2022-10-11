@@ -3,11 +3,11 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
-import { Tag } from 'entity/post/type'
-import { POST_DIRECTORY } from 'entity/post/constant'
-import { TAG_COLOR_BY_TYPE } from 'constants/post/tag'
+import { Tag } from 'domain/post/type'
+import { POST_DIRECTORY } from 'domain/post/constant'
+import { TAG_COLOR_BY_TYPE } from 'application/constants/post/tag'
 
-import Chip from './Chip'
+import Chip from '../Chip'
 
 interface Props extends DOMAttributes<HTMLDivElement> {
   tag: Tag

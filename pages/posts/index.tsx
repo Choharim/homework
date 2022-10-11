@@ -6,12 +6,12 @@ import {
 } from 'next'
 import React from 'react'
 import styled from 'styled-components'
-
-import { getAllPosts } from 'entity/post/util'
-
-import { PostCardLink } from 'components'
 import { ParsedUrlQuery } from 'querystring'
-import TagFilter from 'components/TagFilter'
+
+import { getAllPosts } from 'domain/post/util'
+
+import TagFilter from 'application/components/post/TagFilter'
+import PostCardLink from 'application/components/post/PostCardLink'
 
 const PostsPage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>

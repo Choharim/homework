@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { EN_NAME } from 'entity/owner/constant'
+import { EN_NAME } from 'domain/owner/constant'
 
 export const FOOTER_HEIGHT = 100
 

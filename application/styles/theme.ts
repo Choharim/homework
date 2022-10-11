@@ -1,5 +1,6 @@
-import { deviceSize } from 'constants/common'
 import { DefaultTheme } from 'styled-components'
+
+import { deviceSize } from 'application/constants/common'
 
 export const color = {
   white: '#ffffff',

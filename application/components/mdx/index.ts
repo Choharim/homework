@@ -1,11 +1,12 @@
 import styled, { css } from 'styled-components'
-import Code from './Code'
+
 import {
   HighlightBlock,
   HighlightWord,
   ListContainer,
   ParagrahFont,
 } from './style'
+import Code from './Code'
 
 const MDX_STYLE = {
   h1: styled.h1`

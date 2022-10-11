@@ -1,13 +1,16 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { copyToClipboard } from 'utils/copy'
-import { COPY_FAILURE, COPY_SUCCESS, deviceSize } from 'constants/common'
-import { FrontMatter } from 'entity/post/type'
+import { FrontMatter } from 'domain/post/type'
+import { copyToClipboard } from 'application/utils/copy'
+import {
+  COPY_FAILURE,
+  COPY_SUCCESS,
+  deviceSize,
+} from 'application/constants/common'
 
-import ShareLink from './ShareLink'
 import TagLink from './TagLink'
-import Thumbnail from './Thumbnail'
+import Thumbnail from '../Thumbnail'
 
 type Props = {
   children: React.ReactNode
@@ -37,7 +40,7 @@ const PostTemplate = ({ data, children }: Props) => {
               </TagLink>
             )}
           </TitleWrapper>
-          <ShareLink onClick={shareLink} />
+          <ShareLink onClick={shareLink}>🔗</ShareLink>
         </Wrapper>
         <CreatedTime dateTime={createDate}>{createDate}</CreatedTime>
         {thumbnail && (
@@ -104,4 +107,20 @@ const CreatedTime = styled.time`
       ${theme.font.body_2}
     }
   `}
+`
+
+const ShareLink = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  font-size: 24px;
+  border-radius: 4px;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.lightGray};
+  }
 `
