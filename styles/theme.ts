@@ -46,6 +46,11 @@ export const font = {
     lineHeight: '35px',
     fontWeight: 700,
   },
+  header_4: {
+    fontSize: '22px',
+    lineHeight: '33px',
+    fontWeight: 700,
+  },
   subtitle_1: {
     fontSize: '21px',
     lineHeight: '27px',

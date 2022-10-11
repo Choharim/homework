@@ -141,6 +141,12 @@ const Name = styled.span`
   margin-left: 10px;
   color: ${({ theme }) => theme.color.black};
   ${({ theme }) => theme.font.header_3};
+
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
+      ${({ theme }) => theme.font.header_4};
+    }
+  `}
 `
 
 const MenuContainer = styled.ul`
@@ -156,7 +162,7 @@ const MenuText = styled.span`
 const LinkWrapper = styled.a`
   display: flex;
   align-items: center;
-  height: 46px;
+  height: 45px;
   padding: 0 10px;
   border-radius: 4px;
 `
