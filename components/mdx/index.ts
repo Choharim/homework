@@ -15,42 +15,40 @@ const MDX_STYLE = {
     padding-bottom: 10px;
     border-bottom: 1px solid ${({ theme }) => theme.color.lightGray};
 
-    ${({ theme }) =>
-      theme.media.tablet &&
-      css`
+    ${({ theme }) => css`
+      ${theme.media.tablet} {
         ${theme.font.header_3};
         margin: 25px 0;
         padding-bottom: 8px;
-      `}
-    ${({ theme }) =>
-      theme.media.mobile &&
-      css`
+      }
+      ${theme.media.mobile} {
         ${theme.font.subtitle_1};
-      `}
+      }
+    `}
   `,
   h2: styled.h2`
     ${({ theme }) => theme.font.header_3};
 
     margin: 10px 0;
 
-    ${({ theme }) =>
-      theme.media.tablet &&
-      css`
+    ${({ theme }) => css`
+      ${theme.media.tablet} {
         ${theme.font.subtitle_1};
         margin: 8px 0;
-      `}
+      }
+    `}
   `,
   h3: styled.h3`
     ${({ theme }) => theme.font.subtitle_1};
 
     margin: 8px 0;
 
-    ${({ theme }) =>
-      theme.media.tablet &&
-      css`
+    ${({ theme }) => css`
+      ${theme.media.tablet} {
         ${theme.font.subtitle_2};
         margin: 5px 0;
-      `}
+      }
+    `}
   `,
   p: styled.p`
     ${ParagrahFont}
@@ -77,11 +75,11 @@ const MDX_STYLE = {
         top: 0;
         left: -25px;
 
-        ${({ theme }) =>
-          theme.media.tablet &&
-          css`
+        ${({ theme }) => css`
+          ${theme.media.tablet} {
             left: -20px;
-          `}
+          }
+        `}
       }
     }
   `,
@@ -90,11 +88,11 @@ const MDX_STYLE = {
 
     margin: 10px 0;
 
-    ${({ theme }) =>
-      theme.media.tablet &&
-      css`
+    ${({ theme }) => css`
+      ${theme.media.tablet} {
         margin: 8px 0;
-      `}
+      }
+    `}
   `,
   blockquote: styled.blockquote`
     ${HighlightBlock}

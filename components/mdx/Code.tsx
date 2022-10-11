@@ -77,10 +77,12 @@ const HighlightWrapper = styled.pre`
   overflow-x: auto;
   overflow-y: hidden;
 
-  ${({ theme }) => theme.media.tablet} {
-    margin: 10px 0;
-    padding: 1rem 0;
-  }
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
+      margin: 10px 0;
+      padding: 1rem 0;
+    }
+  `}
 `
 
 const Table = styled.table`
@@ -92,13 +94,14 @@ const TableBody = styled.tbody`
   ${({ theme }) => theme.font.body_2};
   white-space: pre;
 
-  ${({ theme }) => theme.media.tablet} {
-    ${({ theme }) => theme.font.body_3};
-  }
-
-  ${({ theme }) => theme.media.mobile} {
-    ${({ theme }) => theme.font.body_4};
-  }
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
+      ${theme.font.body_3}
+    }
+    ${theme.media.mobile} {
+      ${theme.font.body_4}
+    }
+  `}
 `
 
 const TableLine = styled.tr<{ $isHighlight: boolean }>`

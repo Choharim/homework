@@ -4,9 +4,10 @@ export const ParagrahFont = css`
   ${({ theme }) => theme.font.body_1};
 
   ${({ theme }) =>
-    theme.media.tablet &&
     css`
-      ${theme.font.body_2};
+      ${theme.media.tablet} {
+        ${theme.font.body_2};
+      }
     `}
 `
 export const ListContainer = css`
@@ -14,10 +15,11 @@ export const ListContainer = css`
   padding-inline-start: 40px;
 
   ${({ theme }) =>
-    theme.media.tablet &&
     css`
-      margin: 18px 0 20px;
-      padding-inline-start: 30px;
+      ${theme.media.tablet} {
+        margin: 18px 0 20px;
+        padding-inline-start: 30px;
+      }
     `}
 `
 
@@ -40,13 +42,14 @@ export const HighlightBlock = css`
   }
 
   ${({ theme }) =>
-    theme.media.tablet &&
     css`
-      margin: 22px 0 28px;
-      padding: 22px;
+      ${theme.media.tablet} {
+        margin: 22px 0 28px;
+        padding: 22px;
 
-      p {
-        ${({ theme }) => theme.font.subtitle_4};
+        p {
+          ${({ theme }) => theme.font.subtitle_4};
+        }
       }
     `}
 `

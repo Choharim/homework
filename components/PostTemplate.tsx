@@ -77,11 +77,11 @@ const TitleWrapper = styled.div`
 const Title = styled.h1`
   ${({ theme }) => theme.font.header_1};
 
-  ${({ theme }) =>
-    theme.media.tablet &&
-    css`
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
       ${theme.font.header_2}
-    `}
+    }
+  `}
 `
 
 const Wrapper = styled.div`
@@ -95,9 +95,9 @@ const CreatedTime = styled.time`
   ${({ theme }) => theme.font.body_1};
   color: ${({ theme }) => theme.color.darkGray};
 
-  ${({ theme }) =>
-    theme.media.tablet &&
-    css`
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
       ${theme.font.body_2}
-    `}
+    }
+  `}
 `
