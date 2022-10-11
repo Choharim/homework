@@ -89,11 +89,16 @@ const Code = ({ className, children }: Props) => {
 }
 export default Code
 
+const PADDING_X = {
+  pc: '24px',
+  tablet: '10px',
+} as const
+
 const HighlightWrapper = styled.pre`
   position: relative;
 
   margin: 20px 0;
-  padding: 24px 0;
+  padding: ${PADDING_X.pc} 0;
   border-radius: 3px;
   background-color: #212121;
   overflow-x: auto;
@@ -101,7 +106,7 @@ const HighlightWrapper = styled.pre`
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
-      margin: 10px 0;
+      margin: ${PADDING_X.tablet} 0;
       padding: 12px 0;
     }
   `}
@@ -109,8 +114,8 @@ const HighlightWrapper = styled.pre`
 
 const CopyCodeButton = styled.button`
   position: absolute;
-  top: 24px;
-  right: 24px;
+  top: ${PADDING_X.pc};
+  right: ${PADDING_X.pc};
   padding: 5px;
   outline: none;
   border: none;
@@ -123,8 +128,8 @@ const CopyCodeButton = styled.button`
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
-      top: 10px;
-      right: 10px;
+      top: ${PADDING_X.tablet};
+      right: ${PADDING_X.tablet};
     }
   `}
 `

@@ -1,95 +1,158 @@
 import Link from 'next/link'
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useCallback, useEffect, useState } from 'react'
 import styled, { css } from 'styled-components'
 
-const totalPages = 240
-const defaultCount = 9
+const MAX_DISPLAY_COUNT = 5
+const HALF = MAX_DISPLAY_COUNT / 2
+const FIRST_RIGHT_NUMBER = Math.ceil(HALF)
+const LAST_LEFT_NUMBER = HALF % 2 === 0 ? HALF - 1 : Math.floor(HALF)
 
-const Pagination = () => {
+type Props = {
+  totalPages: number
+  currentPageNumber: number
+}
+//@todo refactoring pagination
+const Pagination = ({ currentPageNumber, totalPages }: Props) => {
+  const router = useRouter()
   const [currentPage, setCurrentPage] = useState(0)
   const [pageNav, setPageNav] = useState(1)
 
-  const clickPrevButton = () => {
-    if (currentPage > 0) {
-      setCurrentPage((prev) => prev - 1)
-    }
-    if (pageNav > 1) {
-      setPageNav((prev) => prev - 1)
-    }
-  }
+  const clickPageNumber = useCallback(
+    (pageNumber: number) => {
+      setCurrentPage(pageNumber - 1)
 
-  const clickNextButton = () => {
-    setCurrentPage((prev) => prev + 1)
-    setPageNav((prev) => prev + 1)
-  }
+      if (
+        pageNumber > FIRST_RIGHT_NUMBER ||
+        (pageNumber <= FIRST_RIGHT_NUMBER && pageNav !== 1)
+      ) {
+        const gap = pageNumber - (pageNav + LAST_LEFT_NUMBER)
 
-  const clickPageNumber = (pageNumber: number) => {
-    setCurrentPage(pageNumber - 1)
-
-    if (pageNumber > 5 || (pageNumber <= 5 && pageNav !== 1)) {
-      const gap = pageNumber - (pageNav + 4)
-
-      if (pageNav + gap < 1) {
-        setPageNav(1)
-      } else {
-        if (
-          pageNav >= totalPages - (defaultCount - 1) &&
-          pageNumber > totalPages - 4
-        )
-          return
-        setPageNav((prev) => prev + gap)
+        if (pageNav + gap < 1) {
+          setPageNav(1)
+        } else {
+          if (
+            pageNav >= totalPages - (MAX_DISPLAY_COUNT - 1) &&
+            pageNumber > totalPages - FIRST_RIGHT_NUMBER
+          )
+            return
+          setPageNav((prev) => prev + gap)
+        }
       }
-    }
+    },
+    [pageNav, totalPages]
+  )
+
+  useEffect(() => {
+    clickPageNumber(currentPageNumber)
+  }, [currentPageNumber, clickPageNumber])
+
+  const setPageNumberInUrl = (pageNumber: number) => {
+    router.push({ ...router, query: { page: pageNumber } })
   }
+
+  if (!totalPages) return <></>
 
   return (
-    <>
-      <div>{`현재 페이지 ${currentPage + 1}`}</div>
-      <PaginationWrapper>
-        {pageNav > 1 && <PrevButton onClick={clickPrevButton}>이전</PrevButton>}
-        <PageNumbers>
-          {[...Array(totalPages)].map((_, i) => {
-            if (i + 1 > pageNav - 1 && i + 1 < defaultCount + pageNav) {
-              return (
-                <PageNumber
-                  active={currentPage === i}
-                  onClick={() => clickPageNumber(i + 1)}
-                >
-                  <Link href={`#${i + 1}`}>
-                    <a>{i + 1}</a>
-                  </Link>
-                </PageNumber>
-              )
-            }
-          })}
-        </PageNumbers>
-        {totalPages > pageNav + defaultCount - 1 && (
-          <NextButton onClick={clickNextButton}>다음</NextButton>
-        )}
-      </PaginationWrapper>
-    </>
+    <PaginationWrapper>
+      <PrevButton
+        onClick={() => setPageNumberInUrl(currentPageNumber - 1)}
+        $dimmed={currentPageNumber <= 1}
+      >
+        {`<`}
+      </PrevButton>
+      <PageNumbers>
+        {[...Array(totalPages)].map((_, i) => {
+          const pageNumber = i + 1
+          if (
+            pageNumber > pageNav - 1 &&
+            pageNumber < MAX_DISPLAY_COUNT + pageNav
+          ) {
+            return (
+              <Link
+                href={{ query: { page: pageNumber } }}
+                key={`page_number_${i}`}
+                passHref
+              >
+                <PageNumberAtag $active={currentPage === i}>
+                  <PageNumber>{pageNumber}</PageNumber>
+                </PageNumberAtag>
+              </Link>
+            )
+          }
+        })}
+      </PageNumbers>
+      <NextButton
+        onClick={() => setPageNumberInUrl(currentPageNumber + 1)}
+        $dimmed={currentPageNumber >= totalPages}
+      >
+        {`>`}
+      </NextButton>
+    </PaginationWrapper>
   )
 }
 
 export default Pagination
 
 const PaginationWrapper = styled.div`
-  display: flex;
-`
-
-const PrevButton = styled.button``
-
-const NextButton = styled.button``
-
-const PageNumbers = styled.ul`
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  margin: 20px 0px;
 `
 
-const PageNumber = styled.li<{ active: boolean }>`
-  ${({ theme, active }) =>
-    active &&
+const BUTTON_SIZE = '32px'
+
+const Button = styled.button<{ $dimmed: boolean }>`
+  width: ${BUTTON_SIZE};
+  height: ${BUTTON_SIZE};
+  border-radius: 4px;
+  border: none;
+  background-color: ${({ theme }) => theme.color.brown};
+  ${({ theme }) => theme.font.body_1};
+
+  ${({ theme, $dimmed }) =>
+    $dimmed &&
     css`
-      background-color: ${theme.color.darkPink};
+      background-color: ${theme.color.lightGray};
+      pointer-events: none;
     `}
+`
+
+const PrevButton = styled(Button)``
+
+const NextButton = styled(Button)``
+
+const X_GAP = '10px'
+
+const PageNumbers = styled.ul`
+  display: grid;
+  grid-auto-flow: column;
+  gap: ${X_GAP};
+  margin: 0 ${X_GAP};
+`
+
+const PageNumberAtag = styled.a<{ $active: boolean }>`
+  ${({ theme, $active }) =>
+    $active &&
+    css`
+      ${PageNumber} {
+        ${theme.font.subtitle_4};
+      }
+      cursor: default;
+      pointer-events: none;
+    `}
+`
+
+const PageNumber = styled.li`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: ${BUTTON_SIZE};
+  height: ${BUTTON_SIZE};
+  color: ${({ theme }) => theme.color.black};
+
+  ${({ theme }) => theme.font.body_1};
 `
