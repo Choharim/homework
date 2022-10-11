@@ -1,8 +1,8 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { copy } from 'utils/copy'
-import { deviceSize } from 'constants/common'
+import { copyToClipboard } from 'utils/copy'
+import { COPY_FAILURE, COPY_SUCCESS, deviceSize } from 'constants/common'
 import { FrontMatter } from 'entity/post/type'
 
 import ShareLink from './ShareLink'
@@ -18,7 +18,11 @@ const PostTemplate = ({ data, children }: Props) => {
   const { title, createDate, tag, thumbnail } = data
 
   const shareLink = () => {
-    copy(window.location.href)
+    copyToClipboard({
+      text: window.location.href,
+      onSuccess: () => alert(COPY_SUCCESS),
+      onFailure: () => alert(COPY_FAILURE),
+    })
   }
 
   return (
