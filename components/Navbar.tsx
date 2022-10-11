@@ -9,7 +9,7 @@ import { POST_DIRECTORY } from 'entity/post/constant'
 import { deviceSize } from 'constants/common'
 import { Z_IDEX } from 'styles/constant'
 
-import Logo from 'public/logo.png'
+import Logo from 'public/favicon.ico'
 import GithubLogo from 'public/github_logo.png'
 
 export const NAVBAR_HEIGHT = 58
