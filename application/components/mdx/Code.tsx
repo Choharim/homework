@@ -3,6 +3,10 @@ import theme from 'prism-react-renderer/themes/vsDark'
 import styled, { css } from 'styled-components'
 import rangeParser from 'parse-numeric-range'
 import { useCallback } from 'react'
+import Image from 'next/image'
+
+import { copyToClipboard } from 'application/utils/copy'
+import { COPY_FAILURE, COPY_SUCCESS } from 'application/constants/common'
 
 type Props = {
   children: string
@@ -34,8 +38,24 @@ const Code = ({ className, children }: Props) => {
     [className]
   )
 
+  const copyCode = () => {
+    copyToClipboard({
+      text: children,
+      onSuccess: () => alert(COPY_SUCCESS),
+      onFailure: () => alert(COPY_FAILURE),
+    })
+  }
+
   return match ? (
     <HighlightWrapper>
+      <CopyCodeButton onClick={copyCode}>
+        <Image
+          src="/copy.svg"
+          alt="code-copy_icon"
+          width="24px"
+          height="24px"
+        />
+      </CopyCodeButton>
       <Highlight
         {...defaultProps}
         language={match[1] as Language}
@@ -70,17 +90,43 @@ const Code = ({ className, children }: Props) => {
 export default Code
 
 const HighlightWrapper = styled.pre`
+  position: relative;
+
   margin: 20px 0;
-  padding: 1.5rem 0;
+  padding: 24px 0;
   border-radius: 3px;
   background-color: #212121;
   overflow-x: auto;
   overflow-y: hidden;
 
-  ${({ theme }) => theme.media.tablet} {
-    margin: 10px 0;
-    padding: 1rem 0;
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
+      margin: 10px 0;
+      padding: 12px 0;
+    }
+  `}
+`
+
+const CopyCodeButton = styled.button`
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  padding: 5px;
+  outline: none;
+  border: none;
+  background-color: ${({ theme }) => theme.color.darkGray};
+  border-radius: 4px;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.gray};
   }
+
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
+      top: 10px;
+      right: 10px;
+    }
+  `}
 `
 
 const Table = styled.table`
@@ -92,13 +138,14 @@ const TableBody = styled.tbody`
   ${({ theme }) => theme.font.body_2};
   white-space: pre;
 
-  ${({ theme }) => theme.media.tablet} {
-    ${({ theme }) => theme.font.body_3};
-  }
-
-  ${({ theme }) => theme.media.mobile} {
-    ${({ theme }) => theme.font.body_4};
-  }
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
+      ${theme.font.body_3}
+    }
+    ${theme.media.mobile} {
+      ${theme.font.body_4}
+    }
+  `}
 `
 
 const TableLine = styled.tr<{ $isHighlight: boolean }>`

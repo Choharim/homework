@@ -2,12 +2,12 @@ import React from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 
-import { POST_DIRECTORY } from 'entity/post/constant'
-import Post from 'entity/post/type'
-import { limitTextLine } from 'styles/mixin'
+import { POST_DIRECTORY } from 'domain/post/constant'
+import Post from 'domain/post/type'
+import { limitTextLine } from 'application/styles/mixin'
 
 import TagLink from './TagLink'
-import Card from './Card'
+import Card from '../Card'
 
 const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
   const {

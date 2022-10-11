@@ -2,10 +2,10 @@ import type { AppProps } from 'next/app'
 import { NextPage } from 'next/types'
 import { ThemeProvider } from 'styled-components'
 
-import { GlobalStyles } from 'styles/GlobalStyles'
-import { theme } from 'styles/theme'
+import { GlobalStyles } from 'application/styles/GlobalStyles'
+import { theme } from 'application/styles/theme'
 
-import { Layout } from 'components'
+import Layout from 'application/components/layout/Layout'
 
 export type NextPageWithLayout<T = Record<string, unknown>> = NextPage<T> & {
   getLayout?: (page: React.ReactElement) => JSX.Element

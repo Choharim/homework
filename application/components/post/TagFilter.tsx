@@ -2,9 +2,9 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { useRouter } from 'next/router'
 
-import { TAGS } from 'entity/post/constant'
-import { Tag } from 'entity/post/type'
-import { TAG_COLOR_BY_TYPE } from 'constants/post/tag'
+import { TAGS } from 'domain/post/constant'
+import { Tag } from 'domain/post/type'
+import { TAG_COLOR_BY_TYPE } from 'application/constants/post/tag'
 
 import TagLink from './TagLink'
 
@@ -55,4 +55,11 @@ const CircleTagLink = styled(TagLink)<{ $active: boolean; tag?: Tag }>`
       background-color: ${TAG_COLOR_BY_TYPE[tag]?.hover};
       border: 1px solid ${TAG_COLOR_BY_TYPE[tag]?.active};
     `};
+
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
+      padding: 8px 24px;
+      ${theme.font.subtitle_4}
+    }
+  `}
 `

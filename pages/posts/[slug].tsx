@@ -11,11 +11,12 @@ import { ParsedUrlQuery } from 'querystring'
 import * as mdx from '@mdx-js/react'
 
 import { NextPageWithLayout } from 'pages/_app'
-import Post from 'entity/post/type'
-import { getFileSlug, getPost, getPostsFilePaths } from 'entity/post/util'
+import Post from 'domain/post/type'
+import { getFileSlug, getPost, getPostsFilePaths } from 'domain/post/util'
 
-import { Layout, PostTemplate } from 'components'
-import MDX_STYLE from 'components/mdx'
+import MDX_STYLE from 'application/components/mdx'
+import Layout from 'application/components/layout/Layout'
+import PostTemplate from 'application/components/post/PostTemplate'
 
 const Detail: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>

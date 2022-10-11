@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import Head from 'next/head'
 
-import { deviceSize } from 'constants/common'
-import { KO_NAME } from 'entity/owner/constant'
+import { deviceSize } from 'application/constants/common'
+import { KO_NAME } from 'domain/owner/constant'
 
 import Navbar, { NAVBAR_HEIGHT } from './Navbar'
 import Footer, { FOOTER_HEIGHT } from './Footer'

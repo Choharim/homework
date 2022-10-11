@@ -4,12 +4,12 @@ import Link from 'next/link'
 import Image, { StaticImageData } from 'next/image'
 import { useRouter } from 'next/router'
 
-import { EN_NAME, GITHUB_URL } from 'entity/owner/constant'
-import { POST_DIRECTORY } from 'entity/post/constant'
-import { deviceSize } from 'constants/common'
-import { Z_IDEX } from 'styles/constant'
+import { EN_NAME, GITHUB_URL } from 'domain/owner/constant'
+import { POST_DIRECTORY } from 'domain/post/constant'
+import { deviceSize } from 'application/constants/common'
+import { Z_IDEX } from 'application/styles/constant'
 
-import Logo from 'public/logo.png'
+import Logo from 'public/favicon.ico'
 import GithubLogo from 'public/github_logo.png'
 
 export const NAVBAR_HEIGHT = 58
@@ -141,6 +141,12 @@ const Name = styled.span`
   margin-left: 10px;
   color: ${({ theme }) => theme.color.black};
   ${({ theme }) => theme.font.header_3};
+
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
+      ${({ theme }) => theme.font.header_4};
+    }
+  `}
 `
 
 const MenuContainer = styled.ul`
@@ -156,7 +162,7 @@ const MenuText = styled.span`
 const LinkWrapper = styled.a`
   display: flex;
   align-items: center;
-  height: 46px;
+  height: 45px;
   padding: 0 10px;
   border-radius: 4px;
 `

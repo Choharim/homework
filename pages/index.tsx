@@ -2,9 +2,10 @@ import { InferGetStaticPropsType } from 'next'
 import styled from 'styled-components'
 
 import { NextPageWithLayout } from './_app'
-import { getAllPosts } from 'entity/post/util'
+import { getAllPosts } from 'domain/post/util'
 
-import { Layout, PostCardLink } from 'components'
+import PostCardLink from 'application/components/post/PostCardLink'
+import Layout from 'application/components/layout/Layout'
 
 const Home: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>

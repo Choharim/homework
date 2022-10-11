@@ -1,13 +1,16 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { copy } from 'utils/copy'
-import { deviceSize } from 'constants/common'
-import { FrontMatter } from 'entity/post/type'
+import { FrontMatter } from 'domain/post/type'
+import { copyToClipboard } from 'application/utils/copy'
+import {
+  COPY_FAILURE,
+  COPY_SUCCESS,
+  deviceSize,
+} from 'application/constants/common'
 
-import ShareLink from './ShareLink'
 import TagLink from './TagLink'
-import Thumbnail from './Thumbnail'
+import Thumbnail from '../Thumbnail'
 
 type Props = {
   children: React.ReactNode
@@ -18,7 +21,11 @@ const PostTemplate = ({ data, children }: Props) => {
   const { title, createDate, tag, thumbnail } = data
 
   const shareLink = () => {
-    copy(window.location.href)
+    copyToClipboard({
+      text: window.location.href,
+      onSuccess: () => alert(COPY_SUCCESS),
+      onFailure: () => alert(COPY_FAILURE),
+    })
   }
 
   return (
@@ -33,7 +40,7 @@ const PostTemplate = ({ data, children }: Props) => {
               </TagLink>
             )}
           </TitleWrapper>
-          <ShareLink onClick={shareLink} />
+          <ShareLink onClick={shareLink}>🔗</ShareLink>
         </Wrapper>
         <CreatedTime dateTime={createDate}>{createDate}</CreatedTime>
         {thumbnail && (
@@ -77,11 +84,11 @@ const TitleWrapper = styled.div`
 const Title = styled.h1`
   ${({ theme }) => theme.font.header_1};
 
-  ${({ theme }) =>
-    theme.media.tablet &&
-    css`
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
       ${theme.font.header_2}
-    `}
+    }
+  `}
 `
 
 const Wrapper = styled.div`
@@ -95,9 +102,25 @@ const CreatedTime = styled.time`
   ${({ theme }) => theme.font.body_1};
   color: ${({ theme }) => theme.color.darkGray};
 
-  ${({ theme }) =>
-    theme.media.tablet &&
-    css`
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
       ${theme.font.body_2}
-    `}
+    }
+  `}
+`
+
+const ShareLink = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  font-size: 24px;
+  border-radius: 4px;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.lightGray};
+  }
 `

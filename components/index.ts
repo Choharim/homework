@@ -1,7 +1,0 @@
-export { default as Footer } from './Footer'
-export { default as Layout } from './Layout'
-export { default as Navbar } from './Navbar'
-export { default as PostCardLink } from './PostCardLink'
-export { default as PostTemplate } from './PostTemplate'
-export { default as TagLink } from './TagLink'
-export { default as Thumbnail } from './Thumbnail'

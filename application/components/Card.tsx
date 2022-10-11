@@ -27,9 +27,9 @@ const Card = React.forwardRef<HTMLDivElement, Props>(
   }
 )
 
-export default Card
-
 Card.displayName = 'Card'
+
+export default Card
 
 const BORDER_RADIUS = '10px'
 
