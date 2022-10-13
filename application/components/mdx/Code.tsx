@@ -47,7 +47,7 @@ const Code = ({ className, children }: Props) => {
   }
 
   return match ? (
-    <HighlightWrapper>
+    <Wrapper>
       <CopyCodeButton onClick={copyCode}>
         <Image
           src="/copy.svg"
@@ -56,33 +56,35 @@ const Code = ({ className, children }: Props) => {
           height="24px"
         />
       </CopyCodeButton>
-      <Highlight
-        {...defaultProps}
-        language={match[1] as Language}
-        code={children}
-        theme={theme}
-      >
-        {({ tokens, getLineProps, getTokenProps }) => (
-          <Table>
-            <TableBody>
-              {tokens.map((line, i) => (
-                <TableLine
-                  key={`code-line_${i}`}
-                  {...getLineProps({ line, key: i })}
-                  $isHighlight={isHighlightLine(i)}
-                >
-                  <Td>
-                    {line.map((token, key) => (
-                      <span key={key} {...getTokenProps({ token, key })} />
-                    ))}
-                  </Td>
-                </TableLine>
-              ))}
-            </TableBody>
-          </Table>
-        )}
-      </Highlight>
-    </HighlightWrapper>
+      <HighlightWrapper>
+        <Highlight
+          {...defaultProps}
+          language={match[1] as Language}
+          code={children}
+          theme={theme}
+        >
+          {({ tokens, getLineProps, getTokenProps }) => (
+            <Table>
+              <TableBody>
+                {tokens.map((line, i) => (
+                  <TableLine
+                    key={`code-line_${i}`}
+                    {...getLineProps({ line, key: i })}
+                    $isHighlight={isHighlightLine(i)}
+                  >
+                    <Td>
+                      {line.map((token, key) => (
+                        <span key={key} {...getTokenProps({ token, key })} />
+                      ))}
+                    </Td>
+                  </TableLine>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </Highlight>
+      </HighlightWrapper>
+    </Wrapper>
   ) : (
     <code className={className}>{children}</code>
   )
@@ -94,9 +96,11 @@ const PADDING_X = {
   tablet: '10px',
 } as const
 
-const HighlightWrapper = styled.pre`
+const Wrapper = styled.div`
   position: relative;
+`
 
+const HighlightWrapper = styled.pre`
   margin: 20px 0;
   padding: ${PADDING_X.pc} 0;
   border-radius: 3px;

@@ -42,7 +42,7 @@ const MDX_STYLE = {
   h3: styled.h3`
     ${({ theme }) => theme.font.subtitle_1};
 
-    margin: 8px 0;
+    margin: 10px 0;
 
     ${({ theme }) => css`
       ${theme.media.tablet} {
@@ -53,6 +53,7 @@ const MDX_STYLE = {
   `,
   p: styled.p`
     ${ParagrahFont}
+    margin-bottom: 5px;
 
     > code {
       ${HighlightWord}
@@ -74,7 +75,7 @@ const MDX_STYLE = {
         display: inline-block;
         position: absolute;
         top: 0;
-        left: -25px;
+        left: -20px;
 
         ${({ theme }) => css`
           ${theme.media.tablet} {

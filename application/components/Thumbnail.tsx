@@ -6,6 +6,7 @@ interface ThumbnailProps
   extends Pick<ImageProps, 'src' | 'width' | 'height' | 'objectFit'>,
     HTMLAttributes<Pick<HTMLDivElement, 'className'>> {
   layout: 'fill' | 'responsive'
+  bgColor?: 'black' | 'white'
 }
 
 const Thumbnail = ({
@@ -14,10 +15,17 @@ const Thumbnail = ({
   width,
   height,
   objectFit,
+  bgColor = 'black',
   ...rest
 }: ThumbnailProps) => {
   return (
-    <Container layout={layout} width={width} height={height} {...rest}>
+    <Container
+      layout={layout}
+      width={width}
+      height={height}
+      bgColor={bgColor}
+      {...rest}
+    >
       <Image
         src={src}
         layout={layout}
@@ -33,10 +41,8 @@ const Thumbnail = ({
 export default Thumbnail
 
 const Container = styled.div<
-  Pick<ThumbnailProps, 'layout' | 'width' | 'height'>
+  Pick<ThumbnailProps, 'layout' | 'width' | 'height' | 'bgColor'>
 >`
-  background-color: ${({ theme }) => theme.color.black};
-
   ${({ layout, width, height }) => {
     switch (layout) {
       case 'fill':
@@ -59,6 +65,18 @@ const Container = styled.div<
         return css`
           display: block;
         `
+    }
+  }}
+
+  background-color: ${({ theme, bgColor }) => {
+    switch (bgColor) {
+      case 'black':
+        return theme.color.black
+      case 'white':
+        return theme.color.white
+
+      default:
+        return theme.color.black
     }
   }}
 `

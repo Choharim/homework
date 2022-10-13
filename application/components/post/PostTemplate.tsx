@@ -50,6 +50,7 @@ const PostTemplate = ({ data, children }: Props) => {
             width={`${deviceSize.pc}px`}
             height="300px"
             objectFit="contain"
+            bgColor="white"
           />
         )}
       </Header>
