@@ -6,7 +6,7 @@ export const color = {
   white: '#ffffff',
 
   moreLightGray: '#F2F2F2',
-  lightGray: '#e6e6e6',
+  lightGray: '#ededeb',
   gray: '#bcbcbc',
   darkGray: '#707070',
   moreDarkGray: '#4D4D4D',
@@ -80,7 +80,7 @@ export const font = {
   body_1: {
     fontSize: '16px',
     lineHeight: '26px',
-    fontWeight: 550,
+    fontWeight: 500,
   },
   body_2: {
     fontSize: '15px',

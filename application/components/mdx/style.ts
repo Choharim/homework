@@ -11,14 +11,14 @@ export const ParagrahFont = css`
     `}
 `
 export const ListContainer = css`
-  margin: 10px 0 26px;
-  padding-inline-start: 40px;
+  margin: 5px 0 26px;
+  padding-inline-start: 25px;
 
   ${({ theme }) =>
     css`
       ${theme.media.tablet} {
-        margin: 18px 0 20px;
-        padding-inline-start: 30px;
+        margin: 5px 0 20px;
+        padding-inline-start: 20px;
       }
     `}
 `
@@ -26,6 +26,7 @@ export const ListContainer = css`
 export const HighlightWord = css`
   background-color: ${({ theme }) => theme.color.lightGray};
   color: ${({ theme }) => theme.color.red};
+  ${({ theme }) => theme.font.subtitle_4};
   padding: 4px 5px;
   margin: 0 4px;
   border-radius: 2px;
@@ -39,6 +40,11 @@ export const HighlightBlock = css`
   p {
     color: ${({ theme }) => theme.color.moreDarkGray};
     ${({ theme }) => theme.font.subtitle_3};
+
+    code {
+      ${HighlightWord}
+      background-color: ${({ theme }) => theme.color.pink};
+    }
   }
 
   ${({ theme }) =>
