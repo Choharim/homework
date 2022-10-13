@@ -52,8 +52,8 @@ const Code = ({ className, children }: Props) => {
         <Image
           src="/copy.svg"
           alt="code-copy_icon"
-          width="24px"
-          height="24px"
+          width="22px"
+          height="22px"
         />
       </CopyCodeButton>
       <HighlightWrapper>
@@ -98,10 +98,11 @@ const PADDING_X = {
 
 const Wrapper = styled.div`
   position: relative;
+  max-width: fit-content;
 `
 
 const HighlightWrapper = styled.pre`
-  margin: 20px 0;
+  max-width: fit-content;
   padding: ${PADDING_X.pc} 0;
   border-radius: 3px;
   background-color: #212121;
@@ -120,7 +121,7 @@ const CopyCodeButton = styled.button`
   position: absolute;
   top: ${PADDING_X.pc};
   right: ${PADDING_X.pc};
-  padding: 5px;
+  padding: 4px 5px;
   outline: none;
   border: none;
   background-color: ${({ theme }) => theme.color.darkGray};

@@ -1,7 +1,8 @@
 import styled, { css } from 'styled-components'
 
 import {
-  HighlightBlock,
+  Block,
+  ForwardDash,
   HighlightWord,
   ListContainer,
   ParagrahFont,
@@ -13,8 +14,13 @@ const MDX_STYLE = {
     ${({ theme }) => theme.font.header_2};
 
     margin: 30px 0;
-    padding-bottom: 10px;
-    border-bottom: 1px solid ${({ theme }) => theme.color.lightGray};
+    padding: 0 10px 10px;
+    border-bottom: 1px solid ${({ theme }) => theme.color.gray};
+
+    &::before {
+      content: '✔️';
+      margin-right: 5px;
+    }
 
     ${({ theme }) => css`
       ${theme.media.tablet} {
@@ -68,21 +74,7 @@ const MDX_STYLE = {
     ${ListContainer}
 
     > li {
-      position: relative;
-
-      &::before {
-        content: '-';
-        display: inline-block;
-        position: absolute;
-        top: 0;
-        left: -20px;
-
-        ${({ theme }) => css`
-          ${theme.media.tablet} {
-            left: -20px;
-          }
-        `}
-      }
+      ${ForwardDash}
     }
   `,
   li: styled.li`
@@ -97,7 +89,7 @@ const MDX_STYLE = {
     `}
   `,
   blockquote: styled.blockquote`
-    ${HighlightBlock}
+    ${Block()}
   `,
   code: Code,
 }

@@ -8,6 +8,7 @@ import {
   COPY_SUCCESS,
   deviceSize,
 } from 'application/constants/common'
+import { Block } from '../mdx/style'
 
 import TagLink from './TagLink'
 import Thumbnail from '../Thumbnail'
@@ -18,7 +19,7 @@ type Props = {
 }
 
 const PostTemplate = ({ data, children }: Props) => {
-  const { title, createDate, tag, thumbnail } = data
+  const { title, createDate, tag, thumbnail, description } = data
 
   const shareLink = () => {
     copyToClipboard({
@@ -54,8 +55,11 @@ const PostTemplate = ({ data, children }: Props) => {
           />
         )}
       </Header>
-
-      {children}
+      <SummaryBox>
+        <PinIcon>📌</PinIcon>
+        <Summary>{description}</Summary>
+      </SummaryBox>
+      <MDXWrapper>{children}</MDXWrapper>
     </Article>
   )
 }
@@ -123,5 +127,29 @@ const ShareLink = styled.div`
 
   &:hover {
     background-color: ${({ theme }) => theme.color.lightGray};
+  }
+`
+
+const SummaryBox = styled.div`
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+  padding: 25px 20px;
+  border-radius: 2px;
+  margin-bottom: 20px;
+
+  background-color: ${({ theme }) => theme.color.ivory};
+`
+
+const PinIcon = styled.span`
+  ${({ theme }) => theme.font.subtitle_2};
+`
+
+const Summary = styled.p`
+  ${({ theme }) => theme.font.subtitle_4};
+`
+const MDXWrapper = styled.div`
+  aside {
+    ${Block('yellow')}
   }
 `
