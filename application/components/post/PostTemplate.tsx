@@ -8,6 +8,7 @@ import {
   COPY_SUCCESS,
   deviceSize,
 } from 'application/constants/common'
+import { Block } from '../mdx/style'
 
 import TagLink from './TagLink'
 import Thumbnail from '../Thumbnail'
@@ -54,9 +55,11 @@ const PostTemplate = ({ data, children }: Props) => {
           />
         )}
       </Header>
-      <Summary>{description}</Summary>
-
-      {children}
+      <SummaryBox>
+        <PinIcon>📌</PinIcon>
+        <Summary>{description}</Summary>
+      </SummaryBox>
+      <MDXWrapper>{children}</MDXWrapper>
     </Article>
   )
 }
@@ -127,9 +130,26 @@ const ShareLink = styled.div`
   }
 `
 
-const Summary = styled.p`
-  ${({ theme }) => theme.font.subtitle_2};
-  color: ${({ theme }) => theme.color.lightBlack};
+const SummaryBox = styled.div`
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+  padding: 25px 20px;
+  border-radius: 2px;
+  margin-bottom: 20px;
 
-  margin-bottom: 10px;
+  background-color: ${({ theme }) => theme.color.ivory};
+`
+
+const PinIcon = styled.span`
+  ${({ theme }) => theme.font.subtitle_2};
+`
+
+const Summary = styled.p`
+  ${({ theme }) => theme.font.subtitle_4};
+`
+const MDXWrapper = styled.div`
+  aside {
+    ${Block('yellow')}
+  }
 `

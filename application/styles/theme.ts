@@ -15,6 +15,7 @@ export const color = {
   black: '#000000',
 
   brown: '#b09b88',
+  ivory: '#faecdd',
 
   pink: '#ffe2dd',
   darkPink: '#ffdcd6',

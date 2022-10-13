@@ -1,3 +1,4 @@
+import { color } from 'application/styles/theme'
 import { css } from 'styled-components'
 
 export const ParagrahFont = css`
@@ -10,6 +11,25 @@ export const ParagrahFont = css`
       }
     `}
 `
+
+export const ForwardDash = css`
+  position: relative;
+
+  &::before {
+    content: '-';
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: -20px;
+
+    ${({ theme }) => css`
+      ${theme.media.tablet} {
+        left: -20px;
+      }
+    `}
+  }
+`
+
 export const ListContainer = css`
   margin: 5px 0 26px;
   padding-inline-start: 25px;
@@ -24,26 +44,32 @@ export const ListContainer = css`
 `
 
 export const HighlightWord = css`
-  background-color: ${({ theme }) => theme.color.lightGray};
+  background-color: ${({ theme }) => theme.color.darkPink};
   color: ${({ theme }) => theme.color.red};
   ${({ theme }) => theme.font.subtitle_4};
-  padding: 4px 5px;
+  padding: 4px 6px;
   margin: 0 4px;
   border-radius: 2px;
+
+  ${({ theme }) =>
+    css`
+      ${theme.media.tablet} {
+        padding: 2px 4px;
+        ${theme.font.subtitle_5};
+      }
+    `}
 `
 
-export const HighlightBlock = css`
+export const Block = (bgColor?: keyof typeof color) => css`
   margin: 24px 0 32px;
   padding: 24px;
-  background-color: ${({ theme }) => theme.color.moreLightGray};
-
+  background-color: ${({ theme }) => theme.color?.[bgColor || 'moreLightGray']};
   p {
     color: ${({ theme }) => theme.color.moreDarkGray};
     ${({ theme }) => theme.font.subtitle_3};
 
     code {
       ${HighlightWord}
-      background-color: ${({ theme }) => theme.color.pink};
     }
   }
 
