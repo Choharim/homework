@@ -18,7 +18,7 @@ type Props = {
 }
 
 const PostTemplate = ({ data, children }: Props) => {
-  const { title, createDate, tag, thumbnail } = data
+  const { title, createDate, tag, thumbnail, description } = data
 
   const shareLink = () => {
     copyToClipboard({
@@ -54,6 +54,7 @@ const PostTemplate = ({ data, children }: Props) => {
           />
         )}
       </Header>
+      <Summary>{description}</Summary>
 
       {children}
     </Article>
@@ -124,4 +125,11 @@ const ShareLink = styled.div`
   &:hover {
     background-color: ${({ theme }) => theme.color.lightGray};
   }
+`
+
+const Summary = styled.p`
+  ${({ theme }) => theme.font.subtitle_2};
+  color: ${({ theme }) => theme.color.lightBlack};
+
+  margin-bottom: 10px;
 `
