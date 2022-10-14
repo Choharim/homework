@@ -41,10 +41,12 @@ const X_PADDING = 24
 const Main = styled.main`
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-  padding: calc(${NAVBAR_HEIGHT}px + 20px) ${X_PADDING}px;
+
   height: 100%;
   min-height: calc((100vh - ${FOOTER_HEIGHT}px));
   width: 100%;
   max-width: calc(${deviceSize.pc}px + ${X_PADDING}px);
+
+  margin: 0 auto;
+  padding: calc(${NAVBAR_HEIGHT}px + 20px) ${X_PADDING}px;
 `

@@ -11,7 +11,7 @@ import Card from '../Card'
 
 const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
   const {
-    data: { tag, thumbnail, ...content },
+    data: { thumbnail, ...content },
     slug,
   } = props
 
@@ -22,11 +22,6 @@ const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
       passHref
     >
       <PostCardLink.Card thumbnail={thumbnail}>
-        {!!tag && (
-          <TagLink tag={tag} type="hash">
-            {tag}
-          </TagLink>
-        )}
         <PostCardLink.Content {...content} />
       </PostCardLink.Card>
     </Link>
@@ -38,17 +33,22 @@ export default PostCardLink
 PostCardLink.Card = Card
 
 PostCardLink.Content = function Component(
-  content: Pick<Post['data'], 'title' | 'createDate' | 'description'>
+  content: Omit<Post['data'], 'thumbnail'>
 ) {
-  const { title, createDate, description } = content
+  const { title, createDate, description, tag } = content
 
   return (
     <Content>
-      <Header>
+      <Top>
         <Title>{title}</Title>
         <Desc>{description}</Desc>
-      </Header>
-      <CreateDate dateTime={createDate}>{createDate}</CreateDate>
+      </Top>
+      <Bottom>
+        <TagLink tag={tag} type="hash">
+          {tag}
+        </TagLink>
+        <CreateDate dateTime={createDate}>{createDate}</CreateDate>
+      </Bottom>
     </Content>
   )
 }
@@ -60,24 +60,34 @@ const Content = styled.div`
   height: 100%;
 `
 
-const Header = styled.div`
+const Top = styled.div`
   display: grid;
   gap: 4px;
-  margin-top: 12px;
-`
-
-const Desc = styled.p`
-  margin: 10px 0;
-  ${limitTextLine(3)}
-`
-
-const CreateDate = styled.time`
-  display: flex;
-  justify-content: end;
-  ${({ theme }) => theme.font.body_3};
-  color: ${({ theme }) => theme.color.darkGray};
+  margin-top: 4px;
 `
 
 const Title = styled.h3`
+  ${({ theme }) => theme.font.subtitle_1};
+  color: ${({ theme }) => theme.color.black};
+
   ${limitTextLine(1)}
+`
+
+const Desc = styled.p`
+  ${({ theme }) => theme.font.body_2};
+  color: ${({ theme }) => theme.color.lightBlack};
+
+  ${limitTextLine(3)}
+`
+
+const Bottom = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: flex-end;
+`
+
+const CreateDate = styled.time`
+  ${({ theme }) => theme.font.body_3};
+  color: ${({ theme }) => theme.color.darkGray};
 `

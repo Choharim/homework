@@ -140,11 +140,11 @@ const LogWrapper = styled.div`
 const Name = styled.span`
   margin-left: 10px;
   color: ${({ theme }) => theme.color.black};
-  ${({ theme }) => theme.font.header_3};
+  ${({ theme }) => theme.font.header_4};
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
-      ${({ theme }) => theme.font.header_4};
+      ${({ theme }) => theme.font.subtitle_1};
     }
   `}
 `
@@ -156,7 +156,7 @@ const MenuContainer = styled.ul`
 
 const MenuText = styled.span`
   color: ${({ theme }) => theme.color.black};
-  ${({ theme }) => theme.font.subtitle_2};
+  ${({ theme }) => theme.font.body_1};
 `
 
 const LinkWrapper = styled.a`

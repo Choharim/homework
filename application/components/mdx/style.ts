@@ -1,5 +1,4 @@
-import { color } from 'application/styles/theme'
-import { css } from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const ParagrahFont = css`
   ${({ theme }) => theme.font.body_1};
@@ -12,61 +11,48 @@ export const ParagrahFont = css`
     `}
 `
 
-export const ForwardDash = css`
-  position: relative;
-
-  &::before {
-    content: '-';
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    left: -20px;
-
-    ${({ theme }) => css`
-      ${theme.media.tablet} {
-        left: -20px;
-      }
-    `}
-  }
-`
-
 export const ListContainer = css`
-  margin: 5px 0 26px;
-  padding-inline-start: 25px;
+  margin: 20px 0 20px 28px;
 
   ${({ theme }) =>
     css`
       ${theme.media.tablet} {
-        margin: 5px 0 20px;
-        padding-inline-start: 20px;
+        margin: 15px 0 15px 20px;
       }
     `}
 `
 
 export const HighlightWord = css`
-  background-color: ${({ theme }) => theme.color.darkPink};
-  color: ${({ theme }) => theme.color.red};
-  ${({ theme }) => theme.font.subtitle_4};
-  padding: 4px 6px;
+  ${({ theme }) => theme.font.body_1};
+
+  background-color: ${({ theme }) => theme.color.lightPink};
+  padding: 4px 8px;
   margin: 0 4px;
   border-radius: 2px;
 
   ${({ theme }) =>
     css`
       ${theme.media.tablet} {
-        padding: 2px 4px;
-        ${theme.font.subtitle_5};
+        ${theme.font.body_2};
       }
     `}
 `
 
-export const Block = (bgColor?: keyof typeof color) => css`
+export const BlockQuote = styled.blockquote`
+  ${({ theme }) => theme.font.body_1};
+
+  border-left: 5px solid ${({ theme }) => theme.color.darkPink};
+  margin: 25px 0;
+  padding-left: 20px;
+`
+
+export const HighlightBlock = css`
   margin: 24px 0 32px;
   padding: 24px;
-  background-color: ${({ theme }) => theme.color?.[bgColor || 'moreLightGray']};
+  background-color: ${({ theme }) => theme.color.moreLightGray};
   p {
     color: ${({ theme }) => theme.color.moreDarkGray};
-    ${({ theme }) => theme.font.subtitle_3};
+    ${({ theme }) => theme.font.body_1};
 
     code {
       ${HighlightWord}
@@ -78,10 +64,6 @@ export const Block = (bgColor?: keyof typeof color) => css`
       ${theme.media.tablet} {
         margin: 22px 0 28px;
         padding: 22px;
-
-        p {
-          ${({ theme }) => theme.font.subtitle_4};
-        }
       }
     `}
 `

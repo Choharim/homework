@@ -21,4 +21,6 @@ const Desc = styled.footer`
   justify-content: center;
   width: 100%;
   height: ${FOOTER_HEIGHT}px;
+
+  ${({ theme }) => theme.font.subtitle_4}
 `

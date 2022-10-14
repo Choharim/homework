@@ -8,7 +8,7 @@ import {
   COPY_SUCCESS,
   deviceSize,
 } from 'application/constants/common'
-import { Block } from '../mdx/style'
+import { HighlightBlock } from '../mdx/style'
 
 import TagLink from './TagLink'
 import Thumbnail from '../Thumbnail'
@@ -34,14 +34,14 @@ const PostTemplate = ({ data, children }: Props) => {
       <Header>
         <Wrapper>
           <TitleWrapper>
-            <Title>{title}</Title>
+            <Title onClick={shareLink}>{title}</Title>
+
             {!!tag && (
               <TagLink tag={tag} type="hash">
                 {tag}
               </TagLink>
             )}
           </TitleWrapper>
-          <ShareLink onClick={shareLink}>🔗</ShareLink>
         </Wrapper>
         <CreatedTime dateTime={createDate}>{createDate}</CreatedTime>
         {thumbnail && (
@@ -51,12 +51,10 @@ const PostTemplate = ({ data, children }: Props) => {
             width={`${deviceSize.pc}px`}
             height="300px"
             objectFit="contain"
-            bgColor="white"
           />
         )}
       </Header>
       <SummaryBox>
-        <PinIcon>📌</PinIcon>
         <Summary>{description}</Summary>
       </SummaryBox>
       <MDXWrapper>{children}</MDXWrapper>
@@ -70,7 +68,7 @@ const Article = styled.article`
   display: flex;
   flex-direction: column;
 
-  color: ${({ theme }) => theme.color.black};
+  color: ${({ theme }) => theme.color.lightBlack};
 `
 
 const Header = styled.div`
@@ -83,17 +81,31 @@ const TitleWrapper = styled.div`
   display: grid;
   grid-template-columns: auto auto;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 `
 
 const Title = styled.h1`
+  position: relative;
+
   ${({ theme }) => theme.font.header_1};
+  color: ${({ theme }) => theme.color.black};
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
       ${theme.font.header_2}
     }
   `}
+
+  &::after {
+    position: absolute;
+    content: '🔗';
+    right: -20px;
+    top: -20px;
+
+    font-size: 20px;
+  }
+
+  cursor: pointer;
 `
 
 const Wrapper = styled.div`
@@ -114,42 +126,35 @@ const CreatedTime = styled.time`
   `}
 `
 
-const ShareLink = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 35px;
-  height: 35px;
-  font-size: 24px;
-  border-radius: 4px;
+const SummaryBox = styled.div`
+  position: relative;
 
-  cursor: pointer;
+  padding: 24px;
+  margin: 20px 0;
+  border-radius: 2px;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.color.lightGray};
+  background-color: ${({ theme }) => theme.color.lightPink};
+
+  &::before {
+    position: absolute;
+    top: -23px;
+    left: -23px;
+    content: '💡';
+    font-size: 48px;
   }
 `
 
-const SummaryBox = styled.div`
-  display: grid;
-  grid-template-columns: auto auto;
-  gap: 10px;
-  padding: 25px 20px;
-  border-radius: 2px;
-  margin-bottom: 20px;
-
-  background-color: ${({ theme }) => theme.color.ivory};
-`
-
-const PinIcon = styled.span`
-  ${({ theme }) => theme.font.subtitle_2};
-`
-
 const Summary = styled.p`
-  ${({ theme }) => theme.font.subtitle_4};
+  ${({ theme }) => theme.font.body_1};
+
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
+      ${theme.font.body_2}
+    }
+  `}
 `
 const MDXWrapper = styled.div`
   aside {
-    ${Block('yellow')}
+    ${HighlightBlock}
   }
 `
