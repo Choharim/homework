@@ -1,21 +1,13 @@
 import styled, { css } from 'styled-components'
 
-import {
-  Block,
-  ForwardDash,
-  HighlightWord,
-  ListContainer,
-  ParagrahFont,
-} from './style'
+import { BlockQuote, HighlightWord, ListContainer, ParagrahFont } from './style'
 import Code from './Code'
 
 const MDX_STYLE = {
-  h1: styled.h1`
+  h2: styled.h2`
     ${({ theme }) => theme.font.header_2};
 
-    margin: 30px 0;
-    padding: 0 10px 10px;
-    border-bottom: 1px solid ${({ theme }) => theme.color.gray};
+    margin: 80px 0 32px;
 
     &::before {
       content: '✔️';
@@ -25,41 +17,43 @@ const MDX_STYLE = {
     ${({ theme }) => css`
       ${theme.media.tablet} {
         ${theme.font.header_3};
-        margin: 25px 0;
-        padding-bottom: 8px;
+      }
+      ${theme.media.mobile} {
+        ${theme.font.header_4};
+      }
+    `}
+  `,
+  h3: styled.h3`
+    ${({ theme }) => theme.font.header_3};
+
+    margin: 55px 0 22px;
+
+    ${({ theme }) => css`
+      ${theme.media.tablet} {
+        ${theme.font.header_4};
       }
       ${theme.media.mobile} {
         ${theme.font.subtitle_1};
       }
     `}
   `,
-  h2: styled.h2`
-    ${({ theme }) => theme.font.header_3};
+  h4: styled.h4`
+    ${({ theme }) => theme.font.header_4};
 
-    margin: 10px 0;
+    margin: 40px 0 18px;
 
     ${({ theme }) => css`
       ${theme.media.tablet} {
         ${theme.font.subtitle_1};
-        margin: 8px 0;
       }
-    `}
-  `,
-  h3: styled.h3`
-    ${({ theme }) => theme.font.subtitle_1};
-
-    margin: 10px 0;
-
-    ${({ theme }) => css`
-      ${theme.media.tablet} {
+      ${theme.media.mobile} {
         ${theme.font.subtitle_2};
-        margin: 5px 0;
       }
     `}
   `,
   p: styled.p`
     ${ParagrahFont}
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 
     > code {
       ${HighlightWord}
@@ -73,9 +67,7 @@ const MDX_STYLE = {
   ul: styled.ul`
     ${ListContainer}
 
-    > li {
-      ${ForwardDash}
-    }
+    list-style-type: disc;
   `,
   li: styled.li`
     ${ParagrahFont}
@@ -84,13 +76,11 @@ const MDX_STYLE = {
 
     ${({ theme }) => css`
       ${theme.media.tablet} {
-        margin: 8px 0;
+        margin: 6px 0;
       }
     `}
   `,
-  blockquote: styled.blockquote`
-    ${Block()}
-  `,
+  blockquote: BlockQuote,
   code: Code,
 }
 

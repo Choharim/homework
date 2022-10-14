@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 
 import Thumbnail from './Thumbnail'
 
-const THUMBNAIL_HEIGHT = 160
+const THUMBNAIL_HEIGHT = 130
 
 interface Props extends DOMAttributes<HTMLDivElement> {
   thumbnail?: string
@@ -58,7 +58,7 @@ const Body = styled.div<{ $hasThumbnail: boolean }>`
   ${({ $hasThumbnail }) =>
     $hasThumbnail
       ? css`
-          padding: 12px 24px 24px;
+          padding: 5px 24px 24px;
 
           height: calc(100% - ${THUMBNAIL_HEIGHT}px);
         `

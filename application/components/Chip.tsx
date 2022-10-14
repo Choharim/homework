@@ -12,7 +12,7 @@ export default Chip
 const Wrapper = styled.div`
   width: fit-content;
   border-radius: 4px;
-  padding: 4px 8px;
+  padding: 2px 8px;
 
   color: ${({ theme }) => theme.color.lightBlack};
   ${({ theme }) => theme.font.body_5};

@@ -43,9 +43,9 @@ const CircleTagLink = styled(TagLink)<{ $active: boolean; tag?: Tag }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  ${({ theme }) => theme.font.subtitle_3}
-  border-radius: 100px;
-  padding: 12px 28px;
+  ${({ theme }) => theme.font.body_1}
+  padding: 8px 24px;
+  border-radius: 40px;
   white-space: nowrap;
 
   ${({ $active, tag }) =>
@@ -58,8 +58,8 @@ const CircleTagLink = styled(TagLink)<{ $active: boolean; tag?: Tag }>`
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
-      padding: 8px 24px;
-      ${theme.font.subtitle_4}
+      padding: 6px 20px;
+      ${theme.font.body_2}
     }
   `}
 `

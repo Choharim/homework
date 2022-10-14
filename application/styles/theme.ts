@@ -11,12 +11,13 @@ export const color = {
   darkGray: '#707070',
   moreDarkGray: '#4D4D4D',
 
-  lightBlack: '#454545',
+  lightBlack: '#4d5256',
   black: '#000000',
 
   brown: '#b09b88',
   ivory: '#faecdd',
 
+  lightPink: '#feece8',
   pink: '#ffe2dd',
   darkPink: '#ffdcd6',
   moreDardPink: '#fbac9c',
@@ -34,78 +35,83 @@ export const color = {
 
 export const font = {
   header_1: {
-    fontSize: '32px',
-    lineHeight: '42px',
+    fontSize: '44px',
+    lineHeight: '1.3em',
     fontWeight: 700,
   },
   header_2: {
-    fontSize: '28px',
-    lineHeight: '40px',
+    fontSize: '32px',
+    lineHeight: '1.4em',
     fontWeight: 700,
   },
   header_3: {
-    fontSize: '24px',
-    lineHeight: '35px',
+    fontSize: '28px',
+    lineHeight: '1.5em',
     fontWeight: 700,
   },
   header_4: {
-    fontSize: '22px',
-    lineHeight: '33px',
+    fontSize: '24px',
+    lineHeight: '1.6em',
     fontWeight: 700,
   },
   subtitle_1: {
-    fontSize: '21px',
-    lineHeight: '27px',
+    fontSize: '22px',
+    lineHeight: '1.7em',
     fontWeight: 600,
   },
   subtitle_2: {
-    fontSize: '19px',
-    lineHeight: '26px',
+    fontSize: '20px',
+    lineHeight: '1.8em',
     fontWeight: 600,
   },
   subtitle_3: {
-    fontSize: '17px',
-    lineHeight: '25px',
+    fontSize: '18px',
+    lineHeight: '1.9em',
     fontWeight: 600,
   },
   subtitle_4: {
     fontSize: '16px',
-    lineHeight: '24px',
+    lineHeight: '2.0em',
     fontWeight: 600,
   },
   subtitle_5: {
     fontSize: '14px',
-    lineHeight: '22px',
+    lineHeight: '2.1em',
+    fontWeight: 600,
+  },
+  subtitle_6: {
+    fontSize: '13px',
+    lineHeight: '2.2em',
     fontWeight: 600,
   },
   body_1: {
-    fontSize: '16px',
-    lineHeight: '26px',
+    fontSize: '18px',
+    lineHeight: '1.9em',
     fontWeight: 500,
   },
   body_2: {
-    fontSize: '15px',
-    lineHeight: '24px',
+    fontSize: '16px',
+    lineHeight: '2.0em',
     fontWeight: 500,
   },
   body_3: {
     fontSize: '14px',
-    lineHeight: '20px',
+    lineHeight: '2.1em',
     fontWeight: 500,
   },
   body_4: {
     fontSize: '13px',
-    lineHeight: '18px',
+    lineHeight: '2.2em',
     fontWeight: 500,
   },
   body_5: {
     fontSize: '12px',
-    lineHeight: '16px',
+    lineHeight: '2.3em',
     fontWeight: 500,
   },
   body_6: {
-    fontSize: '11px',
-    lineHeight: '15px',
+    fontSize: '10px',
+    lineHeight: '2.4em',
     fontWeight: 500,
   },
 } as const

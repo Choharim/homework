@@ -59,7 +59,7 @@ const Pagination = ({ currentPageNumber, totalPages }: Props) => {
         onClick={() => setPageNumberInUrl(currentPageNumber - 1)}
         $dimmed={currentPageNumber <= 1}
       >
-        {`<`}
+        &#xE000;
       </PrevButton>
       <PageNumbers>
         {[...Array(totalPages)].map((_, i) => {
@@ -86,7 +86,7 @@ const Pagination = ({ currentPageNumber, totalPages }: Props) => {
         onClick={() => setPageNumberInUrl(currentPageNumber + 1)}
         $dimmed={currentPageNumber >= totalPages}
       >
-        {`>`}
+        &#xE001;
       </NextButton>
     </PaginationWrapper>
   )
@@ -139,7 +139,7 @@ const PageNumberAtag = styled.a<{ $active: boolean }>`
     $active &&
     css`
       ${PageNumber} {
-        ${theme.font.subtitle_4};
+        ${theme.font.body_1};
       }
       cursor: default;
       pointer-events: none;
@@ -152,7 +152,7 @@ const PageNumber = styled.li`
   align-items: center;
   width: ${BUTTON_SIZE};
   height: ${BUTTON_SIZE};
-  color: ${({ theme }) => theme.color.black};
 
-  ${({ theme }) => theme.font.body_1};
+  color: ${({ theme }) => theme.color.black};
+  ${({ theme }) => theme.font.body_2};
 `

@@ -65,7 +65,7 @@ const Code = ({ className, children }: Props) => {
         >
           {({ tokens, getLineProps, getTokenProps }) => (
             <Table>
-              <TableBody>
+              <tbody>
                 {tokens.map((line, i) => (
                   <TableLine
                     key={`code-line_${i}`}
@@ -79,7 +79,7 @@ const Code = ({ className, children }: Props) => {
                     </Td>
                   </TableLine>
                 ))}
-              </TableBody>
+              </tbody>
             </Table>
           )}
         </Highlight>
@@ -92,7 +92,7 @@ const Code = ({ className, children }: Props) => {
 export default Code
 
 const PADDING_X = {
-  pc: '24px',
+  pc: '15px',
   tablet: '10px',
 } as const
 
@@ -144,20 +144,6 @@ const Table = styled.table`
   width: 100%;
 `
 
-const TableBody = styled.tbody`
-  ${({ theme }) => theme.font.body_2};
-  white-space: pre;
-
-  ${({ theme }) => css`
-    ${theme.media.tablet} {
-      ${theme.font.body_3}
-    }
-    ${theme.media.mobile} {
-      ${theme.font.body_4}
-    }
-  `}
-`
-
 const TableLine = styled.tr<{ $isHighlight: boolean }>`
   display: block;
   padding: 0 1.5rem;
@@ -179,8 +165,31 @@ const TableLine = styled.tr<{ $isHighlight: boolean }>`
 
 // @todo important 제거하기
 const Td = styled.td`
+  ${({ theme }) => theme.font.body_2};
+  white-space: pre;
+
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
+      ${theme.font.body_3}
+    }
+    ${theme.media.mobile} {
+      ${theme.font.body_4}
+    }
+  `}
+
   .comment {
     color: #999 !important;
+
+    ${({ theme }) => theme.font.body_3};
+
+    ${({ theme }) => css`
+      ${theme.media.tablet} {
+        ${theme.font.body_4}
+      }
+      ${theme.media.mobile} {
+        ${theme.font.body_5}
+      }
+    `}
   }
   .imports.maybe-class-name {
     color: #f8f8f2 !important;
