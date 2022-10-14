@@ -24,7 +24,6 @@ export const ListContainer = css`
 
 export const HighlightWord = css`
   ${({ theme }) => theme.font.body_1};
-
   background-color: ${({ theme }) => theme.color.lightPink};
   padding: 4px 8px;
   margin: 0 4px;
@@ -49,21 +48,26 @@ export const BlockQuote = styled.blockquote`
 export const HighlightBlock = css`
   margin: 24px 0 32px;
   padding: 24px;
-  background-color: ${({ theme }) => theme.color.moreLightGray};
-  p {
-    color: ${({ theme }) => theme.color.moreDarkGray};
-    ${({ theme }) => theme.font.body_1};
-
-    code {
-      ${HighlightWord}
-    }
-  }
+  background-color: ${({ theme }) => theme.color.ivory};
 
   ${({ theme }) =>
     css`
       ${theme.media.tablet} {
         margin: 22px 0 28px;
-        padding: 22px;
+        padding: 20px;
       }
     `}
+
+  ul,
+  ol {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  code {
+    background-color: transparent;
+    color: ${({ theme }) => theme.color.red};
+    margin: 0;
+    padding: 0;
+  }
 `
