@@ -148,10 +148,6 @@ const TableLine = styled.tr<{ $isHighlight: boolean }>`
   display: block;
   padding: 0 1.5rem;
 
-  &:not(:last-child) {
-    margin-bottom: 2px;
-  }
-
   ${({ $isHighlight }) =>
     $isHighlight &&
     css`

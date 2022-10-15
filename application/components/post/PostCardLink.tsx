@@ -10,10 +10,7 @@ import TagLink from './TagLink'
 import Card from '../Card'
 
 const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
-  const {
-    data: { thumbnail, ...content },
-    slug,
-  } = props
+  const { data, slug } = props
 
   return (
     <Link
@@ -21,8 +18,8 @@ const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
       as={`/${POST_DIRECTORY}/${slug}`}
       passHref
     >
-      <PostCardLink.Card thumbnail={thumbnail}>
-        <PostCardLink.Content {...content} />
+      <PostCardLink.Card thumbnail={data.thumbnail}>
+        <PostCardLink.Content {...data} />
       </PostCardLink.Card>
     </Link>
   )
@@ -32,16 +29,14 @@ export default PostCardLink
 
 PostCardLink.Card = Card
 
-PostCardLink.Content = function Component(
-  content: Omit<Post['data'], 'thumbnail'>
-) {
-  const { title, createDate, description, tag } = content
+PostCardLink.Content = function Component(content: Post['data']) {
+  const { title, createDate, description, tag, thumbnail } = content
 
   return (
     <Content>
       <Top>
         <Title>{title}</Title>
-        <Desc>{description}</Desc>
+        <Desc hasThumbnail={!!thumbnail}>{description}</Desc>
       </Top>
       <Bottom>
         <TagLink tag={tag} type="hash">
@@ -73,11 +68,11 @@ const Title = styled.h3`
   ${limitTextLine(1)}
 `
 
-const Desc = styled.p`
+const Desc = styled.p<{ hasThumbnail: boolean }>`
   ${({ theme }) => theme.font.body_2};
   color: ${({ theme }) => theme.color.lightBlack};
 
-  ${limitTextLine(3)}
+  ${({ hasThumbnail }) => (hasThumbnail ? limitTextLine(3) : limitTextLine(6))}
 `
 
 const Bottom = styled.div`
