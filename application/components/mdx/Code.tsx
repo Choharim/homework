@@ -161,15 +161,15 @@ const TableLine = styled.tr<{ $isHighlight: boolean }>`
 
 // @todo important 제거하기
 const Td = styled.td`
-  ${({ theme }) => theme.font.body_2};
+  ${({ theme }) => theme.font.body_1};
   white-space: pre;
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
-      ${theme.font.body_3}
+      ${theme.font.body_2}
     }
     ${theme.media.mobile} {
-      ${theme.font.body_4}
+      ${theme.font.body_3}
     }
   `}
 

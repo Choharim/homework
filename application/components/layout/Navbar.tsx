@@ -6,11 +6,11 @@ import { useRouter } from 'next/router'
 
 import { EN_NAME, GITHUB_URL } from 'domain/owner/constant'
 import { POST_DIRECTORY } from 'domain/post/constant'
-import { deviceSize } from 'application/constants/common'
 import { Z_IDEX } from 'application/styles/constant'
 
 import Logo from 'public/favicon.ico'
 import GithubLogo from 'public/github_logo.png'
+import Frame from './Frame'
 
 export const NAVBAR_HEIGHT = 58
 
@@ -48,10 +48,10 @@ const MENUS: Array<TextMenu | ImageMenu> = [
 const Navbar = () => {
   return (
     <Navigation>
-      <Frame>
+      <CustomFrame>
         <Navbar.Logo />
         <Navbar.Menu />
-      </Frame>
+      </CustomFrame>
     </Navigation>
   )
 }
@@ -121,32 +121,21 @@ const Navigation = styled.nav`
   z-index: ${Z_IDEX.nav};
 `
 
-const Frame = styled.div`
+const CustomFrame = styled(Frame)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  height: 100%;
-  max-width: ${deviceSize.pc}px;
-  margin: 0 auto;
-  padding: 0 24px;
 `
 
 const LogWrapper = styled.div`
   display: flex;
-  align-items: end;
+  align-items: center;
 `
 
 const Name = styled.span`
   margin-left: 10px;
   color: ${({ theme }) => theme.color.black};
-  ${({ theme }) => theme.font.header_4};
-
-  ${({ theme }) => css`
-    ${theme.media.tablet} {
-      ${({ theme }) => theme.font.subtitle_1};
-    }
-  `}
+  ${({ theme }) => theme.font.subtitle_1};
 `
 
 const MenuContainer = styled.ul`

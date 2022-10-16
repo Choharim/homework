@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import { ParsedUrlQuery } from 'querystring'
 
 import { getAllPosts } from 'domain/post/util'
+import { CardListFrame } from 'application/styles/mixin'
 
 import TagFilter from 'application/components/post/TagFilter'
 import PostCardLink from 'application/components/post/PostCardLink'
@@ -75,20 +76,9 @@ const Frame = styled.div`
   display: grid;
   grid-template-rows: auto auto;
   gap: 30px;
-  margin-top: 59px;
+  /* margin-top: 59px; */
 `
 
 const CardList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-
-  ${({ theme }) => theme.media.tablet} {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-
-  ${({ theme }) => theme.media.mobile} {
-    grid-template-columns: repeat(1, 1fr);
-  }
+  ${CardListFrame}
 `

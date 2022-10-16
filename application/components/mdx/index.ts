@@ -53,6 +53,7 @@ const MDX_STYLE = {
   `,
   p: styled.p`
     ${ParagrahFont}
+    text-align: middle;
     margin-bottom: 10px;
 
     > code {

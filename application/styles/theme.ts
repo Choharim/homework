@@ -35,83 +35,85 @@ export const color = {
 
 export const font = {
   header_1: {
-    fontSize: '44px',
+    fontSize: '40px',
     lineHeight: '1.3em',
     fontWeight: 700,
   },
   header_2: {
-    fontSize: '32px',
+    fontSize: '34px',
     lineHeight: '1.4em',
     fontWeight: 700,
   },
   header_3: {
-    fontSize: '28px',
+    fontSize: '30px',
     lineHeight: '1.5em',
     fontWeight: 700,
   },
   header_4: {
-    fontSize: '24px',
+    fontSize: '26px',
     lineHeight: '1.6em',
     fontWeight: 700,
   },
+
   subtitle_1: {
-    fontSize: '22px',
+    fontSize: '24px',
     lineHeight: '1.7em',
     fontWeight: 600,
   },
   subtitle_2: {
-    fontSize: '20px',
+    fontSize: '22px',
     lineHeight: '1.8em',
     fontWeight: 600,
   },
   subtitle_3: {
-    fontSize: '18px',
+    fontSize: '20px',
     lineHeight: '1.9em',
     fontWeight: 600,
   },
   subtitle_4: {
-    fontSize: '16px',
+    fontSize: '18px',
     lineHeight: '2.0em',
     fontWeight: 600,
   },
   subtitle_5: {
-    fontSize: '14px',
+    fontSize: '16px',
     lineHeight: '2.1em',
     fontWeight: 600,
   },
   subtitle_6: {
-    fontSize: '13px',
+    fontSize: '14px',
     lineHeight: '2.2em',
     fontWeight: 600,
   },
+
   body_1: {
     fontSize: '18px',
-    lineHeight: '1.9em',
+    lineHeight: '1.8em',
     fontWeight: 500,
   },
   body_2: {
     fontSize: '16px',
-    lineHeight: '2.0em',
+    lineHeight: '1.9em',
     fontWeight: 500,
   },
   body_3: {
     fontSize: '14px',
-    lineHeight: '2.1em',
+    lineHeight: '2.0em',
     fontWeight: 500,
   },
   body_4: {
     fontSize: '13px',
-    lineHeight: '2.2em',
+    lineHeight: '2.1em',
     fontWeight: 500,
   },
   body_5: {
     fontSize: '12px',
-    lineHeight: '2.3em',
+    lineHeight: '2.2em',
     fontWeight: 500,
   },
   body_6: {
     fontSize: '10px',
-    lineHeight: '2.4em',
+    lineHeight: '2.3em',
     fontWeight: 500,
   },
 } as const
