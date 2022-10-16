@@ -1,14 +1,7 @@
 import styled, { css } from 'styled-components'
 
 export const ParagrahFont = css`
-  ${({ theme }) => theme.font.body_1};
-
-  ${({ theme }) =>
-    css`
-      ${theme.media.tablet} {
-        ${theme.font.body_2};
-      }
-    `}
+  ${({ theme }) => theme.font.body_2};
 `
 
 export const ListContainer = css`
@@ -23,18 +16,10 @@ export const ListContainer = css`
 `
 
 export const HighlightWord = css`
-  ${({ theme }) => theme.font.body_1};
   background-color: ${({ theme }) => theme.color.lightPink};
   padding: 4px 8px;
   margin: 0 4px;
   border-radius: 2px;
-
-  ${({ theme }) =>
-    css`
-      ${theme.media.tablet} {
-        ${theme.font.body_2};
-      }
-    `}
 `
 
 export const BlockQuote = styled.blockquote`
@@ -46,7 +31,7 @@ export const BlockQuote = styled.blockquote`
 `
 
 export const HighlightBlock = css`
-  margin: 24px 0 32px;
+  margin: 24px 0;
   padding: 20px;
   background-color: ${({ theme }) => theme.color.ivory};
 
