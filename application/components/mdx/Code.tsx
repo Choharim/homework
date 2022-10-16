@@ -142,12 +142,10 @@ const CopyCodeButton = styled.button`
 const Table = styled.table`
   display: table;
   width: 100%;
+  padding: 0 1rem;
 `
 
 const TableLine = styled.tr<{ $isHighlight: boolean }>`
-  display: block;
-  padding: 0 1.5rem;
-
   ${({ $isHighlight }) =>
     $isHighlight &&
     css`
@@ -161,14 +159,12 @@ const TableLine = styled.tr<{ $isHighlight: boolean }>`
 
 // @todo important 제거하기
 const Td = styled.td`
-  ${({ theme }) => theme.font.body_1};
+  ${({ theme }) => theme.font.body_2};
   white-space: pre;
+  padding: 0;
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
-      ${theme.font.body_2}
-    }
-    ${theme.media.mobile} {
       ${theme.font.body_3}
     }
   `}
