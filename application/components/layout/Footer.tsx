@@ -22,5 +22,5 @@ const Desc = styled.footer`
   width: 100%;
   height: ${FOOTER_HEIGHT}px;
 
-  ${({ theme }) => theme.font.subtitle_4}
+  ${({ theme }) => theme.font.body_2}
 `

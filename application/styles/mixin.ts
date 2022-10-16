@@ -8,3 +8,14 @@ export const limitTextLine = (lineCount: number) => css`
   line-clamp: ${lineCount};
   -webkit-box-orient: vertical;
 `
+
+export const CardListFrame = css`
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+
+  ${({ theme }) => theme.media.mobile} {
+    grid-template-columns: repeat(1, 1fr);
+  }
+`

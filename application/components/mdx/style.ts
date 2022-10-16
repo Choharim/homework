@@ -47,14 +47,13 @@ export const BlockQuote = styled.blockquote`
 
 export const HighlightBlock = css`
   margin: 24px 0 32px;
-  padding: 24px;
+  padding: 20px;
   background-color: ${({ theme }) => theme.color.ivory};
 
   ${({ theme }) =>
     css`
       ${theme.media.tablet} {
         margin: 22px 0 28px;
-        padding: 20px;
       }
     `}
 

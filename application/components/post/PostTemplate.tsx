@@ -156,5 +156,9 @@ const Summary = styled.p`
 const MDXWrapper = styled.div`
   aside {
     ${HighlightBlock}
+
+    p:last-child {
+      margin-bottom: 0;
+    }
   }
 `
