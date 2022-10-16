@@ -76,7 +76,6 @@ const Frame = styled.div`
   display: grid;
   grid-template-rows: auto auto;
   gap: 30px;
-  /* margin-top: 59px; */
 `
 
 const CardList = styled.div`
