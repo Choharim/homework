@@ -17,7 +17,7 @@ interface Props extends DOMAttributes<HTMLDivElement> {
 const TagLink = ({ tag, type = 'none', ...rest }: Props) => {
   const { query } = useRouter()
 
-  const updatedQueryPath = useMemo(() => {
+  const updatedQueryTag = useMemo(() => {
     const tags = (query.tag as string)?.split(',') || []
 
     if (tags.includes(tag)) {
@@ -31,7 +31,7 @@ const TagLink = ({ tag, type = 'none', ...rest }: Props) => {
     <Link
       href={{
         pathname: `/${POST_DIRECTORY}`,
-        query: !!updatedQueryPath ? { tag: updatedQueryPath } : {},
+        query: !!updatedQueryTag ? { tag: updatedQueryTag } : {},
       }}
       passHref
     >

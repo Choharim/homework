@@ -5,7 +5,8 @@ export const GlobalStyles = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
-   
+    height: 100%;
+
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: auto;
 
