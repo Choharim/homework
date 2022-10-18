@@ -33,7 +33,6 @@ export default Layout
 const LayoutFrame = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
 `
 
 /**

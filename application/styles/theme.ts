@@ -88,32 +88,32 @@ export const font = {
 
   body_1: {
     fontSize: '18px',
-    lineHeight: '1.8em',
+    lineHeight: '1.9em',
     fontWeight: 500,
   },
   body_2: {
     fontSize: '16px',
-    lineHeight: '1.9em',
+    lineHeight: '2.0em',
     fontWeight: 500,
   },
   body_3: {
     fontSize: '14px',
-    lineHeight: '2.0em',
+    lineHeight: '2.1em',
     fontWeight: 500,
   },
   body_4: {
     fontSize: '13px',
-    lineHeight: '2.1em',
+    lineHeight: '2.2em',
     fontWeight: 500,
   },
   body_5: {
     fontSize: '12px',
-    lineHeight: '2.2em',
+    lineHeight: '2.3em',
     fontWeight: 500,
   },
   body_6: {
     fontSize: '10px',
-    lineHeight: '2.3em',
+    lineHeight: '2.4em',
     fontWeight: 500,
   },
 } as const

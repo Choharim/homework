@@ -167,6 +167,9 @@ const Td = styled.td`
     ${theme.media.tablet} {
       ${theme.font.body_3}
     }
+    ${theme.media.mobile} {
+      ${theme.font.body_4}
+    }
   `}
 
   .comment {

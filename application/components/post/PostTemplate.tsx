@@ -82,6 +82,11 @@ const TitleWrapper = styled.div`
   grid-template-columns: auto auto;
   align-items: center;
   gap: 20px;
+
+  ${({ theme }) => theme.media.mobile} {
+    grid-template-columns: unset;
+    grid-template-rows: auto auto;
+  }
 `
 
 const Title = styled.h1`
@@ -96,11 +101,11 @@ const Title = styled.h1`
     }
   `}
 
-  &::after {
+  &::before {
     position: absolute;
     content: '🔗';
-    right: -20px;
-    top: -20px;
+    left: -15px;
+    top: -25px;
 
     font-size: 20px;
   }
