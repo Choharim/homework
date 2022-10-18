@@ -4,43 +4,25 @@ import { useCallback, useEffect, useState } from 'react'
 import styled, { css } from 'styled-components'
 
 const MAX_DISPLAY_COUNT = 5
-const HALF = MAX_DISPLAY_COUNT / 2
-const FIRST_RIGHT_NUMBER = Math.ceil(HALF)
-const LAST_LEFT_NUMBER = HALF % 2 === 0 ? HALF - 1 : Math.floor(HALF)
+const STANDARD = Math.floor(MAX_DISPLAY_COUNT / 2) + 1
 
 type Props = {
   totalPages: number
   currentPageNumber: number
 }
-//@todo refactoring pagination
 const Pagination = ({ currentPageNumber, totalPages }: Props) => {
   const router = useRouter()
-  const [currentPage, setCurrentPage] = useState(0)
-  const [pageNav, setPageNav] = useState(1)
+  const { pathname, query } = router
+  const [firstDisplayPagination, setFirstDisplayPagination] = useState(1)
 
   const clickPageNumber = useCallback(
     (pageNumber: number) => {
-      setCurrentPage(pageNumber - 1)
+      if (pageNumber <= STANDARD || totalPages - STANDARD + 1 <= pageNumber)
+        return
 
-      if (
-        pageNumber > FIRST_RIGHT_NUMBER ||
-        (pageNumber <= FIRST_RIGHT_NUMBER && pageNav !== 1)
-      ) {
-        const gap = pageNumber - (pageNav + LAST_LEFT_NUMBER)
-
-        if (pageNav + gap < 1) {
-          setPageNav(1)
-        } else {
-          if (
-            pageNav >= totalPages - (MAX_DISPLAY_COUNT - 1) &&
-            pageNumber > totalPages - FIRST_RIGHT_NUMBER
-          )
-            return
-          setPageNav((prev) => prev + gap)
-        }
-      }
+      setFirstDisplayPagination(pageNumber - STANDARD + 1)
     },
-    [pageNav, totalPages]
+    [totalPages]
   )
 
   useEffect(() => {
@@ -48,7 +30,7 @@ const Pagination = ({ currentPageNumber, totalPages }: Props) => {
   }, [currentPageNumber, clickPageNumber])
 
   const setPageNumberInUrl = (pageNumber: number) => {
-    router.push({ ...router, query: { page: pageNumber } })
+    router.push({ pathname, query: { ...query, page: pageNumber } })
   }
 
   if (!totalPages) return <></>
@@ -57,7 +39,7 @@ const Pagination = ({ currentPageNumber, totalPages }: Props) => {
     <PaginationWrapper>
       <PrevButton
         onClick={() => setPageNumberInUrl(currentPageNumber - 1)}
-        $dimmed={currentPageNumber <= 1}
+        disabled={currentPageNumber <= 1}
       >
         &#xE000;
       </PrevButton>
@@ -65,16 +47,16 @@ const Pagination = ({ currentPageNumber, totalPages }: Props) => {
         {[...Array(totalPages)].map((_, i) => {
           const pageNumber = i + 1
           if (
-            pageNumber > pageNav - 1 &&
-            pageNumber < MAX_DISPLAY_COUNT + pageNav
+            pageNumber >= firstDisplayPagination &&
+            pageNumber < MAX_DISPLAY_COUNT + firstDisplayPagination
           ) {
             return (
               <Link
-                href={{ query: { page: pageNumber } }}
+                href={{ query: { ...query, page: pageNumber } }}
                 key={`page_number_${i}`}
                 passHref
               >
-                <PageNumberAtag $active={currentPage === i}>
+                <PageNumberAtag $active={currentPageNumber === pageNumber}>
                   <PageNumber>{pageNumber}</PageNumber>
                 </PageNumberAtag>
               </Link>
@@ -84,7 +66,7 @@ const Pagination = ({ currentPageNumber, totalPages }: Props) => {
       </PageNumbers>
       <NextButton
         onClick={() => setPageNumberInUrl(currentPageNumber + 1)}
-        $dimmed={currentPageNumber >= totalPages}
+        disabled={currentPageNumber >= totalPages}
       >
         &#xE001;
       </NextButton>
@@ -105,18 +87,20 @@ const PaginationWrapper = styled.div`
 
 const BUTTON_SIZE = '32px'
 
-const Button = styled.button<{ $dimmed: boolean }>`
+const Button = styled.button<{ disabled: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: ${BUTTON_SIZE};
   height: ${BUTTON_SIZE};
-  border-radius: 4px;
   border: none;
-  background-color: ${({ theme }) => theme.color.brown};
+  background-color: transparent;
   ${({ theme }) => theme.font.body_1};
 
-  ${({ theme, $dimmed }) =>
-    $dimmed &&
+  ${({ theme, disabled }) =>
+    disabled &&
     css`
-      background-color: ${theme.color.lightGray};
+      color: ${theme.color.gray};
       pointer-events: none;
     `}
 `
@@ -139,7 +123,7 @@ const PageNumberAtag = styled.a<{ $active: boolean }>`
     $active &&
     css`
       ${PageNumber} {
-        ${theme.font.body_1};
+        background-color: ${theme.color.darkPink};
       }
       cursor: default;
       pointer-events: none;
@@ -152,6 +136,7 @@ const PageNumber = styled.li`
   align-items: center;
   width: ${BUTTON_SIZE};
   height: ${BUTTON_SIZE};
+  border-radius: 2px;
 
   color: ${({ theme }) => theme.color.black};
   ${({ theme }) => theme.font.body_2};
