@@ -69,7 +69,10 @@ const Code = ({ className, children }: Props) => {
                 {tokens.map((line, i) => (
                   <TableLine
                     key={`code-line_${i}`}
-                    {...getLineProps({ line, key: i })}
+                    {...getLineProps({
+                      line,
+                      key: i,
+                    })}
                     $isHighlight={isHighlightLine(i)}
                   >
                     <Td>
@@ -98,11 +101,9 @@ const PADDING_X = {
 
 const Wrapper = styled.div`
   position: relative;
-  max-width: fit-content;
 `
 
 const HighlightWrapper = styled.pre`
-  max-width: fit-content;
   padding: ${PADDING_X.pc} 0;
   border-radius: 3px;
   background-color: #212121;
@@ -160,15 +161,11 @@ const TableLine = styled.tr<{ $isHighlight: boolean }>`
 // @todo important 제거하기
 const Td = styled.td`
   ${({ theme }) => theme.font.body_2};
-  white-space: pre;
   padding: 0;
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
       ${theme.font.body_3}
-    }
-    ${theme.media.mobile} {
-      ${theme.font.body_4}
     }
   `}
 
