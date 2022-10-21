@@ -104,7 +104,7 @@ const Wrapper = styled.div`
 `
 
 const HighlightWrapper = styled.pre`
-  padding: ${PADDING_X.pc} 0;
+  padding: ${PADDING_X.pc};
   border-radius: 3px;
   background-color: #212121;
   overflow-x: auto;
@@ -112,8 +112,7 @@ const HighlightWrapper = styled.pre`
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
-      margin: ${PADDING_X.tablet} 0;
-      padding: 12px 0;
+      padding: ${PADDING_X.tablet};
     }
   `}
 `
@@ -122,7 +121,8 @@ const CopyCodeButton = styled.button`
   position: absolute;
   top: ${PADDING_X.pc};
   right: ${PADDING_X.pc};
-  padding: 4px 5px;
+  width: 32px;
+  height: 32px;
   outline: none;
   border: none;
   background-color: ${({ theme }) => theme.color.darkGray};
@@ -143,7 +143,6 @@ const CopyCodeButton = styled.button`
 const Table = styled.table`
   display: table;
   width: 100%;
-  padding: 0 1rem;
 `
 
 const TableLine = styled.tr<{ $isHighlight: boolean }>`

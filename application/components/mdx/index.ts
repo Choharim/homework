@@ -7,7 +7,7 @@ const MDX_STYLE = {
   h2: styled.h2`
     ${({ theme }) => theme.font.header_2};
 
-    margin: 50px 0 25px;
+    margin: 40px 0 20px;
 
     &::before {
       content: '✔️';
@@ -26,7 +26,7 @@ const MDX_STYLE = {
   h3: styled.h3`
     ${({ theme }) => theme.font.header_3};
 
-    margin: 40px 0 20px;
+    margin: 30px 0 15px;
 
     ${({ theme }) => css`
       ${theme.media.tablet} {
@@ -40,7 +40,7 @@ const MDX_STYLE = {
   h4: styled.h4`
     ${({ theme }) => theme.font.header_4};
 
-    margin: 30px 0 15px;
+    margin: 20px 0 10px;
 
     ${({ theme }) => css`
       ${theme.media.tablet} {
@@ -53,14 +53,10 @@ const MDX_STYLE = {
   `,
   p: styled.p`
     ${ParagrahFont}
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 
     > code {
       ${HighlightWord}
-    }
-
-    > strong {
-      ${({ theme }) => theme.font.subtitle_4};
     }
   `,
   ol: styled.ol`
