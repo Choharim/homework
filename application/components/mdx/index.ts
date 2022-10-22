@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components'
 
 import { BlockQuote, HighlightWord, ListContainer, ParagrahFont } from './style'
 import Code from './Code'
+import Picture from './Picture'
 
 const MDX_STYLE = {
   h2: styled.h2`
@@ -82,6 +83,7 @@ const MDX_STYLE = {
   `,
   blockquote: BlockQuote,
   code: Code,
+  Picture,
 }
 
 export default MDX_STYLE
