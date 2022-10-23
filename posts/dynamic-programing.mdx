@@ -58,7 +58,7 @@ function addUntil_100(array) {
 
 ## 동적 프로그래밍 - 메모이제이션
 
-계산한 함수 결과를 해시 테이블에 저장해 재사용하는 방법이다.
+계산한 함수 결과를 해시 테이블과 같은 자료구조에 저장해 재사용하는 방법이다.
 
 1. 계산된 n번째 피보나치 수열의 값을 obj에 저장한다.
 2. obj에 계산된 값이 있으면 재귀 함수를 호출하지 않고 해당 value로 재사용하고, 없으면 재귀 함수를 호출하고 obj에 계산된 값을 저장한다.
@@ -82,7 +82,7 @@ function pibonachi(n, obj = {}) {
 }
 ```
 
-오른쪽이 메모이제이션을 통해 재귀 함수의 호출을 나타낸 트리이다. 함수 호출 횟수가 대폭 감소했다는 것을 알 수 있다. 시간 복잡도가 O(2^n)에서 O(n)으로 줄었다.
+메모이제이션을 통해 재귀 함수의 호출을 나타낸 트리이다. 함수 호출 횟수가 대폭 감소했다는 것을 알 수 있다. 시간 복잡도가 O(2^n)에서 O(n)으로 줄었다.
 
 <Picture
   src="/thumbnail/dynamic-programing_2.png"
@@ -115,7 +115,7 @@ function fibonacci(n) {
 
 > **문제 - 다음 함수에서 불필요한 재귀를 없애라.**
 
-```jsx
+```
 function addUntil_100(array) {
   if (!array.length) return 0;
 
@@ -175,24 +175,6 @@ function addUntil_100(array) {
 }
 ```
 
-**[풀이 4] - helper함수와 인수 이용하기**
-
-```jsx
-function addUntil_100(array) {
-  function helper(array, sum = 0) {
-    if (!array.length) return 0
-
-    if (sum + array[0] <= 100) {
-      return helper(array.slice(1), sum + array[0])
-    }
-
-    return sum
-  }
-
-  return helper(array)
-}
-```
-
 > **문제 - 다음 함수에서 불필요한 재귀를 없애라.**
 
 ```jsx
@@ -233,7 +215,7 @@ function uniquePath(n, m) {
 }
 ```
 
-**[풀이]**
+**[풀이1]**
 
 ```jsx
 function uniquePath(n, m) {
@@ -252,6 +234,26 @@ function uniquePath(n, m) {
       }
 
       return obj[n][m]
+    }
+  }
+
+  return recursion(n, m)
+}
+```
+
+**[풀이2]**
+
+```jsx
+function uniquePath(n, m) {
+  function recursion(n, m, obj = {}) {
+    if (n === 1 || m === 1) return 1
+
+    if (obj[[n, m]]) {
+      return obj[[n, m]]
+    } else {
+      obj[[n, m]] = recursion(n, m - 1, obj) + recursion(n - 1, m, obj)
+
+      return obj[[n, m]]
     }
   }
 
