@@ -19,7 +19,7 @@ type Props = {
 }
 
 const PostTemplate = ({ data, children }: Props) => {
-  const { title, createDate, tag, thumbnail, description } = data
+  const { title, createDate, tag, thumbnailSrc, description } = data
 
   const shareLink = () => {
     copyToClipboard({
@@ -44,13 +44,14 @@ const PostTemplate = ({ data, children }: Props) => {
           </TitleWrapper>
         </Wrapper>
         <CreatedTime dateTime={createDate}>{createDate}</CreatedTime>
-        {thumbnail && (
+        {thumbnailSrc && (
           <Thumbnail
-            src={thumbnail}
+            src={require(`/public/thumbnail/${thumbnailSrc}`)}
             layout="responsive"
             width={`${deviceSize.pc}px`}
             height="300px"
             objectFit="contain"
+            placeholder="blur"
           />
         )}
       </Header>

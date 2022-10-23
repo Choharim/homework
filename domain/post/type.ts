@@ -13,7 +13,7 @@ export type FrontMatter = {
   description: Description
   createDate: DateString
   tag: Tag
-  thumbnail?: string
+  thumbnailSrc?: string
 }
 
 export type Tag = typeof TAGS[number]

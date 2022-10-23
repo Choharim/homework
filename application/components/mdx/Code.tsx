@@ -52,8 +52,8 @@ const Code = ({ className, children }: Props) => {
         <Image
           src="/copy.svg"
           alt="code-copy_icon"
-          width="22px"
-          height="22px"
+          width="24px"
+          height="24px"
         />
       </CopyCodeButton>
       <HighlightWrapper>
@@ -89,7 +89,7 @@ const Code = ({ className, children }: Props) => {
       </HighlightWrapper>
     </Wrapper>
   ) : (
-    <code className={className}>{children}</code>
+    <code>{children}</code>
   )
 }
 export default Code

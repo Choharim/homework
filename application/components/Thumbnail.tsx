@@ -3,18 +3,22 @@ import Image, { ImageProps } from 'next/image'
 import styled, { css } from 'styled-components'
 
 export interface ThumbnailProps
-  extends Pick<ImageProps, 'src' | 'width' | 'height' | 'objectFit' | 'alt'>,
-    HTMLAttributes<Pick<HTMLDivElement, 'className'>> {
+  extends Pick<
+      ImageProps,
+      'src' | 'width' | 'height' | 'objectFit' | 'placeholder' | 'alt'
+    >,
+    Pick<HTMLAttributes<HTMLDivElement>, 'className'> {
   layout: 'fill' | 'responsive'
 }
 
 const Thumbnail = ({
   src,
+  alt,
   layout,
+  objectFit,
   width,
   height,
-  objectFit,
-  alt,
+  placeholder,
   ...rest
 }: ThumbnailProps) => {
   return (
@@ -26,6 +30,7 @@ const Thumbnail = ({
         width={layout === 'responsive' ? width : undefined}
         height={layout === 'responsive' ? height : undefined}
         alt={alt || `${src}_thumbnail`}
+        placeholder={placeholder}
       />
     </Container>
   )

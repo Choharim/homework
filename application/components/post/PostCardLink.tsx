@@ -18,7 +18,7 @@ const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
       as={`/${POST_DIRECTORY}/${slug}`}
       passHref
     >
-      <PostCardLink.Card thumbnail={data.thumbnail}>
+      <PostCardLink.Card thumbnailSrc={data.thumbnailSrc}>
         <PostCardLink.Content {...data} />
       </PostCardLink.Card>
     </Link>
@@ -30,13 +30,13 @@ export default PostCardLink
 PostCardLink.Card = Card
 
 PostCardLink.Content = function Component(content: Post['data']) {
-  const { title, createDate, description, tag, thumbnail } = content
+  const { title, createDate, description, tag, thumbnailSrc } = content
 
   return (
     <Content>
       <Top>
         <Title>{title}</Title>
-        <Desc hasThumbnail={!!thumbnail}>{description}</Desc>
+        <Desc hasThumbnail={!!thumbnailSrc}>{description}</Desc>
       </Top>
       <Bottom>
         <TagLink tag={tag} type="hash">
