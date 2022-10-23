@@ -74,7 +74,6 @@ const Article = styled.article`
 const Header = styled.div`
   display: grid;
   gap: 10px;
-  margin: 20px 0 30px;
 `
 
 const TitleWrapper = styled.div`
@@ -134,7 +133,7 @@ const CreatedTime = styled.time`
 const SummaryBox = styled.div`
   position: relative;
 
-  padding: 24px;
+  padding: 20px;
   margin: 20px 0;
   border-radius: 2px;
 
@@ -150,13 +149,7 @@ const SummaryBox = styled.div`
 `
 
 const Summary = styled.p`
-  ${({ theme }) => theme.font.body_1};
-
-  ${({ theme }) => css`
-    ${theme.media.tablet} {
-      ${theme.font.body_2}
-    }
-  `}
+  ${({ theme }) => theme.font.body_2};
 `
 const MDXWrapper = styled.div`
   aside {

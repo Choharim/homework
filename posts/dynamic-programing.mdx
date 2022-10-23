@@ -1,0 +1,262 @@
+---
+title: 동적 프로그래밍
+description: 하위 문제가 중첩되는 재귀 문제의 시간 복잡도를 줄여주는 동적 프로그래밍에 대해 알아보자.
+createDate: '2022.10.21'
+tag: 알고리즘
+---
+
+## 재귀 호출 횟수
+
+피보나치 수열(ex) 0,1,1,2,3,5,8,13,21...)에서 n번째 수를 구하는 함수를 하위 문제를 이용한 재귀로 구현하면 다음과 같다.
+
+```jsx
+function pibonachi(n) {
+  if (n <= 1) return 0
+  if (n === 2) return 1
+
+  return pibonachi(n - 2) + pibonachi(n - 1)
+}
+```
+
+pibonachi(6)을 호출하면 실행된 함수의 트리를 그려보면 다음과 같다.
+
+<Picture src="/thumbnail/dynamic-programing_1.png" alt="재귀 트리" />
+
+여기서 먼저 실행되었던 f(4), f(3), f(2), f(1), f(0)이 수차례 재실행되는 것을 볼 수 있다. 이런 중복 실행으로 인해 시간 복잡도는 O(2^n)으로 매우 좋지 않다. 전에 실행되어 얻은 값을 재사용할 순 없을까? 재귀의 시간 복잡도를 최적화 해주는 방법을 알아보자.
+
+## 재귀 함수를 변수에 저장하기
+
+필요한 호출을 한 번만 수행하고 그 결과를 변수에 담아 사용하는 것이다.
+
+**Example**
+
+- 불필요한 재귀 함수 호출이 이루어 지고 있다.
+
+```jsx
+function addUntil_100(array) {
+  if (!array.length) return 0
+
+  return addUntil_100(array.slice(0, -1)) + array[array.length - 1] > 100
+    ? addUntil_100(array.slice(0, -1))
+    : addUntil_100(array.slice(0, -1)) + array[array.length - 1]
+}
+```
+
+- 필요한 함수 호출은 한 번만하고 변수에 담아 사용한다.
+
+```jsx
+function addUntil_100(array) {
+  if (!array.length) return 0
+
+  const prevResult = addUntil_100(array.slice(0, -1))
+
+  return prevResult + array[array.length - 1] > 100
+    ? prevResult
+    : prevResult + array[array.length - 1]
+}
+```
+
+## 동적 프로그래밍 - 메모이제이션
+
+계산한 함수 결과를 해시 테이블과 같은 자료구조에 저장해 재사용하는 방법이다.
+
+1. 계산된 n번째 피보나치 수열의 값을 obj에 저장한다.
+2. obj에 계산된 값이 있으면 재귀 함수를 호출하지 않고 해당 value로 재사용하고, 없으면 재귀 함수를 호출하고 obj에 계산된 값을 저장한다.
+
+```jsx
+function pibonachi(n, obj = {}) {
+  if (n <= 1) {
+    return 0
+  }
+  if (n === 2) {
+    return 1
+  }
+
+  if (obj[n]) {
+    return obj[n]
+  } else {
+    obj[n] = pibonachi(n - 2, obj) + pibonachi(n - 1, obj)
+
+    return obj[n]
+  }
+}
+```
+
+메모이제이션을 통해 재귀 함수의 호출을 나타낸 트리이다. 함수 호출 횟수가 대폭 감소했다는 것을 알 수 있다. 시간 복잡도가 O(2^n)에서 O(n)으로 줄었다.
+
+<Picture
+  src="/thumbnail/dynamic-programing_2.png"
+  alt="다이나믹 프로그래밍 - 재귀 트리"
+/>
+
+## 동적 프로그래밍 - 상향식
+
+재귀 작성 방법에는 크게 루프를 대신할 수 있는 샹향식(bottom up), 하위 문제를 사용해 풀 수 있는 하향식 (top down)으로 이루어졌다. 상향식의 경우, 변수에 이전 값을 기억하며 결과값에 가까워지는 것으로 시간 복잡도가 O(n) 최적화 된다.
+
+```jsx
+function fibonacci(n) {
+  if (n === 0 || n === 1) return 0
+
+  let a = 0
+  let b = 1
+
+  for (let i = 1; i < n - 1; i++) {
+    const prevA = a
+
+    a = b
+    b += prevA
+  }
+
+  return b
+}
+```
+
+## 문제로 확인해보자
+
+> **문제 - 다음 함수에서 불필요한 재귀를 없애라.**
+
+```
+function addUntil_100(array) {
+  if (!array.length) return 0;
+
+  return addUntil_100(array.slice(0, -1)) + array[array.length - 1] > 100
+    ? addUntil_100(array.slice(0, -1))
+    : addUntil_100(array.slice(0, -1)) + array[array.length - 1];
+}|
+```
+
+**[풀이 1] - 호출이 필요한 재귀함수 변수에 저장하기**
+
+```jsx
+function addUntil_100(array) {
+  if (!array.length) return 0
+
+  const prevResult = addUntil_100(array.slice(0, -1))
+
+  return prevResult + array[array.length - 1] > 100
+    ? prevResult
+    : prevResult + array[array.length - 1]
+}
+```
+
+**[풀이 2] - 인수에 저장하기**
+
+```jsx
+function addUntil_100(array, sum = 0) {
+  if (!array.length) return 0
+
+  if (sum + array[0] <= 100) {
+    return addUntil_100(array.slice(1), sum + array[0])
+  }
+
+  return sum
+}
+```
+
+**[풀이 3] - helper함수 이용하기**
+
+```jsx
+function addUntil_100(array) {
+  let sum = 0
+
+  function helper(array) {
+    if (!array.length) return
+
+    if (array[0] + sum <= 100) {
+      sum += array[0]
+
+      helper(array.slice(1))
+    }
+  }
+
+  helper(array)
+
+  return sum
+}
+```
+
+> **문제 - 다음 함수에서 불필요한 재귀를 없애라.**
+
+```jsx
+function golomn(n) {
+  if (n === 1) return 1
+
+  return 1 + golomn(n - golomn(golomn(n - 1)))
+}
+```
+
+**[풀이]**
+
+1.  g(3), g(2)의 각각 실행 순서를 보았을 때 중복되는 부분이 있다.
+2.  반복해서 불필요하게 재귀함수를 호출하지 않고 계산된 값을 저장하여 재활용하자.
+
+```jsx
+function golomn(n) {
+  function recursion(n, obj = {}) {
+    if (n === 1) return 1
+
+    if (!obj[n]) {
+      obj[n] = 1 + recursion(n - recursion(recursion(n - 1, obj), obj), obj)
+    }
+    return obj[n]
+  }
+
+  return recursion(n)
+}
+```
+
+> **문제 - n행 m열의 최단 경로의 수를 메모이제이션으로 개선해라.**
+
+```jsx
+function uniquePath(n, m) {
+  if (n === 1 || m === 1) return 1
+
+  return uniquePath(n, m - 1) + uniquePath(n - 1, m)
+}
+```
+
+**[풀이1]**
+
+```jsx
+function uniquePath(n, m) {
+  function recursion(n, m, obj = {}) {
+    if (n === 1 || m === 1) return 1
+
+    if (obj[n]?.[m]) {
+      return obj[n][m]
+    } else {
+      obj = {
+        ...obj,
+        [n]: {
+          ...obj[n],
+          [m]: recursion(n, m - 1, obj) + recursion(n - 1, m, obj),
+        },
+      }
+
+      return obj[n][m]
+    }
+  }
+
+  return recursion(n, m)
+}
+```
+
+**[풀이2]**
+
+```jsx
+function uniquePath(n, m) {
+  function recursion(n, m, obj = {}) {
+    if (n === 1 || m === 1) return 1
+
+    if (obj[[n, m]]) {
+      return obj[[n, m]]
+    } else {
+      obj[[n, m]] = recursion(n, m - 1, obj) + recursion(n - 1, m, obj)
+
+      return obj[[n, m]]
+    }
+  }
+
+  return recursion(n, m)
+}
+```

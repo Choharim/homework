@@ -11,7 +11,7 @@ export const limitTextLine = (lineCount: number) => css`
 
 export const CardListFrame = css`
   display: grid;
-
+  grid-auto-rows: max-content;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
 

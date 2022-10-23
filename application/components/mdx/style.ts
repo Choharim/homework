@@ -5,7 +5,7 @@ export const ParagrahFont = css`
 `
 
 export const ListContainer = css`
-  margin: 20px 0 20px 28px;
+  margin: 10px 0 10px 28px;
 
   ${({ theme }) =>
     css`
@@ -26,8 +26,8 @@ export const BlockQuote = styled.blockquote`
   ${({ theme }) => theme.font.body_1};
 
   border-left: 5px solid ${({ theme }) => theme.color.darkPink};
-  margin: 25px 0;
-  padding-left: 20px;
+  margin: 20px 0;
+  padding: 4px 0 4px 20px;
 `
 
 export const HighlightBlock = css`

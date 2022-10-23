@@ -69,7 +69,10 @@ const Code = ({ className, children }: Props) => {
                 {tokens.map((line, i) => (
                   <TableLine
                     key={`code-line_${i}`}
-                    {...getLineProps({ line, key: i })}
+                    {...getLineProps({
+                      line,
+                      key: i,
+                    })}
                     $isHighlight={isHighlightLine(i)}
                   >
                     <Td>
@@ -98,12 +101,10 @@ const PADDING_X = {
 
 const Wrapper = styled.div`
   position: relative;
-  max-width: fit-content;
 `
 
 const HighlightWrapper = styled.pre`
-  max-width: fit-content;
-  padding: ${PADDING_X.pc} 0;
+  padding: ${PADDING_X.pc};
   border-radius: 3px;
   background-color: #212121;
   overflow-x: auto;
@@ -111,8 +112,7 @@ const HighlightWrapper = styled.pre`
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
-      margin: ${PADDING_X.tablet} 0;
-      padding: 12px 0;
+      padding: ${PADDING_X.tablet};
     }
   `}
 `
@@ -121,7 +121,8 @@ const CopyCodeButton = styled.button`
   position: absolute;
   top: ${PADDING_X.pc};
   right: ${PADDING_X.pc};
-  padding: 4px 5px;
+  width: 32px;
+  height: 32px;
   outline: none;
   border: none;
   background-color: ${({ theme }) => theme.color.darkGray};
@@ -142,7 +143,6 @@ const CopyCodeButton = styled.button`
 const Table = styled.table`
   display: table;
   width: 100%;
-  padding: 0 1rem;
 `
 
 const TableLine = styled.tr<{ $isHighlight: boolean }>`
@@ -160,15 +160,11 @@ const TableLine = styled.tr<{ $isHighlight: boolean }>`
 // @todo important 제거하기
 const Td = styled.td`
   ${({ theme }) => theme.font.body_2};
-  white-space: pre;
   padding: 0;
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
       ${theme.font.body_3}
-    }
-    ${theme.media.mobile} {
-      ${theme.font.body_4}
     }
   `}
 

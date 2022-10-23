@@ -18,6 +18,7 @@ import MDX_STYLE from 'application/components/mdx'
 import Layout from 'application/components/layout/Layout'
 import PostTemplate from 'application/components/post/PostTemplate'
 
+//@todo - https://nextjs.org/docs/advanced-features/using-mdx
 const Detail: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ data, mdxSource }) => {

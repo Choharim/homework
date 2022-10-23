@@ -11,6 +11,7 @@ import Layout from 'application/components/layout/Layout'
 const Home: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ posts }) => {
+  //@todo infinite scroll
   return (
     <CardList>
       {posts?.map(({ data, slug }) => (

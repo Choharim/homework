@@ -2,8 +2,8 @@ import { HTMLAttributes } from 'react'
 import Image, { ImageProps } from 'next/image'
 import styled, { css } from 'styled-components'
 
-interface ThumbnailProps
-  extends Pick<ImageProps, 'src' | 'width' | 'height' | 'objectFit'>,
+export interface ThumbnailProps
+  extends Pick<ImageProps, 'src' | 'width' | 'height' | 'objectFit' | 'alt'>,
     HTMLAttributes<Pick<HTMLDivElement, 'className'>> {
   layout: 'fill' | 'responsive'
 }
@@ -14,6 +14,7 @@ const Thumbnail = ({
   width,
   height,
   objectFit,
+  alt,
   ...rest
 }: ThumbnailProps) => {
   return (
@@ -24,7 +25,7 @@ const Thumbnail = ({
         objectFit={objectFit}
         width={layout === 'responsive' ? width : undefined}
         height={layout === 'responsive' ? height : undefined}
-        alt={`${src}_thumbnail`}
+        alt={alt || `${src}_thumbnail`}
       />
     </Container>
   )
@@ -60,5 +61,5 @@ const Container = styled.div<
     }
   }}
 
-  background-color: ${({ theme }) => theme.color.white}
+  background-color: ${({ theme }) => theme.color.white};
 `
