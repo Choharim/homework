@@ -6,22 +6,23 @@ import Thumbnail from './Thumbnail'
 const THUMBNAIL_HEIGHT = 130
 
 interface Props extends DOMAttributes<HTMLDivElement> {
-  thumbnail?: string
+  thumbnailSrc?: string
 }
 
 const Card = React.forwardRef<HTMLDivElement, Props>(
-  ({ thumbnail, children, ...rest }, ref) => {
+  ({ thumbnailSrc, children, ...rest }, ref) => {
     return (
       <Wrapper ref={ref} {...rest}>
-        {thumbnail && (
+        {thumbnailSrc && (
           <CustomThumbnail
-            src={thumbnail}
+            src={require(`/public/thumbnail/${thumbnailSrc}`)}
             layout="fill"
             objectFit="contain"
             height={`${THUMBNAIL_HEIGHT}px`}
+            placeholder="blur"
           />
         )}
-        <Body $hasThumbnail={!!thumbnail}>{children}</Body>
+        <Body $hasThumbnail={!!thumbnailSrc}>{children}</Body>
       </Wrapper>
     )
   }
