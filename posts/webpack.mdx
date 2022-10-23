@@ -88,10 +88,12 @@ module.exports = {
 ```
 
 - css 번들링
-  css-loader는 js 코드로 변환해주고 → style-loader는 그 js 코드를 DOM에 적용해준다. - css-loader
+  css-loader는 js 코드로 변환해주고 → style-loader는 그 js 코드를 DOM에 적용해준다.
+- css-loader
   : css 코드를 js 코드로 변환 되었을 뿐 DOM에 적용되지 않았기 때문에 스트일이 적용되지 않는다.
   실제로 css-loader를 설정하고 build를 했을 때 dist 파일 main.js에 스타일 코드가 string으로 추가된 것을 볼 수 있다.
-  모듈로 변경된 스타일 시트는 돔에 추가되어야만 브라우져가 해석할 수 있다. css 코드는 CSSOM으로 바뀌어야 스타일이 적용될 수 있다. CSSOM으로 적용하기 위해서는 html에 css파일을 직접 불러오거나 인라인 스크립트로 직접 넣어주어야 한다. - style-loader
+  모듈로 변경된 스타일 시트는 돔에 추가되어야만 브라우져가 해석할 수 있다. css 코드는 CSSOM으로 바뀌어야 스타일이 적용될 수 있다. CSSOM으로 적용하기 위해서는 html에 css파일을 직접 불러오거나 인라인 스크립트로 직접 넣어주어야 한다.
+- style-loader
   : js 코드로 변경된 스타일 코드를 DOM에 추가해주는 로더이다. style tag로 만들어 head안에 추가해주는 작업을 한다.
 - image 파일 번들링
   - file-loader
@@ -208,7 +210,11 @@ module.exports {
   ex) 이전 빌드된 결과물에 foo.js파일이 있을 때 현재 빌드할 시 foo.js 관련 빌드가 없으면 foo.js는 수정되지도 제거되지도 않은 상태 그대로 존재할 것이다. 이때 CleanWebpackPlugin을 사용하면 직전에 빌드된 결과물을 제거한 후 (output 폴더 (ex. dist 폴더)) 빌드 결과물을 추가하기 때문에 foo.js가 사라진 것을 볼 수 있다.
 - clean option
   webpack v5.20dptj 추가된 옵션으로, 빌드 시 이전 결과를 제거해준다.
-  `jsx // webpack.config.js { output: { path: path.resovle(__dirname, 'dist'), clean: true } } `
+
+  ```jsx
+  // webpack.config.js
+  { output: { path: path.resovle(__dirname, 'dist'), clean: true } }
+  ```
 
       특정 파일을 제거하지 않고 그대로 유지할 수도 있다. keep 함수가 true를 return하면 해당 파일이 유지되고 그렇지 않으면 제거된다.
 
