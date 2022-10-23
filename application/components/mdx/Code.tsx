@@ -64,26 +64,22 @@ const Code = ({ className, children }: Props) => {
           theme={theme}
         >
           {({ tokens, getLineProps, getTokenProps }) => (
-            <Table>
-              <tbody>
-                {tokens.map((line, i) => (
-                  <TableLine
-                    key={`code-line_${i}`}
-                    {...getLineProps({
-                      line,
-                      key: i,
-                    })}
-                    $isHighlight={isHighlightLine(i)}
-                  >
-                    <Td>
-                      {line.map((token, key) => (
-                        <span key={key} {...getTokenProps({ token, key })} />
-                      ))}
-                    </Td>
-                  </TableLine>
-                ))}
-              </tbody>
-            </Table>
+            <LineContainer>
+              {tokens.map((line, i) => (
+                <Line
+                  key={`code-line_${i}`}
+                  {...getLineProps({
+                    line,
+                    key: i,
+                  })}
+                  $isHighlight={isHighlightLine(i)}
+                >
+                  {line.map((token, key) => (
+                    <span key={key} {...getTokenProps({ token, key })} />
+                  ))}
+                </Line>
+              ))}
+            </LineContainer>
           )}
         </Highlight>
       </HighlightWrapper>
@@ -107,8 +103,6 @@ const HighlightWrapper = styled.pre`
   padding: ${PADDING_X.pc};
   border-radius: 3px;
   background-color: #212121;
-  overflow-x: auto;
-  overflow-y: hidden;
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
@@ -140,25 +134,9 @@ const CopyCodeButton = styled.button`
   `}
 `
 
-const Table = styled.table`
-  display: table;
+const LineContainer = styled.div`
   width: 100%;
-`
 
-const TableLine = styled.tr<{ $isHighlight: boolean }>`
-  ${({ $isHighlight }) =>
-    $isHighlight &&
-    css`
-      background-color: rgb(47, 53, 60);
-    `}
-
-  &:hover {
-    background-color: rgb(53, 59, 69);
-  }
-`
-
-// @todo important 제거하기
-const Td = styled.td`
   ${({ theme }) => theme.font.body_2};
   padding: 0;
 
@@ -207,5 +185,20 @@ const Td = styled.td`
   }
   .plain {
     color: #e8f8f9 !important;
+  }
+`
+
+const Line = styled.div<{ $isHighlight: boolean }>`
+  display: flex;
+  flex-wrap: wrap;
+
+  ${({ $isHighlight }) =>
+    $isHighlight &&
+    css`
+      background-color: rgb(47, 53, 60);
+    `}
+
+  &:hover {
+    background-color: rgb(53, 59, 69);
   }
 `
