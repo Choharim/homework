@@ -1,0 +1,117 @@
+---
+title: 버블과 선택 정렬
+description: 버블 정렬과 선택 정렬에 대해 알아보자.
+createDate: '2022.10.25'
+tag: 알고리즘
+---
+
+## 버블 정렬
+
+현재 값과 다음 값을 비교하며 정렬하는 정렬 알고리즘이다. 해당 사이클에서 가장 큰 값(버블)을 올바르게 위치시키는 것이므로 버블 정렬이라고 한다.
+
+🔍 오름차순으로 예를 들어보면
+
+1. 현재 값과 다음 값을 비교하여 현재 값이 다음 값보다 크면 두 값을 서로 교환한다.
+2. 마지막 요소까지 비교를 했으면 다시 처음으로 돌아와 1번을 반복한다.
+3. 첫번째 사이클을 마친 후 마지막 요소에 가장 큰 값이 위치하게 되고, 두번째에는 마지막에서 두번째 요소에 두번째로 큰 값이 위치하게 된다. 즉, 한 사이클마다 큰 값이 끝으로 이동되기 때문에 비교 범위는 줄어든다.
+
+코드로 나타내면 다음과 같다.
+
+```jsx
+function bubbleSort(array) {
+  let lastIndex = array.length - 1
+  let index = 0
+
+  while (index < lastIndex) {
+    if (array[index] > array[index + 1]) {
+      ;[array[index], array[index + 1]] = [array[index + 1], array[index]]
+    }
+
+    if (index + 1 === lastIndex) {
+      lastIndex--
+      index = 0
+    } else {
+      index++
+    }
+  }
+
+  return array
+}
+```
+
+<aside>
+⚠️ 대부분의 요소가 정렬되어있을 때는 모든 요소를 계속 순회할 필요가 없으므로 비효율적인 정렬 방법이다. 순회할 때 요소를 더이상 바꾸지 않았다면 모두 정렬된 것이므로 실행을 종료하여 최적화할 수 있다.
+
+</aside>
+
+```jsx
+function bubbleSort(array) {
+  let isSwap
+
+  for (let i = 0; i < array.length - 1; i++) {
+    isSwap = false //초기화
+
+    for (let j = 0; j < array.length - 1 - i; j++) {
+      if (array[j] > array[j + 1]) {
+        ;[array[j], array[j + 1]] = [array[j + 1], array[j]]
+        isSwap = true
+      }
+    }
+
+    if (!isSwap) break
+  }
+
+  return array
+}
+```
+
+### BigO
+
+데이터의 수(n)에 따라 알고리즘에서 필요한 단계수이다.
+
+2 ((n - 1) + (n - 2) + (n - 3) + ... + 3 + 2 + 1) = 2 (n _ (n -1) /2) = n _ (n -1) 이므로 시간 복잡도가 O(n^2)이다.
+
+| n   | 최악의 경우 필요한 단계수       |
+| --- | ------------------------------- |
+| 5   | 비교: 4 + 3 + 2 + 1             |
+|     | 교환: 4 + 3 + 2 + 1= 20         |
+| 10  | 비교: 9 + 8 + … + 2 + 1         |
+|     | 교환: 9 + 8 + … + 2 + 1= 90     |
+| 40  | 비교: 39 + 38 + … + 2 + 1       |
+|     | 교환: 39 + 38 + … + 2 + 1= 1560 |
+
+## 선택 정렬
+
+각 사이클에서 앞/뒤 값을 비교한 후 교환하며 큰 값부터 올바르게 위치시키는 버블 정렬과는 다르게, 각 사이클에서 기준 요소와 모든 값을 비교한 후 마지막에 최소값을 앞에 위치시키는 정렬 알고리즘이다.
+
+🔍 오름차순으로 정렬할 때 순서는 다음과 같다.
+
+1. 각 요소를 기준으로 마지막 요소까지 최소값을 찾는 사이클을 실행한다.
+2. 해당 사이클에서 마지막 요소까지 확인이 끝나면 찾은 최소값과 현재 기준 요소를 교환한다.
+3. 각 사이클이 끝날 때마다 앞에 최소값이 정렬되므로 비교 범위는 줄어든다.
+
+```jsx
+function selectionSort(array) {
+  let smallestIndex
+
+  for (let i = 0; i < array.length - 1; i++) {
+    smallestIndex = i
+
+    for (let j = i + 1; j < array.length; j++) {
+      if (array[smallestIndex] > array[j]) {
+        smallestIndex = j
+      }
+    }
+
+    if (smallestIndex !== i) {
+      ;[array[smallestIndex], array[i]] = [array[i], array[smallestIndex]]
+    }
+  }
+
+  return array
+}
+```
+
+### BigO
+
+버블 정렬과의 차이점은 교환이 해당 사이클 마지막에 최대 1번 이루어진다는 것이다. 하지만 시간 복잡도는 (n - 1) + (n - 2) + (n - 3) + ... + 3 + 2 + 1 = n \* (n -1) /2 즉, O(n^2)으로 같다. 구체적으로는 최악의 경우에서, 선택 정렬이 버블정렬보다 단계 수가 절반이다. 선택 정렬이 두 배 더 빠른 것이다.이처럼 같은 BigO를 가지고 있어도 처리 속도가 다를 수 있다.
