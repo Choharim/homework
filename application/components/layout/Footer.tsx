@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { EN_NAME } from 'domain/owner/constant'
 
-export const FOOTER_HEIGHT = 100
+export const FOOTER_HEIGHT = 150
 
 const Footer = () => {
   return (

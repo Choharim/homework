@@ -139,5 +139,5 @@ const PageNumber = styled.li`
   border-radius: 2px;
 
   color: ${({ theme }) => theme.color.black};
-  ${({ theme }) => theme.font.body_2};
+  ${({ theme }) => theme.font.body_1};
 `

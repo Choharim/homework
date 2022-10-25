@@ -69,7 +69,7 @@ const Title = styled.h3`
 `
 
 const Desc = styled.p<{ hasThumbnail: boolean }>`
-  ${({ theme }) => theme.font.body_2};
+  ${({ theme }) => theme.font.body_1};
   color: ${({ theme }) => theme.color.lightBlack};
 
   ${({ hasThumbnail }) => (hasThumbnail ? limitTextLine(3) : limitTextLine(6))}

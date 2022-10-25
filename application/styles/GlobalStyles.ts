@@ -31,7 +31,8 @@ export const GlobalStyles = createGlobalStyle`
   }
   button,
   input,
-  select {
+  select,
+  code {
     font-family: inherit;
     appearance: none;
     outline: none;
