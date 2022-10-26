@@ -26,7 +26,7 @@ const TagFilter = () => {
 
 export default TagFilter
 
-const TagButtonContainer = styled.nav`
+const TagButtonContainer = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -47,6 +47,7 @@ const CircleTagLink = styled(TagLink)<{ $active: boolean; tag?: Tag }>`
   padding: 5px 18px;
   border-radius: 40px;
   white-space: nowrap;
+  border: 1px solid transparent;
 
   ${({ $active, tag }) =>
     $active &&

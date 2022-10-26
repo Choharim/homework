@@ -18,7 +18,6 @@ const Card = React.forwardRef<HTMLDivElement, Props>(
             src={require(`/public/thumbnail/${thumbnailSrc}`)}
             layout="fill"
             objectFit="contain"
-            height={`${THUMBNAIL_HEIGHT}px`}
             placeholder="blur"
           />
         )}
@@ -45,27 +44,43 @@ const Wrapper = styled.article`
   &:hover {
     transform: translateY(-8px);
   }
+
+  ${({ theme }) => theme.media.tablet} {
+    height: 300px;
+  }
+
+  ${({ theme }) => theme.media.mobile} {
+    display: flex;
+    height: 250px;
+  }
 `
 
 const CustomThumbnail = styled(Thumbnail)`
   border-top-left-radius: ${BORDER_RADIUS};
   border-top-right-radius: ${BORDER_RADIUS};
+  height: ${THUMBNAIL_HEIGHT}px;
+
+  ${({ theme }) => theme.media.mobile} {
+    height: 100%;
+    width: 50%;
+    border-top-left-radius: ${BORDER_RADIUS};
+    border-bottom-left-radius: ${BORDER_RADIUS};
+    border-top-right-radius: initial;
+  }
 `
 
 const Body = styled.div<{ $hasThumbnail: boolean }>`
-  display: flex;
-  flex-direction: column;
+  height: 100%;
+  width: 100%;
 
-  ${({ $hasThumbnail }) =>
-    $hasThumbnail
-      ? css`
-          padding: 5px 24px 24px;
+  ${({ $hasThumbnail, theme }) =>
+    $hasThumbnail &&
+    css`
+      height: calc(100% - ${THUMBNAIL_HEIGHT}px);
 
-          height: calc(100% - ${THUMBNAIL_HEIGHT}px);
-        `
-      : css`
-          padding: 24px;
-
-          height: calc(100%);
-        `};
+      ${theme.media.mobile} {
+        height: 100%;
+        width: 50%;
+      }
+    `};
 `

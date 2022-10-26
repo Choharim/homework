@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { POST_DIRECTORY } from 'domain/post/constant'
 import Post from 'domain/post/type'
@@ -33,10 +33,10 @@ PostCardLink.Content = function Component(content: Post['data']) {
   const { title, createDate, description, tag, thumbnailSrc } = content
 
   return (
-    <Content>
+    <Content hasThumbnail={!!thumbnailSrc}>
       <Top>
         <Title>{title}</Title>
-        <Desc hasThumbnail={!!thumbnailSrc}>{description}</Desc>
+        <Desc>{description}</Desc>
       </Top>
       <Bottom>
         <TagLink tag={tag} type="hash">
@@ -48,17 +48,57 @@ PostCardLink.Content = function Component(content: Post['data']) {
   )
 }
 
-const Content = styled.div`
+const Desc = styled.p`
+  ${({ theme }) => theme.font.body_1};
+  color: ${({ theme }) => theme.color.lightBlack};
+`
+
+const Content = styled.div<{ hasThumbnail: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+
+  ${({ hasThumbnail, theme }) =>
+    hasThumbnail
+      ? css`
+          padding: 12px 24px 24px;
+
+          ${theme.media.mobile} {
+            padding: 24px 24px 24px 12px;
+          }
+        `
+      : css`
+          padding: 24px;
+        `};
+
+  ${Desc} {
+    ${({ hasThumbnail, theme }) =>
+      hasThumbnail
+        ? css`
+            ${limitTextLine(3)}
+            ${theme.media.tablet} {
+              ${limitTextLine(2)}
+            }
+            ${theme.media.mobile} {
+              ${limitTextLine(4)}
+            }
+          `
+        : css`
+            ${limitTextLine(6)}
+            ${theme.media.tablet} {
+              ${limitTextLine(5)}
+            }
+            ${theme.media.mobile} {
+              ${limitTextLine(4)}
+            }
+          `}
+  }
 `
 
 const Top = styled.div`
   display: grid;
   gap: 4px;
-  margin-top: 4px;
 `
 
 const Title = styled.h3`
@@ -66,13 +106,6 @@ const Title = styled.h3`
   color: ${({ theme }) => theme.color.black};
 
   ${limitTextLine(1)}
-`
-
-const Desc = styled.p<{ hasThumbnail: boolean }>`
-  ${({ theme }) => theme.font.body_1};
-  color: ${({ theme }) => theme.color.lightBlack};
-
-  ${({ hasThumbnail }) => (hasThumbnail ? limitTextLine(3) : limitTextLine(6))}
 `
 
 const Bottom = styled.div`

@@ -13,7 +13,8 @@ const Picture = ({ src, alt }: Props) => {
         src={require(`/public/thumbnail/${src}`)}
         layout="responsive"
         width={deviceSize.tablet}
-        height={300}
+        objectFit="contain"
+        height={220}
         alt={alt}
         placeholder="blur"
       />

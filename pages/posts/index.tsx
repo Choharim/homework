@@ -15,7 +15,7 @@ import TagFilter from 'application/components/post/TagFilter'
 import PostCardLink from 'application/components/post/PostCardLink'
 import Pagination from 'application/components/post/Pagnation'
 
-const MAX_CARD_COUNT_PER_PAGE = 4
+const MAX_CARD_COUNT_PER_PAGE = 6
 
 const PostsPage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
@@ -75,11 +75,11 @@ export async function getServerSideProps(
 const Frame = styled.div`
   display: grid;
   grid-template-rows: auto auto;
-  gap: 30px;
   grid-template-rows: max-content;
   height: 100%;
 `
 
 const CardList = styled.div`
   ${CardListFrame}
+  margin-top: 24px;
 `
