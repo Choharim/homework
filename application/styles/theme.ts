@@ -27,6 +27,7 @@ export const color = {
   darkBlue: '#c0d9e8',
   moreDarkBlue: '#8fc5e7',
   green: '#dbeddb',
+  darkGreen: '#6d9d6d',
   orange: '#f9dec9',
   yellow: '#fdecc8',
   darkYellow: '#fde7c8',
@@ -36,43 +37,48 @@ export const color = {
 export const font = {
   header_1: {
     fontSize: '34px',
-    lineHeight: '1.3em',
+    lineHeight: '1.1em',
     fontWeight: 700,
   },
   header_2: {
     fontSize: '30px',
-    lineHeight: '1.4em',
+    lineHeight: '1.2em',
     fontWeight: 700,
   },
   header_3: {
     fontSize: '26px',
-    lineHeight: '1.5em',
+    lineHeight: '1.3em',
     fontWeight: 700,
   },
   subtitle_1: {
     fontSize: '22px',
-    lineHeight: '1.7em',
+    lineHeight: '1.4em',
     fontWeight: 600,
   },
   subtitle_2: {
     fontSize: '18px',
-    lineHeight: '1.8em',
+    lineHeight: '1.5em',
     fontWeight: 600,
   },
 
   body_1: {
     fontSize: '16px',
-    lineHeight: '1.9em',
+    lineHeight: '1.6em',
     fontWeight: 500,
   },
   body_2: {
-    fontSize: '14px',
-    lineHeight: '2.0em',
+    fontSize: '15px',
+    lineHeight: '1.7em',
     fontWeight: 500,
   },
   body_3: {
-    fontSize: '12px',
-    lineHeight: '2.1em',
+    fontSize: '14px',
+    lineHeight: '1.8em',
+    fontWeight: 500,
+  },
+  body_4: {
+    fontSize: '13px',
+    lineHeight: '1.9em',
     fontWeight: 500,
   },
 } as const

@@ -6,22 +6,22 @@ import Thumbnail from './Thumbnail'
 const THUMBNAIL_HEIGHT = 130
 
 interface Props extends DOMAttributes<HTMLDivElement> {
-  thumbnailSrc?: string
+  src?: string
 }
 
 const Card = React.forwardRef<HTMLDivElement, Props>(
-  ({ thumbnailSrc, children, ...rest }, ref) => {
+  ({ src, children, ...rest }, ref) => {
     return (
       <Wrapper ref={ref} {...rest}>
-        {thumbnailSrc && (
+        {!!src && (
           <CustomThumbnail
-            src={require(`/public/thumbnail/${thumbnailSrc}`)}
+            src={src}
             layout="fill"
             objectFit="contain"
             placeholder="blur"
           />
         )}
-        <Body $hasThumbnail={!!thumbnailSrc}>{children}</Body>
+        <Body $hasThumbnail={!!src}>{children}</Body>
       </Wrapper>
     )
   }
@@ -32,6 +32,7 @@ Card.displayName = 'Card'
 export default Card
 
 const BORDER_RADIUS = '10px'
+const HORIZONTAL_CARD_HEIGHT = '250px'
 
 const Wrapper = styled.article`
   width: 100%;
@@ -51,7 +52,7 @@ const Wrapper = styled.article`
 
   ${({ theme }) => theme.media.mobile} {
     display: flex;
-    height: 250px;
+    height: ${HORIZONTAL_CARD_HEIGHT};
   }
 `
 
@@ -62,7 +63,7 @@ const CustomThumbnail = styled(Thumbnail)`
 
   ${({ theme }) => theme.media.mobile} {
     height: 100%;
-    width: 50%;
+    min-width: ${HORIZONTAL_CARD_HEIGHT};
     border-top-left-radius: ${BORDER_RADIUS};
     border-bottom-left-radius: ${BORDER_RADIUS};
     border-top-right-radius: initial;
@@ -80,7 +81,7 @@ const Body = styled.div<{ $hasThumbnail: boolean }>`
 
       ${theme.media.mobile} {
         height: 100%;
-        width: 50%;
+        width: 100%;
       }
     `};
 `

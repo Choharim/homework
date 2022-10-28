@@ -30,7 +30,7 @@ export const BlockQuote = styled.blockquote`
 `
 
 export const HighlightBlock = css`
-  margin: 24px 0;
+  margin: 10px 0 15px;
   padding: 20px;
   background-color: ${({ theme }) => theme.color.ivory};
 

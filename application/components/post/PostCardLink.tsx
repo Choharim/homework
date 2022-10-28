@@ -18,7 +18,13 @@ const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
       as={`/${POST_DIRECTORY}/${slug}`}
       passHref
     >
-      <PostCardLink.Card thumbnailSrc={data.thumbnailSrc}>
+      <PostCardLink.Card
+        src={
+          !!data.thumbnailSrc
+            ? require(`/public/thumbnail/${data.thumbnailSrc}`)
+            : ''
+        }
+      >
         <PostCardLink.Content {...data} />
       </PostCardLink.Card>
     </Link>
@@ -49,7 +55,7 @@ PostCardLink.Content = function Component(content: Post['data']) {
 }
 
 const Desc = styled.p`
-  ${({ theme }) => theme.font.body_1};
+  ${({ theme }) => theme.font.body_2};
   color: ${({ theme }) => theme.color.lightBlack};
 `
 
@@ -67,45 +73,51 @@ const Content = styled.div<{ hasThumbnail: boolean }>`
           ${theme.media.mobile} {
             padding: 24px 24px 24px 12px;
           }
-        `
-      : css`
-          padding: 24px;
-        `};
 
-  ${Desc} {
-    ${({ hasThumbnail, theme }) =>
-      hasThumbnail
-        ? css`
+          ${Title} {
+            ${limitTextLine(1)}
+            ${theme.media.mobile} {
+              ${limitTextLine(2)}
+            }
+          }
+
+          ${Desc} {
             ${limitTextLine(3)}
             ${theme.media.tablet} {
               ${limitTextLine(2)}
             }
             ${theme.media.mobile} {
-              ${limitTextLine(4)}
+              ${limitTextLine(3)}
             }
-          `
-        : css`
+          }
+        `
+      : css`
+          padding: 24px;
+
+          ${Title} {
+            ${limitTextLine(2)}
+          }
+
+          ${Desc} {
             ${limitTextLine(6)}
             ${theme.media.tablet} {
               ${limitTextLine(5)}
             }
             ${theme.media.mobile} {
-              ${limitTextLine(4)}
+              ${limitTextLine(3)}
             }
-          `}
-  }
+          }
+        `};
 `
 
 const Top = styled.div`
   display: grid;
-  gap: 4px;
+  gap: 10px;
 `
 
 const Title = styled.h3`
   ${({ theme }) => theme.font.subtitle_1};
   color: ${({ theme }) => theme.color.black};
-
-  ${limitTextLine(1)}
 `
 
 const Bottom = styled.div`

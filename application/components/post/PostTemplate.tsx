@@ -26,7 +26,7 @@ const PostTemplate = ({ data, children }: Props) => {
           </TagLink>
         )}
         <CreatedTime dateTime={createDate}>{createDate}</CreatedTime>
-        {thumbnailSrc && (
+        {!!thumbnailSrc && (
           <Thumbnail
             src={require(`/public/thumbnail/${thumbnailSrc}`)}
             layout="responsive"
@@ -56,7 +56,7 @@ const Article = styled.article`
 
 const Header = styled.div`
   display: grid;
-  gap: 10px;
+  gap: 15px;
 `
 
 const Title = styled.h1`
@@ -85,7 +85,7 @@ const SummaryBox = styled.div`
   position: relative;
 
   padding: 20px;
-  margin-top: 18px;
+  margin: 20px 0;
   border-radius: 2px;
 
   background-color: ${({ theme }) => theme.color.lightPink};
