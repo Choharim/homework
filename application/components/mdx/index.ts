@@ -8,7 +8,7 @@ const MDX_STYLE = {
   h2: styled.h2`
     ${({ theme }) => theme.font.header_2};
 
-    margin: 40px 0 20px;
+    margin: 30px 0 15px;
 
     &::before {
       content: '✔️';
@@ -19,27 +19,10 @@ const MDX_STYLE = {
       ${theme.media.tablet} {
         ${theme.font.header_3};
       }
-      ${theme.media.mobile} {
-        ${theme.font.header_4};
-      }
     `}
   `,
   h3: styled.h3`
     ${({ theme }) => theme.font.header_3};
-
-    margin: 30px 0 15px;
-
-    ${({ theme }) => css`
-      ${theme.media.tablet} {
-        ${theme.font.header_4};
-      }
-      ${theme.media.mobile} {
-        ${theme.font.subtitle_1};
-      }
-    `}
-  `,
-  h4: styled.h4`
-    ${({ theme }) => theme.font.header_4};
 
     margin: 20px 0 10px;
 
@@ -47,7 +30,15 @@ const MDX_STYLE = {
       ${theme.media.tablet} {
         ${theme.font.subtitle_1};
       }
-      ${theme.media.mobile} {
+    `}
+  `,
+  h4: styled.h4`
+    ${({ theme }) => theme.font.subtitle_1};
+
+    margin: 15px 0 10px;
+
+    ${({ theme }) => css`
+      ${theme.media.tablet} {
         ${theme.font.subtitle_2};
       }
     `}
@@ -74,6 +65,10 @@ const MDX_STYLE = {
     ${ParagrahFont}
 
     margin: 10px 0;
+
+    > code {
+      ${HighlightWord}
+    }
 
     ${({ theme }) => css`
       ${theme.media.tablet} {

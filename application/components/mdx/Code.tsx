@@ -101,7 +101,7 @@ const Wrapper = styled.div`
 
 const HighlightWrapper = styled.pre`
   padding: ${PADDING_X.pc};
-  border-radius: 3px;
+  border-radius: 10px;
   background-color: #212121;
 
   ${({ theme }) => css`
@@ -137,28 +137,17 @@ const CopyCodeButton = styled.button`
 const LineContainer = styled.div`
   width: 100%;
 
-  ${({ theme }) => theme.font.body_2};
+  ${({ theme }) => theme.font.body_1};
   padding: 0;
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
-      ${theme.font.body_3}
+      ${theme.font.body_2}
     }
   `}
 
   .comment {
     color: #999 !important;
-
-    ${({ theme }) => theme.font.body_3};
-
-    ${({ theme }) => css`
-      ${theme.media.tablet} {
-        ${theme.font.body_4}
-      }
-      ${theme.media.mobile} {
-        ${theme.font.body_5}
-      }
-    `}
   }
   .imports.maybe-class-name {
     color: #f8f8f2 !important;

@@ -1,0 +1,107 @@
+---
+title: 합병 정렬
+description: 더이상 절반으로 나눌 수 없을 때까지 즉, 요소가 1개인 배열이 될때까지 절반으로 분할한다. 최종적으로 분할된 배열은 정렬되어 있다고 볼 수 있다. 절반으로 분할 된 배열을 정렬을 하며 다시 병합한다. 이를 반복하며 1개의 배열로 병합될 때까지 이를 반복한다.
+createDate: 2022.10.27
+tag: 알고리즘
+---
+
+### 아이디어
+
+<aside>
+- 정렬되어있지 않는 배열을 정렬하는 것보다 정렬된 배열 두개를 병합하는 것이 더 쉽다. 
+- 요소가 1개 이하인 배열은 정렬되어 있다 볼 수 있다.
+
+</aside>
+
+<Picture src="merge-sort.png" alt="합병 정렬 트리" height={400} />
+
+## 병합
+
+> 정렬된 두 배열을 정렬하며 합치기 위해서 앞 요소부터 작은 값을 찾으며 병합해간다.
+
+정렬된 두 배열을 정렬(오름차순)하며 합쳐보자.
+
+1. 이미 정렬되어 있으므로 첫번째 요소부터 가장 작은 값을 찾는다.
+2. 확인하는 값을 기억하기 위해 각 배열에 포인터를 둔다. 앞 요소부터 확인하면 되므로 각 포인터를 index 0에 위치한다.
+3. 결과 배열에 넣어지면 해당 배열의 포인터를 오른쪽으로 이동한다.
+4. 둘 중 한 배열의 포인터가 배열 길이를 벗어나게 되면 해당 배열의 요소는 모두 결과 배열에 들어간 것이므로 다른 배열의 포인터가 가리키는 요소부터 마지막 요소까지 결과 배열 끝에 넣어준다.
+
+이를 구현해보자.
+
+```jsx
+function mergeSortedArray(sortedArray1, sortedArray2) {
+  let result = []
+
+  let array1Pointer = 0
+  let array2Pointer = 0
+
+  while (
+    array1Pointer < sortedArray1.length &&
+    array2Pointer < sortedArray2.length
+  ) {
+    if (sortedArray1[array1Pointer] < sortedArray2[array2Pointer]) {
+      result.push(sortedArray1[array1Pointer])
+
+      array1Pointer++
+    } else if (sortedArray1[array1Pointer] > sortedArray2[array2Pointer]) {
+      result.push(sortedArray2[array2Pointer])
+
+      array2Pointer++
+    } else {
+      result = result.concat([
+        sortedArray1[array1Pointer],
+        sortedArray2[array2Pointer],
+      ])
+
+      array1Pointer++
+      array2Pointer++
+    }
+
+    console.log(result)
+  }
+
+  while (array1Pointer < sortedArray1.length) {
+    result.push(sortedArray1[array1Pointer])
+
+    array1Pointer++
+  }
+
+  while (array2Pointer < sortedArray2.length) {
+    result.push(sortedArray2[array2Pointer])
+
+    array2Pointer++
+  }
+
+  return result
+}
+```
+
+## 합병 정렬
+
+> 1개의 요소만 갖는 배열이 될 때까지 절반으로 배열을 나누고, 절반으로 나눠진 배열을 병합해간다.
+
+1. 절반으로 나눈 배열을 mergeSortedArray 인수로 넣어 합쳐준다.
+2. mergeSort 인수로 배열 길이 1일 때 더이상 배열을 절반으로 나누지 않아도 되므로 해당 배열을 리턴하며 mergeSort 호출을 멈춘다.
+3. 더이상 재귀 함수가 호출되지 않으면 직전에 반으로 나눠진 배열 두개가 merge되고 이를 반복하여 최종 1개로 병합된다.
+
+```jsx
+function mergeSort(array) {
+  if (array.length === 1) return array
+
+  const half = Math.ceil(array.length / 2)
+  return mergeSortedArray(
+    mergeSort(array.slice(0, half)),
+    mergeSort(array.slice(half))
+  )
+}
+```
+
+### BigO
+
+#### 공간 복잡도 O(n)
+
+정렬해야하는 배열의 크기와 동일한 결과 배열이 필요하다.
+
+#### 시간 복잡도 O(nlogN)
+
+배열 분할의 횟수는 배열의 크기가 1이될 때까지 2로 나눌 수 있는 횟수이므로 logN이고, 절반으로 나눠진 두 배열을 앞에서부터 비교하며 정렬해가므로 비교/정렬 횟수는 n이다.

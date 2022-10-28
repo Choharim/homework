@@ -2,12 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { FrontMatter } from 'domain/post/type'
-import { copyToClipboard } from 'application/utils/copy'
-import {
-  COPY_FAILURE,
-  COPY_SUCCESS,
-  deviceSize,
-} from 'application/constants/common'
+import { deviceSize } from 'application/constants/common'
 import { HighlightBlock } from '../mdx/style'
 
 import TagLink from './TagLink'
@@ -21,30 +16,17 @@ type Props = {
 const PostTemplate = ({ data, children }: Props) => {
   const { title, createDate, tag, thumbnailSrc, description } = data
 
-  const shareLink = () => {
-    copyToClipboard({
-      text: window.location.href,
-      onSuccess: () => alert(COPY_SUCCESS),
-      onFailure: () => alert(COPY_FAILURE),
-    })
-  }
-
   return (
     <Article>
       <Header>
-        <Wrapper>
-          <TitleWrapper>
-            <Title onClick={shareLink}>{title}</Title>
-
-            {!!tag && (
-              <TagLink tag={tag} type="hash">
-                {tag}
-              </TagLink>
-            )}
-          </TitleWrapper>
-        </Wrapper>
+        <Title>{title}</Title>
+        {!!tag && (
+          <TagLink tag={tag} type="hash">
+            {tag}
+          </TagLink>
+        )}
         <CreatedTime dateTime={createDate}>{createDate}</CreatedTime>
-        {thumbnailSrc && (
+        {!!thumbnailSrc && (
           <Thumbnail
             src={require(`/public/thumbnail/${thumbnailSrc}`)}
             layout="responsive"
@@ -74,24 +56,10 @@ const Article = styled.article`
 
 const Header = styled.div`
   display: grid;
-  gap: 10px;
-`
-
-const TitleWrapper = styled.div`
-  display: grid;
-  grid-template-columns: auto auto;
-  align-items: center;
-  gap: 20px;
-
-  ${({ theme }) => theme.media.mobile} {
-    grid-template-columns: unset;
-    grid-template-rows: auto auto;
-  }
+  gap: 15px;
 `
 
 const Title = styled.h1`
-  position: relative;
-
   ${({ theme }) => theme.font.header_1};
   color: ${({ theme }) => theme.color.black};
 
@@ -100,24 +68,6 @@ const Title = styled.h1`
       ${theme.font.header_2}
     }
   `}
-
-  &::before {
-    position: absolute;
-    content: '🔗';
-    left: -15px;
-    top: -25px;
-
-    font-size: 20px;
-  }
-
-  cursor: pointer;
-`
-
-const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
 `
 
 const CreatedTime = styled.time`
@@ -142,15 +92,15 @@ const SummaryBox = styled.div`
 
   &::before {
     position: absolute;
-    top: -23px;
-    left: -23px;
+    top: -20px;
+    left: -20px;
     content: '💡';
-    font-size: 48px;
+    font-size: 40px;
   }
 `
 
 const Summary = styled.p`
-  ${({ theme }) => theme.font.body_2};
+  ${({ theme }) => theme.font.body_1};
 `
 const MDXWrapper = styled.div`
   aside {

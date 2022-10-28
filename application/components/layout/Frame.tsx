@@ -22,7 +22,7 @@ export default Frame
 Frame.Layout = styled.div`
   width: 100%;
   height: 100%;
-  max-width: ${deviceSize.tablet}px;
+  max-width: ${deviceSize.pc}px;
   margin: 0 auto;
   padding: 0 ${X_PADDING}px;
 `

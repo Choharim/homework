@@ -6,23 +6,22 @@ import Thumbnail from './Thumbnail'
 const THUMBNAIL_HEIGHT = 130
 
 interface Props extends DOMAttributes<HTMLDivElement> {
-  thumbnailSrc?: string
+  src?: string
 }
 
 const Card = React.forwardRef<HTMLDivElement, Props>(
-  ({ thumbnailSrc, children, ...rest }, ref) => {
+  ({ src, children, ...rest }, ref) => {
     return (
       <Wrapper ref={ref} {...rest}>
-        {thumbnailSrc && (
+        {!!src && (
           <CustomThumbnail
-            src={require(`/public/thumbnail/${thumbnailSrc}`)}
+            src={src}
             layout="fill"
             objectFit="contain"
-            height={`${THUMBNAIL_HEIGHT}px`}
             placeholder="blur"
           />
         )}
-        <Body $hasThumbnail={!!thumbnailSrc}>{children}</Body>
+        <Body $hasThumbnail={!!src}>{children}</Body>
       </Wrapper>
     )
   }
@@ -33,6 +32,7 @@ Card.displayName = 'Card'
 export default Card
 
 const BORDER_RADIUS = '10px'
+const HORIZONTAL_CARD_HEIGHT = '250px'
 
 const Wrapper = styled.article`
   width: 100%;
@@ -45,27 +45,43 @@ const Wrapper = styled.article`
   &:hover {
     transform: translateY(-8px);
   }
+
+  ${({ theme }) => theme.media.tablet} {
+    height: 300px;
+  }
+
+  ${({ theme }) => theme.media.mobile} {
+    display: flex;
+    height: ${HORIZONTAL_CARD_HEIGHT};
+  }
 `
 
 const CustomThumbnail = styled(Thumbnail)`
   border-top-left-radius: ${BORDER_RADIUS};
   border-top-right-radius: ${BORDER_RADIUS};
+  height: ${THUMBNAIL_HEIGHT}px;
+
+  ${({ theme }) => theme.media.mobile} {
+    height: 100%;
+    min-width: ${HORIZONTAL_CARD_HEIGHT};
+    border-top-left-radius: ${BORDER_RADIUS};
+    border-bottom-left-radius: ${BORDER_RADIUS};
+    border-top-right-radius: initial;
+  }
 `
 
 const Body = styled.div<{ $hasThumbnail: boolean }>`
-  display: flex;
-  flex-direction: column;
+  height: 100%;
+  width: 100%;
 
-  ${({ $hasThumbnail }) =>
-    $hasThumbnail
-      ? css`
-          padding: 5px 24px 24px;
+  ${({ $hasThumbnail, theme }) =>
+    $hasThumbnail &&
+    css`
+      height: calc(100% - ${THUMBNAIL_HEIGHT}px);
 
-          height: calc(100% - ${THUMBNAIL_HEIGHT}px);
-        `
-      : css`
-          padding: 24px;
-
-          height: calc(100%);
-        `};
+      ${theme.media.mobile} {
+        height: 100%;
+        width: 100%;
+      }
+    `};
 `

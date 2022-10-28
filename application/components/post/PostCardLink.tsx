@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { POST_DIRECTORY } from 'domain/post/constant'
 import Post from 'domain/post/type'
@@ -18,7 +18,13 @@ const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
       as={`/${POST_DIRECTORY}/${slug}`}
       passHref
     >
-      <PostCardLink.Card thumbnailSrc={data.thumbnailSrc}>
+      <PostCardLink.Card
+        src={
+          !!data.thumbnailSrc
+            ? require(`/public/thumbnail/${data.thumbnailSrc}`)
+            : ''
+        }
+      >
         <PostCardLink.Content {...data} />
       </PostCardLink.Card>
     </Link>
@@ -33,10 +39,10 @@ PostCardLink.Content = function Component(content: Post['data']) {
   const { title, createDate, description, tag, thumbnailSrc } = content
 
   return (
-    <Content>
+    <Content hasThumbnail={!!thumbnailSrc}>
       <Top>
         <Title>{title}</Title>
-        <Desc hasThumbnail={!!thumbnailSrc}>{description}</Desc>
+        <Desc>{description}</Desc>
       </Top>
       <Bottom>
         <TagLink tag={tag} type="hash">
@@ -48,31 +54,70 @@ PostCardLink.Content = function Component(content: Post['data']) {
   )
 }
 
-const Content = styled.div`
+const Desc = styled.p`
+  ${({ theme }) => theme.font.body_2};
+  color: ${({ theme }) => theme.color.lightBlack};
+`
+
+const Content = styled.div<{ hasThumbnail: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+
+  ${({ hasThumbnail, theme }) =>
+    hasThumbnail
+      ? css`
+          padding: 12px 24px 24px;
+
+          ${theme.media.mobile} {
+            padding: 24px 24px 24px 12px;
+          }
+
+          ${Title} {
+            ${limitTextLine(1)}
+            ${theme.media.mobile} {
+              ${limitTextLine(2)}
+            }
+          }
+
+          ${Desc} {
+            ${limitTextLine(3)}
+            ${theme.media.tablet} {
+              ${limitTextLine(2)}
+            }
+            ${theme.media.mobile} {
+              ${limitTextLine(3)}
+            }
+          }
+        `
+      : css`
+          padding: 24px;
+
+          ${Title} {
+            ${limitTextLine(2)}
+          }
+
+          ${Desc} {
+            ${limitTextLine(6)}
+            ${theme.media.tablet} {
+              ${limitTextLine(5)}
+            }
+            ${theme.media.mobile} {
+              ${limitTextLine(3)}
+            }
+          }
+        `};
 `
 
 const Top = styled.div`
   display: grid;
-  gap: 4px;
-  margin-top: 4px;
+  gap: 10px;
 `
 
 const Title = styled.h3`
   ${({ theme }) => theme.font.subtitle_1};
   color: ${({ theme }) => theme.color.black};
-
-  ${limitTextLine(1)}
-`
-
-const Desc = styled.p<{ hasThumbnail: boolean }>`
-  ${({ theme }) => theme.font.body_2};
-  color: ${({ theme }) => theme.color.lightBlack};
-
-  ${({ hasThumbnail }) => (hasThumbnail ? limitTextLine(3) : limitTextLine(6))}
 `
 
 const Bottom = styled.div`

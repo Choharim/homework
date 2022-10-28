@@ -26,7 +26,7 @@ const TagFilter = () => {
 
 export default TagFilter
 
-const TagButtonContainer = styled.nav`
+const TagButtonContainer = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -44,9 +44,10 @@ const CircleTagLink = styled(TagLink)<{ $active: boolean; tag?: Tag }>`
   align-items: center;
   justify-content: center;
   ${({ theme }) => theme.font.body_1}
-  padding: 8px 24px;
+  padding: 5px 18px;
   border-radius: 40px;
   white-space: nowrap;
+  border: 1px solid transparent;
 
   ${({ $active, tag }) =>
     $active &&
@@ -58,8 +59,7 @@ const CircleTagLink = styled(TagLink)<{ $active: boolean; tag?: Tag }>`
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
-      padding: 6px 20px;
-      ${theme.font.body_2}
+      ${theme.font.body_1}
     }
   `}
 `

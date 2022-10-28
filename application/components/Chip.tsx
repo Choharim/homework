@@ -15,6 +15,6 @@ const Wrapper = styled.div`
   padding: 2px 8px;
 
   color: ${({ theme }) => theme.color.lightBlack};
-  ${({ theme }) => theme.font.body_5};
+  ${({ theme }) => theme.font.body_4};
   cursor: pointer;
 `
