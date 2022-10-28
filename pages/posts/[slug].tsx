@@ -70,9 +70,7 @@ export const getStaticProps = async (
 
   const { data, content } = getPost(slug)
 
-  const mdxSource = await serialize(content, {
-    scope: data,
-  })
+  const mdxSource = await serialize(content)
 
   return {
     props: {
