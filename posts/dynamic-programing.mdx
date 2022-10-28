@@ -20,7 +20,7 @@ function pibonachi(n) {
 
 pibonachi(6)을 호출하면 실행된 함수의 트리를 그려보면 다음과 같다.
 
-<Picture src="dynamic-programing_1.png" alt="재귀 트리" />
+<Picture src="dynamic-programing1.png" alt="재귀 트리" />
 
 여기서 먼저 실행되었던 f(4), f(3), f(2), f(1), f(0)이 수차례 재실행되는 것을 볼 수 있다. 이런 중복 실행으로 인해 시간 복잡도는 O(2^n)으로 매우 좋지 않다. 전에 실행되어 얻은 값을 재사용할 순 없을까? 재귀의 시간 복잡도를 최적화 해주는 방법을 알아보자.
 
@@ -84,7 +84,7 @@ function pibonachi(n, obj = {}) {
 
 메모이제이션을 통해 재귀 함수의 호출을 나타낸 트리이다. 함수 호출 횟수가 대폭 감소했다는 것을 알 수 있다. 시간 복잡도가 O(2^n)에서 O(n)으로 줄었다.
 
-<Picture src="dynamic-programing_2.png" alt="다이나믹 프로그래밍 - 재귀 트리" />
+<Picture src="dynamic-programing2.png" alt="다이나믹 프로그래밍 - 재귀 트리" />
 
 ## 동적 프로그래밍 - 상향식
 
