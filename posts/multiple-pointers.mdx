@@ -343,21 +343,19 @@ function averagePair(sortedArray, avg) {
 
 ```jsx
 /**
- * 시간 복잡도: O(n)
+ * 시간 복잡도: O(n + m)
  * 공간 복잡도: O(1)
  */
-function isSubsequence(word, sentence) {
-  let wordPointer = 0
+function isSubsequence(words, sentence) {
+  if (!words.length) return true
+  if (words.length > sentence.length) return false
 
-  if (sentence.length < word.length) return false
-
-  for (const char of sentence) {
-    if (word[wordPointer] === char) {
-      wordPointer++
-
-      if (wordPointer === word.length) return true
-    } else {
-      wordPointer = 0
+  for (let i = 0; i < sentence.length; i++) {
+    for (let j = 0; j < words.length; j++) {
+      if (words[j] !== sentence[i + j]) {
+        break
+      }
+      if (j === words.length - 1) return true
     }
   }
 
