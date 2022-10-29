@@ -29,7 +29,7 @@ Card.displayName = 'Card'
 
 export default Card
 
-const THUMBNAIL_HEIGHT = 130
+const THUMBNAIL_HEIGHT = '130px'
 const BORDER_RADIUS = '10px'
 
 const Wrapper = styled.article`
@@ -56,7 +56,7 @@ const Wrapper = styled.article`
 const CustomThumbnail = styled(Thumbnail)`
   border-top-left-radius: ${BORDER_RADIUS};
   border-top-right-radius: ${BORDER_RADIUS};
-  height: ${THUMBNAIL_HEIGHT}px;
+  height: ${THUMBNAIL_HEIGHT};
 
   ${({ theme }) => theme.media.mobile} {
     display: none;
@@ -70,7 +70,7 @@ const Body = styled.div<{ $hasThumbnail: boolean }>`
   ${({ $hasThumbnail, theme }) =>
     $hasThumbnail &&
     css`
-      height: calc(100% - ${THUMBNAIL_HEIGHT}px);
+      height: calc(100% - ${THUMBNAIL_HEIGHT});
 
       ${theme.media.mobile} {
         height: 100%;
