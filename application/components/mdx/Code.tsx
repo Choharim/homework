@@ -180,6 +180,7 @@ const LineContainer = styled.div`
 const Line = styled.div<{ $isHighlight: boolean }>`
   display: flex;
   flex-wrap: wrap;
+  white-space: pre-wrap;
 
   ${({ $isHighlight }) =>
     $isHighlight &&
