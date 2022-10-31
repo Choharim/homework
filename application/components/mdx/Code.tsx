@@ -136,44 +136,45 @@ const CopyCodeButton = styled.button`
 
 const LineContainer = styled.div`
   width: 100%;
+  font-size: 14px;
+  line-height: 1.3rem;
 
-  ${({ theme }) => theme.font.body_1};
   padding: 0;
-
-  ${({ theme }) => css`
-    ${theme.media.tablet} {
-      ${theme.font.body_2}
-    }
-  `}
 
   .comment {
     color: #999 !important;
   }
+  .function,
+  .method {
+    color: #7fa6f9 !important;
+  }
   .imports.maybe-class-name {
     color: #f8f8f2 !important;
   }
-  .keyword {
-    color: #c490e5 !important;
-  }
-  .function {
-    color: #81a9fd !important;
-  }
-  .parameter,
   .maybe-class-name {
     color: #ffcb6b !important;
   }
-  .module {
+
+  .keyword,
+  .punctuation {
+    color: #b283cf !important;
+  }
+  .module,
+  .control-flow,
+  .operator {
     color: #88deff !important;
   }
+
+  .plain,
+  .literal-property {
+    color: #eeffff !important;
+  }
+
   .string {
     color: #c0e58b !important;
   }
-
-  .literal-property {
-    color: #f8f8f2 !important;
-  }
-  .plain {
-    color: #e8f8f9 !important;
+  .number {
+    color: #f2896a !important;
   }
 `
 
