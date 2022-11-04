@@ -1,0 +1,266 @@
+---
+title: 단일 연결 리스트
+description: 컴퓨터 메모리에 흩어져 있는 노드를 연결시키는, 노드 기반 자료구조 단일 연결 리스트에 대해 알아보자.
+createDate: 2022.11.4
+tag: 자료구조
+---
+
+## 배열 vs 연결 리스트
+
+1. 배열은 연속된 셀 그룹으로 메모리를 차지하고 있는 반면, 연결 리스트는 메모리 곳곳에 흩어져 있는 데이터를 연결 시키는 구조이다.
+2. 배열은 index가 존재하여 index로 데이터에 한 번에 접근할 수 있지만, 연결 리스트는 index가 존재하지 않고 다음/이전 메모리 주소를 기억해 이를 이용한다.  
+   단일 연결 리스트는 다음 데이터의 메모리 주소의 포인터 (링크)를 포함하고 있어 다음 데이터를 알 수 있다. 이중 연결 리스트는 이전 데이터의 링크도 포함하고 있어 이전/다음으로 연결된 데이터에 접근 할 수 있다.
+
+## 단일 연결 리스트
+
+<Picture src="singly-linked-list1.png" />
+
+- 연결 리스트에서 첫번째로 연결된 노드를 head, 가장 마지막 노드를 tail로 지정하고 전체 노드의 갯수 length를 저장한다.
+
+```jsx
+class SinglyLinkedList {
+  constructor() {
+    this.head = null
+    this.tail = null
+    this.length = 0
+  }
+}
+```
+
+- 연결할 노드 는 값, 다음 데이터를 포함하고 있다.
+
+```jsx
+class Node {
+  constructor(value) {
+    this.value = value
+    this.next = null
+  }
+}
+```
+
+연결 리스트 구조를 자세히 보면 다음과 같다.
+
+<Picture src="singly-linked-list2.png" height={350} />
+
+### 읽기
+
+연결 리스트에 index가 없지만, 배열 처럼 index로 노드를 찾아보자.
+
+1. index 범위를 벗어나면 undefined를 리턴한다.
+2. head부터 시작하여 next 포인터를 이용해 다음 노드에 접근하며 해당 index의 노드를 알아낸다.
+
+⇒ 배열의 경우 읽기는 시간 복잡도 O(1)이지만, 연결 리스트는 `O(n)`이다.
+
+```jsx
+class SinglyLinkedList {
+  constructor() {
+    this.head = null
+    this.tail = null
+    this.length = 0
+  }
+
+  read(index) {
+    if (typeof index !== 'number' || index < 0 || index >= this.length)
+      return undefined
+
+    let target = this.head
+
+    for (let i = 1; i <= index; i++) {
+      target = target.next
+    }
+
+    return target
+  }
+}
+```
+
+### 검색
+
+특정 value를 갖는 노드의 index를 찾아보자. 노드가 없으면 -1을 반환하자.
+
+1. head부터 시작하여 길이만큼 해당 value를 가진 노드가 나타날 때까지 확인한다.
+
+⇒ 배열과 동일하게 시간 복잡도 `O(n)` 이다.
+
+```jsx
+class SinglyLinkedList {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
+  }
+
+...
+
+  search(value) {
+    let target = this.head;
+
+    for (let i = 0; i < this.length; i++) {
+      if (target.value === value) return i;
+
+      target = target.next;
+    }
+
+    return -1;
+  }
+}
+```
+
+### 삽입
+
+1. 첫번째에 삽입되는 경우, 새로 삽입된 노드는 이전 head를 가리키고 head가 된다.
+2. 마지막에 삽입되는 경우, 이전 tail은 새 노드를 가리키고 새 노드가 tail이 된다.
+3. index가 0보다 작거나 길이보다 큰 경우 연결할 수 없으므로 실행하지 않는다.
+4. 그외 삽입하는 경우, 삽입될 index의 전 노드가 새 노드를 가리키고 새 노드가 전 index 노드를 가리킨다.
+
+⇒ 배열은 첫번째 삽입 시간 복잡도는 O(n), 마지막 O(1), 중간 O(n)이지만, 연결 리스트는 `첫번째 삽입 O(1)`, `마지막 삽입O(1)`, `중간 삽입 O(n)`이다.
+
+```jsx
+class SinglyLinkedList {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
+  }
+
+...
+
+  push(value) {
+    const newTail = new Node(value);
+    const oldTail = this.tail;
+
+    if (!oldTail) {
+      this.head = newTail;
+    } else {
+      oldTail.next = newTail;
+    }
+
+    this.tail = newTail;
+    this.length++;
+
+    return this;
+  }
+
+  unshift(value) {
+    const newHead = new Node(value);
+    const oldHead = this.head;
+
+    if (!oldHead) {
+      this.tail = newHead;
+    } else {
+      newHead.next = oldHead;
+    }
+
+    this.head = newHead;
+    this.length++;
+
+    return this;
+  }
+
+  insert(index, value) {
+    if (index === 0) {
+      return this.unshift(value);
+    } else if (index === this.length) {
+      return this.push(value);
+    } else {
+      const frontNode = this.read(index - 1);
+
+      if (!frontNode) return;
+
+      const backNode = frontNode.next;
+      const newNode = new Node(value);
+
+      frontNode.next = newNode;
+      newNode.next = backNode;
+      this.length++;
+
+      return this;
+    }
+  }
+}
+```
+
+### 삭제
+
+1. 첫번째 노드가 삭제되는 경우, head의 다음 노드가 새로운 head가 된다.  
+   제거되는 노드가 tail일 때 tail을 null로 초기화 한다. (제거되는 노드가 tail일 때 head의 next가 null이므로 새로운 head도 null로 초기화 된다.)
+2. 마지막 노드가 삭제되는 경우, tail의 앞 노드가 새로운 tail이 되고 앞 노드의 next를 null로 초기화하여 연결을 끊어야 한다. 때문에 tail의 앞 노드를 알아내기 위해 head부터 마지막 직전까지 노드를 읽어내야 한다. tail의 앞 노드가 없을 경우 전체 길이가 1이므로 head와 tail을 null로 초기화 한다.
+3. 삭제하려는 index의 노드의 앞 노드와 뒤 노드를 연결해야 한다.  
+   앞 노드가 존재하지 않을 경우, 삭제하려는 index 노드가 존재하지 않기 때문에 undefined를 리턴한다.  
+   앞 노드의 next를 다음 노드로 지정한다.
+
+⇒ 배열의 경우 첫번째 요소를 삭제할 때 시간 복잡도 O(n), 마지막 요소 삭제는 O(1), 중간 요소는 O(n)이다. 연결 리스트는 `첫번째 요소 삭제는 O(1)`, `마지막 요소 삭제는 O(n)`, `중간 요소는 O(n)`이다.
+
+```jsx
+class SinglyLinkedList {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
+  }
+
+...
+
+  shift() {
+    if (!this.length) return undefined;
+
+    const removed = this.head;
+    const newHead = this.head.next;
+
+    if (!newHead) {
+      this.tail = null;
+    }
+
+    this.head = newHead;
+    this.length--;
+
+    return removed;
+  }
+
+  pop() {
+    if (!this.length) return undefined;
+
+    const frontOfLast = this.read(this.length - 2);
+
+    let removed;
+
+    if (!frontOfLast) {
+      removed = this.head;
+
+      this.head = null;
+      this.tail = null;
+    } else {
+      removed = frontOfLast.next;
+
+      frontOfLast.next = null;
+      this.tail = frontOfLast;
+    }
+
+    this.length--;
+
+    return removed;
+  }
+
+  remove(index) {
+    if (index === 0) {
+      return this.shift();
+    } else if (index === this.length - 1) {
+      return this.pop();
+    } else {
+      const front = this.read(index - 1);
+
+      if (!front) {
+        return undefined;
+      } else {
+        const removed = front.next;
+        const back = removed.next;
+
+        front.next = back;
+        this.length--;
+
+        return removed;
+      }
+    }
+  }
+}
+```

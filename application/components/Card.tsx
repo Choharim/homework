@@ -3,8 +3,6 @@ import styled, { css } from 'styled-components'
 
 import Thumbnail from './Thumbnail'
 
-const THUMBNAIL_HEIGHT = 130
-
 interface Props extends DOMAttributes<HTMLDivElement> {
   src?: string
 }
@@ -31,8 +29,8 @@ Card.displayName = 'Card'
 
 export default Card
 
+const THUMBNAIL_HEIGHT = '130px'
 const BORDER_RADIUS = '10px'
-const HORIZONTAL_CARD_HEIGHT = '250px'
 
 const Wrapper = styled.article`
   width: 100%;
@@ -51,22 +49,17 @@ const Wrapper = styled.article`
   }
 
   ${({ theme }) => theme.media.mobile} {
-    display: flex;
-    height: ${HORIZONTAL_CARD_HEIGHT};
+    height: 250px;
   }
 `
 
 const CustomThumbnail = styled(Thumbnail)`
   border-top-left-radius: ${BORDER_RADIUS};
   border-top-right-radius: ${BORDER_RADIUS};
-  height: ${THUMBNAIL_HEIGHT}px;
+  height: ${THUMBNAIL_HEIGHT};
 
   ${({ theme }) => theme.media.mobile} {
-    height: 100%;
-    min-width: ${HORIZONTAL_CARD_HEIGHT};
-    border-top-left-radius: ${BORDER_RADIUS};
-    border-bottom-left-radius: ${BORDER_RADIUS};
-    border-top-right-radius: initial;
+    display: none;
   }
 `
 
@@ -77,11 +70,10 @@ const Body = styled.div<{ $hasThumbnail: boolean }>`
   ${({ $hasThumbnail, theme }) =>
     $hasThumbnail &&
     css`
-      height: calc(100% - ${THUMBNAIL_HEIGHT}px);
+      height: calc(100% - ${THUMBNAIL_HEIGHT});
 
       ${theme.media.mobile} {
         height: 100%;
-        width: 100%;
       }
     `};
 `
