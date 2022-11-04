@@ -1,0 +1,246 @@
+---
+title: 이중 연결 리스트
+description: 각 노드에서 다음 노드와 이전 노드를 링크하는 것이 이중 연결 리스트이다. 이전 노드에도 접근이 가능해 앞/뒤로 이동을 할 수 있어 단일 연결 리스트보다 유연하다.
+createDate: 2022.11.4
+tag: 자료구조
+---
+
+<Picture src="double-linked-list.png" />
+
+- 이중 연결 리스트는 첫번째 노드 head, 마지막 노드 tail, 전체 노드 갯수 length를 갖는다 (단일 연결 리스트와 동일하다.)
+
+```jsx
+class DoubleLinkedList {
+  constructor() {
+    this.head = null
+    this.tail = null
+    this.length = 0
+  }
+}
+```
+
+- 노드는 값, 이전 노드, 다음 노드를 갖는다.
+
+```jsx
+class Node {
+  constructor(value) {
+    this.value = value
+    this.prev = null
+    this.next = null
+  }
+}
+```
+
+### 읽기
+
+특정 index 위치에 있는 노드를 찾는다.
+
+단일 연결 리스트의 경우, 뒤로만 이동이 가능했기 때문에 head부터 시작하여 next를 이용해 타켓을 찾아야 했다.  
+이중 연결 리스트의 경우, 앞으로도 이동이 가능하므로 index가 중간보다 크면 tail부터 시작하여 타겟을 찾을 수 있다.
+
+1. index가 중간 index 초과일 때, tail부터 시작하여 prev를 이용해 해당 index 노드에 접근한다.
+2. index가 중간 index 이하일 때, head부터 시작하여 next를 이용해 해당 index 노드에 접근한다.
+
+⇒ 단일 연결 리스트와 시간 복잡도가 `O(n)`으로 동일하지만, index의 위치에 따라 시작점을 head와 tail중 가까운 곳을 선택해 단계수를 줄 일 수 있다.
+
+```jsx
+class DoubleLinkedList {
+  constructor() {
+    this.head = null
+    this.tail = null
+    this.length = 0
+  }
+
+  read(index) {
+    if (typeof index !== 'number' || index < 0 || index >= this.length)
+      return undefined
+
+    const isOverHalf = this.length / 2 <= index
+    let target
+
+    if (isOverHalf) {
+      target = this.tail
+
+      for (let i = this.length - 1; i > index; i--) {
+        target = target.prev
+      }
+    } else {
+      target = this.head
+
+      for (let i = 0; i < index; i++) {
+        target = target.next
+      }
+    }
+
+    return target
+  }
+}
+```
+
+### 삽입
+
+1. 첫번째에 삽입되는 경우, 이전 head의 prev는 새 head를 가리키고 새 head의 next는 이전 head를 가리킨다.
+   이전 head가 없을 경우, tail에 새 head를 지정해 주어야 한다.
+2. 마지막에 삽입되는 경우, 이전 tail의 next는 새 tail을 가리키고 새 tail의 prev는 이전 tail을 가리킨다.  
+   이전 tail이 없을 경우, 새 tail과의 연결 작업을 하지 않고 head에 새 tail을 지정해 주어야 한다.
+3. 삽입하고자 하는 index의 앞 노드가 없을 경우, 범위를 벗어난 index에 삽입하는 경우이므로 undefined를 리턴한다.  
+   앞 노드의 next는 추가 노드를, 추가 노드의 prev는 앞 노드를 가리킨다. 추가 노드의 next는 뒤 노드를, 뒤 노드의 prev는 추가 노드를 가리킨다.
+
+⇒ 단일 연결 리스트와 동일하게 `첫번째 O(1)`, `중간O(n)` ,`마지막 O(1)`이 된다.
+
+```jsx
+class DoubleLinkedList {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
+  }
+
+...
+
+  unshift(value) {
+    const oldHead = this.head;
+    const newHead = new Node(value);
+
+    if (!oldHead) {
+      this.tail = newHead;
+    } else {
+      oldHead.prev = newHead;
+      newHead.next = oldHead;
+    }
+    this.head = newHead;
+    this.length++;
+
+    return this;
+  }
+
+  push(value) {
+    const oldTail = this.tail;
+    const newTail = new Node(value);
+
+    if (!oldTail) {
+      this.head = newTail;
+    } else {
+      oldTail.next = newTail;
+      newTail.prev = oldTail;
+    }
+
+    this.tail = newTail;
+    this.length++;
+
+    return this;
+  }
+
+  insert(index, value) {
+    if (index === 0) {
+      return this.unshift(value);
+    } else if (index === this.length) {
+      return this.push(value);
+    } else {
+      const front = this.read(index - 1);
+
+      if (!front) {
+        return undefined;
+      } else {
+        const back = front.next;
+        const newNode = new Node(value);
+
+        front.next = newNode;
+        newNode.prev = front;
+        newNode.next = back;
+        back.prev = newNode;
+
+        this.length++;
+
+        return this;
+      }
+    }
+  }
+}
+```
+
+### 삭제
+
+1.  첫번째 노드를 삭제하는 경우, 제거될 현재 head의 다음 노드가 없을 경우 tail을 null로 초기화 한다.  
+    다음 노드가 있을 경우, 새로운 head가 되고 제거될 이전 노드와의 연결을 끊는다.
+2.  마지막 노드를 삭제하는 경우, 제거될 현재 tail의 이전 노드가 없을 경우 head를 null로 초기화 한다.  
+    이전 노드가 있을 경우, 새로운 tail이 되고 제거될 다음 노드와의 연결을 끊는다.
+3.  제거될 index의 노드가 있을 때만 실행한다.  
+     이전 노드와 다음 노드와 연결을 해주고, 제거될 노드의 이전/다음 연결을 끊는다.
+
+⇒ 단일 연결 리스트의 경우 첫번째는 O(1), 중간 O(n), 마지막 O(n)었지만 이중 연결 리스트는 `첫번째 O(1)` , `중간 O(n)`, `마지막 O(1)`이다.
+
+```jsx
+class DoubleLinkedList {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
+  }
+
+...
+
+  shift() {
+    if (!this.length) return undefined;
+
+    const removed = this.head;
+    const newHead = removed.next;
+
+    if (!newHead) {
+      this.tail = null;
+    } else {
+      newHead.prev = null;
+      removed.next = null;
+    }
+    this.head = newHead;
+    this.length--;
+
+    return removed;
+  }
+
+  pop() {
+    if (!this.length) return undefined;
+
+    const removed = this.tail;
+    const newTail = removed.prev;
+
+    if (!newTail) {
+      this.head = null;
+    } else {
+      newTail.next = null;
+      removed.prev = null;
+    }
+    this.tail = newTail;
+    this.length--;
+
+    return removed;
+  }
+
+  remove(index) {
+    if (index === 0) {
+      return this.shift();
+    } else if (index === this.length - 1) {
+      return this.pop();
+    } else {
+      const removed = this.read(index);
+
+      if (!removed) return undefined;
+
+      const front = removed.prev;
+      const back = removed.next;
+      front.next = back;
+      back.prev = front;
+      removed.prev = null;
+      removed.next = null;
+
+      this.length--;
+
+      return removed;
+    }
+  }
+}
+```
+
+## 단일 연결 리스트 vs 이중 연결 리스트
+
+뒤로만 이동할 수 있는 단일 연결 리스트와는 다르게 앞/뒤로 이동할 수 있는 이중 연결 리스트의 경우 더 적은 단계로 검색 및 삭제가 가능하다. 대신 각 노드에 이전 노드를 가리키는 링크를 포함해야 하므로 `더 많은 메모리를 차지`하는 단점이 있다.
