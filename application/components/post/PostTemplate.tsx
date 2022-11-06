@@ -31,7 +31,7 @@ const PostTemplate = ({ data, children }: Props) => {
             src={require(`/public/thumbnail/${thumbnailSrc}`)}
             layout="responsive"
             width={`${deviceSize.pc}px`}
-            height="300px"
+            height={330}
             objectFit="contain"
             placeholder="blur"
           />

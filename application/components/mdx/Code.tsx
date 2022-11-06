@@ -75,7 +75,7 @@ const Code = ({ className, children }: Props) => {
                   $isHighlight={isHighlightLine(i)}
                 >
                   {line.map((token, key) => (
-                    <span key={key} {...getTokenProps({ token, key })} />
+                    <CodeText key={key} {...getTokenProps({ token, key })} />
                   ))}
                 </Line>
               ))}
@@ -178,6 +178,8 @@ const LineContainer = styled.div`
   }
 `
 
+const CodeText = styled.span``
+
 const Line = styled.div<{ $isHighlight: boolean }>`
   display: flex;
   flex-wrap: wrap;
@@ -191,5 +193,11 @@ const Line = styled.div<{ $isHighlight: boolean }>`
 
   &:hover {
     background-color: rgb(53, 59, 69);
+  }
+
+  &:last-child {
+    ${CodeText} {
+      display: none !important;
+    }
   }
 `

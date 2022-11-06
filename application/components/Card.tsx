@@ -57,6 +57,7 @@ const CustomThumbnail = styled(Thumbnail)`
   border-top-left-radius: ${BORDER_RADIUS};
   border-top-right-radius: ${BORDER_RADIUS};
   height: ${THUMBNAIL_HEIGHT};
+  background-color: ${({ theme }) => theme.color.black};
 
   ${({ theme }) => theme.media.mobile} {
     display: none;
