@@ -1,7 +1,7 @@
 ---
 title: 동적 프로그래밍
 description: 하위 문제가 중첩되는 재귀 문제의 시간 복잡도를 줄여주는 동적 프로그래밍에 대해 알아보자.
-createDate: '2022.10.21'
+createDate: 2022.10.21
 tag: 알고리즘
 ---
 
@@ -110,7 +110,7 @@ function fibonacci(n) {
 
 ## 문제로 확인해보자
 
-> **문제 - 다음 함수에서 불필요한 재귀를 없애라.**
+> **문제** - 다음 함수에서 불필요한 재귀를 없애라.
 
 ```jsx
 function addUntil_100(array) {
@@ -122,7 +122,7 @@ function addUntil_100(array) {
 }|
 ```
 
-**[풀이 1] - 호출이 필요한 재귀함수 변수에 저장하기**
+**[풀이 1]** - 호출이 필요한 재귀함수 변수에 저장하기
 
 ```jsx
 function addUntil_100(array) {
@@ -136,7 +136,7 @@ function addUntil_100(array) {
 }
 ```
 
-**[풀이 2] - 인수에 저장하기**
+**[풀이 2]** - 인수에 저장하기
 
 ```jsx
 function addUntil_100(array, sum = 0) {
@@ -150,7 +150,7 @@ function addUntil_100(array, sum = 0) {
 }
 ```
 
-**[풀이 3] - helper함수 이용하기**
+**[풀이 3]** - helper함수 이용하기
 
 ```jsx
 function addUntil_100(array) {
@@ -172,7 +172,7 @@ function addUntil_100(array) {
 }
 ```
 
-> **문제 - 다음 함수에서 불필요한 재귀를 없애라.**
+> **문제** - 다음 함수에서 불필요한 재귀를 없애라.
 
 ```jsx
 function golomn(n) {
@@ -202,7 +202,7 @@ function golomn(n) {
 }
 ```
 
-> **문제 - n행 m열의 최단 경로의 수를 메모이제이션으로 개선해라.**
+> **문제** - n행 m열의 최단 경로의 수를 메모이제이션으로 개선해라.
 
 ```jsx
 function uniquePath(n, m) {
@@ -212,33 +212,7 @@ function uniquePath(n, m) {
 }
 ```
 
-**[풀이1]**
-
-```jsx
-function uniquePath(n, m) {
-  function recursion(n, m, obj = {}) {
-    if (n === 1 || m === 1) return 1
-
-    if (obj[n]?.[m]) {
-      return obj[n][m]
-    } else {
-      obj = {
-        ...obj,
-        [n]: {
-          ...obj[n],
-          [m]: recursion(n, m - 1, obj) + recursion(n - 1, m, obj),
-        },
-      }
-
-      return obj[n][m]
-    }
-  }
-
-  return recursion(n, m)
-}
-```
-
-**[풀이2]**
+**[풀이]**
 
 ```jsx
 function uniquePath(n, m) {
