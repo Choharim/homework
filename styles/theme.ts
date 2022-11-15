@@ -37,21 +37,26 @@ export const color = {
 export const font = {
   header_1: {
     fontSize: '34px',
-    lineHeight: '1.1em',
+    lineHeight: '1.0em',
     fontWeight: 700,
   },
   header_2: {
-    fontSize: '30px',
-    lineHeight: '1.2em',
+    fontSize: '29px',
+    lineHeight: '1.1em',
     fontWeight: 700,
   },
   header_3: {
-    fontSize: '26px',
+    fontSize: '25px',
+    lineHeight: '1.2em',
+    fontWeight: 700,
+  },
+  header_4: {
+    fontSize: '22px',
     lineHeight: '1.3em',
     fontWeight: 700,
   },
   subtitle_1: {
-    fontSize: '22px',
+    fontSize: '20px',
     lineHeight: '1.4em',
     fontWeight: 600,
   },
@@ -60,25 +65,30 @@ export const font = {
     lineHeight: '1.5em',
     fontWeight: 600,
   },
+  subtitle_3: {
+    fontSize: '17px',
+    lineHeight: '1.6em',
+    fontWeight: 500,
+  },
 
   body_1: {
     fontSize: '16px',
-    lineHeight: '1.6em',
+    lineHeight: '1.7em',
     fontWeight: 500,
   },
   body_2: {
     fontSize: '15px',
-    lineHeight: '1.7em',
+    lineHeight: '1.8em',
     fontWeight: 500,
   },
   body_3: {
     fontSize: '14px',
-    lineHeight: '1.8em',
+    lineHeight: '1.9em',
     fontWeight: 500,
   },
   body_4: {
     fontSize: '13px',
-    lineHeight: '1.9em',
+    lineHeight: '2.0em',
     fontWeight: 500,
   },
 } as const

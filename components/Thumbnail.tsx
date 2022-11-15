@@ -5,10 +5,11 @@ import styled, { css } from 'styled-components'
 export interface ThumbnailProps
   extends Pick<
       ImageProps,
-      'src' | 'width' | 'height' | 'objectFit' | 'placeholder' | 'alt'
+      'src' | 'width' | 'objectFit' | 'placeholder' | 'alt'
     >,
     Pick<HTMLAttributes<HTMLDivElement>, 'className'> {
   layout: 'fill' | 'responsive'
+  height?: number
 }
 
 const Thumbnail = ({
@@ -49,12 +50,12 @@ const Container = styled.div<
 
           ${width &&
           css`
-            width: ${width};
+            width: ${width}px;
           `};
 
           ${height &&
           css`
-            height: ${height};
+            height: ${height}px;
           `}
         `
 

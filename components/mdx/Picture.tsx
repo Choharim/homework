@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { deviceSize } from 'application/constants/common'
-
 import Thumbnail, { ThumbnailProps } from '../Thumbnail'
 
 type Props = Pick<ThumbnailProps, 'src' | 'alt' | 'height'>
@@ -14,10 +12,9 @@ const Picture = ({ src, alt, height }: Props) => {
     <Wrapper>
       <Thumbnail
         src={require(`/public/thumbnail/${src}`)}
-        layout="responsive"
-        width={deviceSize.tablet}
+        layout="fill"
         objectFit="contain"
-        height={height ?? 220}
+        height={height ?? 240}
         alt={alt}
         placeholder="blur"
       />

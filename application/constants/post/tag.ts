@@ -1,5 +1,5 @@
 import { Tag } from 'domain/post/type'
-import { color } from 'application/styles/theme'
+import { color } from 'styles/theme'
 
 export const TAG_COLOR_BY_TYPE: {
   [key in Tag]: {

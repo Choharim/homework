@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components'
 
 import { POST_DIRECTORY } from 'domain/post/constant'
 import Post from 'domain/post/type'
-import { limitTextLine } from 'application/styles/mixin'
+import { limitTextLine } from 'styles/mixin'
 
 import TagLink from './TagLink'
 import Card from '../Card'
@@ -71,7 +71,7 @@ const Content = styled.div<{ hasThumbnail: boolean }>`
           padding: 12px 24px 24px;
 
           ${theme.media.mobile} {
-            padding: 24px 24px 24px 12px;
+            padding: 24px;
           }
 
           ${Title} {
@@ -116,7 +116,7 @@ const Top = styled.div`
 `
 
 const Title = styled.h3`
-  ${({ theme }) => theme.font.subtitle_1};
+  ${({ theme }) => theme.font.header_4};
   color: ${({ theme }) => theme.color.black};
 `
 

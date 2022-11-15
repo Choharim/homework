@@ -2,7 +2,6 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { FrontMatter } from 'domain/post/type'
-import { deviceSize } from 'application/constants/common'
 import { HighlightBlock } from '../mdx/style'
 
 import TagLink from './TagLink'
@@ -29,9 +28,8 @@ const PostTemplate = ({ data, children }: Props) => {
         {!!thumbnailSrc && (
           <Thumbnail
             src={require(`/public/thumbnail/${thumbnailSrc}`)}
-            layout="responsive"
-            width={`${deviceSize.pc}px`}
-            height="300px"
+            layout="fill"
+            height={330}
             objectFit="contain"
             placeholder="blur"
           />
@@ -50,33 +48,36 @@ export default PostTemplate
 const Article = styled.article`
   display: flex;
   flex-direction: column;
+  margin-bottom: 100px;
 
   color: ${({ theme }) => theme.color.lightBlack};
 `
 
 const Header = styled.div`
   display: grid;
-  gap: 15px;
+  gap: 10px;
 `
 
 const Title = styled.h1`
   ${({ theme }) => theme.font.header_1};
   color: ${({ theme }) => theme.color.black};
+  margin-bottom: 15px;
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
       ${theme.font.header_2}
+      margin-bottom: 10px;
     }
   `}
 `
 
 const CreatedTime = styled.time`
-  ${({ theme }) => theme.font.body_1};
+  ${({ theme }) => theme.font.body_2};
   color: ${({ theme }) => theme.color.darkGray};
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
-      ${theme.font.body_2}
+      ${theme.font.body_3}
     }
   `}
 `
@@ -93,14 +94,14 @@ const SummaryBox = styled.div`
   &::before {
     position: absolute;
     top: -20px;
-    left: -20px;
+    left: -18px;
     content: '💡';
-    font-size: 40px;
+    font-size: 38px;
   }
 `
 
 const Summary = styled.p`
-  ${({ theme }) => theme.font.body_1};
+  ${({ theme }) => theme.font.subtitle_3};
 `
 const MDXWrapper = styled.div`
   aside {

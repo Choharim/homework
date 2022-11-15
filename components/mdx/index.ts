@@ -10,11 +10,6 @@ const MDX_STYLE = {
 
     margin: 30px 0 15px;
 
-    &::before {
-      content: '✔️';
-      margin-right: 5px;
-    }
-
     ${({ theme }) => css`
       ${theme.media.tablet} {
         ${theme.font.header_3};
@@ -24,22 +19,22 @@ const MDX_STYLE = {
   h3: styled.h3`
     ${({ theme }) => theme.font.header_3};
 
+    margin: 25px 0 10px;
+
+    ${({ theme }) => css`
+      ${theme.media.tablet} {
+        ${theme.font.header_4};
+      }
+    `}
+  `,
+  h4: styled.h4`
+    ${({ theme }) => theme.font.header_4};
+
     margin: 20px 0 10px;
 
     ${({ theme }) => css`
       ${theme.media.tablet} {
         ${theme.font.subtitle_1};
-      }
-    `}
-  `,
-  h4: styled.h4`
-    ${({ theme }) => theme.font.subtitle_1};
-
-    margin: 15px 0 10px;
-
-    ${({ theme }) => css`
-      ${theme.media.tablet} {
-        ${theme.font.subtitle_2};
       }
     `}
   `,

@@ -1,23 +1,26 @@
 import { InferGetStaticPropsType } from 'next'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { NextPageWithLayout } from './_app'
 import { getAllPosts } from 'domain/post/util'
-import { CardListFrame } from 'application/styles/mixin'
+import { CardListFrame } from 'styles/mixin'
 
-import PostCardLink from 'application/components/post/PostCardLink'
-import Layout from 'application/components/layout/Layout'
+import PostCardLink from 'components/post/PostCardLink'
+import Layout from 'components/layout/Layout'
+import { POST_GROUP_COUNT } from 'application/constants/post/count'
 
 const Home: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ posts }) => {
-  //@todo infinite scroll
   return (
-    <CardList>
-      {posts?.map(({ data, slug }) => (
-        <PostCardLink key={slug} data={data} slug={slug} />
-      ))}
-    </CardList>
+    <>
+      <Title>🔥 최신 글</Title>
+      <CardList>
+        {posts?.map(({ data, slug }) => (
+          <PostCardLink key={slug} data={data} slug={slug} />
+        ))}
+      </CardList>
+    </>
   )
 }
 
@@ -28,13 +31,24 @@ Home.getLayout = function getLayout(page: React.ReactElement) {
 }
 
 export async function getStaticProps() {
-  const posts = getAllPosts()
+  const posts = getAllPosts().slice(0, POST_GROUP_COUNT)
 
   return {
     props: { posts },
   }
 }
 
+const Title = styled.h1`
+  ${({ theme }) => theme.font.header_2}
+  margin-bottom: 30px;
+
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
+      ${theme.font.header_3}
+      margin-bottom: 25px;
+    }
+  `}
+`
 const CardList = styled.div`
   ${CardListFrame}
 `

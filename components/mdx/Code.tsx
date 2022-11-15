@@ -75,7 +75,7 @@ const Code = ({ className, children }: Props) => {
                   $isHighlight={isHighlightLine(i)}
                 >
                   {line.map((token, key) => (
-                    <span key={key} {...getTokenProps({ token, key })} />
+                    <CodeText key={key} {...getTokenProps({ token, key })} />
                   ))}
                 </Line>
               ))}
@@ -103,6 +103,7 @@ const HighlightWrapper = styled.pre`
   padding: ${PADDING_X.pc};
   border-radius: 10px;
   background-color: #212121;
+  overflow-x: auto;
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
@@ -142,7 +143,7 @@ const LineContainer = styled.div`
   padding: 0;
 
   .comment {
-    color: #999 !important;
+    color: #ececec84 !important;
   }
   .function,
   .method {
@@ -178,11 +179,9 @@ const LineContainer = styled.div`
   }
 `
 
-const Line = styled.div<{ $isHighlight: boolean }>`
-  display: flex;
-  flex-wrap: wrap;
-  white-space: pre-wrap;
+const CodeText = styled.span``
 
+const Line = styled.div<{ $isHighlight: boolean }>`
   ${({ $isHighlight }) =>
     $isHighlight &&
     css`
@@ -191,5 +190,11 @@ const Line = styled.div<{ $isHighlight: boolean }>`
 
   &:hover {
     background-color: rgb(53, 59, 69);
+  }
+
+  &:last-child {
+    ${CodeText} {
+      display: none !important;
+    }
   }
 `
