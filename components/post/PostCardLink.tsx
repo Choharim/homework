@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components'
 
 import { POST_DIRECTORY } from 'domain/post/constant'
 import Post from 'domain/post/type'
-import { limitTextLine } from 'application/styles/mixin'
+import { limitTextLine } from 'styles/mixin'
 
 import TagLink from './TagLink'
 import Card from '../Card'

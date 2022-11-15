@@ -142,7 +142,7 @@ const LineContainer = styled.div`
   padding: 0;
 
   .comment {
-    color: #999 !important;
+    color: #ececec84 !important;
   }
   .function,
   .method {

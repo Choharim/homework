@@ -14,9 +14,9 @@ import { NextPageWithLayout } from 'pages/_app'
 import Post from 'domain/post/type'
 import { getFileSlug, getPost, getPostsFilePaths } from 'domain/post/util'
 
-import MDX_STYLE from 'application/components/mdx'
-import Layout from 'application/components/layout/Layout'
-import PostTemplate from 'application/components/post/PostTemplate'
+import MDX_STYLE from 'components/mdx'
+import Layout from 'components/layout/Layout'
+import PostTemplate from 'components/post/PostTemplate'
 
 //@todo - https://nextjs.org/docs/advanced-features/using-mdx
 const Detail: NextPageWithLayout<
