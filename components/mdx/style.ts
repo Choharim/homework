@@ -5,7 +5,7 @@ export const ParagrahFont = css`
 `
 
 export const ListContainer = css`
-  margin: 10px 0 10px 28px;
+  margin: 10px 0 30px 28px;
 
   ${({ theme }) =>
     css`

@@ -43,18 +43,18 @@ const CircleTagLink = styled(TagLink)<{ $active: boolean; tag?: Tag }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  ${({ theme }) => theme.font.body_1}
-  padding: 5px 18px;
+  ${({ theme }) => theme.font.subtitle_3}
+  padding: 5px 15px;
   border-radius: 40px;
   white-space: nowrap;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
 
   ${({ $active, tag }) =>
     $active &&
     css`
       color: ${({ theme }) => theme.color.black};
       background-color: ${TAG_COLOR_BY_TYPE[tag]?.hover};
-      border: 1px solid ${TAG_COLOR_BY_TYPE[tag]?.active};
+      border: 2px solid ${TAG_COLOR_BY_TYPE[tag]?.active};
     `};
 
   ${({ theme }) => css`

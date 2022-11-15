@@ -34,7 +34,7 @@ const isTextMenu = (menu: TextMenu | ImageMenu): menu is TextMenu => {
 const MENUS: Array<TextMenu | ImageMenu> = [
   {
     href: `/${POST_DIRECTORY}`,
-    label: '개발 이야기',
+    label: '개발 글',
     isOutlink: false,
   },
   {
@@ -145,7 +145,7 @@ const MenuContainer = styled.ul`
 
 const MenuText = styled.span`
   color: ${({ theme }) => theme.color.black};
-  ${({ theme }) => theme.font.body_1};
+  ${({ theme }) => theme.font.subtitle_3};
 `
 
 const LinkWrapper = styled.a`

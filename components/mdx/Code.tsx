@@ -103,6 +103,7 @@ const HighlightWrapper = styled.pre`
   padding: ${PADDING_X.pc};
   border-radius: 10px;
   background-color: #212121;
+  overflow-x: auto;
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
@@ -181,10 +182,6 @@ const LineContainer = styled.div`
 const CodeText = styled.span``
 
 const Line = styled.div<{ $isHighlight: boolean }>`
-  display: flex;
-  flex-wrap: wrap;
-  white-space: pre-wrap;
-
   ${({ $isHighlight }) =>
     $isHighlight &&
     css`

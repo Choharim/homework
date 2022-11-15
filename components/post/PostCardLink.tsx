@@ -71,7 +71,7 @@ const Content = styled.div<{ hasThumbnail: boolean }>`
           padding: 12px 24px 24px;
 
           ${theme.media.mobile} {
-            padding: 24px 24px 24px 12px;
+            padding: 24px;
           }
 
           ${Title} {
@@ -116,7 +116,7 @@ const Top = styled.div`
 `
 
 const Title = styled.h3`
-  ${({ theme }) => theme.font.subtitle_1};
+  ${({ theme }) => theme.font.header_4};
   color: ${({ theme }) => theme.color.black};
 `
 

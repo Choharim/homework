@@ -1,5 +1,5 @@
 import { InferGetStaticPropsType } from 'next'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { NextPageWithLayout } from './_app'
 import { getAllPosts } from 'domain/post/util'
@@ -12,10 +12,9 @@ import { POST_GROUP_COUNT } from 'application/constants/post/count'
 const Home: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ posts }) => {
-  //@todo infinite scroll
   return (
     <>
-      <Title>🔥 최신 개발 글</Title>
+      <Title>🔥 최신 글</Title>
       <CardList>
         {posts?.map(({ data, slug }) => (
           <PostCardLink key={slug} data={data} slug={slug} />
@@ -41,7 +40,14 @@ export async function getStaticProps() {
 
 const Title = styled.h1`
   ${({ theme }) => theme.font.header_2}
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
+      ${theme.font.header_3}
+      margin-bottom: 25px;
+    }
+  `}
 `
 const CardList = styled.div`
   ${CardListFrame}

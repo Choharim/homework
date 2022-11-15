@@ -37,7 +37,7 @@ const LayoutFrame = styled.div`
   flex-direction: column;
 `
 const mainStyle = css`
-  padding-top: calc(${NAVBAR_HEIGHT}px + 60px);
+  padding-top: calc(${NAVBAR_HEIGHT}px + 40px);
 `
 
 /**
