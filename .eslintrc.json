@@ -19,10 +19,45 @@
           },
           {
             "target": "./domain",
+            "from": "./components"
+          },
+          {
+            "target": "./domain",
+            "from": "./hooks"
+          },
+          {
+            "target": "./domain",
+            "from": "./styles"
+          },
+          {
+            "target": "./domain",
             "from": "./pages"
+          },
+
+          {
+            "target": "./application",
+            "from": "./components"
           },
           {
             "target": "./application",
+            "from": "./hooks"
+          },
+          {
+            "target": "./application",
+            "from": "./styles"
+          },
+          {
+            "target": "./application",
+            "from": "./pages"
+          },
+
+          {
+            "target": "./hooks",
+            "from": "./pages"
+          },
+
+          {
+            "target": "./components",
             "from": "./pages"
           }
         ]
