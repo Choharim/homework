@@ -45,9 +45,7 @@ PostCardLink.Content = function Component(content: Post['data']) {
         <Desc>{description}</Desc>
       </Top>
       <Bottom>
-        <TagLink tag={tag} type="hash">
-          {tag}
-        </TagLink>
+        <TagLink tag={tag} />
         <CreateDate dateTime={createDate}>{createDate}</CreateDate>
       </Bottom>
     </Content>

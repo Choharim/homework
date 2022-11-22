@@ -11,10 +11,9 @@ import Chip from '../Chip'
 
 interface Props extends DOMAttributes<HTMLDivElement> {
   tag: Tag
-  type?: 'hash' | 'none'
 }
 
-const TagLink = ({ tag, type = 'none', ...rest }: Props) => {
+const TagLink = ({ tag, ...rest }: Props) => {
   const { query } = useRouter()
 
   const updatedQueryTag = useMemo(() => {
@@ -41,7 +40,6 @@ const TagLink = ({ tag, type = 'none', ...rest }: Props) => {
           $hoverColor={TAG_COLOR_BY_TYPE[tag].hover}
           {...rest}
         >
-          {type === 'hash' && '# '}
           {tag}
         </TagLink.Chip>
       </A>
