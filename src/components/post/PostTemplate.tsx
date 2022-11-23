@@ -1,11 +1,13 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { FrontMatter } from 'domain/post/type'
+import { FrontMatter } from '@/domain/post/type'
 import { HighlightBlock } from '../mdx/style'
 
 import TagLink from './TagLink'
 import Thumbnail from '../Thumbnail'
+import Frame from '../layout/Frame'
+import { limitTextLine } from '@/styles/mixin'
 
 type Props = {
   children: React.ReactNode
@@ -18,23 +20,28 @@ const PostTemplate = ({ data, children }: Props) => {
   return (
     <Article>
       <Header>
-        <Title>{title}</Title>
-        {!!tag && <TagLink tag={tag} />}
-        <CreatedTime dateTime={createDate}>{createDate}</CreatedTime>
+        <HeaderFrame>
+          <Title>{title}</Title>
+          <Summary>{description}</Summary>
+
+          {!!tag && <TagLink tag={tag} />}
+          <CreatedTime dateTime={createDate}>{createDate}</CreatedTime>
+        </HeaderFrame>
+      </Header>
+
+      <Frame>
         {!!thumbnailSrc && (
           <Thumbnail
-            src={require(`/public/thumbnail/${thumbnailSrc}`)}
+            src={require(`/public/post/${thumbnailSrc}`)}
             layout="fill"
             height={330}
             objectFit="contain"
             placeholder="blur"
           />
         )}
-      </Header>
-      <SummaryBox>
-        <Summary>{description}</Summary>
-      </SummaryBox>
-      <MDXWrapper>{children}</MDXWrapper>
+
+        <MDXWrapper>{children}</MDXWrapper>
+      </Frame>
     </Article>
   )
 }
@@ -50,6 +57,11 @@ const Article = styled.article`
 `
 
 const Header = styled.div`
+  padding: 100px 0 50px;
+  background-color: ${({ theme }) => theme.color.primary1};
+`
+
+const HeaderFrame = styled(Frame)`
   display: grid;
   gap: 10px;
 `
@@ -57,12 +69,10 @@ const Header = styled.div`
 const Title = styled.h1`
   ${({ theme }) => theme.font.header_1};
   color: ${({ theme }) => theme.color.black};
-  margin-bottom: 15px;
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
       ${theme.font.header_2}
-      margin-bottom: 10px;
     }
   `}
 `
@@ -78,26 +88,10 @@ const CreatedTime = styled.time`
   `}
 `
 
-const SummaryBox = styled.div`
-  position: relative;
-
-  padding: 20px;
-  margin: 20px 0;
-  border-radius: 2px;
-
-  background-color: ${({ theme }) => theme.color.lightPink};
-
-  &::before {
-    position: absolute;
-    top: -20px;
-    left: -18px;
-    content: '💡';
-    font-size: 38px;
-  }
-`
-
 const Summary = styled.p`
   ${({ theme }) => theme.font.subtitle_3};
+  margin: 5px 0 15px;
+  ${limitTextLine(2)}
 `
 const MDXWrapper = styled.div`
   aside {

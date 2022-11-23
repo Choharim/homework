@@ -14,50 +14,52 @@
       {
         "zones": [
           {
-            "target": "./domain",
-            "from": "./application"
+            "target": "./src/domain",
+            "from": "./src/application"
           },
           {
-            "target": "./domain",
-            "from": "./components"
+            "target": "./src/domain",
+            "from": "./src/utils"
           },
           {
-            "target": "./domain",
-            "from": "./hooks"
+            "target": "./src/domain",
+            "from": "./src/constants"
           },
           {
-            "target": "./domain",
-            "from": "./styles"
+            "target": "./src/domain",
+            "from": "./src/hooks"
           },
           {
-            "target": "./domain",
+            "target": "./src/domain",
+            "from": "./src/styles"
+          },
+          {
+            "target": "./src/domain",
+            "from": "./src/components"
+          },
+          {
+            "target": "./src/domain",
             "from": "./pages"
           },
 
           {
-            "target": "./application",
-            "from": "./components"
+            "target": "./src/application",
+            "from": "./src/utils"
           },
           {
-            "target": "./application",
-            "from": "./hooks"
+            "target": "./src/application",
+            "from": "./src/constants"
           },
           {
-            "target": "./application",
-            "from": "./styles"
+            "target": "./src/application",
+            "from": "./src/hooks"
           },
           {
-            "target": "./application",
-            "from": "./pages"
+            "target": "./src/application",
+            "from": "./src/components"
           },
-
           {
-            "target": "./hooks",
-            "from": "./pages"
-          },
-
-          {
-            "target": "./components",
+            "target": "./src/application",
             "from": "./pages"
           }
         ]

@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import Head from 'next/head'
 
-import { KO_NAME } from 'domain/owner/constant'
+import { KO_NAME } from '@/domain/owner/constant'
 
 import Navbar, { NAVBAR_HEIGHT } from './Navbar'
 import Footer, { FOOTER_HEIGHT } from './Footer'
@@ -11,9 +11,10 @@ import Frame from './Frame'
 type Props = {
   children: React.ReactNode
   title?: string
+  resetFrameStyle?: boolean
 }
 
-const Layout = ({ children, title }: Props) => {
+const Layout = ({ children, title, resetFrameStyle }: Props) => {
   return (
     <LayoutFrame>
       <Head>
@@ -22,9 +23,15 @@ const Layout = ({ children, title }: Props) => {
         {/* <meta name="meta name" content="meta content" /> */}
       </Head>
       <Navbar />
-      <Main css={mainStyle} asTag="main">
-        {children}
-      </Main>
+
+      {resetFrameStyle ? (
+        <main>{children}</main>
+      ) : (
+        <Main css={mainStyle} asTag="main">
+          {children}
+        </Main>
+      )}
+
       <Footer />
     </LayoutFrame>
   )

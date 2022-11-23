@@ -5,8 +5,8 @@ import rangeParser from 'parse-numeric-range'
 import { useCallback } from 'react'
 import Image from 'next/image'
 
-import { copyToClipboard } from 'application/utils/copy'
-import { COPY_FAILURE, COPY_SUCCESS } from 'application/constants/common'
+import { copyToClipboard } from '@/utils/copy'
+import { COPY_FAILURE, COPY_SUCCESS } from '@/constants/common'
 
 type Props = {
   children: string

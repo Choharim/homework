@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { EN_NAME } from 'domain/owner/constant'
+import { EN_NAME } from '@/domain/owner/constant'
 
 export const FOOTER_HEIGHT = 100
 
@@ -21,6 +21,8 @@ const Desc = styled.footer`
   justify-content: center;
   width: 100%;
   height: ${FOOTER_HEIGHT}px;
+  margin-top: 50px;
+  background-color: ${({ theme }) => theme.color.primary1};
 
   ${({ theme }) => theme.font.body_2}
 `

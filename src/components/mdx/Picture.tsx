@@ -11,7 +11,7 @@ const Picture = ({ src, alt, height }: Props) => {
   return (
     <Wrapper>
       <Thumbnail
-        src={require(`/public/thumbnail/${src}`)}
+        src={require(`/public/post/${src}`)}
         layout="fill"
         objectFit="contain"
         height={height ?? 300}

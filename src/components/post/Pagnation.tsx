@@ -123,7 +123,7 @@ const PageNumberAtag = styled.a<{ $active: boolean }>`
     $active &&
     css`
       ${PageNumber} {
-        background-color: ${theme.color.darkPink};
+        background-color: ${theme.color.primary1};
       }
       cursor: default;
       pointer-events: none;

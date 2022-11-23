@@ -1,5 +1,5 @@
-import { Tag } from 'domain/post/type'
-import { color } from 'styles/theme'
+import { Tag } from '@/domain/post/type'
+import { color } from '@/styles/theme'
 
 export const TAG_COLOR_BY_TYPE: {
   [key in Tag]: {
@@ -18,3 +18,5 @@ export const TAG_COLOR_BY_TYPE: {
   },
   FE: { base: color.blue, hover: color.darkBlue, active: color.moreDarkBlue },
 }
+
+export const POST_GROUP_COUNT = 6

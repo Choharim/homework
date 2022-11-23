@@ -1,6 +1,7 @@
 import fs from 'fs'
 import matter from 'gray-matter'
 import { join } from 'path'
+
 import { MDX_EXTENSION, POSTS_PATH } from './constant'
 import Post from './type'
 

@@ -10,13 +10,13 @@ import { serialize } from 'next-mdx-remote/serialize'
 import { ParsedUrlQuery } from 'querystring'
 import * as mdx from '@mdx-js/react'
 
+import Post from '@/domain/post/type'
+import { getFileSlug, getPost, getPostsFilePaths } from '@/domain/post/util'
 import { NextPageWithLayout } from 'pages/_app'
-import Post from 'domain/post/type'
-import { getFileSlug, getPost, getPostsFilePaths } from 'domain/post/util'
 
-import MDX_STYLE from 'components/mdx'
-import Layout from 'components/layout/Layout'
-import PostTemplate from 'components/post/PostTemplate'
+import MDX_STYLE from '@/components/mdx'
+import Layout from '@/components/layout/Layout'
+import PostTemplate from '@/components/post/PostTemplate'
 
 //@todo - https://nextjs.org/docs/advanced-features/using-mdx
 const Detail: NextPageWithLayout<
@@ -41,7 +41,11 @@ export default Detail
 Detail.getLayout = function getLayout(
   page: React.ReactElement<Pick<Post, 'data' | 'content'>>
 ) {
-  return <Layout title={page.props.data.title}>{page}</Layout>
+  return (
+    <Layout title={page.props.data.title} resetFrameStyle>
+      {page}
+    </Layout>
+  )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

@@ -1,6 +1,6 @@
 import { DefaultTheme } from 'styled-components'
 
-import { deviceSize } from 'application/constants/common'
+import { DEVICE_SIZE } from '@/constants/common'
 
 export const color = {
   white: '#ffffff',
@@ -14,7 +14,7 @@ export const color = {
   lightBlack: '#4d5052',
   black: '#000000',
 
-  brown: '#b09b88',
+  brown: '#877462',
   ivory: '#faecdd',
 
   lightPink: '#feece8',
@@ -32,11 +32,14 @@ export const color = {
   yellow: '#fdecc8',
   darkYellow: '#fde7c8',
   moreDarkYellow: '#fdcb84',
+
+  primary1: '#FEF0E2',
+  primary2: '#EBD5BE',
 } as const
 
 export const font = {
   header_1: {
-    fontSize: '34px',
+    fontSize: '36px',
     lineHeight: '1.0em',
     fontWeight: 700,
   },
@@ -72,17 +75,17 @@ export const font = {
   },
 
   body_1: {
-    fontSize: '16px',
-    lineHeight: '1.7em',
+    fontSize: '17px',
+    lineHeight: '1.75em',
     fontWeight: 500,
   },
   body_2: {
-    fontSize: '15px',
+    fontSize: '16px',
     lineHeight: '1.8em',
     fontWeight: 500,
   },
   body_3: {
-    fontSize: '14px',
+    fontSize: '15px',
     lineHeight: '1.9em',
     fontWeight: 500,
   },
@@ -94,8 +97,8 @@ export const font = {
 } as const
 
 export const media = {
-  mobile: `@media screen and (max-width: ${deviceSize.tablet}px)`,
-  tablet: `@media screen and (max-width: ${deviceSize.pc}px)`,
+  mobile: `@media screen and (max-width: ${DEVICE_SIZE.tablet}px)`,
+  tablet: `@media screen and (max-width: ${DEVICE_SIZE.pc}px)`,
 } as const
 
 export const theme: DefaultTheme = {

@@ -1,14 +1,20 @@
 import styled, { css } from 'styled-components'
 
-import { BlockQuote, HighlightWord, ListContainer, ParagrahFont } from './style'
+import {
+  BlockQuote,
+  HighlightWord,
+  ListContainer,
+  ParagrahFont,
+  HeaderFont,
+} from './style'
 import Code from './Code'
 import Picture from './Picture'
 
 const MDX_STYLE = {
   h2: styled.h2`
     ${({ theme }) => theme.font.header_2};
-
     margin: 30px 0 15px;
+    ${HeaderFont}
 
     ${({ theme }) => css`
       ${theme.media.tablet} {
@@ -18,8 +24,8 @@ const MDX_STYLE = {
   `,
   h3: styled.h3`
     ${({ theme }) => theme.font.header_3};
-
-    margin: 25px 0 10px;
+    margin: 26px 0 15px;
+    ${HeaderFont}
 
     ${({ theme }) => css`
       ${theme.media.tablet} {
@@ -29,8 +35,8 @@ const MDX_STYLE = {
   `,
   h4: styled.h4`
     ${({ theme }) => theme.font.header_4};
-
-    margin: 20px 0 10px;
+    margin: 22px 0 10px;
+    ${HeaderFont}
 
     ${({ theme }) => css`
       ${theme.media.tablet} {

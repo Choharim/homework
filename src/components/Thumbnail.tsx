@@ -30,7 +30,7 @@ const Thumbnail = ({
         objectFit={objectFit}
         width={layout === 'responsive' ? width : undefined}
         height={layout === 'responsive' ? height : undefined}
-        alt={alt || `${src}_thumbnail`}
+        alt={alt || 'thumbnail'}
         placeholder={placeholder}
       />
     </Container>
@@ -66,6 +66,5 @@ const Container = styled.div<
         `
     }
   }}
-
   background-color: ${({ theme }) => theme.color.white};
 `

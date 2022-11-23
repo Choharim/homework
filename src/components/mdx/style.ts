@@ -1,5 +1,8 @@
 import styled, { css } from 'styled-components'
 
+export const HeaderFont = css`
+  color: ${({ theme }) => theme.color.black};
+`
 export const ParagrahFont = css`
   ${({ theme }) => theme.font.body_1};
 `
@@ -25,10 +28,14 @@ export const BlockQuote = styled.blockquote`
   ${({ theme }) => theme.font.body_1};
 
   border-left: 5px solid ${({ theme }) => theme.color.moreDardPink};
-  background-color: ${({ theme }) => theme.color.pink};
+  background-color: ${({ theme }) => theme.color.lightPink};
   margin: 20px 0;
   padding: 15px 10px 15px 20px;
   border-radius: 2px;
+
+  code {
+    color: ${({ theme }) => theme.color.red};
+  }
 `
 
 export const HighlightBlock = css`
