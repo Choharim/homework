@@ -14,7 +14,7 @@ const Picture = ({ src, alt, height }: Props) => {
         src={require(`/public/thumbnail/${src}`)}
         layout="fill"
         objectFit="contain"
-        height={height ?? 240}
+        height={height ?? 300}
         alt={alt}
         placeholder="blur"
       />

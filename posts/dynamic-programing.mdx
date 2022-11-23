@@ -1,28 +1,101 @@
 ---
 title: 동적 프로그래밍
-description: 하위 문제가 중첩되는 재귀 문제의 시간 복잡도를 줄여주는 동적 프로그래밍에 대해 알아보자.
+description: 중복되는 하위 문제의 결과값을 재활용하면 시간 복잡도를 줄일 수 있다.
 createDate: 2022.10.21
 tag: 알고리즘
 ---
 
 ## 재귀 호출 횟수
 
-피보나치 수열(ex) 0,1,1,2,3,5,8,13,21...)에서 n번째 수를 구하는 함수를 하위 문제를 이용한 재귀로 구현하면 다음과 같다.
+피보나치 수열(ex) 1,1,2,3,5,8,13,21...)에서 n번째 수를 구하는 함수를 하위 문제를 이용한 재귀로 구현하면 다음과 같다.
 
 ```jsx
-function pibonachi(n) {
-  if (n <= 1) return 0
-  if (n === 2) return 1
+function fibonacci(n) {
+  if (n <= 2) return 1
 
-  return pibonachi(n - 2) + pibonachi(n - 1)
+  return fibonacci(n - 2) + fibonacci(n - 1)
 }
 ```
 
-pibonachi(6)을 호출하면 실행된 함수의 트리를 그려보면 다음과 같다.
+<Picture src="dynamic-programing1.png" />
 
-<Picture src="dynamic-programing1.png" alt="재귀 트리" />
+fibonacci(6)을 호출하면 실행된 함수의 트리를 보면, f(4), f(3), f(2), f(1) 가 수차례 재실행되는 것을 볼 수 있다. f(2),f(1)은 기저조건으로 O(1)으로 값을 얻을 수 있지만 f(3),f(4)은 실행될 때마다 재계산된다. n이 1씩 증가할 때마다 약 2배의 재귀 함수가 더 호출되는 상황으로 `시간 복잡도는 O(2^n)` 가 되어 좋지 않다.
 
-여기서 먼저 실행되었던 f(4), f(3), f(2), f(1), f(0)이 수차례 재실행되는 것을 볼 수 있다. 이런 중복 실행으로 인해 시간 복잡도는 O(2^n)으로 매우 좋지 않다. 전에 실행되어 얻은 값을 재사용할 순 없을까? 재귀의 시간 복잡도를 최적화 해주는 방법을 알아보자.
+전에 실행되어 얻은 값을 재사용할 순 없을까? 재귀의 시간 복잡도를 최적화 해주는 방법을 알아보자.
+
+## 동적 프로그래밍
+
+계산했던 결과값을 자료구조에 저장했다가 동일한 문제를 마주했을 때 다시 계산하지 않고 재사용하는 방법이다.
+
+### 동적 프로그래밍을 사용할 수 있는 경우
+
+#### 반복적인 하위 문제가 존재할 경우 (Overlapping Subproblems)
+
+중복되는 하위 문제의 결과값으로 값을 도출할 수 있을 때 이다. 자세히 말해, 하위 문제의 결과값을 이용해 현재의 결과값을 얻을 수 있고 그 과정에서 동일한 하위 문제가 반복될 때를 말한다.
+
+위의 fibonacci 함수가 이에 해당한다. fibonacci(6)의 결과 값은 하위 문제인 fibonacci(4)와 fibonacci(5) 결과값의 합이기 때문이다.
+
+#### 최적 부분 구조가 존재할 경우 (Optimal Substructure)
+
+하위 문제의 결과를 연결하여 현재의 결과를 도출할 수 있을 때를 말한다.
+
+예를 들어, a에서 d로 가는 최단 경로가 a → b → c → d 다음과 같다고 가정하자. 하위 문제인 a에서 c로 가는 최단 경로는 a → b → c이고, a에서 b로가는 최단 경로는 a → b가 될 경우 모든 하위 문제를 연결 또는 합쳤을 때 최종 결과값과 동일하다. 이런 경우를 최적의 부분 구조를 가졌다고 한다.
+
+a에서 c로 가는 최단 경로가 a → b → c가 아니거나 a에서 b로가는 최단 경로 a → b가 아닐 때는 하위 문제를 연결하여 최종 결과값을 도출할 수 없으므로 최적의 부분 구조를 가졌다고 볼 수 없다.
+
+위의 fibonacci함수가 이에 해당한다. fibonacci(6)의 결과값을 도출하기 위한 fibonacci(5)와 fibonacci(4)는 fibonacci(5),fibonacci(4)의 각 결과 값을 도출하기 위한 과정과 동일하기 때문이다.
+
+### 동적 프로그래밍 방법
+
+#### 메모이제이션
+
+계산한 함수 결과를 해시 테이블과 같은 자료구조에 저장해 재사용하는 방법이다.
+
+본 문제 → 하위 문제 → 하위 문제의 하위 문제…들어가며 계산값을 구해가는 top-bottom 방식이다.
+
+resultStore에 계산된 값이 있으면 재귀 함수를 호출하지 않고 해당 value로 재사용하고, 없으면 재귀 함수를 호출하고 resultStore에 계산된 값을 저장한다.
+
+```jsx
+function memoizedFibonacci(n, resultStore = {}) {
+  if (resultStore[n] !== undefined) return resultStore[n]
+  if (n <= 2) return 1
+
+  resultStore[n] =
+    memoizedFibonacci(n - 1, resultStore) +
+    memoizedFibonacci(n - 2, resultStore)
+
+  return resultStore[n]
+}
+```
+
+메모이제이션을 통해 재귀 함수의 호출을 나타낸 트리이다. 시간 복잡도가 O(2^n)에서 `O(n)`으로 줄었다.
+
+<Picture src="dynamic-programing2.png" />
+
+#### 타뷸레이션 (tabulation)
+
+가장 작은 하위 문제의 결과값을 저장하여 재사용해가는 bottom-up 방법이다. 이때의 시간 복잡도도 `O(n)` 이다.
+
+```jsx
+function tabulatedFibonacci(n) {
+  // if (n <= 2) return 1;
+
+  let fibNums = [0, 1, 1]
+
+  for (let i = 3; i <= n; i++) {
+    fibNums[i] = fibNums[i - 1] + fibNums[i - 2]
+  }
+
+  return fibNums[n]
+}
+```
+
+<aside>
+⚠️ `공간 복잡도` 측면에서 두 방법을 비교해보자.
+메모이제이션을 사용했더라도 n이 1000..으로 매우 커질 경우 콜 스택에 쌓이는 재귀 함수가 많기 때문에 maxinum call stack size exceed 에러가 발생한다. 변수를 만들어 저장하지 않아도 함수 자체가 반복적으로 호출되는 상황이기 때문에 임시 메모리를 차지하게 되는 것이다.
+반면 tabulation 방법은 공간 복잡도가 O(n)으로 에러 없이 실행된다.
+
+</aside>
 
 ## 재귀 함수를 변수에 저장하기
 
@@ -44,7 +117,7 @@ function addUntil_100(array) {
 
 - 필요한 함수 호출은 한 번만하고 변수에 담아 사용한다.
 
-```jsx{4}
+```jsx
 function addUntil_100(array) {
   if (!array.length) return 0
 
@@ -53,58 +126,6 @@ function addUntil_100(array) {
   return prevResult + array[array.length - 1] > 100
     ? prevResult
     : prevResult + array[array.length - 1]
-}
-```
-
-## 동적 프로그래밍 - 메모이제이션
-
-계산한 함수 결과를 해시 테이블과 같은 자료구조에 저장해 재사용하는 방법이다.
-
-1. 계산된 n번째 피보나치 수열의 값을 obj에 저장한다.
-2. obj에 계산된 값이 있으면 재귀 함수를 호출하지 않고 해당 value로 재사용하고, 없으면 재귀 함수를 호출하고 obj에 계산된 값을 저장한다.
-
-```jsx{1,9,10,12}
-function pibonachi(n, obj = {}) {
-  if (n <= 1) {
-    return 0
-  }
-  if (n === 2) {
-    return 1
-  }
-
-  if (obj[n]) {
-    return obj[n]
-  } else {
-    obj[n] = pibonachi(n - 2, obj) + pibonachi(n - 1, obj)
-
-    return obj[n]
-  }
-}
-```
-
-메모이제이션을 통해 재귀 함수의 호출을 나타낸 트리이다. 함수 호출 횟수가 대폭 감소했다는 것을 알 수 있다. 시간 복잡도가 O(2^n)에서 O(n)으로 줄었다.
-
-<Picture src="dynamic-programing2.png" alt="다이나믹 프로그래밍 - 재귀 트리" />
-
-## 동적 프로그래밍 - 상향식
-
-재귀 작성 방법에는 크게 루프를 대신할 수 있는 샹향식(bottom up), 하위 문제를 사용해 풀 수 있는 하향식 (top down)으로 이루어졌다. 상향식의 경우, 변수에 이전 값을 기억하며 결과값에 가까워지는 것으로 시간 복잡도가 O(n) 최적화 된다.
-
-```jsx
-function fibonacci(n) {
-  if (n === 0 || n === 1) return 0
-
-  let a = 0
-  let b = 1
-
-  for (let i = 1; i < n - 1; i++) {
-    const prevA = a
-
-    a = b
-    b += prevA
-  }
-
-  return b
 }
 ```
 
