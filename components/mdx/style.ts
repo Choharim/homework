@@ -25,8 +25,10 @@ export const BlockQuote = styled.blockquote`
   ${({ theme }) => theme.font.body_1};
 
   border-left: 5px solid ${({ theme }) => theme.color.moreDardPink};
+  background-color: ${({ theme }) => theme.color.pink};
   margin: 20px 0;
-  padding: 4px 0 4px 20px;
+  padding: 15px 10px 15px 20px;
+  border-radius: 2px;
 `
 
 export const HighlightBlock = css`

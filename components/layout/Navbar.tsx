@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { EN_NAME, GITHUB_URL } from 'domain/owner/constant'
 import { POST_DIRECTORY } from 'domain/post/constant'
 import { Z_IDEX } from 'styles/constant'
+import useScrollDirection from 'hooks/useScrollDirection'
 
 import Logo from 'public/favicon.ico'
 import GithubLogo from 'public/github_logo.png'
@@ -34,7 +35,7 @@ const isTextMenu = (menu: TextMenu | ImageMenu): menu is TextMenu => {
 const MENUS: Array<TextMenu | ImageMenu> = [
   {
     href: `/${POST_DIRECTORY}`,
-    label: '개발 글',
+    label: '블로그',
     isOutlink: false,
   },
   {
@@ -46,8 +47,10 @@ const MENUS: Array<TextMenu | ImageMenu> = [
 ]
 
 const Navbar = () => {
+  const direction = useScrollDirection()
+
   return (
-    <Navigation>
+    <Navigation hidden={direction === 'down'}>
       <CustomFrame>
         <Navbar.Logo />
         <Navbar.Menu />
@@ -108,7 +111,7 @@ Navbar.Menu = function Component() {
   )
 }
 
-const Navigation = styled.nav`
+const Navigation = styled.nav<{ hidden: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -119,6 +122,18 @@ const Navigation = styled.nav`
   backdrop-filter: saturate(180%) blur(5px);
   border-bottom: 1px solid ${({ theme }) => theme.color.lightGray};
   z-index: ${Z_IDEX.nav};
+
+  display: block;
+  ${({ hidden }) =>
+    hidden
+      ? css`
+          transform: translateY(-100%);
+        `
+      : css`
+          transform: translateY(0);
+        `};
+
+  transition: transform 0.2s;
 `
 
 const CustomFrame = styled(Frame)`

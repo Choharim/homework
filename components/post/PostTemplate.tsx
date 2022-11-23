@@ -19,11 +19,7 @@ const PostTemplate = ({ data, children }: Props) => {
     <Article>
       <Header>
         <Title>{title}</Title>
-        {!!tag && (
-          <TagLink tag={tag} type="hash">
-            {tag}
-          </TagLink>
-        )}
+        {!!tag && <TagLink tag={tag} />}
         <CreatedTime dateTime={createDate}>{createDate}</CreatedTime>
         {!!thumbnailSrc && (
           <Thumbnail
