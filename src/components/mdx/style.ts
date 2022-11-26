@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 
 export const HeaderFont = css`
-  color: ${({ theme }) => theme.color.black};
+  color: ${({ theme }) => theme.color.primary3};
 `
 export const ParagrahFont = css`
   ${({ theme }) => theme.font.body_1};
@@ -41,7 +41,7 @@ export const BlockQuote = styled.blockquote`
 export const HighlightBlock = css`
   margin: 10px 0 15px;
   padding: 20px;
-  background-color: ${({ theme }) => theme.color.ivory};
+  background-color: ${({ theme }) => theme.color.primary7};
 
   ${({ theme }) =>
     css`

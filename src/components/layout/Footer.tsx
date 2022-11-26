@@ -22,7 +22,7 @@ const Desc = styled.footer`
   width: 100%;
   height: ${FOOTER_HEIGHT}px;
   margin-top: 50px;
-  background-color: ${({ theme }) => theme.color.primary1};
-
-  ${({ theme }) => theme.font.body_2}
+  background-color: ${({ theme }) => theme.color.primary7};
+  color: ${({ theme }) => theme.color.primary1};
+  ${({ theme }) => theme.font.subtitle_3}
 `

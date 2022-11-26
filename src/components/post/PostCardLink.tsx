@@ -9,7 +9,7 @@ import { limitTextLine } from '@/styles/mixin'
 import TagLink from './TagLink'
 import Thumbnail from '../Thumbnail'
 
-const SIZE = 200
+const SIZE = 160
 
 const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
   const { data, slug } = props
@@ -66,6 +66,15 @@ const Title = styled.h3`
   transition: color 0.2s ease-in-out;
 `
 
+const Desc = styled.p`
+  ${({ theme }) => theme.font.subtitle_3};
+  color: ${({ theme }) => theme.color.gray1};
+
+  ${limitTextLine(2)}
+
+  transition: color 0.2s ease-in-out;
+`
+
 const Wrapper = styled.article`
   display: flex;
   width: 100%;
@@ -74,7 +83,11 @@ const Wrapper = styled.article`
 
   :hover {
     ${Title} {
-      color: ${({ theme }) => theme.color.brown};
+      color: ${({ theme }) => theme.color.primary3};
+    }
+
+    ${Desc} {
+      color: ${({ theme }) => theme.color.primary1};
     }
   }
 `
@@ -105,13 +118,6 @@ const Top = styled.div`
   gap: 10px;
 `
 
-const Desc = styled.p`
-  ${({ theme }) => theme.font.body_1};
-  color: ${({ theme }) => theme.color.lightBlack};
-
-  ${limitTextLine(3)}
-`
-
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
@@ -121,5 +127,5 @@ const Bottom = styled.div`
 
 const CreateDate = styled.time`
   ${({ theme }) => theme.font.body_3};
-  color: ${({ theme }) => theme.color.darkGray};
+  color: ${({ theme }) => theme.color.gray2};
 `

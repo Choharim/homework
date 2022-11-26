@@ -39,8 +39,10 @@ export async function getStaticProps() {
 }
 
 const Title = styled.h1`
-  ${({ theme }) => theme.font.header_4}
+  ${({ theme }) => theme.font.header_4};
+  color: ${({ theme }) => theme.color.primary1};
 `
+
 const CardList = styled.div`
-  ${CardListFrame}
+  ${CardListFrame};
 `

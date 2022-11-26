@@ -4,18 +4,12 @@ import { DEVICE_SIZE } from '@/constants/common'
 
 export const color = {
   white: '#ffffff',
-
-  moreLightGray: '#F2F2F2',
-  lightGray: '#ededeb',
-  gray: '#bcbcbc',
-  darkGray: '#707070',
-  moreDarkGray: '#4D4D4D',
-
-  lightBlack: '#4d5052',
   black: '#000000',
 
-  brown: '#877462',
-  ivory: '#faecdd',
+  gray1: '#3f3c39',
+  gray2: '#7b7875',
+  gray3: '#b7b4b1',
+  gray4: '#f3f0ed',
 
   lightPink: '#feece8',
   pink: '#ffe2dd',
@@ -26,72 +20,74 @@ export const color = {
   blue: '#d3e4ef',
   darkBlue: '#c0d9e8',
   moreDarkBlue: '#8fc5e7',
-  green: '#dbeddb',
-  darkGreen: '#6d9d6d',
-  orange: '#f9dec9',
-  yellow: '#fdecc8',
-  darkYellow: '#fde7c8',
-  moreDarkYellow: '#fdcb84',
 
-  primary1: '#FEF0E2',
-  primary2: '#EBD5BE',
+  green: '#dbeddb',
+  darkGreen: '#d1e3d1',
+  moreDardGreen: '#bdcfbd',
+
+  primary1: '#4c321b',
+  primary2: '#6a5039',
+  primary3: '#886e57',
+  primary4: '#a68c75',
+  primary5: '#c4aa93',
+  primary6: '#d8c8b1',
+  primary7: '#f6e6cf',
 } as const
 
 export const font = {
   header_1: {
     fontSize: '36px',
-    lineHeight: '1.0em',
+    lineHeight: '1.2',
     fontWeight: 700,
   },
   header_2: {
-    fontSize: '29px',
-    lineHeight: '1.1em',
+    fontSize: '30px',
+    lineHeight: '1.3',
     fontWeight: 700,
   },
   header_3: {
-    fontSize: '25px',
-    lineHeight: '1.2em',
+    fontSize: '26px',
+    lineHeight: '1.3',
     fontWeight: 700,
   },
   header_4: {
     fontSize: '22px',
-    lineHeight: '1.3em',
+    lineHeight: '1.3',
     fontWeight: 700,
   },
   subtitle_1: {
     fontSize: '20px',
-    lineHeight: '1.4em',
+    lineHeight: '1.4',
     fontWeight: 600,
   },
   subtitle_2: {
     fontSize: '18px',
-    lineHeight: '1.5em',
+    lineHeight: '1.4',
     fontWeight: 600,
   },
   subtitle_3: {
     fontSize: '17px',
-    lineHeight: '1.6em',
+    lineHeight: '1.4',
     fontWeight: 500,
   },
 
   body_1: {
-    fontSize: '17px',
-    lineHeight: '1.75em',
-    fontWeight: 500,
+    fontSize: '16px',
+    lineHeight: '1.5',
   },
   body_2: {
-    fontSize: '16px',
-    lineHeight: '1.8em',
+    fontSize: '15px',
+    lineHeight: '1.5',
     fontWeight: 500,
   },
   body_3: {
-    fontSize: '15px',
-    lineHeight: '1.9em',
+    fontSize: '14px',
+    lineHeight: '1.5',
     fontWeight: 500,
   },
   body_4: {
     fontSize: '13px',
-    lineHeight: '2.0em',
+    lineHeight: '1.5',
     fontWeight: 500,
   },
 } as const

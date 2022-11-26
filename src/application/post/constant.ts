@@ -12,9 +12,9 @@ export const TAG_COLOR_BY_TYPE: {
     active: color.moreDardPink,
   },
   자료구조: {
-    base: color.yellow,
-    hover: color.darkYellow,
-    active: color.moreDarkYellow,
+    base: color.green,
+    hover: color.darkGreen,
+    active: color.moreDardGreen,
   },
   FE: { base: color.blue, hover: color.darkBlue, active: color.moreDarkBlue },
 }

@@ -11,6 +11,6 @@ export const limitTextLine = (lineCount: number) => css`
 
 export const CardListFrame = css`
   display: grid;
-  gap: 24px;
+  gap: 20px;
   margin-top: 40px;
 `

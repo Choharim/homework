@@ -120,7 +120,7 @@ const Navigation = styled.nav<{ hidden: boolean }>`
 
   background: hsla(0, 0%, 100%, 0.8);
   backdrop-filter: saturate(180%) blur(5px);
-  border-bottom: 1px solid ${({ theme }) => theme.color.lightGray};
+  border-bottom: 1px solid ${({ theme }) => theme.color.gray4};
   z-index: ${Z_IDEX.nav};
 
   display: block;
@@ -149,8 +149,8 @@ const LogWrapper = styled.div`
 
 const Name = styled.span`
   margin-left: 10px;
-  color: ${({ theme }) => theme.color.black};
-  ${({ theme }) => theme.font.subtitle_1};
+  color: ${({ theme }) => theme.color.primary1};
+  ${({ theme }) => theme.font.header_4};
 `
 
 const MenuContainer = styled.ul`
@@ -178,7 +178,7 @@ const Menu = styled.li<{ $active: boolean }>`
 
   &:hover {
     ${LinkWrapper} {
-      background-color: ${({ theme }) => theme.color.moreLightGray};
+      background-color: ${({ theme }) => theme.color.gray4};
     }
   }
 
@@ -188,7 +188,7 @@ const Menu = styled.li<{ $active: boolean }>`
       pointer-events: none;
 
       ${LinkWrapper} {
-        background-color: ${theme.color.moreLightGray};
+        background-color: ${theme.color.gray4};
       }
     `}
 `

@@ -14,7 +14,7 @@ import { CardListFrame } from '@/styles/mixin'
 
 import TagFilter from '@/components/post/TagFilter'
 import PostCardLink from '@/components/post/PostCardLink'
-import Pagination from '@/components/post/Pagnation'
+import Pagination from '@/components/post/Pagination'
 
 const PostsPage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>

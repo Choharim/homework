@@ -100,7 +100,7 @@ const Button = styled.button<{ disabled: boolean }>`
   ${({ theme, disabled }) =>
     disabled &&
     css`
-      color: ${theme.color.gray};
+      color: ${theme.color.gray3};
       pointer-events: none;
     `}
 `
@@ -123,7 +123,8 @@ const PageNumberAtag = styled.a<{ $active: boolean }>`
     $active &&
     css`
       ${PageNumber} {
-        background-color: ${theme.color.primary1};
+        background-color: ${theme.color.primary4};
+        color: ${theme.color.white};
       }
       cursor: default;
       pointer-events: none;

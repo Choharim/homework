@@ -53,12 +53,12 @@ const Article = styled.article`
   flex-direction: column;
   margin-bottom: 100px;
 
-  color: ${({ theme }) => theme.color.lightBlack};
+  color: ${({ theme }) => theme.color.black};
 `
 
 const Header = styled.div`
   padding: 100px 0 50px;
-  background-color: ${({ theme }) => theme.color.primary1};
+  background-color: ${({ theme }) => theme.color.primary7};
 `
 
 const HeaderFrame = styled(Frame)`
@@ -68,7 +68,7 @@ const HeaderFrame = styled(Frame)`
 
 const Title = styled.h1`
   ${({ theme }) => theme.font.header_1};
-  color: ${({ theme }) => theme.color.black};
+  color: ${({ theme }) => theme.color.primary2};
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
@@ -79,7 +79,7 @@ const Title = styled.h1`
 
 const CreatedTime = styled.time`
   ${({ theme }) => theme.font.body_2};
-  color: ${({ theme }) => theme.color.darkGray};
+  color: ${({ theme }) => theme.color.gray1};
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
