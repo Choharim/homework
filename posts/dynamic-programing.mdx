@@ -33,7 +33,7 @@ fibonacci(6)을 호출하면 실행된 함수의 트리를 보면, f(4), f(3), f
 
 중복되는 하위 문제의 결과값으로 값을 도출할 수 있을 때 이다. 자세히 말해, 하위 문제의 결과값을 이용해 현재의 결과값을 얻을 수 있고 그 과정에서 동일한 하위 문제가 반복될 때를 말한다.
 
-위의 fibonacci 함수가 이에 해당한다. fibonacci(6)의 결과 값은 하위 문제인 fibonacci(4)와 fibonacci(5) 결과값의 합이기 때문이다.
+위의 fibonacci 함수가 이에 해당한다. fibonacci(6)의 결과 값은 하위 문제인 fibonacci(4)와 fibonacci(5) 결과값의 합이고 fibonacci(4)와 fibonacci(5)를 구하는 과정에서 인수가 동일한 재귀함수가 실행된다.
 
 #### 최적 부분 구조가 존재할 경우 (Optimal Substructure)
 
