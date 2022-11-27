@@ -7,7 +7,6 @@ import { HighlightBlock } from '../mdx/style'
 import TagLink from './TagLink'
 import Thumbnail from '../Thumbnail'
 import Frame from '../layout/Frame'
-import { limitTextLine } from '@/styles/mixin'
 
 type Props = {
   children: React.ReactNode
@@ -57,7 +56,8 @@ const Article = styled.article`
 `
 
 const Header = styled.div`
-  padding: 100px 0 50px;
+  padding: 90px 0 40px;
+  margin-bottom: 20px;
   background-color: ${({ theme }) => theme.color.primary7};
 `
 
@@ -91,8 +91,8 @@ const CreatedTime = styled.time`
 const Summary = styled.p`
   ${({ theme }) => theme.font.subtitle_3};
   margin: 5px 0 15px;
-  ${limitTextLine(2)}
 `
+
 const MDXWrapper = styled.div`
   aside {
     ${HighlightBlock}

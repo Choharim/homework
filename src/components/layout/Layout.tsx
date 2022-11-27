@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import Head from 'next/head'
 
-import { KO_NAME } from '@/domain/owner/constant'
+import { EN_NAME } from '@/domain/owner/constant'
 
 import Navbar, { NAVBAR_HEIGHT } from './Navbar'
 import Footer, { FOOTER_HEIGHT } from './Footer'
@@ -18,7 +18,7 @@ const Layout = ({ children, title, resetFrameStyle }: Props) => {
   return (
     <LayoutFrame>
       <Head>
-        {!!title && <title>{`${title} | ${KO_NAME.first}`}</title>}
+        {!!title && <title>{`${title} | ${EN_NAME.first}'s log`}</title>}
         {/* @todo add meta tag */}
         {/* <meta name="meta name" content="meta content" /> */}
       </Head>

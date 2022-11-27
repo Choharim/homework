@@ -97,8 +97,8 @@ Navbar.Menu = function Component() {
               ) : (
                 <Image
                   layout="fixed"
-                  height={25}
-                  width={25}
+                  height={22}
+                  width={22}
                   src={menu.img_url}
                   alt={menu.img_alt}
                 />

@@ -19,8 +19,9 @@ export const ListContainer = css`
 `
 
 export const HighlightWord = css`
+  display: inline-block;
   background-color: ${({ theme }) => theme.color.lightPink};
-  padding: 4px 6px;
+  padding: 2px 5px;
   border-radius: 2px;
 `
 

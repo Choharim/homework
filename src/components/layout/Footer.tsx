@@ -7,22 +7,21 @@ export const FOOTER_HEIGHT = 100
 
 const Footer = () => {
   return (
-    <Desc>
+    <Footer.Section>
       © 2022 by {EN_NAME.last} {EN_NAME.first}
-    </Desc>
+    </Footer.Section>
   )
 }
 
 export default Footer
 
-const Desc = styled.footer`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: ${FOOTER_HEIGHT}px;
-  margin-top: 50px;
-  background-color: ${({ theme }) => theme.color.primary7};
-  color: ${({ theme }) => theme.color.primary1};
-  ${({ theme }) => theme.font.subtitle_3}
-`
+Footer.Section = styled.footer(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '100%',
+  height: `${FOOTER_HEIGHT}px`,
+  marginTop: '30px',
+  color: theme.color.black,
+  ...theme.font.body_1,
+}))
