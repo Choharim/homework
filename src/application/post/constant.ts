@@ -7,16 +7,16 @@ export const TAG_COLOR_BY_TYPE: {
   }
 } = {
   알고리즘: {
-    base: color.pink,
-    hover: color.darkPink,
-    active: color.moreDardPink,
+    base: color.pink4,
+    hover: color.pink3,
+    active: color.pink2,
   },
   자료구조: {
-    base: color.green,
-    hover: color.darkGreen,
-    active: color.moreDardGreen,
+    base: color.green3,
+    hover: color.green2,
+    active: color.green1,
   },
-  FE: { base: color.blue, hover: color.darkBlue, active: color.moreDarkBlue },
+  FE: { base: color.blue3, hover: color.blue2, active: color.blue1 },
 }
 
 export const POST_GROUP_COUNT = 6

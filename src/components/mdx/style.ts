@@ -20,7 +20,7 @@ export const ListContainer = css`
 
 export const HighlightWord = css`
   display: inline-block;
-  background-color: ${({ theme }) => theme.color.lightPink};
+  background-color: ${({ theme }) => theme.color.pink5};
   padding: 2px 5px;
   border-radius: 2px;
 `
@@ -28,14 +28,14 @@ export const HighlightWord = css`
 export const BlockQuote = styled.blockquote`
   ${({ theme }) => theme.font.body_1};
 
-  border-left: 5px solid ${({ theme }) => theme.color.moreDardPink};
-  background-color: ${({ theme }) => theme.color.lightPink};
+  border-left: 5px solid ${({ theme }) => theme.color.pink2};
+  background-color: ${({ theme }) => theme.color.pink5};
   margin: 20px 0;
   padding: 15px 10px 15px 20px;
   border-radius: 2px;
 
   code {
-    color: ${({ theme }) => theme.color.red};
+    color: ${({ theme }) => theme.color.pink1};
   }
 `
 
@@ -59,7 +59,7 @@ export const HighlightBlock = css`
 
   code {
     background-color: transparent;
-    color: ${({ theme }) => theme.color.red};
+    color: ${({ theme }) => theme.color.pink1};
     margin: 0;
     padding: 0;
   }
