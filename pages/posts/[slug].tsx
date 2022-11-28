@@ -9,14 +9,15 @@ import { MDXRemote } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
 import { ParsedUrlQuery } from 'querystring'
 import * as mdx from '@mdx-js/react'
+import styled from 'styled-components'
 
+import Post from '@/domain/post/type'
+import { getFileSlug, getPost, getPostsFilePaths } from '@/domain/post/util'
 import { NextPageWithLayout } from 'pages/_app'
-import Post from 'domain/post/type'
-import { getFileSlug, getPost, getPostsFilePaths } from 'domain/post/util'
 
-import MDX_STYLE from 'components/mdx'
-import Layout from 'components/layout/Layout'
-import PostTemplate from 'components/post/PostTemplate'
+import MDX_STYLE from '@/components/mdx'
+import Layout from '@/components/layout/Layout'
+import PostTemplate from '@/components/post/PostTemplate'
 
 //@todo - https://nextjs.org/docs/advanced-features/using-mdx
 const Detail: NextPageWithLayout<
@@ -41,7 +42,11 @@ export default Detail
 Detail.getLayout = function getLayout(
   page: React.ReactElement<Pick<Post, 'data' | 'content'>>
 ) {
-  return <Layout title={page.props.data.title}>{page}</Layout>
+  return (
+    <CustomLayout title={page.props.data.title} resetFrameStyle>
+      {page}
+    </CustomLayout>
+  )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -79,3 +84,15 @@ export const getStaticProps = async (
     },
   }
 }
+
+/**
+ * @remarks
+ * Layout을 확장한 StyledComponent에 추가한 스타일이 적용되기 위해
+ * - Layout에 className Prop이 전달되어야 함.
+ * - Footer에 스타일을 추가하기 위해서 Footer에도 className Prop이 전달되어야 함.
+ */
+const CustomLayout = styled(Layout)`
+  ${Layout.Footer} {
+    background-color: ${({ theme }) => theme.color.primary7};
+  }
+`
