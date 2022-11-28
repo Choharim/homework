@@ -17,7 +17,7 @@ const Code = ({ className, children }: Props) => {
   const match = /language-(\w+)/.exec(className || '')
 
   /**
-   * @description
+   * @example
    * ```jsx{1,2,3-5}
    * ```
    * 다음의 경우, 1,2,3,4,5 줄에서 true를 반환합니다.

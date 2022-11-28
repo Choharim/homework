@@ -1,21 +1,26 @@
-import React from 'react'
+import React, { HtmlHTMLAttributes } from 'react'
 import styled from 'styled-components'
 
 import { EN_NAME } from '@/domain/owner/constant'
 
 export const FOOTER_HEIGHT = 100
 
-const Footer = () => {
+/**
+ * @remarks
+ * selector로 스타일을 추가할 때 스타일을 적용시키기 위해 className 전달 필요
+ */
+type Props = Pick<HtmlHTMLAttributes<HTMLElement>, 'className'>
+const Footer = ({ className }: Props) => {
   return (
-    <Footer.Section>
+    <Desc className={className}>
       © 2022 by {EN_NAME.last} {EN_NAME.first}
-    </Footer.Section>
+    </Desc>
   )
 }
 
 export default Footer
 
-Footer.Section = styled.footer(({ theme }) => ({
+const Desc = styled.footer(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
