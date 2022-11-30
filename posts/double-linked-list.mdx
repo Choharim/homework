@@ -52,8 +52,7 @@ class DoubleLinkedList {
   }
 
   read(index) {
-    if (typeof index !== 'number' || index < 0 || index >= this.length)
-      return undefined
+    if (typeof index !== 'number' || index < 0 || index >= this.length) return
 
     const isOverHalf = this.length / 2 <= index
     let target
@@ -140,7 +139,7 @@ class DoubleLinkedList {
       const front = this.read(index - 1);
 
       if (!front) {
-        return undefined;
+        return;
       } else {
         const back = front.next;
         const newNode = new Node(value);
@@ -181,7 +180,7 @@ class DoubleLinkedList {
 ...
 
   shift() {
-    if (!this.length) return undefined;
+    if (!this.length) return;
 
     const removed = this.head;
     const newHead = removed.next;
@@ -199,7 +198,7 @@ class DoubleLinkedList {
   }
 
   pop() {
-    if (!this.length) return undefined;
+    if (!this.length) return;
 
     const removed = this.tail;
     const newTail = removed.prev;
@@ -224,7 +223,7 @@ class DoubleLinkedList {
     } else {
       const removed = this.read(index);
 
-      if (!removed) return undefined;
+      if (!removed) return;
 
       const front = removed.prev;
       const back = removed.next;

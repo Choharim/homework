@@ -60,8 +60,7 @@ class SinglyLinkedList {
   }
 
   read(index) {
-    if (typeof index !== 'number' || index < 0 || index >= this.length)
-      return undefined
+    if (typeof index !== 'number' || index < 0 || index >= this.length) return
 
     let target = this.head
 
@@ -108,8 +107,8 @@ class SinglyLinkedList {
 
 ### 삽입
 
-1. 첫번째에 삽입되는 경우, 새로 삽입된 노드는 이전 head를 가리키고 head가 된다.
-2. 마지막에 삽입되는 경우, 이전 tail은 새 노드를 가리키고 새 노드가 tail이 된다.
+1. 첫번째에 삽입되는 경우, 새로 삽입된 노드는 이전 head를 가리키고 새로운 head가 된다.
+2. 마지막에 삽입되는 경우, 이전 tail은 새 노드를 가리키고 새 노드가 새로운 tail이 된다.
 3. index가 0보다 작거나 길이보다 큰 경우 연결할 수 없으므로 실행하지 않는다.
 4. 그외 삽입하는 경우, 삽입될 index의 전 노드가 새 노드를 가리키고 새 노드가 전 index 노드를 가리킨다.
 
@@ -186,7 +185,7 @@ class SinglyLinkedList {
    제거되는 노드가 tail일 때 tail을 null로 초기화 한다. (제거되는 노드가 tail일 때 head의 next가 null이므로 새로운 head도 null로 초기화 된다.)
 2. 마지막 노드가 삭제되는 경우, tail의 앞 노드가 새로운 tail이 되고 앞 노드의 next를 null로 초기화하여 연결을 끊어야 한다. 때문에 tail의 앞 노드를 알아내기 위해 head부터 마지막 직전까지 노드를 읽어내야 한다. tail의 앞 노드가 없을 경우 전체 길이가 1이므로 head와 tail을 null로 초기화 한다.
 3. 삭제하려는 index의 노드의 앞 노드와 뒤 노드를 연결해야 한다.  
-   앞 노드가 존재하지 않을 경우, 삭제하려는 index 노드가 존재하지 않기 때문에 undefined를 리턴한다.  
+   앞 노드가 존재하지 않을 경우, 범위를 벗어난 곳이므로 삭제하려는 index 노드가 존재하지 않기 때문에 undefined를 리턴한다.  
    앞 노드의 next를 다음 노드로 지정한다.
 
 ⇒ 배열의 경우 첫번째 요소를 삭제할 때 시간 복잡도 O(n), 마지막 요소 삭제는 O(1), 중간 요소는 O(n)이다. 연결 리스트는 `첫번째 요소 삭제는 O(1)`, `마지막 요소 삭제는 O(n)`, `중간 요소는 O(n)`이다.
@@ -202,7 +201,7 @@ class SinglyLinkedList {
 ...
 
   shift() {
-    if (!this.length) return undefined;
+    if (!this.length) return;
 
     const removed = this.head;
     const newHead = this.head.next;
@@ -218,7 +217,7 @@ class SinglyLinkedList {
   }
 
   pop() {
-    if (!this.length) return undefined;
+    if (!this.length) return;
 
     const frontOfLast = this.read(this.length - 2);
 
@@ -250,7 +249,7 @@ class SinglyLinkedList {
       const front = this.read(index - 1);
 
       if (!front) {
-        return undefined;
+        return;
       } else {
         const removed = front.next;
         const back = removed.next;
