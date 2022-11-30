@@ -66,6 +66,7 @@ const MDX_STYLE = {
     ${ParagrahFont}
 
     margin: 10px 0;
+    padding-left: 4px;
 
     > code {
       ${HighlightWord}

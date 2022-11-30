@@ -8,7 +8,7 @@ export const ParagrahFont = css`
 `
 
 export const ListContainer = css`
-  margin: 10px 0 30px 28px;
+  margin: 10px 0 30px 25px;
 
   ${({ theme }) =>
     css`
@@ -20,8 +20,9 @@ export const ListContainer = css`
 
 export const HighlightWord = css`
   display: inline-block;
-  background-color: ${({ theme }) => theme.color.pink5};
-  padding: 2px 5px;
+  ${({ theme }) => theme.font.body_2};
+  background-color: ${({ theme }) => theme.color.pink3};
+  padding: 0px 5px;
   border-radius: 2px;
 `
 
