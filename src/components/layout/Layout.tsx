@@ -19,7 +19,7 @@ const Layout = ({ children, title, resetFrameStyle, className }: Props) => {
     <LayoutFrame className={className}>
       <Head>
         {!!title && <title>{`${title} | ${EN_NAME.first}'s log`}</title>}
-        {/* @todo add meta tag */}
+        {/* TODO: add meta tag */}
         {/* <meta name="meta name" content="meta content" /> */}
       </Head>
       <Navbar />
