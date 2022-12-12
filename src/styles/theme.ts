@@ -21,9 +21,13 @@ export const color = {
   blue2: '#c0d9e8',
   blue3: '#d3e4ef',
 
-  green1: '#bdcfbd',
+  green1: '#afc7af',
   green2: '#d1e3d1',
   green3: '#dbeddb',
+
+  purple1: '#bca2ca',
+  purple2: '#dfd3e6',
+  purple3: '#e6ddeb',
 
   primary1: '#4c321b',
   primary2: '#6a5039',
