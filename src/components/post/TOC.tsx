@@ -123,11 +123,8 @@ const List = styled.li<{ $headerType: HeadersOfContents; $highlight: boolean }>`
     }
   }}
 
-  ${({ theme, $highlight }) =>
-    $highlight &&
-    css`
-      color: ${theme.color.primary4};
-    `}
+  color:  ${({ theme, $highlight }) =>
+    $highlight ? theme.color.primary4 : theme.color.gray1};
 
   :hover {
     color: ${({ theme }) => theme.color.primary3};

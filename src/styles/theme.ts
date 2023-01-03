@@ -40,17 +40,17 @@ export const color = {
 
 export const font = {
   header_1: {
-    fontSize: '36px',
+    fontSize: '34px',
     lineHeight: '1.2',
     fontWeight: 700,
   },
   header_2: {
-    fontSize: '30px',
+    fontSize: '28px',
     lineHeight: '1.3',
     fontWeight: 700,
   },
   header_3: {
-    fontSize: '26px',
+    fontSize: '24px',
     lineHeight: '1.3',
     fontWeight: 700,
   },
