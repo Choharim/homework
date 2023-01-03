@@ -8,7 +8,7 @@ import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { ParsedUrlQuery } from 'querystring'
 
-import { getAllPosts } from '@/domain/post/util'
+import { getAllPosts } from '@/domain/post'
 import { POST_GROUP_COUNT } from '@/application/post/constant'
 import { CardListFrame } from '@/styles/mixin'
 

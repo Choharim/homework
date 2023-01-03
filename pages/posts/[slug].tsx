@@ -12,7 +12,7 @@ import * as mdx from '@mdx-js/react'
 import styled from 'styled-components'
 
 import Post from '@/domain/post/type'
-import { getFileSlug, getPost, getPostsFilePaths } from '@/domain/post/util'
+import { getFileSlug, getPost, getPostsFilePaths } from '@/domain/post'
 import { NextPageWithLayout } from 'pages/_app'
 
 import MDX_STYLE from '@/components/mdx'

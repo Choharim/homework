@@ -1,7 +1,7 @@
 import { InferGetStaticPropsType } from 'next'
 import styled from 'styled-components'
 
-import { getAllPosts } from '@/domain/post/util'
+import { getAllPosts } from '@/domain/post'
 import { POST_GROUP_COUNT } from '@/application/post/constant'
 import { NextPageWithLayout } from './_app'
 import { CardListFrame } from '@/styles/mixin'

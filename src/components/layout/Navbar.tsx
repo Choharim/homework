@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { EN_NAME, GITHUB_URL } from '@/domain/owner/constant'
 import { POST_DIRECTORY } from '@/domain/post/constant'
 import useScrollDirection from '@/hooks/useScrollDirection'
-import { Z_IDEX } from '@/styles/constant'
+import { Z_INDEX } from '@/styles/constant'
 
 import Logo from 'public/favicon.ico'
 import GithubLogo from 'public/github_logo.png'
@@ -46,8 +46,10 @@ const MENUS: Array<TextMenu | ImageMenu> = [
   },
 ]
 
+const SCROLL_THRESHOLD = 30
+
 const Navbar = () => {
-  const direction = useScrollDirection()
+  const direction = useScrollDirection(SCROLL_THRESHOLD)
 
   return (
     <Navigation hidden={direction === 'down'}>
@@ -121,7 +123,7 @@ const Navigation = styled.nav<{ hidden: boolean }>`
   background: hsla(0, 0%, 100%, 0.8);
   backdrop-filter: saturate(180%) blur(5px);
   border-bottom: 1px solid ${({ theme }) => theme.color.gray4};
-  z-index: ${Z_IDEX.nav};
+  z-index: ${Z_INDEX.nav};
 
   display: block;
   ${({ hidden }) =>
