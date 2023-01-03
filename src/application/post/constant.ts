@@ -25,3 +25,5 @@ export const TAG_COLOR_BY_TYPE: {
 }
 
 export const POST_GROUP_COUNT = 6
+
+export const HEADERS_OF_CONTENTS = ['h2', 'h3'] as const
