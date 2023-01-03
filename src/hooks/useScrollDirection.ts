@@ -32,7 +32,7 @@ const useScrollDirection = (threshold: number) => {
     return () => {
       window.removeEventListener('scroll', onScroll)
     }
-  }, [])
+  }, [threshold])
 
   return direction
 }
