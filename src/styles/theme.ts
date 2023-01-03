@@ -21,9 +21,13 @@ export const color = {
   blue2: '#c0d9e8',
   blue3: '#d3e4ef',
 
-  green1: '#bdcfbd',
+  green1: '#afc7af',
   green2: '#d1e3d1',
   green3: '#dbeddb',
+
+  purple1: '#bca2ca',
+  purple2: '#dfd3e6',
+  purple3: '#e6ddeb',
 
   primary1: '#4c321b',
   primary2: '#6a5039',
@@ -36,17 +40,17 @@ export const color = {
 
 export const font = {
   header_1: {
-    fontSize: '36px',
+    fontSize: '34px',
     lineHeight: '1.2',
     fontWeight: 700,
   },
   header_2: {
-    fontSize: '30px',
+    fontSize: '28px',
     lineHeight: '1.3',
     fontWeight: 700,
   },
   header_3: {
-    fontSize: '26px',
+    fontSize: '24px',
     lineHeight: '1.3',
     fontWeight: 700,
   },

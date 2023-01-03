@@ -16,7 +16,14 @@ export const TAG_COLOR_BY_TYPE: {
     hover: color.green2,
     active: color.green1,
   },
+  운영체제: {
+    base: color.purple3,
+    hover: color.purple2,
+    active: color.purple1,
+  },
   FE: { base: color.blue3, hover: color.blue2, active: color.blue1 },
 }
 
 export const POST_GROUP_COUNT = 6
+
+export const HEADERS_OF_CONTENTS = ['h2', 'h3'] as const

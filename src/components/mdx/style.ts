@@ -8,7 +8,7 @@ export const ParagrahFont = css`
 `
 
 export const ListContainer = css`
-  margin: 10px 0 30px 28px;
+  margin: 10px 0 30px 25px;
 
   ${({ theme }) =>
     css`
@@ -20,8 +20,9 @@ export const ListContainer = css`
 
 export const HighlightWord = css`
   display: inline-block;
-  background-color: ${({ theme }) => theme.color.pink5};
-  padding: 2px 5px;
+  ${({ theme }) => theme.font.body_2};
+  background-color: ${({ theme }) => theme.color.pink3};
+  padding: 0px 5px;
   border-radius: 2px;
 `
 
@@ -31,7 +32,7 @@ export const BlockQuote = styled.blockquote`
   border-left: 5px solid ${({ theme }) => theme.color.pink2};
   background-color: ${({ theme }) => theme.color.pink5};
   margin: 20px 0;
-  padding: 15px 10px 15px 20px;
+  padding: 5px 10px 5px 20px;
   border-radius: 2px;
 
   code {

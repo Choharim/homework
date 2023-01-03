@@ -3,10 +3,12 @@ import styled, { css } from 'styled-components'
 
 import { FrontMatter } from '@/domain/post/type'
 import { HighlightBlock } from '../mdx/style'
+import { DEVICE_SIZE } from '@/constants/common'
 
 import TagLink from './TagLink'
 import Thumbnail from '../Thumbnail'
 import Frame from '../layout/Frame'
+import TOC, { TOC_WIDTH_IN_PC } from './TOC'
 
 type Props = {
   children: React.ReactNode
@@ -28,19 +30,26 @@ const PostTemplate = ({ data, children }: Props) => {
         </HeaderFrame>
       </Header>
 
-      <Frame>
-        {!!thumbnailSrc && (
-          <Thumbnail
-            src={require(`/public/post/${thumbnailSrc}`)}
-            layout="fill"
-            height={330}
-            objectFit="contain"
-            placeholder="blur"
-          />
-        )}
-
-        <MDXWrapper>{children}</MDXWrapper>
-      </Frame>
+      <ContentsWrapper>
+        <Aside $direction="right">
+          <TOC />
+        </Aside>
+        <Frame>
+          <Aside $direction="top">
+            <TOC />
+          </Aside>
+          {!!thumbnailSrc && (
+            <Thumbnail
+              src={require(`/public/post/${thumbnailSrc}`)}
+              layout="fill"
+              height={330}
+              objectFit="contain"
+              placeholder="blur"
+            />
+          )}
+          <MDXWrapper>{children}</MDXWrapper>
+        </Frame>
+      </ContentsWrapper>
     </Article>
   )
 }
@@ -64,6 +73,42 @@ const Header = styled.div`
 const HeaderFrame = styled(Frame)`
   display: grid;
   gap: 10px;
+`
+const MEDIA_SCREEN_FOR_TOC = `@media screen and (max-width: ${
+  DEVICE_SIZE.tablet + TOC_WIDTH_IN_PC * 2
+}px)`
+
+const ContentsWrapper = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  margin-left: ${TOC_WIDTH_IN_PC}px;
+
+  ${MEDIA_SCREEN_FOR_TOC} {
+    flex-direction: column;
+    margin-left: unset;
+  }
+`
+
+const Aside = styled.aside<{ $direction: 'right' | 'top' }>`
+  position: relative;
+
+  &:empty {
+    display: none;
+  }
+
+  ${({ $direction }) =>
+    $direction === 'right'
+      ? css`
+          ${MEDIA_SCREEN_FOR_TOC} {
+            display: none;
+          }
+        `
+      : css`
+          display: none;
+          ${MEDIA_SCREEN_FOR_TOC} {
+            display: flex;
+          }
+        `}
 `
 
 const Title = styled.h1`

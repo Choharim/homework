@@ -8,7 +8,8 @@ import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { ParsedUrlQuery } from 'querystring'
 
-import { getAllPosts } from '@/domain/post/util'
+import { getAllPosts } from '@/domain/post'
+import Post from '@/domain/post/type'
 import { POST_GROUP_COUNT } from '@/application/post/constant'
 import { CardListFrame } from '@/styles/mixin'
 
@@ -47,7 +48,7 @@ export async function getServerSideProps(
   const { query } = context
   const currentPageNumber = Number(query.page || 1)
 
-  let posts
+  let posts: Post[]
 
   if (!!query.tag) {
     posts = getAllPosts().filter((post) => {

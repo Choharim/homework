@@ -33,6 +33,7 @@ const MDX_STYLE = {
       }
     `}
   `,
+
   h4: styled.h4`
     ${({ theme }) => theme.font.header_4};
     margin: 22px 0 10px;
@@ -47,6 +48,9 @@ const MDX_STYLE = {
   p: styled.p`
     ${ParagrahFont}
     margin-bottom: 5px;
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     > code {
       ${HighlightWord}
@@ -66,6 +70,7 @@ const MDX_STYLE = {
     ${ParagrahFont}
 
     margin: 10px 0;
+    padding-left: 4px;
 
     > code {
       ${HighlightWord}

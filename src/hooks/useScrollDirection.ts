@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react'
 
-const THRESHOLD = 30
 type ScrollDirection = 'up' | 'down'
 
-const useScrollDirection = () => {
+const useScrollDirection = (threshold: number) => {
   const [direction, setDirection] = useState<ScrollDirection>('up')
 
   useEffect(() => {
     let previousScrollY = window.scrollY
 
     const isOverThreshold = (currentScrollY: number) =>
-      Math.abs(currentScrollY - previousScrollY) > THRESHOLD
+      Math.abs(currentScrollY - previousScrollY) > threshold
 
     const checkDirection = () => {
       const currentScrollY = window.scrollY
@@ -33,7 +32,7 @@ const useScrollDirection = () => {
     return () => {
       window.removeEventListener('scroll', onScroll)
     }
-  }, [])
+  }, [threshold])
 
   return direction
 }
