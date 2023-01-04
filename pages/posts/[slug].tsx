@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   GetStaticPaths,
   GetStaticPropsContext,
@@ -23,6 +23,9 @@ import PostTemplate from '@/components/post/PostTemplate'
 const Detail: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ data, mdxSource }) => {
+  useEffect(() => {
+    setTimeout(() => window.scrollTo(0, 0), 0)
+  }, [])
   return (
     <PostTemplate data={data}>
       <MDXRemote
