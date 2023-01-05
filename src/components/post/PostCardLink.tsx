@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 
@@ -13,7 +13,15 @@ const SIZE = 160
 
 const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
   const { data, slug } = props
-
+  const [error, setError] = useState(false)
+  //TODO: custom hook 생성
+  const handleSrcError = () => {
+    try {
+      return require(`/public/post/${data.thumbnailSrc}`)
+    } catch (error) {
+      setError(true)
+    }
+  }
   return (
     <Link
       href={`/${POST_DIRECTORY}/[slug]`}
@@ -21,10 +29,10 @@ const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
       passHref
     >
       <Wrapper>
-        {!!data.thumbnailSrc && (
+        {!error && (
           <ThumbnailWrapper>
             <Thumbnail
-              src={require(`/public/post/${data.thumbnailSrc}`)}
+              src={handleSrcError()}
               layout="fill"
               height={SIZE}
               objectFit="cover"

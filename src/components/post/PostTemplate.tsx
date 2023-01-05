@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 
 import { FrontMatter } from '@/domain/post/type'
@@ -17,6 +17,15 @@ type Props = {
 
 const PostTemplate = ({ data, children }: Props) => {
   const { title, createDate, tag, thumbnailSrc, description } = data
+  const [error, setError] = useState(false)
+
+  const handleSrcError = () => {
+    try {
+      return require(`/public/post/${thumbnailSrc}`)
+    } catch (error) {
+      setError(true)
+    }
+  }
 
   return (
     <Article>
@@ -38,9 +47,9 @@ const PostTemplate = ({ data, children }: Props) => {
           <Aside $direction="top">
             <TOC />
           </Aside>
-          {!!thumbnailSrc && (
+          {!error && (
             <Thumbnail
-              src={require(`/public/post/${thumbnailSrc}`)}
+              src={handleSrcError()}
               layout="fill"
               height={330}
               objectFit="contain"

@@ -19,10 +19,10 @@ export const ListContainer = css`
 `
 
 export const HighlightWord = css`
-  display: inline-block;
+  display: inline;
   ${({ theme }) => theme.font.body_2};
   background-color: ${({ theme }) => theme.color.pink3};
-  padding: 0px 5px;
+  padding: 1px 5px;
   border-radius: 2px;
 `
 
