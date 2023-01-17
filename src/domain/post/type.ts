@@ -1,4 +1,4 @@
-import { TAGS } from './constant'
+import { CATEGORIES } from './constant'
 
 type Post = {
   data: FrontMatter
@@ -12,8 +12,8 @@ export type FrontMatter = {
   title: Title
   description: Description
   createDate: DateString
-  tag: Tag
+  category: Category
   thumbnailSrc?: string
 }
 
-export type Tag = typeof TAGS[number]
+export type Category = typeof CATEGORIES[number]

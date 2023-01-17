@@ -1,0 +1,307 @@
+---
+title: BigO
+description: 빅오 표기법으로 알고리즘의 실행 속도와 알고리즘이 실행되는 동안 차지하는 임시 메모리를 파악할 수 있다. 빅오는 정확도가 아니라 전체적인 추세에 초점을 맞춘다. 이를 통해 효과적인 알고리즘이 무엇인지 판단하고 비교할 수 있다.
+createDate: 2022.10.3
+category: algorithms
+thumbnailSrc: bigO.png
+---
+
+## 시간 복잡도(Time Complexity)
+
+> 알고리즘이 얼마나 빠르게 실행하는지 파악하는 척도이다.  
+> 연산이 얼마나 빠른가가 아니라 `얼마나 많은 연산 단계가 필요한지`를 파악한다.  
+> 데이터 원소가 N개일 때 알고리즘에 몇 단계가 필요한지 나타내어, 데이터가 증가할 때 장기적으로 알고리즘 단계 수가 어떤 궤적을 그리는지 알 수 있다.
+
+### O(1)
+
+데이터 양이 무한으로 커져도 필요한 단계가 변하지 않는다.
+
+- 산수  
+  1 + 2
+- 변수 배정  
+  let a
+- 인덱스로 배열의 요소에 접근  
+  array[1]
+- 오브젝트의 키로 값에 접근  
+  object.a
+
+### O(n)
+
+데이터 양이 증가할 수록 필요한 단계도 그에 따라 증가한다.
+
+```jsx
+/* O(n)
+ * n <= 5, n이 커져도 5로 상수 복잡도 O(1)이 된다.
+ * n > 5, n이 커질수록 복잡도와 1:1로 비례하므로 O(n)이 된다.
+ * n > 5의 경우가 대부분이므로 전반적 추세로 보아 O(n)의 시간 복잡도를 갖는다.
+ */
+function logAtLeast5(n) {
+  for (let i = 1; i <= Math.max(5, n); i++) {
+    console.log(i)
+  }
+}
+```
+
+```jsx
+/* O(1)
+ * n < 5, n이 커질 수록 복잡도도 n으로 비례하므로 O(n)이 된다.
+ * n >= 5, n이 커져도 복잡도가 5로 일정하이므로 O(1)이 된다.
+ * n >=5의 경우가 대부분이므로 전반적 추세로 보아 O(1)의 시간 복잡도를 갖는다.
+ */
+function logAtMost5(n) {
+  for (let i = 1; i <= Math.min(5, n); i++) {
+    console.log(i)
+  }
+}
+```
+
+### O(logN)
+
+데이터가 2배 증가할 때마다 필요한 단계가 한 단계 증가한다. 다른 말로, 데이터 양이 1보다 작아지기 전까지 절반으로 나누었을 때 필요한 횟수이다. 예를 들어, log8은 8이 1보다 작아지기 전 2로 나눠지는 횟수가 3번이므로 3이 된다고 말할 수 있다.
+
+일반적으로 수학에서 밑이 10일 때 생략하지만 BigO에서는 밑이 2일 때 생략한다.
+
+## 공간 복잡도 (Space Complexity)
+
+> input 데이터의 메모리가 아닌 `알고리즘이 차지하는 보조 공간 복잡도`를 나타낸다. 보조 공간이란 알고리즘이 실행되는 동안 사용되는 임시공간이다.
+
+### O(1)
+
+number, boolean, null, undefined는 불변 공간으로, input이 1이든 10000이든 같은 공간을 차지한다.
+
+```jsx
+// O(1)
+function sum(array) {
+  let total = 0
+  for (let i = 0; i < array.length; i++) {
+    total += array[i]
+  }
+  return total
+}
+```
+
+### O(n)
+
+string는 문자 길이 만큼의 공간이 필요하다.
+
+Array는 길이만큼의 공간이 필요하고 Object는 key의 갯수만큼 공간이 필요하다.
+
+```jsx
+/* O(n)
+ * newArray의 크기는 array와 동일하다.
+ * n + i는 1 => O(n)
+ */
+function double(array) {
+  let newArray = []
+  for (let i = 0; i < array.length; i++) {
+    newArray.push(2 * array[i])
+  }
+  return newArray
+}
+```
+
+## Object의 BigO
+
+### 읽기 O(1)
+
+특정 key로 value에 접근할 때 데이터 양와 상관없이 한번에 접근할 수 있다.
+
+### 삽입 O(1)
+
+새로운 key를 삽입할 때 데이터 양과 상관없이 삽입할 수 있다.
+
+### 제거 O(1)
+
+특정 key를 제거할 때 데이터 양과 상관없이 해당 key에 접근하여 제거할 수 있다.
+
+### 검색 O(n)
+
+특정 value를 가진 key가 존재하는지 확인하기 위해서는 최대로 모든 key에 접근해야 하므로 데이터 양이 증가할 수록 필요한 확인 단계가 증가한다.
+
+### 자바스크립트 Object 내장 메소드
+
+- Object.keys O(n)
+- Object.values O(n)
+- Object.entries O(n)
+- hasOwnProperty O(1)
+
+## Array의 BigO
+
+object와 큰 차이점은 순서가 존재한다는 것이다.
+
+### 읽기 O(1)
+
+데이터 양과 상관없이 index로 바로 접근이 가능하기 때문에 필요한 단계 수는 한 단계로 일정하다.
+
+<aside>
+⚠️ 자바스크립트 배열은 배열이 아니다.
+
+일반적인 배열의 경우, 동일한 크기의 메모리 공간이 연속적으로 연결되어 있는 자료구조이다. 이를 밀집 배열이라고 한다.
+밀집 배열에서 index로 해당 값에 접근할 수 있는 원리는 다음과 같다.
+array의 시작 메모리 주소를 기억하고 있고 동일한 크기의 메모리 공간을 요소마다 차지하고 있어 `검색 대상 요소의 메모리 주소 = 배열의 시작 메모리 주소 + 인덱스 * 요소의 바이트 수` 로 해당 타겟의 메모리 주소를 얻을 수 있다. 메모리 주소 값으로 한 번에 값에 접근할 수 있는 것이다.
+
+자바스크립트 배열의 경우, 각 요소의 데이터 타입이 다를 수도 있고 연속적으로 요소가 존재하지 않을 수 있는 희소 배열이다.
+자바스크립트에서는 `index를 property key로 갖고 length property를 갖는 해시 테이블`로 구현된 객체이기 때문에 index를 key로 접근하여 해당 값을 얻을 수 있다. 이를 통해 배열 길이의 시간 복잡도가 O(1)이라는 것을 알 수 있다.
+
+이러한 구조 차이로 일반 배열보다 자바스크립트의 배열에서 index로 접근하는 것이 성능적으로 느리고 삭제/추가는 더 빠르다.
+자바스크립트 엔진은 이러한 단점을 보완하고 일반 객체와 구별하기 위해 `배열에 index로 접근하는 것이 객체에 key로 접근하는 것보다 속도가 약 2배 빠르게` 최적화 했다고 한다.
+
+</aside>
+
+```jsx
+Object.getOwnPropertyDescriptors([1, 2, 3])
+/*
+ * {
+ *  '0': { value: 1, writable: true, enumerable: true, configurable: true },
+ *  '1': { value: 2, writable: true, enumerable: true, configurable: true },
+ *  '2': { value: 3, writable: true, enumerable: true, configurable: true },
+ *  length: { value: 3, writable: true, enumerable: false, configurable: false }
+ * }
+ */
+```
+
+```jsx
+const arr = []
+
+console.time('Array Performance Test')
+
+for (let i = 0; i < 10000000; i++) {
+  arr[i] = i
+}
+console.timeEnd('Array Performance Test')
+// 약 340ms
+
+const obj = {}
+
+console.time('Object Performance Test')
+
+for (let i = 0; i < 10000000; i++) {
+  obj[i] = i
+}
+
+console.timeEnd('Object Performance Test')
+// 약 600ms
+```
+
+### 삽입 O(n)
+
+정렬되어 있는 위치에 따라 다르다.
+마지막에 추가하면 O(1)이지만, 맨 앞에 추가하면 그 뒤에 위치한 모든 요소가 메모리 주소 +1씩 밀려나기 때문에 O(n)이 된다.
+
+### 제거 O(n)
+
+정렬되어 있는 위치에 따라 다르다.
+마지막 요소를 제거하면 O(1)이지만, 맨 앞 요소를 제거하면 그 뒤에 위치한 모든 요소의 메모리 주소가 1씩 당겨지기 때문에 O(n)이 된다.
+
+### 검색 O(n)
+
+특정 값을 찾기 위해 모든 요소를 확인하는 선형 검색으로 찾기 때문에 배열 길이 만큼 검색하는 단계는 증가한다.
+
+### 자바스크립트 Array 내장 메소드
+
+- push O(1)
+- pop O(1)
+- shift O(n)
+- unshift O(n)
+- concat O(n)  
+  이어붙일 array의 길이만큼 필요 단계가 증가한다.
+- slice O(n)  
+  복사하는 element 갯수만큼 필요 단계가 증가한다.
+- splice O(n)
+- sort O(n \* logN)  
+  자바스크립트를 해석하는 엔진에 따라 정렬 알고리즘이 달라진다.  
+  일반적으로 사용되는 V8 엔진에서는 삽입 정렬과 합병 정렬을 결합한 time sort를 사용한다.
+- forEach O(n)
+- map O(n)
+- filter O(n)
+- reduce O(n)
+- indexOf O(n)
+- …etc O(n)
+
+### 배열에서의 집합
+
+집합이란 중복 데이터가 없는 것을 의미한다.
+
+읽기, 검색, 제거는 일반 배열과 동일한 시간 복잡도를 갖지만 삽입의 경우는 다르다.
+
+삽입은 해당 요소가 존재한지 확인한 후 삽입해야 하므로 검색 N, 첫번째 요소에 삽입 N+1으로 2N + 1이 된다. 하지만 빅오는 전반적인 추이를 나타내므로 O(n)이다.
+
+### 정렬된 배열
+
+정렬된 배열의 경우 일반 배열보다 삽입이 느리다. 정렬이 유지되도록 검색 후 요소를 삽입해야하기 때문이다. 하지만 검색에서는 일반 배열보다 훨씬 빠르다.
+
+일반 배열에서 검색 알고리즘은 선형검색으로 판단지만, 정렬된 배열에서는 `이진검색`으로 검색에 필요한 최대 단계 수를 대폭 줄일 수 있다.
+
+<aside>
+- 배열의 크기가 3일 때  
+  `선형 검색` : 3  
+  `이진 검색` : 2
+
+- 배열의 크기가 두배로 증가했을 때  
+  `선형 검색` : 6  
+  `이진 검색` : 2 + 1  
+  …
+- 배열의 크기가 100일 때  
+  일반 배열에서의 `선형 검색`: 100단계  
+  정렬 배열에서의 `이진 검색`: 7단계
+
+</aside>
+
+**데이터가 두배로 증가할 때마다 이진 검색의 단계수는 최대 1단계만 추가된다.**
+
+데이터의 중점을 기준으로 좌/우 어느 쪽에 있는 지 판단 후 절반씩 제거하는 방향으로 검색이 되므로, O(logN)이 된다.  
+배열의 크기가 100일 때의 이진 검색이 7단계임을 계산해보면 log2(100) = 6.64…가 되어 7 단계임을 알 수 있다.
+
+## 함수로 보는 BigO 표기법
+
+### O(1)
+
+input year이 무한이 되어도 최대 2번의 단계가 걸린다. 상수 단계이므로 시간 복잡도는 O(1)이다.
+
+```jsx
+function checkYear(year: number) {
+  const isOdd = year % 2
+  if (isOdd) {
+    return '짝수입니다.'
+  } else {
+    return '홀수입니다.'
+  }
+}
+```
+
+### O(n)
+
+최대 input Array의 길이만큼 반목문을 돌면서 조건을 확인하므로 시간 복잡도는 O(n)이다.
+
+```jsx
+function order(fruits: string[]) {
+  const cart = []
+
+  for (let i = 0; i < fruits.length; i++) {
+    const fruit = fruits[i]
+    if (fruit.startsWith('a')) {
+      cart.push(fruit)
+    }
+  }
+
+  return cart
+}
+```
+
+### O(logN)
+
+반복문의 횟수는 placedGrains이 grains을 넘는 시점이 되기 까지 두배씩 몇번을 증가하는 지이다. 다른말로, grains이 두배 증가하면 반복문이 실행되는 횟수는 +1이 된다.
+
+```jsx
+function chessboardSpace(grains: number) {
+  let placedGrains = 1
+  let chessboardSpaces = 1
+
+  while (placedGrains < grains) {
+    placedGrains *= 2
+    chessboardSpaces += 1
+  }
+
+  return chessboardSpaces
+}
+```

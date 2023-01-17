@@ -12,7 +12,12 @@ import * as mdx from '@mdx-js/react'
 import styled from 'styled-components'
 
 import Post from '@/domain/post/type'
-import { getFileSlug, getPost, getPostsFilePaths } from '@/domain/post'
+import {
+  getFileTitle,
+  getPost,
+  getFileTitleOfPosts,
+  getCategoryOfFile,
+} from '@/domain/post'
 import { NextPageWithLayout } from 'pages/_app'
 
 import MDX_STYLE from '@/components/mdx'
@@ -50,12 +55,12 @@ Detail.getLayout = function getLayout(
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const filePaths = getPostsFilePaths()
+  const files = getFileTitleOfPosts()
 
-  const paths = filePaths.map((filePath) => {
+  const paths = files.map((title) => {
     return {
       params: {
-        slug: getFileSlug(filePath),
+        slug: getFileTitle(title),
       },
     }
   })
@@ -73,7 +78,10 @@ export const getStaticProps = async (
 ) => {
   const { slug } = context.params as Params
 
-  const { data, content } = getPost(slug)
+  const { data, content } = getPost({
+    category: getCategoryOfFile(slug),
+    fileTitle: slug,
+  })
 
   const mdxSource = await serialize(content)
 

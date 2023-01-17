@@ -5,7 +5,7 @@ import { FrontMatter } from '@/domain/post/type'
 import { HighlightBlock } from '../mdx/style'
 import { DEVICE_SIZE } from '@/constants/common'
 
-import TagLink from './TagLink'
+import CategoryLink from './CategoryLink'
 import Thumbnail from '../Thumbnail'
 import Frame from '../layout/Frame'
 import TOC, { TOC_WIDTH_IN_PC } from './TOC'
@@ -17,7 +17,7 @@ type Props = {
 }
 
 const PostTemplate = ({ data, children }: Props) => {
-  const { title, createDate, tag, thumbnailSrc, description } = data
+  const { title, createDate, category, thumbnailSrc, description } = data
   const [error, setError] = useState(false)
 
   const handleSrcError = () => {
@@ -35,7 +35,7 @@ const PostTemplate = ({ data, children }: Props) => {
           <Title>{title}</Title>
           <Summary>{description}</Summary>
 
-          {!!tag && <TagLink tag={tag} />}
+          {!!category && <CategoryLink category={category} />}
           <CreatedTime dateTime={createDate}>{createDate}</CreatedTime>
         </HeaderFrame>
       </Header>

@@ -1,0 +1,230 @@
+---
+title: Multiple Pointers
+description: 특정 위치를 가리켜서 조건을 충족하는 것을 찾는 패턴이다. 두개의 포인터를 두어 같은 방향이든 반대 방향이든 움직이며 비교 범위를 줄여가거나 구해야 하는 값을 기억할 수 있다.
+createDate: 2022.10.18
+category: algorithms
+---
+
+### 문제를 이용해 익혀보자
+
+> **문제 1** - 오름차순으로 정렬된 숫자가 요소로 된 배열에서 두 합이 0인 첫번째 한 쌍(두개의 요소)을 찾아라 (중복된 값은 없다)  
+> ex)  
+> sumZero([-3,-2,-1,0,1,2,3]) // [-3,3]  
+> sumZero([-3,-2,-1,0,1,2]) // [-2,2]  
+> sumZero([1,2,3]) // undefined
+
+**[풀이]**
+
+1.  합이 0이 되려면 절대값이 같지만 부호가 달라야 한다.
+2.  왼쪽/오른쪽에 두개의 포인터를 두고 합계를 구한다.
+3.  왼쪽 포인터는 음수, 오른쪽 포인터는 양수여야 하므로 왼쪽 포인터가 0이상이거나, 오른쪽 포인터가 0이하면 실행을 멈춘다.
+4.  합계가 양수면 양수의 절댓값이 음수의 절댓값보다 더 크다는 것이므로 오른쪽 포인터를 왼쪽으로 한 칸 이동인다.
+5.  합계가 음수이면 음수이 절댓값이 양수의 절댓값보다 더 크다는 것이므로 왼쪽 포인터를 오른쪽으로 한 칸 이동한다.
+
+```jsx
+/**
+ * 시간 복잡도 O(n)
+ * 공간 복잡도 O(1)
+ */
+function findZeroSumPair(sortedArray) {
+  if (sortedArray.length < 2) return // 최소 요소의 갯수는 2개 이상이어야 한다.
+
+  let negativePointer = 0
+  let positivePointer = sortedArray.length - 1
+
+  while (negativePointer < positivePointer) {
+    if (sortedArray[negativePointer] >= 0 || sortedArray[positivePointer] <= 0)
+      return
+
+    const sum = sortedArray[negativePointer] + sortedArray[positivePointer]
+    if (sum === 0) {
+      return [sortedArray[negativePointer], sortedArray[positivePointer]]
+    } else if (sum > 0) {
+      positivePointer--
+    } else {
+      negativePointer++
+    }
+  }
+}
+```
+
+> **문제 2** - 오름차순으로 정렬된 숫자가 요소로 된 배열에서 중복된 값을 제거하면 최종 요소의 갯수가 몇개인지 확인해라.  
+> ex)  
+> countUniqueValues([1,1,1,1,1,2]) // 2  
+> countUniqueValues([1,2,3,4,4,4,5,5,12,12,13]) // 7  
+> countUniqueValues([]) // 0  
+> countUniqueValues([-2,-1,-1,0,1]) // 4
+
+[풀이 1]
+
+1. 두개의 포인터를 index 0, 1에 두고 왼쪽 포인터를 포함한 왼쪽 섹션에는 유니크한 요소만 위치한다. 즉, 두 포인터 사이의 요소는 중복된 요소들이 모여있다.
+2. 두 포인터가 가리키는 값이 같으면 오른족 포인터만 한 칸 오른쪽으로 이동한다. (오른쪽 포인터가 가리키는 값은 중복된 값이므로 두 포인터 사이로 이동시키는 것이다.)
+3. 두 포인터가 가리키는 값이 다르면 왼쪽 포인터를 한 칸 오른쪽으로 이동하고, 오른쪽 포인터가 가리키는 값을 왼쪽 포인터가 가리키는 곳에 넣는다. 오른쪽 포인터를 한 칸 오른쪽으로 이동한다.
+4. 오른쪽 포인터가 마지막 요소를 가리킬 때까지 이를 반복한다.
+5. 최종적으로 왼쪽 포인터의 길이를 리턴한다.
+
+배열 길이가 2 미만일 때는 해당 요소가 무조건 유니크한 값이므로 배열의 길이를 리턴한다.
+
+```jsx
+/**
+ * 시간 복잡도 O(n)
+ * 공간 복잡도 O(1)
+ */
+function countUniqueValues(sortedArray) {
+  if (sortedArray.length < 2) return sortedArray.length
+
+  let uniquePointer = 0
+  let comparePointer = 1
+
+  while (comparePointer < sortedArray.length) {
+    if (sortedArray[uniquePointer] === sortedArray[comparePointer]) {
+      ++comparePointer
+    } else {
+      ++uniquePointer
+      sortedArray[uniquePointer] = sortedArray[comparePointer]
+
+      ++comparePointer
+    }
+  }
+
+  return uniquePointer + 1
+}
+```
+
+**[풀이 2]**
+
+1. 정렬되어있는 배열이므로 현재와 다음의 비교로 파악할 수 있다.
+2. 배열을 순회하며 현재 값과 다음 값이 같지 않으면 count를 +1 증가시킨다.
+3. 마지막 요소는 그 다음 요소가 존재하지 않기 때문에 무조건 count가 +1 된다.
+
+```jsx
+/**
+ * 시간 복잡도 O(n)
+ * 공간 복잡도 O(1)
+ */
+function countUniqueValues(sortedArray) {
+  let count = 0
+
+  for (let index = 0; index < sortedArray.length; index++) {
+    const current = sortedArray[index]
+    const next = sortedArray[index + 1]
+
+    if (current !== next) {
+      ++count
+    }
+  }
+
+  return count
+}
+```
+
+**[풀이 3]**
+
+1. 정렬되어있는 배열이므로 현재와 다음의 비교로 파악할 수 있다.
+2. 직전에 유니크한 값을 저장한다.
+3. 현재 값이 유니크한 값이랑 다르면 count +1 증가시키고, 유니크한 값에도 해당 값을 업데이트 한다.
+
+```jsx
+function countUniqueValues(sortedArray) {
+  let count = 0
+  let uniqueValue
+
+  for (let index = 0; index < sortedArray.length; index++) {
+    const current = sortedArray[index]
+
+    if (uniqueValue !== current) {
+      // 처음에는 undefined일 것이므로 무조건 첫 요소가 유니크한 값으로 들어간다.
+      uniqueValue = current
+      ++count
+    }
+  }
+
+  return count
+}
+```
+
+> **문제 4** - 정수가 정렬된 배열에서 주어진 값을 평균으로한 두 수가 존재하는지 확인해라.  
+> ex)  
+> averagePair([1,2,3], 2.5) // true  
+> averagePair([1,3,3,5,6,7,10,12,19], 8) // true  
+> averagePair([-1,0,3,4,5,6], 4.1) // false  
+> averagePair([], 4) // false
+
+**[풀이]**
+
+1. 두 수가 존재하지 않으면 false 리턴한다.
+2. 정렬되어 있으므로 오른쪽으로 이동할 수록 큰 수가, 왼쪽으로 이동할 수록 작은 수가 존재 할 것이다.
+3. 두 포인터를 배열 양끝에 둔다.
+4. 두 포인터의 합이 평균 \* 2와 같으면 true를 리턴한다.
+5. 작으면 더 큰 수가 필요한 것이므로 왼쪽 포인터를 한 칸 이동하고, 크면 더 작은 수가 필요한 것이므로 오른쪽 포인터를 왼쪽으로 이동한다.
+6. 오른쪽 포인터는 왼쪽 포인터보다 항상 오른쪽에 위치해야 한다.
+
+```jsx
+/**
+ * 시간 복잡도: O(n)
+ * 공간 복잡도: O(1)
+ */
+function averagePair(sortedArray, avg) {
+  if (sortedArray.length < 2) return false
+
+  let rightIndex = sortedArray.length - 1
+
+  for (let leftIndex = 0; leftIndex < rightIndex; leftIndex++) {
+    const sum = sortedArray[leftIndex] + sortedArray[rightIndex]
+
+    if (sum === avg * 2) {
+      return true
+    } else if (sum > avg * 2) {
+      rightIndex--
+    }
+  }
+
+  return false
+}
+```
+
+> **문제 5** - 문장에 특정한 단어가 포함되어 있는지 확인해라  
+> ex)  
+> isSubsequence('hello', 'hello world'); // true  
+> isSubsequence('sing', 'sting'); // false  
+> isSubsequence('abc', 'abracadabra'); // false  
+> isSubsequence('abc', 'acb'); // false (order matters)
+
+**[풀이]**
+
+1. 단어와 문장에 앞에 포인터를 하나씩 둔다.
+2. 각 포인터가 가리키는 문자가 같으면 포인터를 +1씩 옮긴다.
+3. 단어 내에서 앞으로 확인할 문자 갯수가 문장에서 앞으로 확인할 문자 갯수보다 크면 false를 리턴한다.
+4. 각 포인터의 값이 동일할 때  
+   단어 포인터가 단어 마지막 문자를 가리키면 true를 리턴한다.
+5. 두 포인터가 가리키는 문자가 다를 때  
+   이전에 단어와 문장의 포인터 값이 같았으면 (wP > 0), wP는 0으로 초기화하고 sP는 두 문자가 같다고 카운팅되었던 직 후의 포인터로 이동한다. sP = sP - (wP - 1)  
+   이전에 단어와 문장의 포인터 값이 같지 않았으면 (wP === 0), sP만 +1 이동한다.
+
+```jsx
+/**
+ * 시간 복잡도: O(n + m)
+ * 공간 복잡도: O(1)
+ */
+function isSubsequence(word, sentence) {
+  let wP = 0
+  let sP = 0
+
+  while (sP < sentence.length) {
+    if (sentence.length - sP < word.length - wP) return false
+
+    if (sentence[sP] === word[wP]) {
+      if (wP === word.length - 1) return true
+      sP++
+      wP++
+    } else {
+      if (wP !== 0) {
+        sP -= wP - 1
+        wP = 0
+      } else {
+        sP++
+      }
+    }
+  }
+}
+```

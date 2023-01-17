@@ -1,0 +1,263 @@
+---
+title: webpack이란
+description: webpack의 번들링과 plugin에 대해 알아보자.
+createDate: '2022.10.5'
+category: dev
+---
+
+## Webpack이란
+
+> webpack은 entry point를 시작으로 여러 모듈간의 관계성을 파악하여 관련된 모든 모듈을 하나의 파일로 합치는 번들러이다. 그 결과물은 output.path에 지정한 폴더에 생긴다.
+
+## 번들링 과정
+
+- (entry point)main 모듈을 선택하여 이에 의존하고 있는 모든 모듈을 파악하고, 모두 모아 하나의 큰 파일을 만든다.
+  이 과정에서 Impot 문은 번들러 내 함수로 대체되고, impot/export는 사라진다.
+
+1. npm i -D webpack webpack-cli
+   -D 또는 — save-dev 로 추가를 할 경우 dev dependencies에 들어가게 되고, production 빌드시 해당 플러그인이 포함되지않는다.
+   커맨드 라인에서 사용하기 위해 webpack-cli를 설치한다.
+2. webpack을 실행하기 위해서는 기본 설정값 mode, entry, output을 지정해주어야 한다.
+   webpack을 실행할 때마다 `node_modules/.bin/webpack --mode development --entry ./src/app.js --output dist/main.js` 을 직접 타이핑하지 않기 위해 webpack.config.js파일을 생성하여 옵션을 추가한다.
+
+```jsx
+//webpack.config.js
+const path = require('path')
+
+module.exports = {
+  mode: 'development',
+  entry: {
+    main: './src/app.js',
+  },
+  output: {
+    filename: '[name].js', // entry key값이 동적으로 들어간다. 이 경우 main.js이다.
+    path: path.resolve('./dist'), // 절대경로를 지정해야 하기 때문에 path.resolve를 사용한다.
+  },
+}
+```
+
+1. webpack을 실행할 때마다 터미널에 `node_modules/.bin/webpack` 을 직접 타이핑하지 않기 위해 명령어를 추가한다.
+   npm run build를 터미널에서 입력할 경우, node_modules에 있는 webpack을 찾고 webpack.config.js 파일에 있는 옵션을 확인하여 실행한다.
+
+```jsx
+//package.json
+"scripts": {
+    "build": "webpack"
+  }
+```
+
+1. dist 폴더 내에 main.js 파일이 생성되고, 이를 script에 추가하고 open index.html을 터미널에 입력해주면
+   script파일이 실행되는 것을 볼 수 있다.
+   이제 모듈을 지원하지않는 브라우저에서도 동작하는 코드가 됐다. 또한 브라우저가 모듈시스템을 지원하지 않아도 되기때문에 type을 명시하지 않아도 된다.
+
+```jsx
+// index.html
+<script src="./dist/main.js"></script> // type module은 필요없다.
+```
+
+## Loader
+
+- js 파일만 읽을 수 있는 webpack이 다른 타입의 파일을 읽을 수 있게 변환해주는 것이 loader이다.
+- 타입스크립트 같은 다른 언어를 자바스크립트 문법으로 변환해 주고, 이미지를 data URL 형식의 문자열로 변환 해주고, CSS 파일을 자바스크립트에 import 할 수 있도록 해준다.
+- test는 어떤 파일이 변형되어야 하는지, use는 어떤 loader가 변환에 사용되는지 이다.
+
+```jsx
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        /*
+         * 로더가 적용되는 순서는 오른 쪽에서 왼쪽 (아래에서 위쪽으로)이다.
+         * 1)sass-loader, 2)css-loader, 3)style-loader 이다.
+         */
+        use: [
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+            },
+          },
+          { loader: 'sass-loader' },
+        ],
+      },
+    ],
+  },
+}
+```
+
+- css 번들링
+  css-loader는 js 코드로 변환해주고 → style-loader는 그 js 코드를 DOM에 적용해준다.
+- css-loader
+  : css 코드를 js 코드로 변환 되었을 뿐 DOM에 적용되지 않았기 때문에 스트일이 적용되지 않는다.
+  실제로 css-loader를 설정하고 build를 했을 때 dist 파일 main.js에 스타일 코드가 string으로 추가된 것을 볼 수 있다.
+  모듈로 변경된 스타일 시트는 돔에 추가되어야만 브라우져가 해석할 수 있다. css 코드는 CSSOM으로 바뀌어야 스타일이 적용될 수 있다. CSSOM으로 적용하기 위해서는 html에 css파일을 직접 불러오거나 인라인 스크립트로 직접 넣어주어야 한다.
+- style-loader
+  : js 코드로 변경된 스타일 코드를 DOM에 추가해주는 로더이다. style tag로 만들어 head안에 추가해주는 작업을 한다.
+- image 파일 번들링
+  - file-loader
+    : 이미지 파일을 모듈 형태로 지원하고 웹팩 아웃풋에 파일을 옮겨준다. 실제 file-loader를 적용하면 dist 폴더 내에 이미지 파일이 추가된다.
+  ```jsx
+  module.exports = {
+    module: {
+      rules: [
+        {
+          test: /\.png$/, // .png 확장자로 마치는 모든 파일
+          loader: 'file-loader',
+          options: {
+            publicPath: './dist/', // prefix를 아웃풋 경로로 지정
+            name: '[name].[ext]?[hash]', // 로더가 파일을 아웃풋에 복사할때 사용하는 파일 이름 (bulild할 때마다 hash값은 달라짐)
+          },
+        },
+      ],
+    },
+  }
+  ```
+  - url-loader
+    : 여러개의 이미지 파일을 사용할 때는 network 리소스 부담이 있다. 때문에 bas64로 인코딩한 스트링 값을 url로 넣어주는 data uri scheme를 이용하는게 좋다. url-loader는 data uri scheme를 자동으로 처리해주는 로더이다.
+
+## Plugin
+
+번들된 결과물에 추가적인 처리를 하고싶을 때 사용한다. (번들링된 javascript 난독화, 특정 텍스트 추출 등)번들링된 결과물에 plugin이 추가적인 처리를 한 후 output이 적용되어 나온다.
+
+### Banner plugin
+
+- webpack에 내장되어있는 플러그인으로, 결과물에 빌드 정보나 커밋 버전같은 걸 추가할 수 있다.
+
+```jsx
+// webpack.config.js
+
+const webpack = require("webpack")
+
+...
+
+plugins:[
+  new webpack.BannerPlugin({
+  banner : '이것은 배너입니다.'
+  })
+]
+```
+
+### Define plugin
+
+- 기본적으로 개발환경인지, 운영환경인지 파악할 수 있는 환경정보를 제공해준다.
+  webpack의 mode가 “development”일 경우, process.env.NODE_ENV는 “development”가 된다.
+  빌드 타임에 결정된 값을 어플리이션에 전달할 때 사용한다.
+
+```jsx
+// webpack.config.js
+
+const webpack = require("webpack")
+
+export default {
+  ...
+  plugins: [new webpack.DefinePlugin({})],
+}
+```
+
+```jsx
+console.log(process.env.NODE_ENV) // "development"
+```
+
+ex)
+
+```jsx
+new webpack.DefinePlugin({
+  VERSION: JSON.stringify('v.1.2.3'),
+  PRODUCTION: JSON.stringify(false),
+  MAX_COUNT: JSON.stringify(999),
+  'api.domain': JSON.stringify('http://dev.api.domain.com'),
+})
+```
+
+```jsx
+console.log(VERSION) // 'v.1.2.3'
+console.log(PRODUCTION) // true
+console.log(MAX_COUNT) // 999
+console.log(api.domain) // 'http://dev.api.domain.com'
+```
+
+### HtmlTemplate plugin
+
+- webpack의 기본 plugin이 아닌 third party plugin이기 때문에 따로 설치해야 한다.
+  빌드 과정에 html도 포함하여 dist 폴더에 html이 생성된 것을 볼 수 있다.
+  html을 압축하거나, html에 작성된 주석을 제거하거나, html에 변수를 지정하거나 빌드된 결과물이 output으로 나오기 직전에 html 후처리를 한다.
+
+```jsx
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports {
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html', // 템플릿 경로를 지정
+      templateParameters: { // html에 작성한 env 변수값 지정
+        env: process.env.NODE_ENV === 'development' ? '(개발용)' : '',
+      },
+      minify: process.env.NODE_ENV === 'production' ? {
+      collapseWhitespace: true, // 빈칸 제거
+      removeComments: true, // 주석 제거
+      } : false,
+    })
+  ]
+}
+```
+
+### CleanWebpack plugin
+
+- webpack의 기본 plugin이 아닌 third party plugin이기 때문에 따로 설치해야 한다.
+  빌드할 때 이전에 빌드한 파일을 모두 제거한다. 빌드된 결과물을 깔끔하게 가져가기 위해 사용한다.
+  ex) 이전 빌드된 결과물에 foo.js파일이 있을 때 현재 빌드할 시 foo.js 관련 빌드가 없으면 foo.js는 수정되지도 제거되지도 않은 상태 그대로 존재할 것이다. 이때 CleanWebpackPlugin을 사용하면 직전에 빌드된 결과물을 제거한 후 (output 폴더 (ex. dist 폴더)) 빌드 결과물을 추가하기 때문에 foo.js가 사라진 것을 볼 수 있다.
+- clean option
+  webpack v5.20dptj 추가된 옵션으로, 빌드 시 이전 결과를 제거해준다.
+
+  ```jsx
+  // webpack.config.js
+  { output: { path: path.resovle(__dirname, 'dist'), clean: true } }
+  ```
+
+      특정 파일을 제거하지 않고 그대로 유지할 수도 있다. keep 함수가 true를 return하면 해당 파일이 유지되고 그렇지 않으면 제거된다.
+
+      ```jsx
+      // webpack.config.js
+      {
+        output: {
+          clean: {
+            keep: filename => {
+              return filename === "삭제되지*말아야할*파일"
+            }
+          }
+        }
+      }
+      ```
+
+### MiniCssExtract plugin
+
+- webpack의 기본 plugin이 아닌 third party plugin이기 때문에 따로 설치해야 한다.
+  스타일 파일이 많아질 경우, 하나의 javascript로 합쳐지기엔 브라우저에서 loading되는 시간이 길어지기 때문에 js는 js끼리 모듈화하고 css는 css끼리 모듈화하여 ouput을 생성하는것이 좋다. 이 플러그인은 js파일에서 스타일코드만 모아 빌드하여 ouput으로 생성해준다. (개발 환경에서는 굳이 필요 없기 때문에 production환경일 때 적용해준다.)
+  이때, js로 변환된 css코드를 CSSOM으로 적용하여 스타일을 적용시켜 주는 로더인 (head안에 style 태그를 넣어 스타일을 주는) style-loader가 아닌 외부 css파일을 가져오는 MiniCssExtractPlugin의 내장 loader를 사용한다. 그 결과로 외부 css파일을 link 태그로 불러올 것을 확인할 수 있다.
+
+```jsx
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          process.env.NODE_ENV === 'production'
+            ? MiniCssExtractPlugin.loader // 프로덕션 환경
+            : 'style-loader', // 개발 환경
+          'css-loader',
+        ],
+      },
+    ],
+  },
+  plugins: [
+    ...(process.env.NODE_ENV === 'production'
+      ? [new MiniCssExtractPlugin({ filename: `[name].css` })] // 원본 css 파일명
+      : []),
+  ],
+}
+```

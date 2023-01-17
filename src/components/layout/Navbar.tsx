@@ -5,7 +5,6 @@ import Image, { StaticImageData } from 'next/image'
 import { useRouter } from 'next/router'
 
 import { EN_NAME, GITHUB_URL } from '@/domain/owner/constant'
-import { POST_DIRECTORY } from '@/domain/post/constant'
 import useScrollDirection from '@/hooks/useScrollDirection'
 import { Z_INDEX } from '@/styles/constant'
 
@@ -33,11 +32,6 @@ const isTextMenu = (menu: TextMenu | ImageMenu): menu is TextMenu => {
 }
 
 const MENUS: Array<TextMenu | ImageMenu> = [
-  {
-    href: `/${POST_DIRECTORY}`,
-    label: '블로그',
-    isOutlink: false,
-  },
   {
     href: GITHUB_URL,
     img_url: GithubLogo,

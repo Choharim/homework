@@ -1,0 +1,353 @@
+---
+title: 그래프
+description: 복잡한 연결 관계를 나타낼 때 사용되는 그래프를 알아보자.
+createDate: 2022.11.22
+category: data-structure
+---
+
+## 트리 vs 그래프
+
+- 그래프 > 트리  
+  모든 트리는 그래프이지만, 모든 그래프는 트리가 아니다.
+- 특정 경로의 갯수  
+  트리에서 A → B로 이동할 수 있는 경로는 1개이지만, 그래프는 2개 이상이 될 수 있다.
+- 연결 유무  
+  트리에서 모든 노드는 연결되어 있지만, 그래프는 연결이 되지 않은 노드가 존재할 수 있다.
+- 사이클 유무  
+  트리는 사이클이 존재하지 않지만, 그래프는 사이클이 존재할 수 있다.
+- 용어  
+  트리에서 node라고 불리는 데이터 조각은 그래프에서 정점 (vertex)라고 한다.  
+  vertex간 연결해주는 선을 간선 (edge)이라고 하고, 하나의 간선으로 연결된 vertex를 인접한다(adjacent)고 말한다.
+
+## 그래프 종류
+
+- 연결 그래프  
+  모든 vertex간 연결되어 있는 그래프이다.
+- 비연결 그래프  
+  edge로 연결이 되어있지 않는 vertex가 존재하는 그래프이다.
+- 방향 그래프  
+  edge의 방향이 존재하는 그래프이다.
+  A → B 와 같이 A에서는 B로 이동이 가능하지만, B에서는 A로 이동하지 못할 때 필요하다.
+- 비방향 그래프  
+  edge의 방향이 존재하지 않고 단지 연결만 되어있는 그래프이다.
+- 가중 그래프  
+  edge의 가중치가 존재하는 그래프이다.  
+  예를 들어, 지도에서 출발점-도착점의 최단 경로를 구할 때 해당 그래프는 edge에 거리라는 가중치가 부여 되어있어야 판단할 수 있다. 최소 경비로 갈 수 있는 비행기 경로를 선택할 때도 edge에 경비라는 가중치가 부여되어야 알아낼 수 있다.
+- 비가중 그래프  
+  edge에 가중치가 존재하지 않는 그래프이다. 단지 연관되어 있다는 것을 나타낼 때 사용한다.
+
+## 그래프 정렬 방법
+
+vertex간의 연결이 어떻게 되어 있는지 나타내는(기억하는) 방법이다.
+
+### 인접 행렬 (adjacent matrix)
+
+vertex가 연속된 정수로 이루어져 있다면 배열의 index에 해당 vertex의 정보를 저장할 수 있다.
+
+다음과 같이 연결되어있는 무방향 그래프는 2차 행렬로 나타낼 수 있다.
+
+vertex 0은 1,3과 연결되어 있으므로 배열 index 0자리에 인접한 vertex를 저장한다.
+
+```jsx
+/**
+   0
+ /   \
+1     3
+|     |
+ 2 ㅡ 4 
+*/
+const adjacentMatrix = [
+  [1, 3],
+  [0, 2],
+  [1, 4],
+  [0, 4],
+  [2, 3],
+]
+```
+
+### 인접 리스트 (adjacent list)
+
+vertex가 연속된 숫자가 아닐 때 사용하는 방법이다. 해시 테이블에 key는 vertex를, value에는 인접한 vertex 리스트를 배열로 저장한다.
+
+```jsx
+/**
+  'a'
+ /    \
+'e'   'b'
+|      |
+'d' ㅡ 'c'
+*/
+const adjacentList = {
+  a: ['b', 'e'],
+  b: ['a', 'c'],
+  c: ['b', 'd'],
+  d: ['c', 'e'],
+  e: ['a', 'd'],
+}
+```
+
+## 그래프 순회 (graph traversal)
+
+비가중 연결 그래프로 살펴보자.
+
+<Picture src="graph1.png" />
+
+다음 그래프를 인접 리스트로 나타내면 다음과 같다.
+
+```jsx
+class Graph {
+  constructor() {
+    this.hash = {
+      A: ['B', 'C'],
+      B: ['A', 'D'],
+      C: ['A', 'E'],
+      D: ['B', 'E', 'F'],
+      E: ['C', 'D', 'F'],
+      F: ['D', 'E'],
+    }
+  }
+}
+```
+
+### 깊이 우선 탐색 (DFS - depth first search)
+
+주어진 시작점에서 모든 vertex를 멀어지는 방향으로 순회하는 방법이다.
+
+#### 재귀
+
+```jsx
+class Graph {
+ ...
+  recursiveDFS(start) {
+    const hash = this.hash;
+    let result = [];
+    let visited = {};
+
+    function recursion(current) {
+      if (!current) return;
+
+      result.push(current);
+      visited[current] = true;
+
+      for (const adjacentVertex of hash[current]) {
+        if (visited[adjacentVertex]) continue;
+
+        recursion(adjacentVertex);
+      }
+    }
+
+    recursion(start);
+
+    return result;
+  }
+}
+
+const graph = new Graph();
+graph.recursiveDFS("A"); //[ 'A', 'B', 'D', 'E', 'C', 'F' ]
+```
+
+가장 깊은 곳에 도달할 때까지(모든 vertex 재귀함수가 끝날 때까지) 시작점의 재귀 함수가 실행되고 있는 것으로 공간 복잡도가 좋지 않다.
+
+다음 해야하는 작업을 기억하며 공간 복잡도가 더 나은, 깊게 순회할 수 있는 방법은 스택(stack)을 사용하는 것이다.
+
+#### 스택
+
+```jsx
+class Graph {
+ ...
+  iterativeDFS(start) {
+    let result = [];
+    let visited = {};
+    const stack = new Stack();
+
+    let current = start;
+    stack.add(current);
+    visited[current] = true;
+
+    while (stack.values.length) {
+      current = stack.remove();
+
+      result.push(current);
+
+      for (const adjacentVertex of this.hash[current]) {
+        if (visited[adjacentVertex]) continue;
+
+        stack.add(adjacentVertex);
+        visited[adjacentVertex] = true;
+      }
+    }
+
+    return result;
+  }
+}
+
+const graph = new Graph();
+graph.iterativeDFS("A"); //[ 'A', 'C', 'E', 'F', 'D', 'B' ]
+```
+
+### 너비 우선 탐색 (BFS - breadth first search)
+
+```jsx
+class Graph {
+ ...
+  BFS(start) {
+    let result = [];
+    let visited = {};
+    const queue = new Queue();
+
+    let current = start;
+
+    queue.enqueue(current);
+    visited[current] = true;
+
+    while (queue.values.length) {
+      current = queue.dequeue();
+
+      result.push(current);
+
+      for (const adjacentVertex of this.hash[current]) {
+        if (visited[adjacentVertex]) continue;
+
+        queue.enqueue(adjacentVertex);
+        visited[adjacentVertex] = true;
+      }
+    }
+
+    return result;
+  }
+}
+
+const graph = new Graph();
+graph.BFS("A"); //[ 'A', 'B', 'C', 'D', 'E', 'F' ]
+```
+
+## 시간 복잡도
+
+모든 vertex를 edge를 통해 접근하기 때문에 vertex 갯수: V, edge의 갯수:E라고 했을 때 V + 2 \* E의 단계가 필요하므로 O(V + E) 시간 복잡도를 갖는다.
+
+## 다익스트라 (Dijkstra)
+
+지도에서 출발지에서 도착지까지 갈 수 있는 경로를 나타내는 내기 위해선, 출발지 vertex부터 도착지 vertex의 방향으로 이어진 경로를 구해야 하기 때문에 방향 그래프를 사용한다. 그리고 모든 경로 중 최단 거리 경로를 알기 위해선 각 연결 선에 거리라는 가중치가 있는 가중 방향 그래프를 사용하게 된다. 이때, 두 vertex간의 최소/최단 경로를 효율적으로 구할 수 있는 알고리즘이 다익스트라 알고리즘이다.
+
+원리는 다음과 같다.
+
+<aside>
+1. 시작 vertex와 현재까지 가장 가까운 vertex를 방문한다.   
+2. 방문한 vertex에서 인접한 vertex를 살펴본다.   
+    여태 방문하지 않았는지.   
+    여태 방문하지 않았으면, 시작점 vertex부터 현재 방문한 vertex를 거쳐 이동할 수 있는 거리가 몇인지.   
+   인접한 vertex에서 여태 기록했던 최단 거리보다 작으면 최단 거리를 업데이트 해주고, 업데이트 된 최단 거리를 이동하기 위해 어느 곳을 거친 것인지 기록한다.(현재 방문한 vertex)   
+3. 모든 vertex를 방문할 때까지 이를 반복한다.
+
+</aside>
+
+여기에서 저장해야 하는 데이터는 다음과 같다.
+
+1. 방문한 곳 (visited)
+2. 시작점 vertex부터 해당 vertex까지 현재까지의 최단 거리 shortest  
+   모든 vertex의 데이터를 저장해야 하므로 해시 테이블 key는 vertex value는 시작점 vertex ~ key vertex의 최단거리이다.
+3. 각 vertex기준 shortest를 저장했을 때 어느 곳을 거친 최단 거리인지 기억하기 위해 previous 해시 테이블을 저장한다.  
+   key는 vertex, value는 shortest key vertex가 업데이트 되었을 때 경로한 직전 vertex
+
+> 시작 vertex와 현재까지 가장 가까운 vertex를 방문하기 위해, shortest 최단 거리를 갖는 vertex를 알아야 한다. 최대/최단 노드의 값을 효율적으로 저장하고 가져오는 방법은 이진힙을 이용한 우선순위 큐를 사용하는 것이다.
+
+다음 가중 연결 그래프에서 두 지점의 최단 경로와 최단 거리를 구해보자.
+
+<Picture src="graph2.png" />
+
+### 그래프 - 인접 리스트
+
+```jsx
+class WeightedGraph {
+  constructor() {
+    this.adjacentList = {
+      A: [
+        { node: 'B', weight: 4 },
+        { node: 'C', weight: 2 },
+      ],
+      B: [
+        { node: 'A', weight: 4 },
+        { node: 'E', weight: 3 },
+      ],
+      C: [
+        { node: 'A', weight: 2 },
+        { node: 'D', weight: 2 },
+        { node: 'F', weight: 4 },
+      ],
+      D: [
+        { node: 'C', weight: 2 },
+        { node: 'E', weight: 3 },
+        { node: 'F', weight: 1 },
+      ],
+      E: [
+        { node: 'B', weight: 3 },
+        { node: 'D', weight: 3 },
+        { node: 'F', weight: 1 },
+      ],
+      F: [
+        { node: 'C', weight: 4 },
+        { node: 'D', weight: 1 },
+        { node: 'E', weight: 1 },
+      ],
+    }
+  }
+}
+```
+
+### 다익스트라 - 우선순위 큐 사용
+
+```jsx
+class WeightedGraph {
+...
+  dijkstra(start, end) {
+    const nodes = new PriorityQueue();
+    let shortest = {};
+    let previous = {};
+
+    /**
+     * 초기화
+     */
+    for (const vertex in this.adjacentList) {
+      shortest[vertex] = start === vertex ? 0 : Infinity;
+      previous[vertex] = null;
+      nodes.enqueue(vertex, start === vertex ? 0 : Infinity);
+    }
+
+    let current;
+
+    while (nodes.values.length) {
+      /**
+       * shortest에서 현재까지 방문하지 않은 vertex 중 최단거리 갖는 vertex 방문
+       */
+      current = nodes.dequeue().val;
+
+      // 도착지 vertex와 동일하면 모든 최단 경로 구한 것이므로 종료
+      if (current === end) break;
+
+      // 방문한 vertex의 인접 vertex의 shortest 업데이트 해야 하는지 확인
+      for (const { node, weight } of this.adjacentList[current]) {
+        const path = shortest[current] + weight;
+        if (shortest[node] > path) {
+          previous[node] = current;
+          shortest[node] = path;
+          nodes.enqueue(node, path);
+        }
+      }
+    }
+
+    // 결과값을 출발점 -> O -> ... -> 도착점 (거리)로 확인하기 위한 코드
+    let target = end;
+    let result = target;
+    while (1) {
+      result = `${previous[target]} -> ${result}`;
+      target = previous[target];
+      if (target === start) break;
+    }
+
+    return `${result} (${shortest[end]})`;
+  }
+}
+
+const weightedGraph = new WeightedGraph();
+weightedGraph.dijkstra("A", "E") // A -> C -> D -> F -> E (6)
+```
