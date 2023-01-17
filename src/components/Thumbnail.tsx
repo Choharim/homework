@@ -66,5 +66,4 @@ const Container = styled.div<
         `
     }
   }}
-  background-color: ${({ theme }) => theme.color.white};
 `

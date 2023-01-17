@@ -27,6 +27,6 @@ const Desc = styled.footer(({ theme }) => ({
   width: '100%',
   height: `${FOOTER_HEIGHT}px`,
   marginTop: '30px',
-  color: theme.color.black,
-  ...theme.font.body_1,
+  color: theme.color.primary1,
+  ...theme.font.body_3,
 }))

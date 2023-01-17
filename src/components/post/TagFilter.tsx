@@ -52,7 +52,6 @@ const CircleTagLink = styled(TagLink)<{ $active: boolean; tag?: Tag }>`
   ${({ $active, tag }) =>
     $active &&
     css`
-      color: ${({ theme }) => theme.color.black};
       background-color: ${TAG_COLOR_BY_TYPE[tag]?.hover};
       border: 2px solid ${TAG_COLOR_BY_TYPE[tag]?.active};
     `};

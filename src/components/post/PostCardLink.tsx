@@ -67,7 +67,7 @@ PostCardLink.Content = function Component(content: Post['data']) {
 
 const Title = styled.h3`
   ${({ theme }) => theme.font.header_3};
-  color: ${({ theme }) => theme.color.black};
+  color: ${({ theme }) => theme.color.primary2};
 
   ${limitTextLine(2)}
 
@@ -76,7 +76,7 @@ const Title = styled.h3`
 
 const Desc = styled.p`
   ${({ theme }) => theme.font.subtitle_3};
-  color: ${({ theme }) => theme.color.gray1};
+  color: ${({ theme }) => theme.color.primary1};
 
   ${limitTextLine(2)}
 
@@ -91,11 +91,11 @@ const Wrapper = styled.article`
 
   :hover {
     ${Title} {
-      color: ${({ theme }) => theme.color.primary3};
+      color: ${({ theme }) => theme.color.primary4};
     }
 
     ${Desc} {
-      color: ${({ theme }) => theme.color.primary1};
+      color: ${({ theme }) => theme.color.primary3};
     }
   }
 `
@@ -105,7 +105,7 @@ const ThumbnailWrapper = styled.div`
   border-radius: 10px;
   height: ${SIZE}px;
   min-width: ${SIZE}px;
-  background-color: ${({ theme }) => theme.color.black};
+  background-color: transparent;
   margin-right: 24px;
 
   ${({ theme }) => theme.media.mobile} {
@@ -135,5 +135,5 @@ const Bottom = styled.div`
 
 const CreateDate = styled.time`
   ${({ theme }) => theme.font.body_3};
-  color: ${({ theme }) => theme.color.gray2};
+  color: ${({ theme }) => theme.color.primary3};
 `

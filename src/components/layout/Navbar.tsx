@@ -120,9 +120,9 @@ const Navigation = styled.nav<{ hidden: boolean }>`
   width: 100%;
   height: ${NAVBAR_HEIGHT}px;
 
-  background: hsla(0, 0%, 100%, 0.8);
+  background-color: rgb(250, 242, 232, 0.8);
   backdrop-filter: saturate(180%) blur(5px);
-  border-bottom: 1px solid ${({ theme }) => theme.color.gray4};
+  border-bottom: 1px solid ${({ theme }) => theme.color.line};
   z-index: ${Z_INDEX.nav};
 
   display: block;
@@ -161,7 +161,7 @@ const MenuContainer = styled.ul`
 `
 
 const MenuText = styled.span`
-  color: ${({ theme }) => theme.color.black};
+  color: ${({ theme }) => theme.color.primary1};
   ${({ theme }) => theme.font.subtitle_3};
 `
 
@@ -180,7 +180,7 @@ const Menu = styled.li<{ $active: boolean }>`
 
   &:hover {
     ${LinkWrapper} {
-      background-color: ${({ theme }) => theme.color.gray4};
+      background-color: ${({ theme }) => theme.color.primary7};
     }
   }
 
@@ -190,7 +190,7 @@ const Menu = styled.li<{ $active: boolean }>`
       pointer-events: none;
 
       ${LinkWrapper} {
-        background-color: ${theme.color.gray4};
+        background-color: ${theme.color.primary7};
       }
     `}
 `

@@ -9,6 +9,7 @@ import TagLink from './TagLink'
 import Thumbnail from '../Thumbnail'
 import Frame from '../layout/Frame'
 import TOC, { TOC_WIDTH_IN_PC } from './TOC'
+import { NAVBAR_HEIGHT } from '../layout/Navbar'
 
 type Props = {
   children: React.ReactNode
@@ -70,13 +71,12 @@ const Article = styled.article`
   flex-direction: column;
   margin-bottom: 100px;
 
-  color: ${({ theme }) => theme.color.black};
+  color: ${({ theme }) => theme.color.primary1};
 `
 
 const Header = styled.div`
   padding: 90px 0 40px;
   margin-bottom: 20px;
-  background-color: ${({ theme }) => theme.color.primary7};
 `
 
 const HeaderFrame = styled(Frame)`
@@ -111,13 +111,30 @@ const Aside = styled.aside<{ $direction: 'right' | 'top' }>`
           ${MEDIA_SCREEN_FOR_TOC} {
             display: none;
           }
+
+          ${TOC.TOCBox} {
+            position: sticky;
+            right: 0;
+            top: ${NAVBAR_HEIGHT + 5}px;
+            width: ${TOC_WIDTH_IN_PC}px;
+          }
         `
       : css`
           display: none;
           ${MEDIA_SCREEN_FOR_TOC} {
             display: flex;
           }
+
+          ${TOC.TOCBox} {
+            position: unset;
+            width: 100%;
+            margin-bottom: 20px;
+          }
         `}
+
+  ${({ theme }) => theme.media.mobile} {
+    display: none;
+  }
 `
 
 const Title = styled.h1`
@@ -133,7 +150,7 @@ const Title = styled.h1`
 
 const CreatedTime = styled.time`
   ${({ theme }) => theme.font.body_2};
-  color: ${({ theme }) => theme.color.gray1};
+  color: ${({ theme }) => theme.color.primary3};
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
@@ -143,7 +160,7 @@ const CreatedTime = styled.time`
 `
 
 const Summary = styled.p`
-  ${({ theme }) => theme.font.subtitle_3};
+  ${({ theme }) => theme.font.subtitle_2};
   margin: 5px 0 15px;
 `
 
