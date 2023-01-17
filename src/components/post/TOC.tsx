@@ -9,7 +9,7 @@ import { setTOCId } from '@/application/post'
 
 export const TOC_WIDTH_IN_PC = 280
 
-const OBSERVER_OPTIONS = {
+const OBSERVER_OPTIONS: IntersectionObserverInit = {
   root: null,
   rootMargin: `-${NAVBAR_HEIGHT}px`,
   threshold: 0,
