@@ -179,8 +179,8 @@ const Menu = styled.li<{ $active: boolean }>`
   }
 
   &:hover {
-    ${LinkWrapper} {
-      background-color: ${({ theme }) => theme.color.primary7};
+    ${MenuText} {
+      color: ${({ theme }) => theme.color.primary3};
     }
   }
 
@@ -189,8 +189,8 @@ const Menu = styled.li<{ $active: boolean }>`
     css`
       pointer-events: none;
 
-      ${LinkWrapper} {
-        background-color: ${theme.color.primary7};
+      ${MenuText} {
+        color: ${theme.color.primary3};
       }
     `}
 `
