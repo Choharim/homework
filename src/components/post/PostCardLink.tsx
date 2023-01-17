@@ -6,7 +6,7 @@ import { POST_DIRECTORY } from '@/domain/post/constant'
 import Post from '@/domain/post/type'
 import { limitTextLine } from '@/styles/mixin'
 
-import TagLink from './TagLink'
+import CategoryLink from './CategoryLink'
 import Thumbnail from '../Thumbnail'
 
 const SIZE = 160
@@ -49,7 +49,7 @@ const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
 export default PostCardLink
 
 PostCardLink.Content = function Component(content: Post['data']) {
-  const { title, createDate, description, tag } = content
+  const { title, createDate, description, category } = content
 
   return (
     <Content>
@@ -58,7 +58,7 @@ PostCardLink.Content = function Component(content: Post['data']) {
         <Desc>{description}</Desc>
       </Top>
       <Bottom>
-        <TagLink tag={tag} />
+        <CategoryLink category={category} />
         <CreateDate dateTime={createDate}>{createDate}</CreateDate>
       </Bottom>
     </Content>
