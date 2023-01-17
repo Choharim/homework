@@ -8,6 +8,8 @@ type Post = {
 
 export default Post
 
+export type BriefPost = Pick<Post, 'data' | 'slug'>
+
 export type FrontMatter = {
   title: Title
   description: Description

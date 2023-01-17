@@ -81,7 +81,7 @@ export const getStaticProps = async (
   const { data, content } = getPost({
     category: getCategoryOfFile(slug),
     fileTitle: slug,
-  })
+  }) as Post
 
   const mdxSource = await serialize(content)
 

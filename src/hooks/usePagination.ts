@@ -30,7 +30,7 @@ const usePagination = ({ category }: Params) => {
   useEffect(() => {
     if (!pageOffset) return
 
-    fetchPosts(pageOffset, category).then((res) => setPosts(res))
+    fetchPosts('', { pageOffset, category }).then((res) => setPosts(res))
   }, [pageOffset, category])
 
   return { posts, targetRef }

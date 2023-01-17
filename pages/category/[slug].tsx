@@ -13,14 +13,16 @@ import { CATEGORIES } from '@/domain/post/constant'
 import { NextPageWithLayout } from 'pages/_app'
 import { CardListFrame } from '@/styles/mixin'
 
-import usePagination from '@/hooks/usePagination'
+// import usePagination from '@/hooks/usePagination'
 import CategoryFilter from '@/components/post/CategoryFilter'
 import PostCardLink from '@/components/post/PostCardLink'
+import { fetchPosts } from '@/services/api'
 
 const PostsPage: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
-> = ({ category }) => {
-  const { posts, targetRef } = usePagination({ category })
+> = ({ posts }) => {
+  // TODO:
+  // const { posts, targetRef } = usePagination({ category })
 
   return (
     <>
@@ -30,7 +32,7 @@ const PostsPage: NextPageWithLayout<
           return <PostCardLink key={slug} data={data} slug={slug} />
         })}
       </CardList>
-      <div ref={targetRef} />
+      {/* <div ref={targetRef} /> */}
     </>
   )
 }
@@ -52,10 +54,11 @@ export const getStaticProps = async (
   context: GetStaticPropsContext<ParsedUrlQuery, PreviewData>
 ) => {
   const { slug } = context.params as Params
+  const posts = await fetchPosts(process.env.BASE_URL || '', { category: slug })
 
   return {
     props: {
-      category: slug,
+      posts,
     },
   }
 }
