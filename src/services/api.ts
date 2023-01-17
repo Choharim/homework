@@ -1,10 +1,20 @@
 import Post, { Category } from '@/domain/post/type'
 
+type FetchPostsParams = {
+  pageOffset?: number
+  category: Category
+}
 export const fetchPosts = async (
-  pageOffset: number,
-  category: Category = 'all'
+  baseUrl: string,
+  { pageOffset, category }: FetchPostsParams
 ): Promise<Post[]> => {
-  const res = await fetch(`/api/posts?page=${pageOffset}&category=${category}`)
+  let params = [`category=${category}`]
+
+  if (typeof pageOffset === 'number') {
+    params = [...params, `page=${pageOffset}`]
+  }
+
+  const res = await fetch(`${baseUrl}/api/posts?${params.join('&')}`)
 
   return await res.json()
 }

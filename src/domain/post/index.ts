@@ -3,7 +3,7 @@ import matter from 'gray-matter'
 import { join } from 'path'
 
 import { MDX_EXTENSION, POSTS_PATH } from './constant'
-import Post, { Category } from './type'
+import Post, { BriefPost, Category } from './type'
 
 const MDX_REG_EXP = /\.mdx?$/
 
@@ -50,10 +50,16 @@ export const getFileTitleOfPosts = (category: Category = 'all') => {
   return fileTitleOfPosts.filter((path) => isMDX(path))
 }
 
-export const getPost = (params: {
+type GetPostCommonParams = {
   fileTitle: string
   category: Category
-}): Post => {
+}
+interface GetPostBriefParams extends GetPostCommonParams {
+  isBrief: true
+}
+
+//TODO: 타입 가드
+export const getPost = (params: GetPostCommonParams | GetPostBriefParams) => {
   const { fileTitle, category } = params
 
   const filePath = getFilename(fileTitle)
@@ -63,10 +69,23 @@ export const getPost = (params: {
   const markdown = fs.readFileSync(fullPath, 'utf-8')
   const { data, content } = matter(markdown)
 
-  return { slug: getFileTitle(fileTitle), data: data as Post['data'], content }
+  if ((params as GetPostBriefParams).isBrief) {
+    return {
+      slug: getFileTitle(fileTitle),
+      data: data as Post['data'],
+    } as BriefPost
+  } else {
+    return {
+      slug: getFileTitle(fileTitle),
+      data: data as Post['data'],
+      content,
+    } as Post
+  }
 }
 
-const sortByCreateDate = (posts: Post[]): Post[] => {
+const sortByCreateDate = (
+  posts: (BriefPost | Post)[]
+): (BriefPost | Post)[] => {
   const postsArray = [...posts]
 
   return postsArray.sort(
@@ -80,7 +99,7 @@ export const getPosts = (category: Category = 'all') => {
   const fileTitleOfPosts = getFileTitleOfPosts(category)
 
   const posts = fileTitleOfPosts.map((title) =>
-    getPost({ fileTitle: title, category })
+    getPost({ fileTitle: title, category, isBrief: true })
   )
 
   return sortByCreateDate(posts)
