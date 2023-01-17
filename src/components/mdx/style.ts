@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 
 export const HeaderFont = css`
-  color: ${({ theme }) => theme.color.primary3};
+  color: ${({ theme }) => theme.color.primary2};
 `
 export const ParagrahFont = css`
   ${({ theme }) => theme.font.body_1};
@@ -21,18 +21,19 @@ export const ListContainer = css`
 export const HighlightWord = css`
   display: inline;
   ${({ theme }) => theme.font.body_2};
-  background-color: ${({ theme }) => theme.color.pink3};
-  padding: 1px 5px;
+  background-color: ${({ theme }) => theme.color.primary4};
+  color: ${({ theme }) => theme.color.bg};
+  padding: 2px 5px;
   border-radius: 2px;
 `
 
 export const BlockQuote = styled.blockquote`
   ${({ theme }) => theme.font.body_1};
 
-  border-left: 5px solid ${({ theme }) => theme.color.pink2};
-  background-color: ${({ theme }) => theme.color.pink5};
+  border-left: 5px solid ${({ theme }) => theme.color.line};
+  background-color: ${({ theme }) => theme.color.primary7};
   margin: 20px 0;
-  padding: 5px 10px 5px 20px;
+  padding: 8px 10px 8px 20px;
   border-radius: 2px;
 
   code {
@@ -43,7 +44,8 @@ export const BlockQuote = styled.blockquote`
 export const HighlightBlock = css`
   margin: 10px 0 15px;
   padding: 20px;
-  background-color: ${({ theme }) => theme.color.primary7};
+  border: 2px dashed ${({ theme }) => theme.color.line};
+  border-radius: 12px;
 
   ${({ theme }) =>
     css`

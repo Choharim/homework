@@ -61,7 +61,7 @@ const TOC = () => {
   if (!headingElements.length) <></>
 
   return (
-    <TOCBox>
+    <TOC.TOCBox>
       <ListContainer>
         {headingElements.map((heading) => (
           <List
@@ -75,28 +75,15 @@ const TOC = () => {
           </List>
         ))}
       </ListContainer>
-    </TOCBox>
+    </TOC.TOCBox>
   )
 }
 
 export default TOC
 
-const TOCBox = styled.div`
-  position: sticky;
-  right: 0;
-  top: ${NAVBAR_HEIGHT + 5}px;
-
-  width: ${TOC_WIDTH_IN_PC}px;
+TOC.TOCBox = styled.div`
   padding: 5px;
   z-index: ${Z_INDEX.aside};
-
-  ${({ theme }) => theme.media.tablet} {
-    position: unset;
-    width: 100%;
-  }
-  ${({ theme }) => theme.media.mobile} {
-    display: none;
-  }
 `
 
 const ListContainer = styled.ol`
@@ -111,22 +98,28 @@ const List = styled.li<{ $headerType: HeadersOfContents; $highlight: boolean }>`
     switch ($headerType) {
       case 'h2':
         return css`
-          ${theme.font.subtitle_2}
+          padding: 5px 0;
+          ${theme.font.subtitle_2};
+          color: ${theme.color.primary2};
         `
       case 'h3':
       default:
         return css`
-          ${theme.font.subtitle_3}
-          margin: 2px 0 2px 10px;
-          color: ${theme.color.gray1};
+          padding: 3px 0;
+          margin-left: 15px;
+          ${theme.font.subtitle_3};
+          color: ${theme.color.primary3};
         `
     }
   }}
 
-  color:  ${({ theme, $highlight }) =>
-    $highlight ? theme.color.primary4 : theme.color.gray1};
+  ${({ theme, $highlight }) =>
+    $highlight &&
+    css`
+      color: ${theme.color.primary5};
+    `};
 
   :hover {
-    color: ${({ theme }) => theme.color.primary3};
+    color: ${({ theme }) => theme.color.primary6};
   }
 `

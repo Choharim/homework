@@ -50,11 +50,11 @@ const TagLink = ({ tag, ...rest }: Props) => {
 export default TagLink
 
 TagLink.Chip = styled(Chip)<{ $bgColor: string; $hoverColor: string }>`
+  color: ${({ theme }) => theme.color.primary1};
   background-color: ${({ $bgColor }) => $bgColor};
 
   &:hover {
     background-color: ${({ $hoverColor }) => $hoverColor};
-    color: ${({ theme }) => theme.color.black};
   }
 `
 

@@ -29,13 +29,16 @@ export const color = {
   purple2: '#dfd3e6',
   purple3: '#e6ddeb',
 
-  primary1: '#4c321b',
-  primary2: '#6a5039',
-  primary3: '#886e57',
-  primary4: '#a68c75',
-  primary5: '#c4aa93',
-  primary6: '#d8c8b1',
-  primary7: '#f6e6cf',
+  primary1: '#372f25',
+  primary2: '#52473a',
+  primary3: '#66594a',
+  primary4: '#7e7265',
+  primary5: '#9b8f81',
+  primary6: '#b8ac9f',
+  primary7: '#d5cabf',
+
+  bg: '#faf2e8',
+  line: '#66594a',
 } as const
 
 export const font = {
@@ -67,30 +70,30 @@ export const font = {
   subtitle_2: {
     fontSize: '18px',
     lineHeight: '1.4',
-    fontWeight: 600,
+    fontWeight: 550,
   },
   subtitle_3: {
-    fontSize: '17px',
+    fontSize: '18px',
     lineHeight: '1.4',
     fontWeight: 500,
   },
 
   body_1: {
-    fontSize: '16px',
+    fontSize: '17px',
     lineHeight: '1.5',
   },
   body_2: {
-    fontSize: '15px',
+    fontSize: '16px',
     lineHeight: '1.5',
     fontWeight: 500,
   },
   body_3: {
-    fontSize: '14px',
+    fontSize: '15px',
     lineHeight: '1.5',
     fontWeight: 500,
   },
   body_4: {
-    fontSize: '13px',
+    fontSize: '14px',
     lineHeight: '1.5',
     fontWeight: 500,
   },

@@ -15,6 +15,7 @@ const Pagination = ({ currentPageNumber, totalPages }: Props) => {
   const { pathname, query } = router
   const [firstDisplayPagination, setFirstDisplayPagination] = useState(1)
 
+  //FIXME:
   const clickPageNumber = useCallback(
     (pageNumber: number) => {
       if (pageNumber <= STANDARD || totalPages - STANDARD + 1 <= pageNumber)
@@ -124,7 +125,7 @@ const PageNumberAtag = styled.a<{ $active: boolean }>`
     css`
       ${PageNumber} {
         background-color: ${theme.color.primary4};
-        color: ${theme.color.white};
+        color: ${theme.color.bg};
       }
       cursor: default;
       pointer-events: none;
@@ -139,6 +140,6 @@ const PageNumber = styled.li`
   height: ${BUTTON_SIZE};
   border-radius: 2px;
 
-  color: ${({ theme }) => theme.color.black};
+  color: ${({ theme }) => theme.color.primary1};
   ${({ theme }) => theme.font.body_1};
 `

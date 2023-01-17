@@ -120,11 +120,11 @@ const CopyCodeButton = styled.button`
   height: 32px;
   outline: none;
   border: none;
-  background-color: ${({ theme }) => theme.color.gray2};
+  background-color: ${({ theme }) => theme.color.primary6};
   border-radius: 4px;
 
   &:hover {
-    background-color: ${({ theme }) => theme.color.gray3};
+    background-color: ${({ theme }) => theme.color.primary7};
   }
 
   ${({ theme }) => css`
