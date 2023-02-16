@@ -36,8 +36,9 @@ export const color = {
   primary5: '#9b8f81',
   primary6: '#b8ac9f',
   primary7: '#d5cabf',
+  primary8: '#e5dcd3',
 
-  bg: '#faf2e8',
+  bg: '#fcf6ef',
   line: '#66594a',
 } as const
 
@@ -64,37 +65,37 @@ export const font = {
   },
   subtitle_1: {
     fontSize: '20px',
-    lineHeight: '1.4',
+    lineHeight: '1.5',
     fontWeight: 600,
   },
   subtitle_2: {
     fontSize: '18px',
-    lineHeight: '1.4',
-    fontWeight: 550,
+    lineHeight: '1.5',
+    fontWeight: 600,
   },
   subtitle_3: {
-    fontSize: '18px',
-    lineHeight: '1.4',
+    fontSize: '17px',
+    lineHeight: '1.6',
     fontWeight: 500,
   },
 
   body_1: {
     fontSize: '17px',
-    lineHeight: '1.5',
+    lineHeight: '1.6',
   },
   body_2: {
     fontSize: '16px',
-    lineHeight: '1.5',
+    lineHeight: '1.6',
     fontWeight: 500,
   },
   body_3: {
     fontSize: '15px',
-    lineHeight: '1.5',
+    lineHeight: '1.6',
     fontWeight: 500,
   },
   body_4: {
     fontSize: '14px',
-    lineHeight: '1.5',
+    lineHeight: '1.6',
     fontWeight: 500,
   },
 } as const

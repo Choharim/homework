@@ -301,6 +301,71 @@ class BinarySearchTree {
 
 방문한 노드 값 먼저 저장하기 때문에 다시 이전과 동일한 트리로 되돌릴 수 있다.
 
+> 이진 탐색 트리를 전위 순회한 결과 배열을 다시 이진 탐색 트리로 되돌려 보자.
+
+- 재귀를 이용한 방법
+
+  ```jsx
+  const array = input.map(Number)
+  const result = []
+
+  function DFS(start, end) {
+    if (start > end) {
+      return
+    } else if (start === end) {
+      result.push(array[start])
+      return
+    }
+
+    const root = array[start]
+    let rightStart = end + 1
+
+    for (let i = start + 1; i <= end; i++) {
+      if (array[i] > root) {
+        rightStart = i
+        break
+      }
+    }
+
+    DFS(start + 1, rightStart - 1)
+    DFS(rightStart, end)
+
+    result.push(root)
+  }
+
+  DFS(0, array.length - 1)
+
+  console.log(result)
+  ```
+
+- Stack을 이용한 방법
+
+  ```jsx
+  const array = input.map(Number)
+  const result = []
+
+  const stack = [[0, array.length - 1]]
+
+  while (stack.length) {
+    ;[start, end] = stack.pop()
+
+    result.unshift(array[start])
+
+    let rightStart = end + 1
+    for (let i = start + 1; i <= end; i++) {
+      if (array[start] < array[i]) {
+        rightStart = i
+        break
+      }
+    }
+
+    if (start + 1 <= rightStart - 1) stack.push([start + 1, rightStart - 1])
+    if (rightStart <= end) stack.push([rightStart, end])
+  }
+
+  console.log(result)
+  ```
+
 ### 중위 순회 (in order)
 
 이진 탐색 트리에서 오름차순으로 정렬된 배열을 얻을 수 있다.

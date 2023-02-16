@@ -76,7 +76,6 @@ const Article = styled.article`
 
 const Header = styled.div`
   padding: 90px 0 40px;
-  margin-bottom: 20px;
 `
 
 const HeaderFrame = styled(Frame)`
@@ -128,7 +127,6 @@ const Aside = styled.aside<{ $direction: 'right' | 'top' }>`
           ${TOC.TOCBox} {
             position: unset;
             width: 100%;
-            margin-bottom: 20px;
           }
         `}
 
@@ -160,7 +158,7 @@ const CreatedTime = styled.time`
 `
 
 const Summary = styled.p`
-  ${({ theme }) => theme.font.subtitle_2};
+  ${({ theme }) => theme.font.subtitle_3};
   margin: 5px 0 15px;
 `
 

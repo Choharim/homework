@@ -13,7 +13,7 @@ export const ListContainer = css`
   ${({ theme }) =>
     css`
       ${theme.media.tablet} {
-        margin: 15px 0 15px 20px;
+        margin: 12px 0 12px 25px;
       }
     `}
 `
@@ -21,19 +21,18 @@ export const ListContainer = css`
 export const HighlightWord = css`
   display: inline;
   ${({ theme }) => theme.font.body_2};
-  background-color: ${({ theme }) => theme.color.primary4};
-  color: ${({ theme }) => theme.color.bg};
+  background-color: ${({ theme }) => theme.color.primary7};
   padding: 2px 5px;
   border-radius: 2px;
 `
 
 export const BlockQuote = styled.blockquote`
-  ${({ theme }) => theme.font.body_1};
+  ${({ theme }) => theme.font.subtitle_3};
 
-  border-left: 5px solid ${({ theme }) => theme.color.line};
-  background-color: ${({ theme }) => theme.color.primary7};
+  border-left: 4px solid ${({ theme }) => theme.color.line};
+  background-color: ${({ theme }) => theme.color.primary8};
   margin: 20px 0;
-  padding: 8px 10px 8px 20px;
+  padding: 5px 10px 5px 20px;
   border-radius: 2px;
 
   code {
@@ -43,7 +42,7 @@ export const BlockQuote = styled.blockquote`
 
 export const HighlightBlock = css`
   margin: 10px 0 15px;
-  padding: 20px;
+  padding: 15px;
   border: 2px dashed ${({ theme }) => theme.color.line};
   border-radius: 12px;
 

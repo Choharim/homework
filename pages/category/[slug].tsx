@@ -5,18 +5,17 @@ import {
   PreviewData,
 } from 'next'
 import React from 'react'
-import styled from 'styled-components'
 import { ParsedUrlQuery } from 'querystring'
 
 import { Category } from '@/domain/post/type'
 import { CATEGORIES } from '@/domain/post/constant'
 import { NextPageWithLayout } from 'pages/_app'
-import { CardListFrame } from '@/styles/mixin'
 
 // import usePagination from '@/hooks/usePagination'
 import CategoryFilter from '@/components/post/CategoryFilter'
 import PostCardLink from '@/components/post/PostCardLink'
 import { fetchPosts } from '@/services/api'
+import CardListFrame from '@/components/post/CardListFrame'
 
 const PostsPage: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -27,11 +26,11 @@ const PostsPage: NextPageWithLayout<
   return (
     <>
       <CategoryFilter />
-      <CardList>
+      <CardListFrame>
         {posts?.map(({ data, slug }) => {
           return <PostCardLink key={slug} data={data} slug={slug} />
         })}
-      </CardList>
+      </CardListFrame>
       {/* <div ref={targetRef} /> */}
     </>
   )
@@ -62,7 +61,3 @@ export const getStaticProps = async (
     },
   }
 }
-
-const CardList = styled.div`
-  ${CardListFrame}
-`
