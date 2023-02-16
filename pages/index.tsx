@@ -1,7 +1,5 @@
 import { InferGetStaticPropsType } from 'next'
-import styled from 'styled-components'
 
-import { CardListFrame } from '@/styles/mixin'
 import { NextPageWithLayout } from './_app'
 import { fetchPosts } from '@/services/api'
 
@@ -9,6 +7,7 @@ import { fetchPosts } from '@/services/api'
 import PostCardLink from '@/components/post/PostCardLink'
 import Layout from '@/components/layout/Layout'
 import CategoryFilter from '@/components/post/CategoryFilter'
+import CardListFrame from '@/components/post/CardListFrame'
 
 const Home: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -19,11 +18,11 @@ const Home: NextPageWithLayout<
   return (
     <>
       <CategoryFilter />
-      <CardList>
+      <CardListFrame>
         {posts?.map(({ data, slug }) => (
           <PostCardLink key={slug} data={data} slug={slug} />
         ))}
-      </CardList>
+      </CardListFrame>
       {/* <div ref={targetRef} /> */}
     </>
   )
@@ -46,7 +45,3 @@ export async function getStaticProps() {
 Home.getLayout = function getLayout(page: React.ReactElement) {
   return <Layout title="홈">{page}</Layout>
 }
-
-const CardList = styled.div`
-  ${CardListFrame};
-`

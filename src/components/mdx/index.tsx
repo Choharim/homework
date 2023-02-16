@@ -60,6 +60,11 @@ const MDX_STYLE = {
     ${ListContainer}
 
     list-style: decimal;
+    > li {
+      &::marker {
+        font-weight: bold;
+      }
+    }
   `,
   ul: styled.ul`
     ${ListContainer}

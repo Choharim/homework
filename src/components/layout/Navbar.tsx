@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { EN_NAME, GITHUB_URL } from '@/domain/owner/constant'
 import useScrollDirection from '@/hooks/useScrollDirection'
 import { Z_INDEX } from '@/styles/constant'
+import { convertHEXToRGB } from '@/utils/convertColorFormat'
 
 import Logo from 'public/favicon.ico'
 import GithubLogo from 'public/github_logo.png'
@@ -114,7 +115,7 @@ const Navigation = styled.nav<{ hidden: boolean }>`
   width: 100%;
   height: ${NAVBAR_HEIGHT}px;
 
-  background-color: rgb(250, 242, 232, 0.8);
+  background-color: rgb(${({ theme }) => convertHEXToRGB(theme.color.bg)}, 0.5);
   backdrop-filter: saturate(180%) blur(5px);
   border-bottom: 1px solid ${({ theme }) => theme.color.line};
   z-index: ${Z_INDEX.nav};

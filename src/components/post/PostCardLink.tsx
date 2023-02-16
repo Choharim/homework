@@ -9,7 +9,7 @@ import { limitTextLine } from '@/styles/mixin'
 import CategoryLink from './CategoryLink'
 import Thumbnail from '../Thumbnail'
 
-const SIZE = 160
+const SIZE = 150
 
 const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
   const { data, slug } = props

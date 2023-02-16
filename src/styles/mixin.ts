@@ -8,9 +8,3 @@ export const limitTextLine = (lineCount: number) => css`
   line-clamp: ${lineCount};
   -webkit-box-orient: vertical;
 `
-
-export const CardListFrame = css`
-  display: grid;
-  gap: 20px;
-  margin-top: 40px;
-`
