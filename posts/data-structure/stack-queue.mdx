@@ -1,109 +1,40 @@
 ---
 title: 스택과 큐
-description: 임시 데이터를 처리할 수 있는 스택과 큐를 알아보자.
+description: 임시 데이터를 처리할 수 있는 스택과 큐가 무엇인지 알아보고 이를 구현할 수 있는 방법을 살펴보자.
 createDate: 2022.11.8
 category: data-structure
 ---
 
-## 스택
+## 스택(Stack)
 
-**LIFO** (last in first out) 방식으로 동작하는 데이터 집합이다. 마지막에 추가된 데이터 순서대로 제거되는 방식이다. 스택의 내부 자료 구조는 LIFO 규칙만 따르면 되는 내부 구조가 정해지지 않은, 추상 데이터 타입에 속한다.
+`LIFO (Last In First Out)` 방식으로 동작하는 데이터 집합이다. `마지막에 추가된 데이터 순서대로 처리`되는 방식이다. 스택의 내부 자료 구조는 LIFO 규칙만 따르면 되는 내부 구조가 정해지지 않은, 추상 데이터 타입에 속한다.
 
 마지막에 들어온 데이터 순으로 처리해야할 때 스택을 사용할 수 있다. 예를 들어, 린터에서 같은 종류의 괄호가 여닫아졌는지 확인하거나 뒤로가기를 눌렀을 때나 Ctrl + z를 이용해 되돌리기를 할 때 등을 구현할 때 스택을 사용한다.
 
-### 구현 - 배열 내장 메소드 Push / Pop
+### 배열 메소드-Push, Pop
 
-데이터를 추가할 때 배열에 push하고, 제거할 때 배열에 pop을 실행하여 마지막 요소를 제거한다. 간단한 방법이다.
+데이터를 추가할 때 배열에 push하고, 제거할 때 배열에 pop을 실행하여 마지막 요소를 제거하여 스택을 간편하게 구현할 수 있다.
 
-### 구현 - 연결 리스트
+index를 유지한 채로 데이터를 추가하고 삭제하기 때문에 `시간 복잡도 O(1)`이다.
 
-배열의 push와 pop을 이용해 데이터를 추가하고 마지막에 추가된 순서대로 제거하는 작업을 할 수 있다. 하지만 스택에는 index가 필요없고 배열 내장 메소드도 불러올 필요가 없기 때문에 연결 리스트로 스택을 구현하는 것이 좋다.
+### 연결 리스트
 
-시간 복잡도 O(1)으로 구현하기 위해 head(first)에 데이터를 삽입하고 제거한다.
+배열의 push와 pop을 이용할 수 있지만, 스택에는 index가 필요없고 배열 내장 메소드도 불러올 필요가 없기 때문에 연결 리스트로 구현하는 것이 좋다.
 
-```jsx
-function Node(data) {
-  this.data = data
-  this.next = null
-}
+**단일 연결 리스트**에서 `head 방향`으로 데이터를 추가하고 삭제함으로써 `시간 복잡도 O(1)`으로 스택을 구현할 수 있다.
 
-function Stack() {
-  this.first = null
-  this.last = null
-}
+## 큐(Queue)
 
-Stack.prototype.add = function (data) {
-  const added = new Node(data)
+`FIFO (First In First Out)` 방식으로, `처음 들어간 데이터부터 순차적으로 처리`되는 데이터 구조이다. 스택과 마찬가지로 임시 데이터를 처리하기 위한 자료 구조이고, 추상 데이터 타입이다.
 
-  if (this.first) {
-    added.next = this.first
-  } else {
-    this.last = added
-  }
-  this.first = added
-}
+데이터를 큐에 넣는 것을 `Enqueue`, 큐에서 삭제하는 것을 `Dequeue`라고 한다.
 
-Stack.prototype.remove = function () {
-  const removed = this.first
+요청 받은 순서대로 처리하는 비동기식 요청을 처리할 때와 같은 원리이다. 운영체제에서의 CPU 스케줄링, 네트웨크 패킷 전송 등에 다양하게 사용된다.
 
-  if (!removed) return null
+### 배열 메소드-Push,Shift / Unshift,Pop
 
-  if (!removed.next) {
-    this.last = null
-  }
-  this.first = removed.next
+shift와 unshift는 배열의 모든 요소의 index를 한 칸씩 이동시키기 때문에 어느 방법을 사용하던 `시간 복잡도 O(n)`이 된다.
 
-  return removed.data
-}
-```
+### 연결 리스트
 
-## 큐
-
-**FIFO** (first in first out) 처음 들어간 데이터부터 순차적으로 제거되는 데이터 구조이다. 스택과 마찬가지로 임시 데이터를 처리하기 위한 자료 구조이고, 추상 데이터 타입이다.
-
-요청 받은 순서대로 처리하는 비동기식 요청을 처리할 때와 같은 원리이다.
-
-### 구현 - 배열 내장 메소드 Push / Shift 또는 Unshift / Pop
-
-shift와 unshift는 배열의 모든 요소의 index를 한 칸씩 이동시키기 때문에 어느 방법을 사용하던 시간 복잡도가 O(n)이 된다.
-
-### 구현 - 연결 리스트
-
-enqueue는 데이터를 리스트 끝에 삽입하고, dequeue는 리스트 첫 번째 데이터를 제거한다. 시간 복잡도는 O(1)이다.
-
-```jsx
-function Node(data) {
-  this.data = data
-  this.next = null
-}
-
-function Queue() {
-  this.first = null
-  this.last = null
-}
-
-Queue.prototype.enqueue = function (data) {
-  const added = new Node(data)
-
-  if (this.last) {
-    this.last.next = added
-  } else {
-    this.first = added
-  }
-  this.last = added
-}
-
-Queue.prototype.dequeue = function () {
-  const removed = this.first
-
-  if (!removed) return null
-
-  if (!removed.next) {
-    this.last = null
-  }
-
-  this.first = removed.next
-
-  return removed.data
-}
-```
+단일 연결 리스트에서 tail에 데이터를 추가하고, head에서 데이터를 삭제함으로써 `시간 복잡도 O(1)`이다.

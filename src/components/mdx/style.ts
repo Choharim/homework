@@ -21,7 +21,7 @@ export const ListContainer = css`
 export const HighlightWord = css`
   display: inline;
   ${({ theme }) => theme.font.body_2};
-  background-color: ${({ theme }) => theme.color.primary7};
+  background-color: ${({ theme }) => theme.color.primary8};
   padding: 2px 5px;
   border-radius: 2px;
 `

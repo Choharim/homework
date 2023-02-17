@@ -1,21 +1,31 @@
 ---
 title: 단일 연결 리스트
-description: 컴퓨터 메모리에 흩어져 있는 노드를 연결시키는, 노드 기반 자료구조 단일 연결 리스트에 대해 알아보자.
+description: 컴퓨터 메모리에 흩어져 있는 노드를 연결시키는 단일 연결 리스트 자료구조에 대해 알아보자. 읽기, 검색, 삽입, 삭제에서 배열과 비교해보자.
 createDate: 2022.11.4
 category: data-structure
 ---
 
-## 배열 vs 연결 리스트
+## 연결 리스트
 
-1. 배열은 연속된 셀 그룹으로 메모리를 차지하고 있는 반면, 연결 리스트는 메모리 곳곳에 흩어져 있는 데이터를 연결 시키는 구조이다.
-2. 배열은 index가 존재하여 index로 데이터에 한 번에 접근할 수 있지만, 연결 리스트는 index가 존재하지 않고 다음/이전 메모리 주소를 기억해 이를 이용한다.  
-   단일 연결 리스트는 다음 데이터의 메모리 주소의 포인터 (링크)를 포함하고 있어 다음 데이터를 알 수 있다. 이중 연결 리스트는 이전 데이터의 링크도 포함하고 있어 이전/다음으로 연결된 데이터에 접근 할 수 있다.
+노드 시퀀스로 구성되며 각 노드에는 `현재 값`과 `다음/이전 노드에 대한 참조`가 포함된다. 첫번째 노드를 Head, 마지막 노드를 Tail이라 한다. 다음/이전 노드의 참조를 이용해 노드를 `‘연결’`한다.
+
+`다음 노드의 참조`만 갖는 연결 리스트는 `단 방향`으로 연결되어 있어 **단일 연결 리스트**라고 하고, `다음 노드와 이전 노드의 참조`를 모두 갖는 연결 리스트는 `양 방향`으로 연결 되어 있어 **이중 연결 리스트**라고 한다.
+
+### 배열과 차이점
+
+**배열**은 `연속`된 셀 그룹으로 메모리를 차지하고 있는 반면, **연결 리스트**는 메모리 곳곳에 `흩어져 있는 데이터를 연결` 시키는 구조이다.
+
+자바스크립트에서 배열은 동적이고 연속적인 메모리 블록으로 구현된다. 때문에 동적 메모리 할당을 사용하여 필요에 따라 새 노드를 만드는 연결 리스트와 비교해 연결리스트가 배열보다 더 적은 메모리를 필요로 한다.
+
+**배열**은 `index`가 존재하지만, **연결 리스트**는 index가 존재하지 않고 `다음/이전 참조`를 이용한다.
 
 ## 단일 연결 리스트
 
 <Picture src="singly-linked-list1.png" />
 
-- 연결 리스트에서 첫번째로 연결된 노드를 head, 가장 마지막 노드를 tail로 지정하고 전체 노드의 갯수 length를 저장한다.
+### 기본 구조
+
+head에는 첫번째 노드, tail에는 마지막 노드, length에는 전체 노드의 갯수가 저장된다.
 
 ```jsx
 class SinglyLinkedList {
@@ -27,7 +37,7 @@ class SinglyLinkedList {
 }
 ```
 
-- 연결할 노드 는 값, 다음 데이터를 포함하고 있다.
+연결되는 단위인 노드는 `값`과 `다음 참조값` 즉, 다음 노드의 객체를 갖는다.
 
 ```jsx
 class Node {
@@ -38,27 +48,19 @@ class Node {
 }
 ```
 
-연결 리스트 구조를 자세히 보면 다음과 같다.
+위 그림의 연결 리스트의 전체 데이터 구조는 다음과 같다.
 
-<Picture src="singly-linked-list2.png" height={350} />
+<Picture src="singly-linked-list2.png" height={400} />
 
 ### 읽기
 
-연결 리스트에 index가 없지만, 배열 처럼 index로 노드를 찾아보자.
+연결 리스트에 index가 없지만 배열처럼 index로 노드를 찾아보자.
 
-1. index 범위를 벗어나면 undefined를 리턴한다.
-2. head부터 시작하여 next 포인터를 이용해 다음 노드에 접근하며 해당 index의 노드를 알아낸다.
-
-⇒ 배열의 경우 읽기는 시간 복잡도 O(1)이지만, 연결 리스트는 `O(n)`이다.
+index가 존재하지 않기 때문에 배열처럼 한 번에 접근할 수 없으니 `첫번째 노드 head부터 순회`하며 찾아야 한다. `next 포인터를 이용`해 다음 노드에 접근하며 해당 index의 노드를 알아낼 수 있다.
 
 ```jsx
 class SinglyLinkedList {
-  constructor() {
-    this.head = null
-    this.tail = null
-    this.length = 0
-  }
-
+  // ...
   read(index) {
     if (typeof index !== 'number' || index < 0 || index >= this.length) return
 
@@ -73,193 +75,237 @@ class SinglyLinkedList {
 }
 ```
 
+> 배열과 단일 연결리스트의 시간 복잡도
+
+**배열**의 경우 index로 한 번에 접근하기 때문에 읽기는 `O(1)`이지만 **단일 연결 리스트**는 첫번째 노드부터 순회해야하기 때문에 `O(n)`이다.
+
 ### 검색
 
-특정 value를 갖는 노드의 index를 찾아보자. 노드가 없으면 -1을 반환하자.
+특정 값을 갖는 노드의 index를 찾아보자. 노드가 없으면 -1을 반환하자.
 
-1. head부터 시작하여 길이만큼 해당 value를 가진 노드가 나타날 때까지 확인한다.
-
-⇒ 배열과 동일하게 시간 복잡도 `O(n)` 이다.
+‘읽기’와 마찬가지로 첫번째 노드 head부터 시작하여 next 포인터를 이용해 마지막 노드 tail까지 순회해야 한다.
 
 ```jsx
 class SinglyLinkedList {
-  constructor() {
-    this.head = null;
-    this.tail = null;
-    this.length = 0;
-  }
-
-...
-
+  // ...
   search(value) {
-    let target = this.head;
+    let target = this.head
 
     for (let i = 0; i < this.length; i++) {
-      if (target.value === value) return i;
+      if (target.value === value) return i
 
-      target = target.next;
+      target = target.next
     }
 
-    return -1;
+    return -1
   }
 }
 ```
+
+> 배열과 단일 연결리스트의 시간 복잡도
+
+배열도 특정 값을 찾기 위해서는 index 0부터 마지막 index까지 순회하며 검색하므로 **배열과 단일 연결 리스트** 모두 `O(n)` 이다.
+
+### 삽입 (Push)
+
+배열의 Push 메소드처럼 `마지막 노드로 연결`할 때는 현재 마지막 노드 tail이 새 노드를 가리키고 새 노드는 tail이 되어야 한다.
+
+tail이 없을 경우 head도 없는 상황이므로 새 노드가 tail와 head로 지정되어야 한다.
+
+```jsx
+class SinglyLinkedList {
+  // ...
+  push(value) {
+    const newTail = new Node(value)
+    const oldTail = this.tail
+
+    if (!oldTail) {
+      this.head = newTail
+    } else {
+      oldTail.next = newTail
+    }
+
+    this.tail = newTail
+    this.length++
+
+    return this
+  }
+}
+```
+
+> 배열과 단일 연결리스트의 시간 복잡도
+
+배열에는 마지막에 메모리 영역을 추가로 할당하면 되고, 단일 연결 리스트에는 tail에 연결하면 되므로 한 번에 삽입이 가능하다. 때문에 **배열과 단일 연결 리스트** 모두 `마지막 삽입O(1)` 이다.
+
+### 삽입 (Unshift)
+
+배열의 Unshift 메소드처럼 `첫번째 노드로 연결`할 때는 새 노드는 현재 첫번째 노드 head를 가리키고 새로운 head가 되어야 한다.
+
+head가 없을 경우 tail도 없는 상황이므로 새 노드가 head와 tail로 지정되어야 한다.
+
+```jsx
+class SinglyLinkedList {
+  // ...
+  unshift(value) {
+    const newHead = new Node(value)
+    const oldHead = this.head
+
+    if (!oldHead) {
+      this.tail = newHead
+    } else {
+      newHead.next = oldHead
+    }
+
+    this.head = newHead
+    this.length++
+
+    return this
+  }
+}
+```
+
+> 배열과 단일 연결리스트의 시간 복잡도
+
+**배열**의 경우 첫번째 요소에 삽입하면 모든 요소의 index가 하나씩 밀려나므로 `첫번째 삽입 O(n)` 이지만, **단일 연결 리스트**는 head와 연결하면 되므로 한 번에 삽입이 가능하여 `첫번째 삽입 O(1)` 이다.
 
 ### 삽입
 
-1. 첫번째에 삽입되는 경우, 새로 삽입된 노드는 이전 head를 가리키고 새로운 head가 된다.
-2. 마지막에 삽입되는 경우, 이전 tail은 새 노드를 가리키고 새 노드가 새로운 tail이 된다.
-3. index가 0보다 작거나 길이보다 큰 경우 연결할 수 없으므로 실행하지 않는다.
-4. 그외 삽입하는 경우, 삽입될 index의 전 노드가 새 노드를 가리키고 새 노드가 전 index 노드를 가리킨다.
+위에 구현한 push, unshift, read를 활용하여 특정 위치에 삽입해보자.
 
-⇒ 배열은 첫번째 삽입 시간 복잡도는 O(n), 마지막 O(1), 중간 O(n)이지만, 연결 리스트는 `첫번째 삽입 O(1)`, `마지막 삽입O(1)`, `중간 삽입 O(n)`이다.
+삽입될 index 위치의 전 노드를 찾아 새 노드를 가리키게 하고, 새 노드가 삽입될 index 위치의 노드를 가리키게 한다.
 
 ```jsx
 class SinglyLinkedList {
-  constructor() {
-    this.head = null;
-    this.tail = null;
-    this.length = 0;
-  }
-
-...
-
-  push(value) {
-    const newTail = new Node(value);
-    const oldTail = this.tail;
-
-    if (!oldTail) {
-      this.head = newTail;
-    } else {
-      oldTail.next = newTail;
-    }
-
-    this.tail = newTail;
-    this.length++;
-
-    return this;
-  }
-
-  unshift(value) {
-    const newHead = new Node(value);
-    const oldHead = this.head;
-
-    if (!oldHead) {
-      this.tail = newHead;
-    } else {
-      newHead.next = oldHead;
-    }
-
-    this.head = newHead;
-    this.length++;
-
-    return this;
-  }
-
+  // ...
   insert(index, value) {
     if (index === 0) {
-      return this.unshift(value);
+      return this.unshift(value)
     } else if (index === this.length) {
-      return this.push(value);
+      return this.push(value)
     } else {
-      const frontNode = this.read(index - 1);
+      const frontNode = this.read(index - 1)
 
-      if (!frontNode) return;
+      if (!frontNode) return
 
-      const backNode = frontNode.next;
-      const newNode = new Node(value);
+      const backNode = frontNode.next
+      const newNode = new Node(value)
 
-      frontNode.next = newNode;
-      newNode.next = backNode;
-      this.length++;
+      frontNode.next = newNode
+      newNode.next = backNode
+      this.length++
 
-      return this;
+      return this
     }
   }
 }
 ```
 
-### 삭제
+> 배열과 단일 연결리스트의 시간 복잡도
 
-1. 첫번째 노드가 삭제되는 경우, head의 다음 노드가 새로운 head가 된다.  
-   제거되는 노드가 tail일 때 tail을 null로 초기화 한다. (제거되는 노드가 tail일 때 head의 next가 null이므로 새로운 head도 null로 초기화 된다.)
-2. 마지막 노드가 삭제되는 경우, tail의 앞 노드가 새로운 tail이 되고 앞 노드의 next를 null로 초기화하여 연결을 끊어야 한다. 때문에 tail의 앞 노드를 알아내기 위해 head부터 마지막 직전까지 노드를 읽어내야 한다. tail의 앞 노드가 없을 경우 전체 길이가 1이므로 head와 tail을 null로 초기화 한다.
-3. 삭제하려는 index의 노드의 앞 노드와 뒤 노드를 연결해야 한다.  
-   앞 노드가 존재하지 않을 경우, 범위를 벗어난 곳이므로 삭제하려는 index 노드가 존재하지 않기 때문에 undefined를 리턴한다.  
-   앞 노드의 next를 다음 노드로 지정한다.
+**배열**의 경우 요소를 삽입하면 index가 밀리기 때문에 `O(n)`이고, **단일 연결 리스트**는 해당 index -1 의 노드를 찾기 위해 순회해야 하므로 `O(n)`이다.
 
-⇒ 배열의 경우 첫번째 요소를 삭제할 때 시간 복잡도 O(n), 마지막 요소 삭제는 O(1), 중간 요소는 O(n)이다. 연결 리스트는 `첫번째 요소 삭제는 O(1)`, `마지막 요소 삭제는 O(n)`, `중간 요소는 O(n)`이다.
+### 삭제 (Pop)
+
+배열의 Pop 메소드처럼 `마지막 노드를 삭제`할 때는 현재 마지막 노드tail의 앞 노드가 새로운 tail이 되고 앞 노드의 next를 null로 초기화하여 삭제된 이전 tail과 연결을 끊어야 한다.
+
+tail의 앞 노드를 알아내기 위해서는 head부터 마지막 직전까지 노드를 찾아야 한다. tail의 앞 노드가 없을 경우 전체 길이가 1인 상황이므로 head와 tail을 null로 초기화 한다.
 
 ```jsx
 class SinglyLinkedList {
-  constructor() {
-    this.head = null;
-    this.tail = null;
-    this.length = 0;
-  }
-
-...
-
-  shift() {
-    if (!this.length) return;
-
-    const removed = this.head;
-    const newHead = this.head.next;
-
-    if (!newHead) {
-      this.tail = null;
-    }
-
-    this.head = newHead;
-    this.length--;
-
-    return removed;
-  }
-
+  // ...
   pop() {
-    if (!this.length) return;
+    if (!this.length) return
 
-    const frontOfLast = this.read(this.length - 2);
+    const frontOfLast = this.read(this.length - 2)
 
-    let removed;
+    let removed
 
     if (!frontOfLast) {
-      removed = this.head;
+      removed = this.head
 
-      this.head = null;
-      this.tail = null;
+      this.head = null
+      this.tail = null
     } else {
-      removed = frontOfLast.next;
+      removed = frontOfLast.next
 
-      frontOfLast.next = null;
-      this.tail = frontOfLast;
+      frontOfLast.next = null
+      this.tail = frontOfLast
     }
 
-    this.length--;
+    this.length--
 
-    return removed;
+    return removed
   }
+}
+```
 
+> 배열과 단일 연결리스트의 시간 복잡도
+
+**배열**의 경우 index를 유지한채 마지막 요소만 제거하면 되므로 `마지막 요소 삭제는 O(1)`이고, **단일 연결 리스트**는 검색을 해야하므로 `마지막 요소 삭제는 O(n)` 이다.
+
+### 삭제 (Shift)
+
+배열의 Shift 메소드처럼 `첫번째 노드를 삭제`할 때는 현재 첫번째 노드head의 다음 노드가 새로운 head가 된다.
+새로운 head가 없을 경우 전체 길이가 1인 상황이므로 tail을 null로 초기화 한다.
+
+```jsx
+class SinglyLinkedList {
+  // ...
+  shift() {
+    if (!this.length) return
+
+    const removed = this.head
+    const newHead = this.head.next
+
+    if (!newHead) {
+      this.tail = null
+    }
+
+    this.head = newHead
+    this.length--
+
+    return removed
+  }
+}
+```
+
+> 배열과 단일 연결리스트의 시간 복잡도
+
+**배열**의 경우 모든 index가 한 칸 당겨지므로 `첫번째 요소 삭제는 O(n)`이고, **단일 연결 리스트**는 첫번째 노드 head의 다음 노드를 head로 지정하면 되므로 `첫번째 요소 삭제는 O(1)` 이다.
+
+### 삭제
+
+위에 구현한 pop, shift, read를 활용하여 특정 위치의 노드를 삭제해보자.
+
+삭제하려는 index 위치의 노드의 앞 노드와 뒤 노드를 연결해야 한다.
+
+```jsx
+class SinglyLinkedList {
+  // ...
   remove(index) {
     if (index === 0) {
-      return this.shift();
+      return this.shift()
     } else if (index === this.length - 1) {
-      return this.pop();
+      return this.pop()
     } else {
-      const front = this.read(index - 1);
+      const front = this.read(index - 1)
 
       if (!front) {
-        return;
+        return
       } else {
-        const removed = front.next;
-        const back = removed.next;
+        const removed = front.next
+        const back = removed.next
 
-        front.next = back;
-        this.length--;
+        front.next = back
+        this.length--
 
-        return removed;
+        return removed
       }
     }
   }
 }
 ```
+
+> 배열과 단일 연결리스트의 시간 복잡도
+
+**배열**은 index가 한 칸씩 당겨지기 때문에 `O(n)`이다. **단일 연결 리스트**는 해당 index -1 의 노드를 찾기 위해 순회해야 하므로 `O(n)`이다.

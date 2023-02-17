@@ -81,7 +81,7 @@ export const font = {
 
   body_1: {
     fontSize: '17px',
-    lineHeight: '1.6',
+    lineHeight: '1.7',
   },
   body_2: {
     fontSize: '16px',

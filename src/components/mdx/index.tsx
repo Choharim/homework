@@ -9,6 +9,7 @@ import {
 } from './style'
 import Code from './Code'
 import Picture from './Picture'
+import Outlink from './Outlink'
 
 const MDX_STYLE = {
   h2: styled.h2`
@@ -47,7 +48,7 @@ const MDX_STYLE = {
   `,
   p: styled.p`
     ${ParagrahFont}
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     &:last-child {
       margin-bottom: 0;
     }
@@ -90,6 +91,7 @@ const MDX_STYLE = {
   blockquote: BlockQuote,
   code: Code,
   Picture,
+  a: Outlink,
 }
 
 export default MDX_STYLE

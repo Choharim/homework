@@ -70,7 +70,7 @@ const CircleCategoryLink = styled(CategoryLink)`
   padding: 5px 15px;
   border-radius: 40px;
   white-space: nowrap;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
