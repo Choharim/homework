@@ -137,8 +137,7 @@ const CopyCodeButton = styled.button`
 
 const LineContainer = styled.div`
   width: 100%;
-  font-size: 14px;
-  line-height: 1.3rem;
+  ${({ theme }) => theme.font.body_2};
 
   padding: 0;
 

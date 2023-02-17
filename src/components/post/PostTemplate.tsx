@@ -18,13 +18,14 @@ type Props = {
 
 const PostTemplate = ({ data, children }: Props) => {
   const { title, createDate, category, thumbnailSrc, description } = data
-  const [error, setError] = useState(false)
+  const [showThumbnail, setShowThumbnail] = useState(!!thumbnailSrc)
 
   const handleSrcError = () => {
     try {
       return require(`/public/post/${thumbnailSrc}`)
     } catch (error) {
-      setError(true)
+      setShowThumbnail(false)
+      console.error(`/public/post/${thumbnailSrc} 이미지 로드에 실패했습니다.`)
     }
   }
 
@@ -32,9 +33,17 @@ const PostTemplate = ({ data, children }: Props) => {
     <Article>
       <Header>
         <HeaderFrame>
+          {showThumbnail && (
+            <Thumbnail
+              src={handleSrcError()}
+              layout="responsive"
+              objectFit="contain"
+              placeholder="blur"
+              round
+            />
+          )}
           <Title>{title}</Title>
           <Summary>{description}</Summary>
-
           {!!category && <CategoryLink category={category} />}
           <CreatedTime dateTime={createDate}>{createDate}</CreatedTime>
         </HeaderFrame>
@@ -45,17 +54,10 @@ const PostTemplate = ({ data, children }: Props) => {
           <TOC />
         </Aside>
         <Frame>
-          <Aside $direction="top">
-            <TOC />
-          </Aside>
-          {!error && (
-            <Thumbnail
-              src={handleSrcError()}
-              layout="fill"
-              height={330}
-              objectFit="contain"
-              placeholder="blur"
-            />
+          {!showThumbnail && (
+            <Aside $direction="top">
+              <TOC />
+            </Aside>
           )}
           <MDXWrapper>{children}</MDXWrapper>
         </Frame>
@@ -138,6 +140,7 @@ const Aside = styled.aside<{ $direction: 'right' | 'top' }>`
 const Title = styled.h1`
   ${({ theme }) => theme.font.header_1};
   color: ${({ theme }) => theme.color.primary2};
+  margin: 15px 0;
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
@@ -159,7 +162,6 @@ const CreatedTime = styled.time`
 
 const Summary = styled.p`
   ${({ theme }) => theme.font.subtitle_3};
-  margin: 5px 0 15px;
 `
 
 const MDXWrapper = styled.div`
