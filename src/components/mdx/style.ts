@@ -1,49 +1,43 @@
 import styled, { css } from 'styled-components'
 
 export const HeaderFont = css`
-  color: ${({ theme }) => theme.color.primary2};
+  color: ${({ theme }) => theme.color.grey800};
 `
 export const ParagrahFont = css`
   ${({ theme }) => theme.font.body_1};
 `
 
 export const ListContainer = css`
-  margin: 10px 0 30px 25px;
-
-  ${({ theme }) =>
-    css`
-      ${theme.media.tablet} {
-        margin: 12px 0 12px 25px;
-      }
-    `}
+  margin-left: 20px;
 `
 
 export const HighlightWord = css`
   display: inline;
+  padding: 3px 5px;
   ${({ theme }) => theme.font.body_2};
-  background-color: ${({ theme }) => theme.color.primary8};
-  padding: 2px 5px;
-  border-radius: 2px;
+  background-color: ${({ theme }) => theme.color.grey100};
+  color: ${({ theme }) => theme.color.grey800};
+  border-radius: 6px;
 `
 
 export const BlockQuote = styled.blockquote`
   ${({ theme }) => theme.font.subtitle_3};
 
-  border-left: 4px solid ${({ theme }) => theme.color.line};
-  background-color: ${({ theme }) => theme.color.primary8};
+  border-left: 4px solid ${({ theme }) => theme.color.primary500};
+  background-color: ${({ theme }) => theme.color.grey100};
   margin: 20px 0;
   padding: 5px 10px 5px 20px;
   border-radius: 2px;
 
   code {
-    color: ${({ theme }) => theme.color.pink1};
+    color: ${({ theme }) => theme.color.primary400};
   }
 `
 
 export const HighlightBlock = css`
   margin: 10px 0 15px;
   padding: 15px;
-  border: 2px dashed ${({ theme }) => theme.color.line};
+  border: 1px dashed ${({ theme }) => theme.color.primary400};
   border-radius: 12px;
 
   ${({ theme }) =>
@@ -61,7 +55,7 @@ export const HighlightBlock = css`
 
   code {
     background-color: transparent;
-    color: ${({ theme }) => theme.color.pink1};
+    color: ${({ theme }) => theme.color.primary400};
     margin: 0;
     padding: 0;
   }

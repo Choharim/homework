@@ -1,7 +1,10 @@
-import React, { DOMAttributes } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
-type Props = DOMAttributes<HTMLDivElement>
+interface Props
+  extends Pick<React.HTMLAttributes<HTMLDivElement>, 'className'> {
+  children: React.ReactNode
+}
 
 const Chip = ({ children, ...rest }: Props) => {
   return <Wrapper {...rest}>{children}</Wrapper>
@@ -11,9 +14,14 @@ export default Chip
 
 const Wrapper = styled.div`
   width: fit-content;
-  border-radius: 4px;
   padding: 4px 12px;
+  border-radius: 30px;
 
   ${({ theme }) => theme.font.body_4};
-  cursor: pointer;
+  color: ${({ theme }) => theme.color.grey700};
+  background-color: ${({ theme }) => theme.color.grey100};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.grey200};
+  }
 `

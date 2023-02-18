@@ -14,7 +14,7 @@ import Outlink from './Outlink'
 const MDX_STYLE = {
   h2: styled.h2`
     ${({ theme }) => theme.font.header_2};
-    margin: 30px 0 15px;
+    margin: 40px 0 20px;
     ${HeaderFont}
 
     ${({ theme }) => css`
@@ -25,7 +25,7 @@ const MDX_STYLE = {
   `,
   h3: styled.h3`
     ${({ theme }) => theme.font.header_3};
-    margin: 26px 0 15px;
+    margin: 15px 0 10px;
     ${HeaderFont}
 
     ${({ theme }) => css`
@@ -37,7 +37,7 @@ const MDX_STYLE = {
 
   h4: styled.h4`
     ${({ theme }) => theme.font.header_4};
-    margin: 22px 0 10px;
+    margin: 15px 0 10px;
     ${HeaderFont}
 
     ${({ theme }) => css`
@@ -75,18 +75,10 @@ const MDX_STYLE = {
   li: styled.li`
     ${ParagrahFont}
 
-    margin: 10px 0;
-    padding-left: 4px;
-
+    margin: 6px 0;
     > code {
       ${HighlightWord}
     }
-
-    ${({ theme }) => css`
-      ${theme.media.tablet} {
-        margin: 6px 0;
-      }
-    `}
   `,
   blockquote: BlockQuote,
   code: Code,

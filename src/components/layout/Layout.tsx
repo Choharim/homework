@@ -49,10 +49,9 @@ Layout.Footer = styled(Footer)``
 const LayoutFrame = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.color.bg};
 `
 const mainStyle = css`
-  padding-top: calc(${NAVBAR_HEIGHT}px + 40px);
+  padding-top: ${NAVBAR_HEIGHT}px;
 `
 
 /**

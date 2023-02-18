@@ -9,11 +9,10 @@ import useScrollDirection from '@/hooks/useScrollDirection'
 import { Z_INDEX } from '@/styles/constant'
 import { convertHEXToRGB } from '@/utils/convertColorFormat'
 
-import Logo from 'public/favicon.ico'
 import GithubLogo from 'public/github_logo.png'
 import Frame from './Frame'
 
-export const NAVBAR_HEIGHT = 58
+export const NAVBAR_HEIGHT = 60
 
 type TextMenu = {
   href: string
@@ -63,13 +62,6 @@ Navbar.Logo = function Component() {
     <Link href="/">
       <a>
         <LogWrapper>
-          <Image
-            layout="fixed"
-            height={35}
-            width={33}
-            src={Logo}
-            alt="logo_image"
-          />
           <Name>{`${EN_NAME.first}'s log`}</Name>
         </LogWrapper>
       </a>
@@ -115,9 +107,12 @@ const Navigation = styled.nav<{ hidden: boolean }>`
   width: 100%;
   height: ${NAVBAR_HEIGHT}px;
 
-  background-color: rgb(${({ theme }) => convertHEXToRGB(theme.color.bg)}, 0.5);
+  background-color: rgb(
+    ${({ theme }) => convertHEXToRGB(theme.color.white)},
+    0.5
+  );
   backdrop-filter: saturate(180%) blur(5px);
-  border-bottom: 1px solid ${({ theme }) => theme.color.line};
+  border-bottom: 1px solid ${({ theme }) => theme.color.grey200};
   z-index: ${Z_INDEX.nav};
 
   display: block;
@@ -145,8 +140,7 @@ const LogWrapper = styled.div`
 `
 
 const Name = styled.span`
-  margin-left: 10px;
-  color: ${({ theme }) => theme.color.primary1};
+  color: ${({ theme }) => theme.color.primary600};
   ${({ theme }) => theme.font.header_4};
 `
 
@@ -156,7 +150,7 @@ const MenuContainer = styled.ul`
 `
 
 const MenuText = styled.span`
-  color: ${({ theme }) => theme.color.primary1};
+  color: ${({ theme }) => theme.color.grey700};
   ${({ theme }) => theme.font.subtitle_3};
 `
 
@@ -175,7 +169,7 @@ const Menu = styled.li<{ $active: boolean }>`
 
   &:hover {
     ${MenuText} {
-      color: ${({ theme }) => theme.color.primary3};
+      color: ${({ theme }) => theme.color.grey800};
     }
   }
 
@@ -185,7 +179,7 @@ const Menu = styled.li<{ $active: boolean }>`
       pointer-events: none;
 
       ${MenuText} {
-        color: ${theme.color.primary3};
+        color: ${theme.color.grey800};
       }
     `}
 `

@@ -12,10 +12,10 @@ import { CATEGORIES } from '@/domain/post/constant'
 import { NextPageWithLayout } from 'pages/_app'
 
 // import usePagination from '@/hooks/usePagination'
-import CategoryFilter from '@/components/post/CategoryFilter'
-import PostCardLink from '@/components/post/PostCardLink'
 import { fetchPosts } from '@/services/api'
+import PostCardLink from '@/components/post/PostCardLink'
 import CardListFrame from '@/components/post/CardListFrame'
+import CategoryFilter from '@/components/post/CategoryFilter'
 
 const PostsPage: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -25,8 +25,8 @@ const PostsPage: NextPageWithLayout<
 
   return (
     <>
-      <CategoryFilter />
       <CardListFrame>
+        <CategoryFilter />
         {posts?.map(({ data, slug }) => {
           return <PostCardLink key={slug} data={data} slug={slug} />
         })}

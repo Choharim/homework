@@ -35,5 +35,5 @@ const Picture = ({ src, alt, height }: Props) => {
 export default Picture
 
 const Wrapper = styled.div`
-  margin: 10px 0;
+  margin: 20px 0;
 `
