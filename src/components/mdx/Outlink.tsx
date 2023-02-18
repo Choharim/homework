@@ -33,7 +33,8 @@ const A = styled.a`
   text-decoration: 2px underline dashed;
   text-underline-offset: 5px;
 
+  color: ${({ theme }) => theme.color.primary200};
   &:hover {
-    color: ${({ theme }) => theme.color.primary5};
+    color: ${({ theme }) => theme.color.primary100};
   }
 `

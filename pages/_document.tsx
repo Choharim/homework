@@ -37,10 +37,11 @@ export default class CustomDocument extends Document {
     return (
       <Html lang="ko">
         <Head>
-          <style>
-            @import
-            url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
-          </style>
+          <link
+            rel="stylesheet"
+            as="style"
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css"
+          />
         </Head>
         <body>
           <Main />

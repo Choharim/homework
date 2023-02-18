@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { DEVICE_SIZE } from '@/constants/common'
 
-const X_PADDING = 32
+const X_PADDING = 20
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
@@ -24,5 +24,8 @@ Frame.Layout = styled.div`
   height: 100%;
   max-width: ${DEVICE_SIZE.tablet}px;
   margin: 0 auto;
-  padding: 0 ${X_PADDING}px;
+
+  ${({ theme }) => theme.media.tablet} {
+    padding: 0 ${X_PADDING}px;
+  }
 `

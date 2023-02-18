@@ -13,6 +13,6 @@ export default CardListFrame
 
 const Wrapper = styled.div`
   display: grid;
-  gap: 35px;
+  gap: 30px;
   margin-top: 40px;
 `

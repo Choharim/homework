@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 
@@ -6,22 +6,11 @@ import { POST_DIRECTORY } from '@/domain/post/constant'
 import Post from '@/domain/post/type'
 import { limitTextLine } from '@/styles/mixin'
 
-import CategoryLink from './CategoryLink'
-import Thumbnail from '../Thumbnail'
-
-const SIZE = 150
+import CategoryChip from './CategoryChip'
 
 const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
   const { data, slug } = props
-  const [error, setError] = useState(false)
-  //TODO: custom hook 생성
-  const handleSrcError = () => {
-    try {
-      return require(`/public/post/${data.thumbnailSrc}`)
-    } catch (error) {
-      setError(true)
-    }
-  }
+
   return (
     <Link
       href={`/${POST_DIRECTORY}/[slug]`}
@@ -29,17 +18,6 @@ const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
       passHref
     >
       <Wrapper>
-        {!error && (
-          <ThumbnailWrapper>
-            <Thumbnail
-              src={handleSrcError()}
-              layout="fill"
-              height={SIZE}
-              objectFit="cover"
-              placeholder="blur"
-            />
-          </ThumbnailWrapper>
-        )}
         <PostCardLink.Content {...data} />
       </Wrapper>
     </Link>
@@ -58,7 +36,7 @@ PostCardLink.Content = function Component(content: Post['data']) {
         <Desc>{description}</Desc>
       </Top>
       <Bottom>
-        <CategoryLink category={category} />
+        <CategoryChip category={category} />
         <CreateDate dateTime={createDate}>{createDate}</CreateDate>
       </Bottom>
     </Content>
@@ -66,8 +44,8 @@ PostCardLink.Content = function Component(content: Post['data']) {
 }
 
 const Title = styled.h3`
-  ${({ theme }) => theme.font.header_3};
-  color: ${({ theme }) => theme.color.primary2};
+  ${({ theme }) => theme.font.header_2};
+  color: ${({ theme }) => theme.color.grey800};
 
   ${limitTextLine(2)}
 
@@ -76,7 +54,7 @@ const Title = styled.h3`
 
 const Desc = styled.p`
   ${({ theme }) => theme.font.subtitle_3};
-  color: ${({ theme }) => theme.color.primary1};
+  color: ${({ theme }) => theme.color.grey700};
 
   ${limitTextLine(2)}
 
@@ -86,54 +64,36 @@ const Desc = styled.p`
 const Wrapper = styled.article`
   display: flex;
   width: 100%;
-  height: ${SIZE}px;
   cursor: pointer;
 
   :hover {
     ${Title} {
-      color: ${({ theme }) => theme.color.primary4};
+      color: ${({ theme }) => theme.color.primary400};
     }
-
-    ${Desc} {
-      color: ${({ theme }) => theme.color.primary3};
-    }
-  }
-`
-
-const ThumbnailWrapper = styled.div`
-  overflow: hidden;
-  border-radius: 10px;
-  height: ${SIZE}px;
-  min-width: ${SIZE}px;
-  background-color: transparent;
-  margin-right: 24px;
-
-  ${({ theme }) => theme.media.mobile} {
-    display: none;
   }
 `
 
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
   width: 100%;
 `
 
 const Top = styled.div`
   display: grid;
-  gap: 10px;
+  gap: 6px;
 `
 
 const Bottom = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  align-items: flex-end;
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin-top: 10px;
 `
 
 const CreateDate = styled.time`
   ${({ theme }) => theme.font.body_3};
-  color: ${({ theme }) => theme.color.primary3};
+  color: ${({ theme }) => theme.color.grey500};
 `

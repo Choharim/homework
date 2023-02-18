@@ -82,7 +82,6 @@ const TOC = () => {
 export default TOC
 
 TOC.TOCBox = styled.div`
-  padding: 5px;
   z-index: ${Z_INDEX.aside};
 `
 
@@ -98,17 +97,15 @@ const List = styled.li<{ $headerType: HeadersOfContents; $highlight: boolean }>`
     switch ($headerType) {
       case 'h2':
         return css`
-          padding: 5px 0;
           ${theme.font.subtitle_2};
-          color: ${theme.color.primary2};
+          color: ${theme.color.grey700};
         `
       case 'h3':
       default:
         return css`
-          padding: 3px 0;
           margin-left: 15px;
           ${theme.font.subtitle_3};
-          color: ${theme.color.primary3};
+          color: ${theme.color.grey600};
         `
     }
   }}
@@ -116,10 +113,10 @@ const List = styled.li<{ $headerType: HeadersOfContents; $highlight: boolean }>`
   ${({ theme, $highlight }) =>
     $highlight &&
     css`
-      color: ${theme.color.primary5};
+      color: ${theme.color.primary400};
     `};
 
   :hover {
-    color: ${({ theme }) => theme.color.primary6};
+    color: ${({ theme }) => theme.color.primary200};
   }
 `

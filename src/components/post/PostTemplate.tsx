@@ -3,9 +3,8 @@ import styled, { css } from 'styled-components'
 
 import { FrontMatter } from '@/domain/post/type'
 import { HighlightBlock } from '../mdx/style'
-import { DEVICE_SIZE } from '@/constants/common'
 
-import CategoryLink from './CategoryLink'
+import CategoryChip from './CategoryChip'
 import Thumbnail from '../Thumbnail'
 import Frame from '../layout/Frame'
 import TOC, { TOC_WIDTH_IN_PC } from './TOC'
@@ -15,6 +14,8 @@ type Props = {
   children: React.ReactNode
   data: FrontMatter
 }
+
+const WIDTH = 644
 
 const PostTemplate = ({ data, children }: Props) => {
   const { title, createDate, category, thumbnailSrc, description } = data
@@ -31,37 +32,37 @@ const PostTemplate = ({ data, children }: Props) => {
 
   return (
     <Article>
-      <Header>
-        <HeaderFrame>
-          {showThumbnail && (
-            <Thumbnail
-              src={handleSrcError()}
-              layout="responsive"
-              objectFit="contain"
-              placeholder="blur"
-              round
-            />
-          )}
-          <Title>{title}</Title>
-          <Summary>{description}</Summary>
-          {!!category && <CategoryLink category={category} />}
-          <CreatedTime dateTime={createDate}>{createDate}</CreatedTime>
-        </HeaderFrame>
-      </Header>
+      <HeaderFrame>
+        {showThumbnail && (
+          <Thumbnail
+            src={handleSrcError()}
+            layout="responsive"
+            objectFit="contain"
+            placeholder="blur"
+            round
+          />
+        )}
+        <Title>{title}</Title>
+        <SubInfo>
+          {!!category && <CategoryChip category={category} />}
+          <CreateDate dateTime={createDate}>{createDate}</CreateDate>
+        </SubInfo>
+        <Summary>{description}</Summary>
+      </HeaderFrame>
 
-      <ContentsWrapper>
-        <Aside $direction="right">
-          <TOC />
-        </Aside>
-        <Frame>
-          {!showThumbnail && (
-            <Aside $direction="top">
-              <TOC />
-            </Aside>
-          )}
+      <BodyFrame>
+        {!showThumbnail && (
+          <Aside $direction="top">
+            <TOC />
+          </Aside>
+        )}
+        <BodyWrapper>
           <MDXWrapper>{children}</MDXWrapper>
-        </Frame>
-      </ContentsWrapper>
+          <Aside $direction="right">
+            <TOC />
+          </Aside>
+        </BodyWrapper>
+      </BodyFrame>
     </Article>
   )
 }
@@ -73,35 +74,74 @@ const Article = styled.article`
   flex-direction: column;
   margin-bottom: 100px;
 
-  color: ${({ theme }) => theme.color.primary1};
-`
-
-const Header = styled.div`
-  padding: 90px 0 40px;
+  color: ${({ theme }) => theme.color.grey700};
+  word-break: keep-all;
 `
 
 const HeaderFrame = styled(Frame)`
   display: grid;
   gap: 10px;
+  max-width: ${WIDTH}px;
+  margin-bottom: 40px;
+  margin-top: ${NAVBAR_HEIGHT}px;
+
+  ${({ theme }) => theme.media.mobile} {
+    margin-bottom: 30px;
+  }
 `
+
+const Title = styled.h1`
+  ${({ theme }) => theme.font.header_1};
+  color: ${({ theme }) => theme.color.grey800};
+  margin: 20px 0 10px;
+
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
+      ${theme.font.header_2}
+    }
+  `}
+`
+
+const SubInfo = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+`
+
+const CreateDate = styled.time`
+  ${({ theme }) => theme.font.body_3};
+  color: ${({ theme }) => theme.color.grey500};
+`
+
+const Summary = styled.p`
+  ${({ theme }) => theme.font.subtitle_3};
+`
+
 const MEDIA_SCREEN_FOR_TOC = `@media screen and (max-width: ${
-  DEVICE_SIZE.tablet + TOC_WIDTH_IN_PC * 2
+  WIDTH + TOC_WIDTH_IN_PC * 2
 }px)`
 
-const ContentsWrapper = styled.div`
+const BodyFrame = styled(Frame)`
+  max-width: calc(${WIDTH}px + ${TOC_WIDTH_IN_PC * 2}px);
+
+  ${MEDIA_SCREEN_FOR_TOC} {
+    max-width: ${WIDTH}px;
+  }
+`
+
+const BodyWrapper = styled.div`
+  position: relative;
   display: flex;
-  flex-direction: row-reverse;
   margin-left: ${TOC_WIDTH_IN_PC}px;
 
   ${MEDIA_SCREEN_FOR_TOC} {
-    flex-direction: column;
-    margin-left: unset;
+    margin-left: 0;
   }
 `
 
 const Aside = styled.aside<{ $direction: 'right' | 'top' }>`
-  position: relative;
-
   &:empty {
     display: none;
   }
@@ -116,8 +156,10 @@ const Aside = styled.aside<{ $direction: 'right' | 'top' }>`
           ${TOC.TOCBox} {
             position: sticky;
             right: 0;
-            top: ${NAVBAR_HEIGHT + 5}px;
+            top: ${NAVBAR_HEIGHT}px;
             width: ${TOC_WIDTH_IN_PC}px;
+            padding-left: 40px;
+            margin-top: 40px;
           }
         `
       : css`
@@ -137,34 +179,9 @@ const Aside = styled.aside<{ $direction: 'right' | 'top' }>`
   }
 `
 
-const Title = styled.h1`
-  ${({ theme }) => theme.font.header_1};
-  color: ${({ theme }) => theme.color.primary2};
-  margin: 15px 0;
-
-  ${({ theme }) => css`
-    ${theme.media.tablet} {
-      ${theme.font.header_2}
-    }
-  `}
-`
-
-const CreatedTime = styled.time`
-  ${({ theme }) => theme.font.body_2};
-  color: ${({ theme }) => theme.color.primary3};
-
-  ${({ theme }) => css`
-    ${theme.media.tablet} {
-      ${theme.font.body_3}
-    }
-  `}
-`
-
-const Summary = styled.p`
-  ${({ theme }) => theme.font.subtitle_3};
-`
-
 const MDXWrapper = styled.div`
+  max-width: ${WIDTH}px;
+
   aside {
     ${HighlightBlock}
 

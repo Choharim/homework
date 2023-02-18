@@ -3,10 +3,12 @@ import styled, { css } from 'styled-components'
 import { useRouter } from 'next/router'
 
 import { CATEGORIES } from '@/domain/post/constant'
-import { CATEGORY_TITLE, COLOR_BY_CATEGORY } from '@/application/post/constant'
+import { CATEGORY_TITLE } from '@/application/post/constant'
+import { Category } from '@/domain/post/type'
 
 import CategoryLink from './CategoryLink'
-import { Category } from '@/domain/post/type'
+
+const GAP = 10
 
 const CategoryFilter = () => {
   const { query } = useRouter()
@@ -15,66 +17,69 @@ const CategoryFilter = () => {
     return CATEGORIES.includes(category)
   }
 
+  const isActive = (category: Category) => {
+    if (isCategory(query.slug as Category)) {
+      return query.slug === category
+    } else {
+      return category === 'all'
+    }
+  }
+
   return (
-    <CategoryButtonContainer>
+    <CategoryContainer>
       {CATEGORIES.map((category, i) => (
-        <CategoryButton
-          key={`${category}_${i}`}
-          $active={
-            !isCategory(query.slug as Category)
-              ? category === 'all'
-              : query.slug === category
-          }
-          $category={category}
-        >
-          <CircleCategoryLink category={category}>
-            {CATEGORY_TITLE[category]}
-          </CircleCategoryLink>
-        </CategoryButton>
+        <Wrapper key={`${category}_${i}`}>
+          <CategoryLink category={category}>
+            <CategoryWrapper
+              $isAll={category === 'all'}
+              $active={isActive(category)}
+            >
+              {CATEGORY_TITLE[category]}
+            </CategoryWrapper>
+          </CategoryLink>
+        </Wrapper>
       ))}
-    </CategoryButtonContainer>
+    </CategoryContainer>
   )
 }
 
 export default CategoryFilter
 
-const CategoryButtonContainer = styled.div`
+const CategoryContainer = styled.div`
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
-  margin: -4px;
+  align-items: center;
+  margin: -${GAP}px;
 `
-const CategoryButton = styled.button<{ $active: boolean; $category: Category }>`
-  border: none;
-  background-color: transparent;
-  padding: 0;
-  margin: 4px;
 
-  ${({ $active, $category }) =>
+const Wrapper = styled.div`
+  margin: ${GAP}px;
+`
+
+const CategoryWrapper = styled.div<{ $isAll: boolean; $active: boolean }>`
+  padding: 4px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  color: ${({ theme }) => theme.color.grey700};
+
+  ${({ $isAll, theme }) =>
+    $isAll
+      ? css`
+          ${theme.font.subtitle_2};
+        `
+      : css`
+          ${theme.font.subtitle_3};
+        `};
+
+  ${({ $active, theme }) =>
     $active &&
     css`
-      pointer-events: none;
-
-      ${CircleCategoryLink} {
-        background-color: ${COLOR_BY_CATEGORY[$category]?.hover};
-        border: 1px solid ${({ theme }) => theme.color.line};
-      }
+      color: ${theme.color.primary800};
+      background-color: ${theme.color.grey100};
+      cursor: default;
     `};
-`
 
-const CircleCategoryLink = styled(CategoryLink)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  ${({ theme }) => theme.font.subtitle_3}
-  padding: 5px 15px;
-  border-radius: 40px;
-  white-space: nowrap;
-  border: 1px solid transparent;
-
-  ${({ theme }) => css`
-    ${theme.media.tablet} {
-      ${theme.font.body_1}
-    }
-  `}
+  &:hover {
+    background-color: ${({ theme }) => theme.color.grey100};
+  }
 `

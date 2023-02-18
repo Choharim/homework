@@ -6,8 +6,8 @@ import { fetchPosts } from '@/services/api'
 // import usePagination from '@/hooks/usePagination'
 import PostCardLink from '@/components/post/PostCardLink'
 import Layout from '@/components/layout/Layout'
-import CategoryFilter from '@/components/post/CategoryFilter'
 import CardListFrame from '@/components/post/CardListFrame'
+import CategoryFilter from '@/components/post/CategoryFilter'
 
 const Home: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -17,8 +17,8 @@ const Home: NextPageWithLayout<
 
   return (
     <>
-      <CategoryFilter />
       <CardListFrame>
+        <CategoryFilter />
         {posts?.map(({ data, slug }) => (
           <PostCardLink key={slug} data={data} slug={slug} />
         ))}
