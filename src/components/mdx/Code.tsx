@@ -124,7 +124,7 @@ const CopyCodeButton = styled.button`
   background-color: ${({ theme }) => theme.color.grey200};
 
   &:hover {
-    background-color: ${({ theme }) => theme.color.white};
+    background-color: ${({ theme }) => theme.color.grey50};
   }
 
   ${({ theme }) => css`

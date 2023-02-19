@@ -74,7 +74,7 @@ const CategoryWrapper = styled.div<{ $isAll: boolean; $active: boolean }>`
   ${({ $active, theme }) =>
     $active &&
     css`
-      color: ${theme.color.primary800};
+      color: ${theme.color.primary500};
       background-color: ${theme.color.grey100};
       cursor: default;
     `};

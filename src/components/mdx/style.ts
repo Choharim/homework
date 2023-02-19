@@ -8,7 +8,8 @@ export const ParagrahFont = css`
 `
 
 export const ListContainer = css`
-  margin-left: 20px;
+  list-style-position: inside;
+  margin-left: 10px;
 `
 
 export const HighlightWord = css`

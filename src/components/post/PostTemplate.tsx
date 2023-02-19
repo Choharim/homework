@@ -79,25 +79,25 @@ const Article = styled.article`
 `
 
 const HeaderFrame = styled(Frame)`
-  display: grid;
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
   max-width: ${WIDTH}px;
   margin-bottom: 40px;
   margin-top: ${NAVBAR_HEIGHT}px;
 
   ${({ theme }) => theme.media.mobile} {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
 `
 
 const Title = styled.h1`
   ${({ theme }) => theme.font.header_1};
   color: ${({ theme }) => theme.color.grey800};
-  margin: 20px 0 10px;
+  margin: 20px 0 15px;
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
-      ${theme.font.header_2}
+      ${theme.font.header_2};
     }
   `}
 `
@@ -117,6 +117,7 @@ const CreateDate = styled.time`
 
 const Summary = styled.p`
   ${({ theme }) => theme.font.subtitle_3};
+  margin-top: 10px;
 `
 
 const MEDIA_SCREEN_FOR_TOC = `@media screen and (max-width: ${
@@ -181,6 +182,7 @@ const Aside = styled.aside<{ $direction: 'right' | 'top' }>`
 
 const MDXWrapper = styled.div`
   max-width: ${WIDTH}px;
+  width: -webkit-fill-available;
 
   aside {
     ${HighlightBlock}
