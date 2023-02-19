@@ -68,7 +68,7 @@ const Wrapper = styled.article`
 
   :hover {
     ${Title} {
-      color: ${({ theme }) => theme.color.primary400};
+      color: ${({ theme }) => theme.color.primary300};
     }
   }
 `

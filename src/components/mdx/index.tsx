@@ -60,7 +60,7 @@ const MDX_STYLE = {
   ol: styled.ol`
     ${ListContainer}
 
-    list-style: decimal;
+    list-style-type: decimal;
     > li {
       &::marker {
         font-weight: bold;
