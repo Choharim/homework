@@ -8,4 +8,9 @@ export const EN_NAME = {
   last: 'Cho',
 }
 
+export const BLOG_NAME = {
+  shortName: 'RIM',
+  fullName: 'RootInMeaningful',
+}
+
 export const GITHUB_URL = 'https://github.com/Choharim'
