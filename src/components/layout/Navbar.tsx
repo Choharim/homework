@@ -7,10 +7,11 @@ import { GITHUB_URL } from '@/domain/owner/constant'
 import useScrollDirection from '@/hooks/useScrollDirection'
 import { Z_INDEX } from '@/styles/constant'
 import { convertHEXToRGB } from '@/utils/convertColorFormat'
+import { PAGE_PATH } from '@/constants/common'
+import useScrollTop from '@/hooks/useScrollTop'
 
 import Frame from './Frame'
 import Logo from '../Logo'
-import useScrollTop from '@/hooks/useScrollTop'
 
 export const NAVBAR_HEIGHT = 60
 
@@ -22,9 +23,9 @@ type TextMenu = {
 
 const MENUS: Array<TextMenu> = [
   {
-    href: '/about',
+    href: PAGE_PATH.About.path,
     isOutlink: false,
-    label: 'About',
+    label: PAGE_PATH.About.label,
   },
   {
     href: GITHUB_URL,

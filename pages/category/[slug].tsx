@@ -10,14 +10,16 @@ import { ParsedUrlQuery } from 'querystring'
 import { Category } from '@/domain/post/type'
 import { CATEGORIES } from '@/domain/post/constant'
 import { NextPageWithLayout } from 'pages/_app'
+import { CATEGORY_TITLE } from '@/application/post/constant'
 
 // import usePagination from '@/hooks/usePagination'
 import { fetchPosts } from '@/services/api'
 import PostCardLink from '@/components/post/PostCardLink'
 import CardListFrame from '@/components/post/CardListFrame'
 import CategoryFilter from '@/components/post/CategoryFilter'
+import Layout from '@/components/layout/Layout'
 
-const PostsPage: NextPageWithLayout<
+const Posts: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ posts }) => {
   // TODO:
@@ -36,7 +38,13 @@ const PostsPage: NextPageWithLayout<
   )
 }
 
-export default PostsPage
+export default Posts
+
+Posts.getLayout = function getLayout(
+  page: React.ReactElement<InferGetStaticPropsType<typeof getStaticProps>>
+) {
+  return <Layout title={CATEGORY_TITLE[page.props.category]}>{page}</Layout>
+}
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -58,6 +66,7 @@ export const getStaticProps = async (
   return {
     props: {
       posts,
+      category: slug,
     },
   }
 }

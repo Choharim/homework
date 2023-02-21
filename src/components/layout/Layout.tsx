@@ -1,29 +1,31 @@
 import React, { HTMLAttributes } from 'react'
 import styled, { css } from 'styled-components'
-import Head from 'next/head'
-
-import { EN_NAME } from '@/domain/owner/constant'
 
 import Navbar, { NAVBAR_HEIGHT } from './Navbar'
 import Footer, { FOOTER_HEIGHT } from './Footer'
 import Frame from './Frame'
+import HeadMeta, { HeadMetaProps } from '../HeadMeta'
 
-interface Props extends Pick<HTMLAttributes<HTMLElement>, 'className'> {
+interface Props
+  extends Pick<HTMLAttributes<HTMLElement>, 'className'>,
+    HeadMetaProps {
   children: React.ReactNode
-  title?: string
+
   resetFrameStyle?: boolean
 }
 
-const Layout = ({ children, title, resetFrameStyle, className }: Props) => {
+const Layout = ({
+  title,
+  description,
+  resetFrameStyle,
+  className,
+  children,
+}: Props) => {
   return (
     <LayoutFrame className={className}>
-      <Head>
-        {!!title && <title>{`${title} | ${EN_NAME.first}'s log`}</title>}
-        {/* TODO: add meta tag */}
-        {/* <meta name="meta name" content="meta content" /> */}
-      </Head>
-      <Navbar />
+      <HeadMeta title={title} description={description} />
 
+      <Navbar />
       {resetFrameStyle ? (
         <main>{children}</main>
       ) : (
@@ -31,7 +33,6 @@ const Layout = ({ children, title, resetFrameStyle, className }: Props) => {
           {children}
         </Main>
       )}
-
       <Layout.Footer />
     </LayoutFrame>
   )

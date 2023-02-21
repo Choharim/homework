@@ -23,7 +23,6 @@ import MDX_STYLE from '@/components/mdx'
 import Layout from '@/components/layout/Layout'
 import PostTemplate from '@/components/post/PostTemplate'
 
-//TODO: - https://nextjs.org/docs/advanced-features/using-mdx
 const Detail: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ data, mdxSource }) => {
@@ -44,10 +43,14 @@ const Detail: NextPageWithLayout<
 export default Detail
 
 Detail.getLayout = function getLayout(
-  page: React.ReactElement<Pick<Post, 'data' | 'content'>>
+  page: React.ReactElement<InferGetStaticPropsType<typeof getStaticProps>>
 ) {
   return (
-    <Layout title={page.props.data.title} resetFrameStyle>
+    <Layout
+      title={page.props.data.title}
+      description={page.props.data.description}
+      resetFrameStyle
+    >
       {page}
     </Layout>
   )
