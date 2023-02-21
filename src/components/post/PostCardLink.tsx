@@ -95,5 +95,5 @@ const Bottom = styled.div`
 
 const CreateDate = styled.time`
   ${({ theme }) => theme.font.body_3};
-  color: ${({ theme }) => theme.color.grey500};
+  color: ${({ theme }) => theme.color.grey600};
 `

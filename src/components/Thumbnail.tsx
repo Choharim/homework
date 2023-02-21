@@ -72,7 +72,7 @@ const Container = styled.div<
     round &&
     css`
       img {
-        border-radius: 50px;
+        border-radius: 25px;
       }
     `}
 `
