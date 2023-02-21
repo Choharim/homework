@@ -64,7 +64,7 @@ const acordian = keyframes`
   }
 `
 
-const Name = styled.span<{
+const Name = styled.div<{
   $isInitial: boolean
   $isFold: Props['isFold']
   $isHighlightInitial: Props['isHighlightInitial']
@@ -82,7 +82,7 @@ const Name = styled.span<{
             ? theme.color.primary300
             : theme.color.primary500};
 
-          animation: ${acordian} 3.5s ease-in-out 1s
+          animation: ${acordian} 3s ease-in-out 1s
             ${$isFold && 'reverse forwards'};
         `}
 `
