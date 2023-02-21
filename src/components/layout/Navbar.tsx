@@ -1,16 +1,16 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import Link from 'next/link'
-import Image, { StaticImageData } from 'next/image'
 import { useRouter } from 'next/router'
 
-import { EN_NAME, GITHUB_URL } from '@/domain/owner/constant'
+import { GITHUB_URL } from '@/domain/owner/constant'
 import useScrollDirection from '@/hooks/useScrollDirection'
 import { Z_INDEX } from '@/styles/constant'
 import { convertHEXToRGB } from '@/utils/convertColorFormat'
 
-import GithubLogo from 'public/github_logo.png'
 import Frame from './Frame'
+import Logo from '../Logo'
+import useScrollTop from '@/hooks/useScrollTop'
 
 export const NAVBAR_HEIGHT = 60
 
@@ -20,23 +20,16 @@ type TextMenu = {
   label: string
 }
 
-type ImageMenu = {
-  href: string
-  isOutlink: boolean
-  img_url: StaticImageData
-  img_alt?: string
-}
-
-const isTextMenu = (menu: TextMenu | ImageMenu): menu is TextMenu => {
-  return 'label' in menu
-}
-
-const MENUS: Array<TextMenu | ImageMenu> = [
+const MENUS: Array<TextMenu> = [
+  {
+    href: '/about',
+    isOutlink: false,
+    label: 'About',
+  },
   {
     href: GITHUB_URL,
-    img_url: GithubLogo,
-    img_alt: 'github_logo_image',
     isOutlink: true,
+    label: 'Github',
   },
 ]
 
@@ -44,11 +37,12 @@ const SCROLL_THRESHOLD = 30
 
 const Navbar = () => {
   const direction = useScrollDirection(SCROLL_THRESHOLD)
+  const isScrollTop = useScrollTop()
 
   return (
-    <Navigation hidden={direction === 'down'}>
+    <Navigation hidden={direction === 'down' && !isScrollTop}>
       <CustomFrame>
-        <Navbar.Logo />
+        <Logo isFold />
         <Navbar.Menu />
       </CustomFrame>
     </Navigation>
@@ -57,19 +51,7 @@ const Navbar = () => {
 
 export default Navbar
 
-Navbar.Logo = function Component() {
-  return (
-    <Link href="/">
-      <a>
-        <LogWrapper>
-          <Name>{`${EN_NAME.first}'s log`}</Name>
-        </LogWrapper>
-      </a>
-    </Link>
-  )
-}
-
-Navbar.Menu = function Component() {
+Navbar.Menu = React.memo(function Component() {
   const { pathname } = useRouter()
 
   return (
@@ -81,24 +63,14 @@ Navbar.Menu = function Component() {
               target={menu.isOutlink ? '_blank' : '_self'}
               rel="noopener noreferrer"
             >
-              {isTextMenu(menu) ? (
-                <MenuText>{menu.label}</MenuText>
-              ) : (
-                <Image
-                  layout="fixed"
-                  height={22}
-                  width={22}
-                  src={menu.img_url}
-                  alt={menu.img_alt}
-                />
-              )}
+              <MenuText>{menu.label}</MenuText>
             </LinkWrapper>
           </Link>
         </Menu>
       ))}
     </MenuContainer>
   )
-}
+})
 
 const Navigation = styled.nav<{ hidden: boolean }>`
   position: fixed;
@@ -134,19 +106,9 @@ const CustomFrame = styled(Frame)`
   justify-content: space-between;
 `
 
-const LogWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`
-
-const Name = styled.span`
-  color: ${({ theme }) => theme.color.primary600};
-  ${({ theme }) => theme.font.header_4};
-`
-
 const MenuContainer = styled.ul`
   display: flex;
-  padding-left: 0;
+  align-items: baseline;
 `
 
 const MenuText = styled.span`
@@ -157,19 +119,19 @@ const MenuText = styled.span`
 const LinkWrapper = styled.a`
   display: flex;
   align-items: center;
-  height: 45px;
-  padding: 0 10px;
-  border-radius: 4px;
+  padding: 3px 8px;
 `
 
 const Menu = styled.li<{ $active: boolean }>`
+  border-radius: 4px;
+
   &:not(:first-child) {
     margin-left: 10px;
   }
 
   &:hover {
     ${MenuText} {
-      color: ${({ theme }) => theme.color.grey800};
+      color: ${({ theme }) => theme.color.primary400};
     }
   }
 
@@ -177,9 +139,10 @@ const Menu = styled.li<{ $active: boolean }>`
     $active &&
     css`
       pointer-events: none;
+      background-color: ${theme.color.grey100};
 
       ${MenuText} {
-        color: ${theme.color.grey800};
+        color: ${theme.color.primary400};
       }
     `}
 `
