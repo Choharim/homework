@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect, useState } from 'react'
+import React, { MouseEvent, useEffect, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 
 import { HEADERS_OF_CONTENTS } from '@/application/post/constant'
@@ -6,29 +6,31 @@ import { Z_INDEX } from '@/styles/constant'
 import { NAVBAR_HEIGHT } from '../layout/Navbar'
 import { HeadersOfContents } from '@/application/post/type'
 import { setTOCId } from '@/application/post'
+import { convertHEXToRGB } from '@/utils/convertColorFormat'
 
 export const TOC_WIDTH_IN_PC = 280
 
 const OBSERVER_OPTIONS: IntersectionObserverInit = {
-  root: null,
   rootMargin: `-${NAVBAR_HEIGHT}px`,
-  threshold: 0,
 }
 
 const TOC = () => {
   const [headingElements, setHeadingElements] = useState<Element[]>([])
   const [highlightId, setHighlightId] = useState<string>('')
+  const entriesRef = useRef<Record<string, IntersectionObserverEntry>>({})
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setHighlightId(entry.target.id)
-          }
-        }),
-      OBSERVER_OPTIONS
-    )
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        entriesRef.current[entry.target.id] = entry
+      })
+
+      const highlightEntry = Object.values(entriesRef.current).find(
+        (entry) => entry.isIntersecting
+      )
+
+      if (highlightEntry) setHighlightId(highlightEntry.target.id)
+    }, OBSERVER_OPTIONS)
 
     const headingElements = Array.from(
       document.querySelectorAll(HEADERS_OF_CONTENTS.join(','))
@@ -97,15 +99,15 @@ const List = styled.li<{ $headerType: HeadersOfContents; $highlight: boolean }>`
     switch ($headerType) {
       case 'h2':
         return css`
-          ${theme.font.subtitle_2};
-          color: ${theme.color.grey700};
+          ${theme.font.body_2};
+          color: ${theme.color.grey800};
         `
       case 'h3':
       default:
         return css`
           margin-left: 15px;
-          ${theme.font.subtitle_3};
-          color: ${theme.color.grey600};
+          ${theme.font.body_3};
+          color: ${theme.color.grey700};
         `
     }
   }}
@@ -113,10 +115,13 @@ const List = styled.li<{ $headerType: HeadersOfContents; $highlight: boolean }>`
   ${({ theme, $highlight }) =>
     $highlight &&
     css`
-      color: ${theme.color.primary400};
+      color: ${theme.color.primary500};
+      filter: drop-shadow(
+        0 0 8px rgba(${convertHEXToRGB(theme.color.primary400)}, 0.7)
+      ); ;
     `};
 
   :hover {
-    color: ${({ theme }) => theme.color.primary200};
+    color: ${({ theme }) => theme.color.primary300};
   }
 `
