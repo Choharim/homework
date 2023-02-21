@@ -33,8 +33,15 @@ const PostTemplate = ({ data, children }: Props) => {
   return (
     <Article>
       <HeaderFrame>
+        <Title>{title}</Title>
+        <SubInfo>
+          {!!category && <CategoryChip category={category} />}
+          <CreateDate dateTime={createDate}>{createDate}</CreateDate>
+        </SubInfo>
+        <Summary>{description}</Summary>
+
         {showThumbnail && (
-          <Thumbnail
+          <CustomThumbnail
             src={handleSrcError()}
             layout="responsive"
             objectFit="contain"
@@ -42,12 +49,6 @@ const PostTemplate = ({ data, children }: Props) => {
             round
           />
         )}
-        <Title>{title}</Title>
-        <SubInfo>
-          {!!category && <CategoryChip category={category} />}
-          <CreateDate dateTime={createDate}>{createDate}</CreateDate>
-        </SubInfo>
-        <Summary>{description}</Summary>
       </HeaderFrame>
 
       <BodyFrame>
@@ -90,6 +91,10 @@ const HeaderFrame = styled(Frame)`
   }
 `
 
+const CustomThumbnail = styled(Thumbnail)`
+  margin-top: 15px; ;
+`
+
 const Title = styled.h1`
   ${({ theme }) => theme.font.header_1};
   color: ${({ theme }) => theme.color.grey800};
@@ -112,7 +117,7 @@ const SubInfo = styled.div`
 
 const CreateDate = styled.time`
   ${({ theme }) => theme.font.body_3};
-  color: ${({ theme }) => theme.color.grey500};
+  color: ${({ theme }) => theme.color.grey600};
 `
 
 const Summary = styled.p`

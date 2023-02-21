@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 type ScrollDirection = 'up' | 'down'
 
-const useScrollDirection = (threshold: number) => {
+const useScrollDirection = (threshold = 0) => {
   const [direction, setDirection] = useState<ScrollDirection>('up')
 
   useEffect(() => {
