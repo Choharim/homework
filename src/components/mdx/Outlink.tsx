@@ -7,10 +7,10 @@ interface Props extends Pick<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
   className: string
 }
 
-const domainRegex = /http[s]*:\/\/[www.]*harim-log.vercel\.app[/]?/
+const domainRegex = /http[s]*:\/\/[www.]*rootinmeaningful.vercel\.app[/]?/
 
-const Outlink = ({ children, className, href }: Props) => {
-  const sameDomain = href && domainRegex.test(href)
+const Outlink = ({ children, className, href = '' }: Props) => {
+  const sameDomain = href.startsWith('/') || domainRegex.test(href)
 
   return (
     <>

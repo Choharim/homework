@@ -52,8 +52,8 @@ const Code = ({ className, children }: Props) => {
         <Image
           src="/copy.svg"
           alt="code-copy_icon"
-          width="24px"
-          height="24px"
+          width="22px"
+          height="22px"
         />
       </CopyCodeButton>
       <HighlightWrapper>
@@ -121,10 +121,10 @@ const CopyCodeButton = styled.button`
   outline: none;
   border: none;
   border-radius: 4px;
-  background-color: ${({ theme }) => theme.color.grey200};
+  background-color: ${({ theme }) => theme.color.grey400};
 
   &:hover {
-    background-color: ${({ theme }) => theme.color.grey50};
+    background-color: ${({ theme }) => theme.color.grey300};
   }
 
   ${({ theme }) => css`
