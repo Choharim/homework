@@ -13,39 +13,30 @@ const About = () => {
       </LogoWrapper>
       <DescriptionWrapper>
         <Paragraph>
-          <Keyword>가치있는 뿌리</Keyword>라는 의미로
-          <br />
-          ‘성장’보단 ‘<Strong>올바르고 좋은</Strong>’ 성장에 초점을 두는 것을
-          말합니다.
+          <Keyword>기본기</Keyword>에 가치를 둡니다.
         </Paragraph>
-        <br />
-        <br />
         <Paragraph>
-          단단하고 깊은 뿌리를 가진 나무는,
+          <Strong>단단하고 깊은 뿌리</Strong>를 가진 나무는,
           <br />
-          폭풍이나 강풍 중에 넘어질 가능성이 적어 <Strong>더 안정적</Strong>
+          폭풍이나 강풍 중에 넘어질 가능성이 적어 <Strong>안정적</Strong>
           입니다.
           <br />
           토양 깊숙이 위치한 양분에 접근할 수 있어{' '}
-          <Strong>더 강하고 건강하게</Strong> 자랄 수 있습니다.
+          <Strong>강하고 건강하게</Strong> 자랄 수 있습니다.
           <br />
-          건강하며 오래 살 수 있도록 도와주어 생태계에 도움이 되는 나무로
-          살아갑니다.
+          <Strong>건강하게 오랫동안</Strong> 생태계에 <Strong>도움</Strong>이
+          되는 나무로 살아갑니다.
         </Paragraph>
-        <br />
-        <br />
         <Paragraph>
-          모든 성장은 의미가 있고 귀중하지만 더 좋은 성장은,
+          <Strong>탄탄한 기본기</Strong>는,
           <br />
           <Strong>넓은 관점</Strong>을 가지게 하고
           <br /> <Strong>깊은 이해</Strong>를 얻을 수 있으며
-          <br /> 견고한 기반으로 <Strong>더 빠르고 좋은 성장</Strong>을 하도록
-          선순환을 이룰 수 있기에
+          <br /> 견고한 기반으로 <Strong>더 빠르게 성장</Strong> 하도록 선순환을
+          이룰 수 있기에
         </Paragraph>
-        <br />
         <Paragraph>
-          가치있는 뿌리를 가진 나무가 되기 위해 <Strong>기본기</Strong>를
-          견고히하며 시야를 넓혀가고 있습니다.
+          <Strong>기본기</Strong>에 초점을 두며 시야를 넓혀가고 있습니다.
         </Paragraph>
       </DescriptionWrapper>
     </Box>
@@ -81,7 +72,7 @@ const LogoWrapper = styled.div`
 const MIN_SIZE = `@media screen and (max-width: ${DEVICE_SIZE.mobile}px)`
 
 const CustomLogo = styled(Logo)`
-  margin: 30px 0 50px;
+  margin-bottom: 50px;
 
   ${({ theme }) => css`
     ${theme.font.header_1};
@@ -102,6 +93,7 @@ const Paragraph = styled.p`
   ${({ theme }) => theme.font.subtitle_2};
   font-weight: 400;
   color: ${({ theme }) => theme.color.grey800};
+  margin: 10px 0;
 `
 
 const Strong = styled.strong`
