@@ -46,18 +46,11 @@ const acordian = keyframes`
     opacity: 0;
     width: 0;
   }
-  20% {
-  opacity: 0.2;
+
+  50% {
+  opacity: 0.5;
   }
-  40% {
-  opacity: 0.4;
-  }
-  60% {
-  opacity: 0.6;
-  }
-  80% {
-  opacity: 0.8;
-  }
+
   100% {
     opacity: 1;
     width: 100%;
@@ -82,7 +75,7 @@ const Name = styled.div<{
             ? theme.color.primary300
             : theme.color.primary500};
 
-          animation: ${acordian} 3s ease-in-out 1s
+          animation: ${acordian} 3.5s ease-in-out 1s
             ${$isFold && 'reverse forwards'};
         `}
 `
