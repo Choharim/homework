@@ -48,7 +48,11 @@ export default Posts
 Posts.getLayout = function getLayout(
   page: React.ReactElement<InferGetStaticPropsType<typeof getStaticProps>>
 ) {
-  return <Layout title={CATEGORY_TITLE[page.props.category]}>{page}</Layout>
+  return (
+    <Layout title={CATEGORY_TITLE[page.props.category]} hasFooter={false}>
+      {page}
+    </Layout>
+  )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
