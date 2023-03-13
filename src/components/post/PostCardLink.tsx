@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { POST_DIRECTORY } from '@/domain/post/constant'
 import Post from '@/domain/post/type'
@@ -50,6 +50,12 @@ const Title = styled.h3`
   ${limitTextLine(2)}
 
   transition: color 0.2s ease-in-out;
+
+  ${({ theme }) => css`
+    ${theme.media.mobile} {
+      ${theme.font.header_3};
+    }
+  `}
 `
 
 const Desc = styled.p`
