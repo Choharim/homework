@@ -28,7 +28,7 @@ export default Pagination
 const Container = styled.ul`
   display: flex;
   margin: 0 auto;
-  padding: 25px 0;
+  padding: 30px 0;
 `
 
 const Page = styled(Chip)<{ $active: boolean }>`

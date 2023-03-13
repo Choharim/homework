@@ -48,5 +48,9 @@ export async function getStaticProps() {
 }
 
 Home.getLayout = function getLayout(page: React.ReactElement) {
-  return <Layout title="홈">{page}</Layout>
+  return (
+    <Layout title="홈" hasFooter={false}>
+      {page}
+    </Layout>
+  )
 }

@@ -12,6 +12,7 @@ interface Props
   children: React.ReactNode
 
   resetFrameStyle?: boolean
+  hasFooter?: boolean
 }
 
 const Layout = ({
@@ -20,6 +21,7 @@ const Layout = ({
   resetFrameStyle,
   className,
   children,
+  hasFooter = true,
 }: Props) => {
   return (
     <LayoutFrame className={className}>
@@ -33,7 +35,7 @@ const Layout = ({
           {children}
         </Main>
       )}
-      <Layout.Footer />
+      {hasFooter && <Layout.Footer />}
     </LayoutFrame>
   )
 }
