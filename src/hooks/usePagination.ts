@@ -1,39 +1,46 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
-import Post, { Category } from '@/domain/post/type'
-import { fetchPosts } from '@/services/api'
+import Post from '@/domain/post/type'
 
-const OBSERVER_OPTIONS: IntersectionObserverInit = {
-  threshold: [0, 0.3, 1],
+const getPaginatedPosts = (
+  posts: Array<Post>,
+  pageNumber: number,
+  pageSize: number
+) => {
+  const startIndex = (pageNumber - 1) * pageSize
+  return posts.slice(startIndex, startIndex + pageSize)
 }
+
+const PAGE_QUERY_KEY = 'page'
 
 type Params = {
-  category: Category
+  pageSize: number
+  posts: Post[]
 }
-const usePagination = ({ category }: Params) => {
-  const [posts, setPosts] = useState<Post[]>([])
-  const [pageOffset, setPageOffset] = useState(0)
-  const targetRef = useRef<HTMLDivElement>(null)
+const usePagination = ({ posts, pageSize }: Params) => {
+  const [currentPage, setCurrentPage] = useState(1)
+  const paginatedPosts = getPaginatedPosts(posts, currentPage, pageSize)
+  const totalPage = Math.ceil(posts.length / pageSize)
+
+  const router = useRouter()
 
   useEffect(() => {
-    if (!targetRef.current) return
+    const page = Number(router.query[PAGE_QUERY_KEY])
 
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) setPageOffset((prev) => prev + 1)
-    }, OBSERVER_OPTIONS)
+    if (!isNaN(page)) {
+      setCurrentPage(page)
+    } else {
+      setCurrentPage(1)
+    }
+  }, [router.query])
 
-    observer.observe(targetRef.current)
-
-    return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
-    if (!pageOffset) return
-
-    fetchPosts('', { pageOffset, category }).then((res) => setPosts(res))
-  }, [pageOffset, category])
-
-  return { posts, targetRef }
+  return {
+    paginatedPosts,
+    totalPage,
+    currentPage,
+    pageQueryKey: PAGE_QUERY_KEY,
+  }
 }
 
 export default usePagination
