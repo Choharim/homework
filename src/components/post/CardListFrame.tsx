@@ -15,4 +15,6 @@ const Wrapper = styled.div`
   display: grid;
   gap: 30px;
   margin-top: 20px;
+  height: 100%;
+  align-content: flex-start;
 `

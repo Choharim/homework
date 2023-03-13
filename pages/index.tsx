@@ -2,28 +2,33 @@ import { InferGetStaticPropsType } from 'next'
 
 import { NextPageWithLayout } from './_app'
 import { fetchPosts } from '@/services/api'
+import usePagination from '@/hooks/usePagination'
 
-// import usePagination from '@/hooks/usePagination'
 import PostCardLink from '@/components/post/PostCardLink'
 import Layout from '@/components/layout/Layout'
 import CardListFrame from '@/components/post/CardListFrame'
 import CategoryFilter from '@/components/post/CategoryFilter'
+import Pagination from '@/components/Pagination'
 
 const Home: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ posts }) => {
-  // TODO:
-  // const { posts, targetRef } = usePagination({ category: 'all' })
+  const { paginatedPosts, totalPage, currentPage, pageQueryKey } =
+    usePagination({ posts })
 
   return (
     <>
       <CardListFrame>
         <CategoryFilter />
-        {posts?.map(({ data, slug }) => (
+        {paginatedPosts?.map(({ data, slug }) => (
           <PostCardLink key={slug} data={data} slug={slug} />
         ))}
       </CardListFrame>
-      {/* <div ref={targetRef} /> */}
+      <Pagination
+        totalPage={totalPage}
+        currentPage={currentPage}
+        pageQueryKey={pageQueryKey}
+      />
     </>
   )
 }
@@ -31,7 +36,7 @@ const Home: NextPageWithLayout<
 export default Home
 
 export async function getStaticProps() {
-  const posts = await fetchPosts(process.env.BASE_URL || '', {
+  const posts = await fetchPosts({
     category: 'all',
   })
 
@@ -43,5 +48,9 @@ export async function getStaticProps() {
 }
 
 Home.getLayout = function getLayout(page: React.ReactElement) {
-  return <Layout title="홈">{page}</Layout>
+  return (
+    <Layout title="홈" hasFooter={false}>
+      {page}
+    </Layout>
+  )
 }
