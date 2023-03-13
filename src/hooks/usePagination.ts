@@ -13,7 +13,7 @@ const getPaginatedPosts = (
 }
 
 const PAGE_QUERY_KEY = 'page'
-const PAGINATION_PAGE_SIZE = 5
+const PAGINATION_PAGE_SIZE = 10
 
 type Params = {
   posts: Post[]
