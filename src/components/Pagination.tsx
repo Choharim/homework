@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
@@ -10,12 +11,16 @@ type Props = {
   pageQueryKey: string
 }
 const Pagination = ({ totalPage, currentPage, pageQueryKey }: Props) => {
+  const router = useRouter()
   const pages = Array.from({ length: totalPage }, (_, i) => i + 1)
 
   return (
     <Container>
       {pages.map((page) => (
-        <Link key={page} href={{ query: { [pageQueryKey]: page } }}>
+        <Link
+          key={page}
+          href={{ query: { ...router.query, [pageQueryKey]: page } }}
+        >
           <Page $active={page === currentPage}>{page}</Page>
         </Link>
       ))}
@@ -44,7 +49,7 @@ const Page = styled(Chip)<{ $active: boolean }>`
   ${({ $active, theme }) =>
     $active
       ? css`
-          background-color: ${theme.color.primary400};
+          background-color: ${theme.color.primary300};
           color: ${theme.color.white};
           cursor: default;
           pointer-events: none;

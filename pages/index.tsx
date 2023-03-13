@@ -14,7 +14,7 @@ const Home: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ posts }) => {
   const { paginatedPosts, totalPage, currentPage, pageQueryKey } =
-    usePagination({ posts, pageSize: 5 })
+    usePagination({ posts })
 
   return (
     <>

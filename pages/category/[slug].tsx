@@ -17,18 +17,28 @@ import PostCardLink from '@/components/post/PostCardLink'
 import CardListFrame from '@/components/post/CardListFrame'
 import CategoryFilter from '@/components/post/CategoryFilter'
 import Layout from '@/components/layout/Layout'
+import usePagination from '@/hooks/usePagination'
+import Pagination from '@/components/Pagination'
 
 const Posts: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ posts }) => {
+  const { paginatedPosts, totalPage, currentPage, pageQueryKey } =
+    usePagination({ posts })
+
   return (
     <>
       <CardListFrame>
         <CategoryFilter />
-        {posts?.map(({ data, slug }) => {
+        {paginatedPosts?.map(({ data, slug }) => {
           return <PostCardLink key={slug} data={data} slug={slug} />
         })}
       </CardListFrame>
+      <Pagination
+        totalPage={totalPage}
+        currentPage={currentPage}
+        pageQueryKey={pageQueryKey}
+      />
     </>
   )
 }

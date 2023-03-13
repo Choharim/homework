@@ -13,15 +13,19 @@ const getPaginatedPosts = (
 }
 
 const PAGE_QUERY_KEY = 'page'
+const PAGINATION_PAGE_SIZE = 5
 
 type Params = {
-  pageSize: number
   posts: Post[]
 }
-const usePagination = ({ posts, pageSize }: Params) => {
+const usePagination = ({ posts }: Params) => {
   const [currentPage, setCurrentPage] = useState(1)
-  const paginatedPosts = getPaginatedPosts(posts, currentPage, pageSize)
-  const totalPage = Math.ceil(posts.length / pageSize)
+  const paginatedPosts = getPaginatedPosts(
+    posts,
+    currentPage,
+    PAGINATION_PAGE_SIZE
+  )
+  const totalPage = Math.ceil(posts.length / PAGINATION_PAGE_SIZE)
 
   const router = useRouter()
 
