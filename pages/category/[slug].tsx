@@ -70,7 +70,7 @@ export const getStaticProps = async (
   context: GetStaticPropsContext<ParsedUrlQuery, PreviewData>
 ) => {
   const { slug } = context.params as Params
-  const posts = await fetchPosts({ category: slug })
+  const posts = await fetchPosts(process.env.BASE_URL || '', { category: slug })
 
   return {
     props: {

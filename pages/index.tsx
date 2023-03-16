@@ -36,7 +36,7 @@ const Home: NextPageWithLayout<
 export default Home
 
 export async function getStaticProps() {
-  const posts = await fetchPosts({
+  const posts = await fetchPosts(process.env.BASE_URL || '', {
     category: 'all',
   })
 
