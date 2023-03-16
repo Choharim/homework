@@ -7,7 +7,7 @@ import PostCardLink from '@/components/post/PostCardLink'
 import Layout from '@/components/layout/Layout'
 import CardListFrame from '@/components/post/CardListFrame'
 import CategoryFilter from '@/components/post/CategoryFilter'
-import Pagination from '@/components/Pagination'
+import Pagination from '@/components/pagination/Pagination'
 import { getPosts } from '@/domain/post'
 
 const Home: NextPageWithLayout<
@@ -46,9 +46,5 @@ export async function getStaticProps() {
 }
 
 Home.getLayout = function getLayout(page: React.ReactElement) {
-  return (
-    <Layout title="홈" hasFooter={false}>
-      {page}
-    </Layout>
-  )
+  return <Layout title="홈">{page}</Layout>
 }
