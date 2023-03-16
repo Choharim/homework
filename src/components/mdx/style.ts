@@ -9,7 +9,7 @@ export const ParagrahFont = css`
 
 export const ListContainer = css`
   list-style-position: inside;
-  margin-left: 10px;
+  margin-left: 13px;
 `
 
 export const HighlightWord = css`
