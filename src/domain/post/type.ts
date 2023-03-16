@@ -1,5 +1,3 @@
-import { CATEGORIES } from './constant'
-
 type Post = {
   data: FrontMatter
   content: string
@@ -18,4 +16,10 @@ export type FrontMatter = {
   thumbnailSrc?: string
 }
 
-export type Category = typeof CATEGORIES[number]
+export type Category =
+  | 'all'
+  | 'javascript'
+  | 'operating-system'
+  | 'algorithms'
+  | 'data-structure'
+  | 'dev'
