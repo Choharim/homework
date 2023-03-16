@@ -7,7 +7,7 @@ import {
 import React from 'react'
 import { ParsedUrlQuery } from 'querystring'
 
-import { BriefPost, Category } from '@/domain/post/type'
+import { Category } from '@/domain/post/type'
 import { CATEGORIES } from '@/domain/post/constant'
 import { NextPageWithLayout } from 'pages/_app'
 import { CATEGORY_TITLE } from '@/application/post/constant'
@@ -17,7 +17,7 @@ import CardListFrame from '@/components/post/CardListFrame'
 import CategoryFilter from '@/components/post/CategoryFilter'
 import Layout from '@/components/layout/Layout'
 import usePagination from '@/hooks/usePagination'
-import Pagination from '@/components/Pagination'
+import Pagination from '@/components/pagination/Pagination'
 import { getPosts } from '@/domain/post'
 
 const Posts: NextPageWithLayout<
@@ -48,11 +48,7 @@ export default Posts
 Posts.getLayout = function getLayout(
   page: React.ReactElement<InferGetStaticPropsType<typeof getStaticProps>>
 ) {
-  return (
-    <Layout title={CATEGORY_TITLE[page.props.category]} hasFooter={false}>
-      {page}
-    </Layout>
-  )
+  return <Layout title={CATEGORY_TITLE[page.props.category]}>{page}</Layout>
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -70,7 +66,7 @@ export const getStaticProps = async (
   context: GetStaticPropsContext<ParsedUrlQuery, PreviewData>
 ) => {
   const { slug } = context.params as Params
-  const posts = getPosts(slug) as BriefPost[]
+  const posts = getPosts(slug)
 
   return {
     props: {
