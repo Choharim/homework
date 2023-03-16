@@ -7,11 +7,10 @@ import {
 import React from 'react'
 import { ParsedUrlQuery } from 'querystring'
 
-import { Category } from '@/domain/post/type'
+import { BriefPost, Category } from '@/domain/post/type'
 import { CATEGORIES } from '@/domain/post/constant'
 import { NextPageWithLayout } from 'pages/_app'
 import { CATEGORY_TITLE } from '@/application/post/constant'
-import { fetchPosts } from '@/services/api'
 
 import PostCardLink from '@/components/post/PostCardLink'
 import CardListFrame from '@/components/post/CardListFrame'
@@ -19,6 +18,7 @@ import CategoryFilter from '@/components/post/CategoryFilter'
 import Layout from '@/components/layout/Layout'
 import usePagination from '@/hooks/usePagination'
 import Pagination from '@/components/Pagination'
+import { getPosts } from '@/domain/post'
 
 const Posts: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -70,7 +70,7 @@ export const getStaticProps = async (
   context: GetStaticPropsContext<ParsedUrlQuery, PreviewData>
 ) => {
   const { slug } = context.params as Params
-  const posts = await fetchPosts(process.env.BASE_URL || '', { category: slug })
+  const posts = getPosts(slug) as BriefPost[]
 
   return {
     props: {

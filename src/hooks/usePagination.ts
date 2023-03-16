@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
-import Post from '@/domain/post/type'
+import { BriefPost } from '@/domain/post/type'
 
 const getPaginatedPosts = (
-  posts: Array<Post>,
+  posts: Array<BriefPost>,
   pageNumber: number,
   pageSize: number
 ) => {
@@ -16,7 +16,7 @@ const PAGE_QUERY_KEY = 'page'
 const PAGINATION_PAGE_SIZE = 10
 
 type Params = {
-  posts: Post[]
+  posts: BriefPost[]
 }
 const usePagination = ({ posts }: Params) => {
   const [currentPage, setCurrentPage] = useState(1)
