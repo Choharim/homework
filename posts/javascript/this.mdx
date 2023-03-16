@@ -1,0 +1,104 @@
+---
+title: this
+description: 동적으로 변하는 this의 원리를 파악하여 상황에 따라 어떻게 바뀌는 지 알아보자.
+createDate: 2023.1.15
+category: javascript
+---
+
+## this 란
+
+자신이 속한 객체 또는 자신이 생성할 인스턴스를 가리키는 `자기 참조 변수`이다.
+
+- this는 함수 호출 방식에 의해 동적으로 바인딩 된다. strict mode도 this 바인딩에 영향을 준다.
+- 자바스크립트 엔진에 의해 암묵적으로 this가 생성되며, 코드 어디서든 참조할 수 있다. 함수를 호출하면 arguments객체와 this가 암묵적으로 함수 내부에 전달된다.
+
+## this 바인딩
+
+> **전역**에서 this는 전역 객체를 가리킨다.
+
+```jsx
+console.log(this) // window or browser
+```
+
+> **일반 함수로 작성된 메서드** 내의 this는 메서드를 호출한 객체를 가리킨다.
+>
+> > 화살표 함수의 경우, 상위 스코프의 this를 참조하기 때문에 이를 따르지 않는다.
+
+```jsx
+const person = {
+  name: 'kim',
+  getName() {
+    return this.name
+  },
+}
+
+person.getName() // kim
+
+const anotherPerson = {
+  name: 'lee',
+}
+
+anotherPerson.getName = person.getName
+
+anotherPerson.getName() // lee
+```
+
+> **생성자 함수** 내에서 this는 생성자 함수가 생성할 인스턴스를 가리킨다.
+
+```jsx
+function Person(name) {
+  this.name = name
+}
+
+const person = new Person('lee') // {name: 'lee'}
+```
+
+> **일반 함수** 선언문으로 정의된 함수 내에서 this는 전역 객체를 가리킨다. (strict mode일 때는 undefined이다.)
+>
+> > 콜백 함수 내부와 내부 함수의 this는 전역 객체를 가리킨다.
+
+```jsx
+function foo() {
+  console.log(this) // window or browser
+
+  function bar() {
+    console.log(this) // window or browser
+  }
+  bar()
+}
+foo()
+```
+
+> **화살표 함수** 내에서 this는 상위 스코프의 this를 가리킨다.
+
+`화살표 함수는 함수 자체의 this 바인딩을 갖지 않아서` 화살표 함수 내에서 this를 참조하면 `상위 스코프의 this를 참조`하게 된다. 이를 **Lexical this** 라 한다.
+
+화살표 함수의 this는 정적으로 결정되기 때문에 call, apply, bind 메소드를 사용하여 this를 변경할 수 없다.
+
+## 명시적/정적 this 바인딩
+
+### Function.prototype.call / apply / bind 메서드
+
+```jsx
+function getThisBinding(x) {
+  return this.y * x
+}
+
+const data = { y: 2 }
+
+// apply, call이 바인딩 하면서 함수 실행
+console.log(getThisBinding.apply(data, [3])) // 6
+console.log(getThisBinding.call(data, 3)) // 6
+
+// bind은 바인딩만 하기 때문에 함수를 호출해주어야 함
+console.log(getThisBinding.bind(data)(3)) // 6
+```
+
+📌 arguments도 바인딩하여 배열로 사용할 수 있다.
+
+```jsx
+function convertArgToArray() {
+  return Array.prototype.slice.call(arguments)
+}
+console.log(convertArgToArray(1, 2, 3, 4, 5)) // [ 1, 2, 3, 4, 5 ]
+```

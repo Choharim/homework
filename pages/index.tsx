@@ -1,14 +1,14 @@
 import { InferGetStaticPropsType } from 'next'
 
 import { NextPageWithLayout } from './_app'
-import { fetchPosts } from '@/services/api'
 import usePagination from '@/hooks/usePagination'
 
 import PostCardLink from '@/components/post/PostCardLink'
 import Layout from '@/components/layout/Layout'
 import CardListFrame from '@/components/post/CardListFrame'
 import CategoryFilter from '@/components/post/CategoryFilter'
-import Pagination from '@/components/Pagination'
+import Pagination from '@/components/pagination/Pagination'
+import { getPosts } from '@/domain/post'
 
 const Home: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -36,9 +36,7 @@ const Home: NextPageWithLayout<
 export default Home
 
 export async function getStaticProps() {
-  const posts = await fetchPosts({
-    category: 'all',
-  })
+  const posts = getPosts('all')
 
   return {
     props: {
@@ -48,9 +46,5 @@ export async function getStaticProps() {
 }
 
 Home.getLayout = function getLayout(page: React.ReactElement) {
-  return (
-    <Layout title="홈" hasFooter={false}>
-      {page}
-    </Layout>
-  )
+  return <Layout title="홈">{page}</Layout>
 }

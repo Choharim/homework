@@ -1,0 +1,144 @@
+---
+title: 클로저
+description: 함수가 종료된 이후에도 외부에서 어떻게 함수의 내부 변수에 접근할 수 있는 지 알아보자.
+createDate: 2023.1.13
+category: javascript
+---
+
+## 렉시컬 스코프
+
+자바스크립트는 렉시컬 스코프를 따른다. `함수 정의가 평가되는 시점에` 함수가 정의된 환경으로 `상위 스코프가 결정`되기 때문에 정적 스코프라고도 한다.
+
+함수는 자신이 정의되었을 때의 `상위 스코프의 참조를 함수 객체 자신의 내부 슬롯에 저장`한다. 함수가 평가되는 시점은 상위 코드가 실행되는 중이기 때문에 `저장된 상위 스코프 참조는 함수가 평가되는 시점에 실행 중인 실행 컨텍스트의 렉시컬 환경`이다.
+
+- 전역에서 정의된 함수 선언문은 전역 코드가 평가되는 시점에 평가되어 함수 객체를 생성한다. 생성된 함수 객체의 내부 슬롯에는 함수 정의가 평가되는 시점, 즉 전역 코드 평가 시점에 실행 중인 실행 컨텍스트의 렉시컬 환경의 참조가 저장된다.
+- 함수 내부에서 정의된 함수 표현식은 외부 함수 코드가 실행되는 시점에 평가되어 함수 객체를 생성한다. 생성된 함수 객체의 내부 슬롯에는 실행 중인 실행 컨텍스트의 렉시컬 환경인 외부 함수 렉시컬 환경의 참조가 저장된다.
+
+<aside>
+⚠️ 실행 컨텍스트가 실행 컨텍스트 스택에서 제거되어도 참조되는 렉시컬 환경은 제거되지 않을 수 있다.
+객체가 더 이상 필요하지 않을 때 GC에 의해 자동으로 해제되기 때문에 참조되고 있다면 제거되지 않는다.
+
+</aside>
+
+<aside>
+📌 함수가 실행될 때 자신이 선언되었을 때의 외부 렉시컬 환경의 참조를 기억하고 있음을 확인해보자.
+
+</aside>
+
+```jsx
+function outerFn() {
+  const name = 'Mozilla'
+
+  function innerFn() {
+    console.log(name)
+  }
+  return innerFn
+}
+
+const myFn = outerFn()
+
+myFn() // Mozilla
+```
+
+1. innerFn 함수 선언문은 outerFn 함수가 평가될 때 평가되므로 outerFn 함수의 렉시컬 환경의 참조를 내부 슬롯에 저장한다.
+2. outerFn 함수가 호출되고 myFn 변수에 내부 함수를 반환하며 함수가 종료되면, outerFn 함수의 실행 컨텍스트는 실행 컨텍스트 스택에서 제거되고 생명 주기가 종료된다.
+3. ⚠️ innerFn 함수의 내부 슬롯에는 outer 함수의 렉시컬 환경이 참조되고 있고, inner 함수가 myFn변수에 참조되고 있으므로 outer 함수의 렉시컬 환경은 GC대상이 되지 않아 메모리에서 제거되지 않고 유지된다.
+4. myFn 함수가 호출되면 outerFn 함수가 반환한 innerFn 함수가 호출되어 innerFn함수의 실행 컨텍스트가 생성되고 실행 컨텍스트 스택에 push되며, 외부 렉시컬 환경에 대한 참조에는 innerFn 함수의 객체 내부 슬롯에 저장되어 있는 참조값이 할당된다.
+
+⇒ 위와 같이 outerFn 함수가 종료되어도 innerFn 함수가 상위 스코프인 outerFn 함수의 렉시컬 환경에 접근할 수 있다.
+
+## 클로저
+
+중첩 함수가 상위 스코프의 식별자를 참조하고 있으며 외부 함수보다 더 오래 유지되는 함수를 `클로저`라고 한다.
+
+함수는 평가되는 시점에 외부 렉시컬 환경의 참조가 결정되고, 이는 함수의 내부 슬롯에 저장한다. 즉, 함수가 평가된 시점의 외부 환경을 기억하는 것이다. 이러한 동작 원리로 내부 함수보다 외부 함수가 더 빨리 종료되어도 참조하고 있는 식별자에 접근할 수 있으며 수정하고 유지할 수 있다.
+
+일반적으로 메모리 낭비를 줄이기 위해 상위 스코프의 식별자 중 클로저 함수가 참조하고 있는 식별자만 기억한다. 클로저에 의해 참조되는 상위 스코프의 변수를 `자유 변수`라고 하고, 자유 변수에 묶여있다는 의미에서 closure라고 한다.
+
+클로저를 활용하면 상태 값을 은닉하며 안전하게 변경하고 유지할 수 있다.
+
+### 활용
+
+> 상태 값을 은닉하여 안전하게 변경하고 유지한다.
+
+1. 클로저 함수를 사용하지 않을 경우
+
+```jsx
+let publicCounter = 0
+
+const increase = function (val) {
+  return ++publicCounter
+}
+
+console.log(increase()) // 1
+console.log(increase()) // 2
+```
+
+publicCounter 변수는 increase 외의 함수에 의해 변경될 수 있다.
+
+```jsx
+const increase = function (val) {
+  let publicCounter = 0
+
+  return ++publicCounter
+}
+
+console.log(increase()) // 1
+console.log(increase()) // 1
+```
+
+함수가 호출될 때마다 각 함수의 publicCounter에 0이 할당되기 때문에 변수 값이 유지되지 않는다.
+
+2. 클로저 함수를 사용하는 경우
+
+```jsx
+const makeCounter = function () {
+  let privateCounter = 0
+
+  function changeBy(val) {
+    privateCounter += val
+  }
+
+  return {
+    increase: function () {
+      changeBy(1)
+    },
+    decrease: function () {
+      changeBy(-1)
+    },
+    value: function () {
+      return privateCounter
+    },
+  }
+}
+
+const counter1 = makeCounter()
+const counter2 = makeCounter()
+
+console.log(counter1.value()) // 0
+counter1.increase()
+counter1.increase()
+counter1.increase()
+console.log(counter1.value()) // 3
+counter1.decrease()
+console.log(counter1.value()) // 2
+
+console.log(counter2.value()) // 0
+counter2.increase()
+console.log(counter2.value()) // 1
+console.log(counter1.value()) // 2
+```
+
+변수와 업데이트 함수를 결합하여 특정 함수만 변수에 접근해 변경할 수 있다.
+
+변수 값을 유지할 수 있다.
+
+<aside>
+⚠️ **counter1, counter2의 내부 변수가 독립적인 이유**   
+makeCounter 함수가 호출되면 makeCounter 함수의 실행 컨텍스트가 생성되고 내부 함수의 정의가 평가된다. 이때, 내부 함수의 내부 슬롯에 상위 렉시컬 환경 참조 값을 저장하여 기억한다. 변수에 makeCounter 함수의 내부 함수를 반환하면 makeCounter함수의 실행 컨텍스트는 스택에서 제거되고, 변수 counter1과 counter2에 담긴 내부함수는 서로 다른 상위 렉시컬 환경 참조 값을 저장하고 있으므로 내부 변수가 공유되지 않고 독립적으로 유지될 수 있다.
+
+</aside>
+
+### 주의 사항
+
+메모리 누수(memory leak)이슈가 발생할 수 있다. 클로저를 사용할 때 함수가 반환되지 않은 상태에서 함수 내부의 변수를 계속 유지하고 있는 경우, 해당 변수에 할당된 메모리가 해제되지 않고 계속 사용되는 메모리 누수가 발생할 수 있다.

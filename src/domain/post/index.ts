@@ -50,16 +50,12 @@ export const getFileTitleOfPosts = (category: Category = 'all') => {
   return fileTitleOfPosts.filter((path) => isMDX(path))
 }
 
-type GetPostCommonParams = {
+type GetPostParams = {
   fileTitle: string
   category: Category
 }
-interface GetPostBriefParams extends GetPostCommonParams {
-  isBrief: true
-}
 
-//TODO: 타입 가드
-export const getPost = (params: GetPostCommonParams | GetPostBriefParams) => {
+export const getPostDetails = (params: GetPostParams): Post => {
   const { fileTitle, category } = params
 
   const filePath = getFilename(fileTitle)
@@ -67,25 +63,27 @@ export const getPost = (params: GetPostCommonParams | GetPostBriefParams) => {
   const fullPath = join(POSTS_PATH, directory, filePath)
 
   const markdown = fs.readFileSync(fullPath, 'utf-8')
-  const { data, content } = matter(markdown)
+  const frontMatter = matter(markdown)
+  const data = frontMatter.data as Post['data']
+  const content = frontMatter.content
 
-  if ((params as GetPostBriefParams).isBrief) {
-    return {
-      slug: getFileTitle(fileTitle),
-      data: data as Post['data'],
-    } as BriefPost
-  } else {
-    return {
-      slug: getFileTitle(fileTitle),
-      data: data as Post['data'],
-      content,
-    } as Post
+  return {
+    slug: getFileTitle(fileTitle),
+    data,
+    content,
   }
 }
 
-const sortByCreateDate = (
-  posts: (BriefPost | Post)[]
-): (BriefPost | Post)[] => {
+export const getPostBrief = (params: GetPostParams): BriefPost => {
+  const { slug, data } = getPostDetails(params)
+
+  return {
+    slug,
+    data,
+  }
+}
+
+const sortByCreateDate = <T extends Post | BriefPost>(posts: T[]): T[] => {
   const postsArray = [...posts]
 
   return postsArray.sort(
@@ -99,7 +97,7 @@ export const getPosts = (category: Category = 'all') => {
   const fileTitleOfPosts = getFileTitleOfPosts(category)
 
   const posts = fileTitleOfPosts.map((title) =>
-    getPost({ fileTitle: title, category, isBrief: true })
+    getPostBrief({ fileTitle: title, category })
   )
 
   return sortByCreateDate(posts)

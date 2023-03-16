@@ -1,11 +1,20 @@
+import { HEADERS_OF_CONTENTS } from './constant'
 import { HeadersOfContents } from './type'
+
+const isHeadersOfContents = (
+  headerName: string
+): headerName is HeadersOfContents => {
+  return HEADERS_OF_CONTENTS.includes(headerName as HeadersOfContents)
+}
 
 export const setTOCId = (headingElements: Element[]) => {
   let h2Count = 0
   let h3Count = 0
 
   headingElements.forEach((header) => {
-    if ((header.localName as HeadersOfContents) === 'h2') {
+    if (!isHeadersOfContents(header.localName)) return
+
+    if (header.localName === 'h2') {
       h2Count++
       h3Count = 0
     } else {
@@ -14,7 +23,7 @@ export const setTOCId = (headingElements: Element[]) => {
 
     header.id = getTOCId({
       headerText: `${header.textContent}`,
-      headerType: header.localName as HeadersOfContents,
+      headerType: header.localName,
       h2Count,
       h3Count,
     })

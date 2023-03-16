@@ -13,7 +13,7 @@ import * as mdx from '@mdx-js/react'
 import Post from '@/domain/post/type'
 import {
   getFileTitle,
-  getPost,
+  getPostDetails,
   getFileTitleOfPosts,
   getCategoryOfFile,
 } from '@/domain/post'
@@ -80,10 +80,10 @@ export const getStaticProps = async (
 ) => {
   const { slug } = context.params as Params
 
-  const { data, content } = getPost({
+  const { data, content } = getPostDetails({
     category: getCategoryOfFile(slug),
     fileTitle: slug,
-  }) as Post
+  })
 
   const mdxSource = await serialize(content)
 

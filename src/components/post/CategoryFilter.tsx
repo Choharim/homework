@@ -13,12 +13,12 @@ const GAP = 10
 const CategoryFilter = () => {
   const { query } = useRouter()
 
-  const isCategory = (category: Category) => {
-    return CATEGORIES.includes(category)
+  const isCategory = (category: unknown): category is Category => {
+    return CATEGORIES.includes(category as Category)
   }
 
   const isActive = (category: Category) => {
-    if (isCategory(query.slug as Category)) {
+    if (isCategory(query.slug)) {
       return query.slug === category
     } else {
       return category === 'all'

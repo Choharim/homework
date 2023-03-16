@@ -3,8 +3,9 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import Chip from './Chip'
-import Icon from './icon/Icon'
+import Chip from '../Chip'
+import Icon from '../icon/Icon'
+import PageLink from './PageLink'
 
 const DISPLAY_PAGE_COUNT = 5
 const HALF = Math.floor(DISPLAY_PAGE_COUNT / 2)
@@ -35,13 +36,17 @@ const getDisplayPageNumbers = (
   return [startIndex, endIndex]
 }
 
-type Props = {
+export type PaginationProps = {
   totalPage: number
   currentPage: number
   pageQueryKey: string
 }
 
-const Pagination = ({ totalPage, currentPage, pageQueryKey }: Props) => {
+const Pagination = ({
+  totalPage,
+  currentPage,
+  pageQueryKey,
+}: PaginationProps) => {
   const router = useRouter()
   const [start, end] = getDisplayPageNumbers(totalPage, currentPage)
   const pages = Array.from({ length: totalPage }, (_, i) => i + 1).slice(
@@ -53,37 +58,21 @@ const Pagination = ({ totalPage, currentPage, pageQueryKey }: Props) => {
 
   return (
     <Container>
-      <Link
-        href={{
-          query: {
-            ...router.query,
-            [pageQueryKey]: 1,
-          },
-        }}
+      <CustomPageLink
+        $dimmed={currentPage === 1}
+        pageQueryKey={pageQueryKey}
+        pageQueryValue={1}
       >
-        <CustomIcon
-          $dimmed={currentPage === 1}
-          $isleftType
-          type="DoubleArrowRight"
-          stroke="grey500"
-        />
-      </Link>
+        <CustomIcon $isleftType type="DoubleArrowRight" stroke="grey500" />
+      </CustomPageLink>
+      <CustomPageLink
+        $dimmed={currentPage === 1}
+        pageQueryKey={pageQueryKey}
+        pageQueryValue={currentPage - 1}
+      >
+        <CustomIcon $isleftType type="ArrowRight" stroke="grey500" />
+      </CustomPageLink>
 
-      <Link
-        href={{
-          query: {
-            ...router.query,
-            [pageQueryKey]: currentPage - 1,
-          },
-        }}
-      >
-        <CustomIcon
-          $dimmed={currentPage === 1}
-          $isleftType
-          type="ArrowRight"
-          stroke="grey500"
-        />
-      </Link>
       {pages.map((page) => (
         <Link
           key={page}
@@ -92,35 +81,22 @@ const Pagination = ({ totalPage, currentPage, pageQueryKey }: Props) => {
           <Page $active={page === currentPage}>{page}</Page>
         </Link>
       ))}
-      <Link
-        href={{
-          query: {
-            ...router.query,
-            [pageQueryKey]: currentPage + 1,
-          },
-        }}
-      >
-        <CustomIcon
-          $dimmed={totalPage === currentPage}
-          type="ArrowRight"
-          stroke="grey500"
-        />
-      </Link>
 
-      <Link
-        href={{
-          query: {
-            ...router.query,
-            [pageQueryKey]: totalPage,
-          },
-        }}
+      <CustomPageLink
+        $dimmed={totalPage === currentPage}
+        pageQueryKey={pageQueryKey}
+        pageQueryValue={currentPage + 1}
       >
-        <CustomIcon
-          $dimmed={totalPage === currentPage}
-          type="DoubleArrowRight"
-          stroke="grey500"
-        />
-      </Link>
+        <CustomIcon type="ArrowRight" stroke="grey500" />
+      </CustomPageLink>
+
+      <CustomPageLink
+        $dimmed={totalPage === currentPage}
+        pageQueryKey={pageQueryKey}
+        pageQueryValue={totalPage}
+      >
+        <CustomIcon type="DoubleArrowRight" stroke="grey500" />
+      </CustomPageLink>
     </Container>
   )
 }
@@ -158,23 +134,27 @@ const Page = styled(Chip)<{ $active: boolean }>`
         `}
 `
 
-const CustomIcon = styled(Icon)<{ $isleftType?: boolean; $dimmed: boolean }>`
-  ${({ $isleftType }) =>
-    $isleftType &&
-    css`
-      transform: rotate(180deg);
-    `}
-
+const CustomPageLink = styled(PageLink)<{ $dimmed: boolean }>`
   ${({ $dimmed, theme }) =>
     $dimmed
       ? css`
           cursor: default;
           pointer-events: none;
-          > svg {
-            stroke: ${theme.color.grey300};
+          ${CustomIcon} {
+            > svg {
+              stroke: ${theme.color.grey300};
+            }
           }
         `
       : css`
           cursor: pointer;
         `}
+`
+
+const CustomIcon = styled(Icon)<{ $isleftType?: boolean }>`
+  ${({ $isleftType }) =>
+    $isleftType &&
+    css`
+      transform: rotate(180deg);
+    `}
 `
