@@ -1,11 +1,10 @@
 ---
-
-title:  클로저
+title: 클로저
 description: 함수가 종료된 이후에도 외부에서 어떻게 함수의 내부 변수에 접근할 수 있는 지 알아보자.
 createDate: 2023.1.13
 category: javascript
-
 ---
+
 ## 렉시컬 스코프
 
 자바스크립트는 렉시컬 스코프를 따른다. `함수 정의가 평가되는 시점에` 함수가 정의된 환경으로 `상위 스코프가 결정`되기 때문에 정적 스코프라고도 한다.
@@ -28,17 +27,17 @@ category: javascript
 
 ```jsx
 function outerFn() {
-    const name = "Mozilla";
+  const name = 'Mozilla'
 
-    function innerFn() {
-        console.log(name);
-    }
-  return innerFn;
+  function innerFn() {
+    console.log(name)
+  }
+  return innerFn
 }
 
-const myFn = outerFn();
-   
-myFn(); // Mozilla
+const myFn = outerFn()
+
+myFn() // Mozilla
 ```
 
 1. innerFn 함수 선언문은 outerFn 함수가 평가될 때 평가되므로 outerFn 함수의 렉시컬 환경의 참조를 내부 슬롯에 저장한다.
@@ -52,7 +51,7 @@ myFn(); // Mozilla
 
 중첩 함수가 상위 스코프의 식별자를 참조하고 있으며 외부 함수보다 더 오래 유지되는 함수를 `클로저`라고 한다.
 
-함수는 평가되는 시점에 외부 렉시컬 환경의 참조가 결정되고, 이는 함수의 내부 슬롯에 저장한다. 즉, 함수가 평가된 시점의 외부 환경을 기억하는 것이다. 이러한 동작 원리로 내부 함수보다 외부 함수가 더 빨리 종료되어도 참조하고 있는 식별자에 접근할 수 있으며 수정하고 유지할 수 있다. 
+함수는 평가되는 시점에 외부 렉시컬 환경의 참조가 결정되고, 이는 함수의 내부 슬롯에 저장한다. 즉, 함수가 평가된 시점의 외부 환경을 기억하는 것이다. 이러한 동작 원리로 내부 함수보다 외부 함수가 더 빨리 종료되어도 참조하고 있는 식별자에 접근할 수 있으며 수정하고 유지할 수 있다.
 
 일반적으로 메모리 낭비를 줄이기 위해 상위 스코프의 식별자 중 클로저 함수가 참조하고 있는 식별자만 기억한다. 클로저에 의해 참조되는 상위 스코프의 변수를 `자유 변수`라고 하고, 자유 변수에 묶여있다는 의미에서 closure라고 한다.
 
@@ -61,31 +60,31 @@ myFn(); // Mozilla
 ### 활용
 
 > 상태 값을 은닉하여 안전하게 변경하고 유지한다.
-> 
+
 1. 클로저 함수를 사용하지 않을 경우
 
 ```jsx
-let publicCounter = 0;
+let publicCounter = 0
 
-const increase = function(val){
-  return  ++publicCounter;
+const increase = function (val) {
+  return ++publicCounter
 }
 
-console.log(increase()); // 1
-console.log(increase()); // 2
+console.log(increase()) // 1
+console.log(increase()) // 2
 ```
 
 publicCounter 변수는 increase 외의 함수에 의해 변경될 수 있다.
 
 ```jsx
-const increase = function(val){
-  let publicCounter = 0;
+const increase = function (val) {
+  let publicCounter = 0
 
-  return  ++publicCounter;
+  return ++publicCounter
 }
 
-console.log(increase()); // 1
-console.log(increase()); // 1
+console.log(increase()) // 1
+console.log(increase()) // 1
 ```
 
 함수가 호출될 때마다 각 함수의 publicCounter에 0이 할당되기 때문에 변수 값이 유지되지 않는다.
@@ -93,46 +92,46 @@ console.log(increase()); // 1
 2. 클로저 함수를 사용하는 경우
 
 ```jsx
-const makeCounter = function() {
-      let privateCounter = 0;
+const makeCounter = function () {
+  let privateCounter = 0
 
-      function changeBy(val) {
-        privateCounter += val;
-      }
+  function changeBy(val) {
+    privateCounter += val
+  }
 
-      return {
-        increase: function() {
-          changeBy(1);
-        },
-        decrease: function() {
-          changeBy(-1);
-        },
-        value: function() {
-          return privateCounter;
-        }
-      }
-};
+  return {
+    increase: function () {
+      changeBy(1)
+    },
+    decrease: function () {
+      changeBy(-1)
+    },
+    value: function () {
+      return privateCounter
+    },
+  }
+}
 
-const counter1 = makeCounter();
-const counter2 = makeCounter();
-    
-console.log(counter1.value()); // 0
-counter1.increase();
-counter1.increase();
-counter1.increase();
-console.log(counter1.value()); // 3
-counter1.decrease();
-console.log(counter1.value()); // 2
+const counter1 = makeCounter()
+const counter2 = makeCounter()
 
-console.log(counter2.value()); // 0
-counter2.increase();
-console.log(counter2.value()); // 1
-console.log(counter1.value()); // 2
+console.log(counter1.value()) // 0
+counter1.increase()
+counter1.increase()
+counter1.increase()
+console.log(counter1.value()) // 3
+counter1.decrease()
+console.log(counter1.value()) // 2
+
+console.log(counter2.value()) // 0
+counter2.increase()
+console.log(counter2.value()) // 1
+console.log(counter1.value()) // 2
 ```
 
 변수와 업데이트 함수를 결합하여 특정 함수만 변수에 접근해 변경할 수 있다.
 
-변수 값을 유지할 수 있다. 
+변수 값을 유지할 수 있다.
 
 <aside>
 ⚠️ **counter1, counter2의 내부 변수가 독립적인 이유**   
@@ -142,4 +141,4 @@ makeCounter 함수가 호출되면 makeCounter 함수의 실행 컨텍스트가 
 
 ### 주의 사항
 
- 메모리 누수(memory leak)이슈가 발생할 수 있다. 클로저를 사용할 때 함수가 반환되지 않은 상태에서 함수 내부의 변수를 계속 유지하고 있는 경우, 해당 변수에 할당된 메모리가 해제되지 않고 계속 사용되는 메모리 누수가 발생할 수 있다.
+메모리 누수(memory leak)이슈가 발생할 수 있다. 클로저를 사용할 때 함수가 반환되지 않은 상태에서 함수 내부의 변수를 계속 유지하고 있는 경우, 해당 변수에 할당된 메모리가 해제되지 않고 계속 사용되는 메모리 누수가 발생할 수 있다.

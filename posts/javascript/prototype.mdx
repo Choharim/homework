@@ -1,25 +1,23 @@
 ---
-
 title: 프로토타입
 description: 자바스크립트는 상속을 구현하기 위해 프로토타입을 사용한다. 프로토타입 메서드와 프로퍼티를 상속하는 프로토타입의 원리를 알아보자.
 createDate: 2023.1.30
 category: javascript
-
 ---
 
 ## 객체 간 상속
 
 프로토타입은 `어떤 객체의 상위 객체의 역할을 하는 객체`이다. 자바스크립트는 프로토타입을 기반으로 상속을 구현한다. 상속은 코드를 재사용할 수 있다는 점에서 유용하다.
 
-### [[ Prototype ]] 내부 슬롯
+### [[Prototype]] 내부 슬롯
 
-프로토타입을 상속받은 하위 객체는 상위 객체의 프로토타입 체인 상에 존재하는 프로퍼티와 메소드를 사용할 수 있다. 
+프로토타입을 상속받은 하위 객체는 상위 객체의 프로토타입 체인 상에 존재하는 프로퍼티와 메소드를 사용할 수 있다.
 
-모든 객체는 [[ Prototype ]]이라는 내부 슬롯을 가진다. 내부 슬롯에 저장되는 프로토타입 참조 값은 해당 객체의 생성 방식에 따라 결정된다. 예를 들어 객체 리터럴에 의해 생성된 객체는 내부 슬롯에 Object.prototype의 참조가 저장되고, 생성자 함수에 의해 생성된 객체는 생성자 함수의 prototype의 참조가 저장된다.
+모든 객체는 [[Prototype]]이라는 내부 슬롯을 가진다. 내부 슬롯에 저장되는 프로토타입 참조 값은 해당 객체의 생성 방식에 따라 결정된다. 예를 들어 객체 리터럴에 의해 생성된 객체는 내부 슬롯에 Object.prototype의 참조가 저장되고, 생성자 함수에 의해 생성된 객체는 생성자 함수의 prototype의 참조가 저장된다.
 
-### _ _proto_ _ 접근자 프로퍼티
+### \_ _proto_ \_ 접근자 프로퍼티
 
-모든 객체는 _ _proto_ _ 접근자 프로퍼티로 내부 슬롯에 있는 자신의 프로토타입에 간접적으로 접근할 수 있다.  _ _proto_ _ 접근자 프로퍼티는 객체가 직접 소유한 프로퍼티가 아닌 Object.prototype 프로퍼티이다. 
+모든 객체는 \_ _proto_ _ 접근자 프로퍼티로 내부 슬롯에 있는 자신의 프로토타입에 간접적으로 접근할 수 있다. _ _proto_ \_ 접근자 프로퍼티는 객체가 직접 소유한 프로퍼티가 아닌 Object.prototype 프로퍼티이다.
 
 ```jsx
 const obj = new Object()
@@ -29,17 +27,17 @@ Object.prototype === obj.__proto__ // true
 
 ### 프로토타입 체인
 
-자바스크립트 엔진은 `객체의 프로퍼티 또는 메소드에 접근하려고 할 때` `해당 객체에 없으면` 해당 객체의 `[[ Prototype ]] 내부 슬롯에 저장된 참조` 즉,  _ _proto_ _ 접근자 프로퍼티가 가리키는 참조를 `따라 상위 프로토타입의 프로퍼티를 순차적으로 검색한다.` 이를 프로토타입 체인이라 한다. 
+자바스크립트 엔진은 `객체의 프로퍼티 또는 메소드에 접근하려고 할 때` `해당 객체에 없으면` 해당 객체의 `[[ Prototype ]] 내부 슬롯에 저장된 참조` 즉, \_ _proto_ \_ 접근자 프로퍼티가 가리키는 참조를 `따라 상위 프로토타입의 프로퍼티를 순차적으로 검색한다.` 이를 프로토타입 체인이라 한다.
 
-`프로토타입 체인의 최상위 객체는 언제나 Object.prototype`이다. Object.prototype의 [[ Prototype ]] 내부 슬롯 값은 null이다.
+`프로토타입 체인의 최상위 객체는 언제나 Object.prototype`이다. Object.prototype의 [[Prototype]] 내부 슬롯 값은 null이다.
 
 ```jsx
-function Person(name){
-    this.name = name
+function Person(name) {
+  this.name = name
 }
 
-Person.prototype.sayHi = function(){ 
-     console.log('hi')
+Person.prototype.sayHi = function () {
+  console.log('hi')
 }
 
 const person = new Person('kim')
@@ -65,10 +63,10 @@ person.constructor === Person // true
 ```
 
 > 자바스크립트 엔진이 person.hasOwnProperty(’name’) 을 실행하는 과정
-> 
+
 1. person에 hasOwnProperty 프로퍼티가 없다.
-2. person.__proto__ (= Person.prototype)에 hasOwnProperty 프로퍼티가 없다.
-3. person.__proto__.__proto__ (= Object.prototype)에 hasOwnProperty 프로퍼티가 있다.
+2. person.**proto** (= Person.prototype)에 hasOwnProperty 프로퍼티가 없다.
+3. person.**proto**.**proto** (= Object.prototype)에 hasOwnProperty 프로퍼티가 있다.
 4. hasOwnProperty의 this에 person이 바인딩되고 hasOwnProperty가 호출된다.
 
 <aside>
@@ -84,33 +82,33 @@ Object.hi // undefined
 ### 프로퍼티 섀도잉
 
 ```jsx
-function Person(name){
-    this.name = name
+function Person(name) {
+  this.name = name
 }
 
-Person.prototype.sayHi = function(){ 
-     console.log('hi')
+Person.prototype.sayHi = function () {
+  console.log('hi')
 }
 
 const person = new Person('kim')
 ```
 
 - 특정 프로토타입 프로퍼티를 상속받는 `인스턴스에 새로운 프로퍼티를 추가`하면 기존 프로토타입 프로퍼티는 기존과 동일하고, `인스턴스 프로퍼티에만 추가`된다.
-    
+
 ```jsx
-person.sayBye = function(){ 
-     console.log('bye')
+person.sayBye = function () {
+  console.log('bye')
 }
 
 person.sayBye() // bye
 Person.prototype.sayBye() // Uncaught TypeError: Person.prototype.sayBye is not a function
 ```
-    
+
 - 특정 프로토타입 프로퍼티를 상속받는 `인스턴스에 프로토타입 프로퍼티 내의 프로퍼티를 재정의`하면 프로토타입 프로퍼티는 기존과 동일하고, `인스턴스 프로퍼티에만 새로운 프로퍼티가 오버라이딩`된다. `인스턴스 프로퍼티에 오버라이딩되어 기존 프로토타입 프로퍼티가 가려진 것`을 프로퍼티 섀도잉이라고 한다.
-    
+
 ```jsx
-person.sayHi = function(){ 
-     console.log('hellow')
+person.sayHi = function () {
+  console.log('hellow')
 }
 
 person.sayHi() // hellow
@@ -119,15 +117,14 @@ Person.prototype.sayHi() // hi
 delete person.sayHi
 person.sayHi() // hi
 ```
-    
 
 ## 프로토타입 생성 시점
 
 ### 사용자 정의 생성자 함수
 
-생성자 함수로서 호출될 수 있는 함수 즉, `함수 선언문의 정의가 평가되어 함수 객체를 생성하는 시점`에 프로토타입이 생성된다. 생성된 프로토타입은 contructor 프로퍼티만 갖는 객체이다. 
+생성자 함수로서 호출될 수 있는 함수 즉, `함수 선언문의 정의가 평가되어 함수 객체를 생성하는 시점`에 프로토타입이 생성된다. 생성된 프로토타입은 contructor 프로퍼티만 갖는 객체이다.
 
-A 생성자 함수의 프로토타입은 A.prototype이고 A.prototype의 contructor는 A 생성자 함수이다. A.prototype의 [[ Prototype ]] 내부 슬롯에는 Object.prototype 참조가 저장된다.
+A 생성자 함수의 프로토타입은 A.prototype이고 A.prototype의 contructor는 A 생성자 함수이다. A.prototype의 [[Prototype]] 내부 슬롯에는 Object.prototype 참조가 저장된다.
 
 ### 생성자 함수로서의 표준 빌트인 객체
 
@@ -135,12 +132,12 @@ Object, String, Number, Function, Array 등과 같은 표준 빌트인 생성자
 
 ## 정적 프로퍼티/메소드
 
-생성자 함수는 객체이므로 `자신의 프로퍼티와 메소드를 소유`할 수 있다. 생성자 함수 객체가 소유한 프로퍼티와 메소드를 정적 프로퍼티, 정적 메소드라고 한다. 
+생성자 함수는 객체이므로 `자신의 프로퍼티와 메소드를 소유`할 수 있다. 생성자 함수 객체가 소유한 프로퍼티와 메소드를 정적 프로퍼티, 정적 메소드라고 한다.
 
 생성자 함수 객체가 소유한 정적 프로퍼티/메소드와 생성자 함수의 프로토타입 프로퍼티/메소드는 구분된다. `정적 프로퍼티/메소드는 생성자 함수의 프로토타입 프로퍼티/메소드가 아니기 때문에` 생성자 함수에 의해 `생성된 인스턴스는 이를 상속받지 않아` 호출할 수 없다.
 
 ```jsx
-const obj = { name:'kim' };
+const obj = { name: 'kim' }
 
 Object.length // Object의 정적 프로퍼티
 Object.create() // Object의 정적 메소드
@@ -159,7 +156,7 @@ key in obj를 이용하여 obj 객체의 프로퍼티와 상속받은 모든 프
 
 ```jsx
 const person = {
-   name:'kim'
+  name: 'kim',
 }
 
 'name' in person // true
@@ -174,7 +171,7 @@ obj.hasOwnProperty(key)를 이용하여 obj 객체의 프로퍼티를 확인할 
 
 ```jsx
 const person = {
-   name:'kim'
+  name: 'kim',
 }
 
 person.hasOwnProperty('name') // true
@@ -192,15 +189,15 @@ in 연산자와 동일하다. 하지만 객체의 프로토타입 체인 상에 
 
 ```jsx
 const obj = {
-  2:2,
-  3:3,
-  1:1,
-  b:'b',
-  a:'a'
+  2: 2,
+  3: 3,
+  1: 1,
+  b: 'b',
+  a: 'a',
 }
 
-for(const key in obj){
-    console.log(key);
+for (const key in obj) {
+  console.log(key)
 }
 
 /*
