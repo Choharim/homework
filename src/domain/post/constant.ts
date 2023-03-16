@@ -8,7 +8,7 @@ export const POSTS_PATH = join(process.cwd(), POST_DIRECTORY)
 
 export const CATEGORIES = [
   'all',
-  // 'javascript',
+  'javascript',
   'operating-system',
   'algorithms',
   'data-structure',
