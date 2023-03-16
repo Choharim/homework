@@ -61,9 +61,12 @@ const Pagination = ({ totalPage, currentPage, pageQueryKey }: Props) => {
           },
         }}
       >
-        <IconWrapper $dimmed={currentPage === 1} $isleftType>
-          <Icon type="DoubleArrowRight" stroke="grey500" />
-        </IconWrapper>
+        <CustomIcon
+          $dimmed={currentPage === 1}
+          $isleftType
+          type="DoubleArrowRight"
+          stroke="grey500"
+        />
       </Link>
 
       <Link
@@ -74,9 +77,12 @@ const Pagination = ({ totalPage, currentPage, pageQueryKey }: Props) => {
           },
         }}
       >
-        <IconWrapper $dimmed={currentPage === 1} $isleftType>
-          <Icon type="ArrowRight" stroke="grey500" />
-        </IconWrapper>
+        <CustomIcon
+          $dimmed={currentPage === 1}
+          $isleftType
+          type="ArrowRight"
+          stroke="grey500"
+        />
       </Link>
       {pages.map((page) => (
         <Link
@@ -94,9 +100,11 @@ const Pagination = ({ totalPage, currentPage, pageQueryKey }: Props) => {
           },
         }}
       >
-        <IconWrapper $dimmed={totalPage === currentPage}>
-          <Icon type="ArrowRight" stroke="grey500" />
-        </IconWrapper>
+        <CustomIcon
+          $dimmed={totalPage === currentPage}
+          type="ArrowRight"
+          stroke="grey500"
+        />
       </Link>
 
       <Link
@@ -107,9 +115,11 @@ const Pagination = ({ totalPage, currentPage, pageQueryKey }: Props) => {
           },
         }}
       >
-        <IconWrapper $dimmed={totalPage === currentPage}>
-          <Icon type="DoubleArrowRight" stroke="grey500" />
-        </IconWrapper>
+        <CustomIcon
+          $dimmed={totalPage === currentPage}
+          type="DoubleArrowRight"
+          stroke="grey500"
+        />
       </Link>
     </Container>
   )
@@ -117,7 +127,7 @@ const Pagination = ({ totalPage, currentPage, pageQueryKey }: Props) => {
 
 export default Pagination
 
-const Container = styled.ul`
+const Container = styled.div`
   display: flex;
   align-items: center;
   margin: 0 auto;
@@ -148,12 +158,7 @@ const Page = styled(Chip)<{ $active: boolean }>`
         `}
 `
 
-const IconWrapper = styled.div<{ $isleftType?: boolean; $dimmed: boolean }>`
-  display: flex;
-  align-items: center;
-  padding: 5px;
-  margin: 0 15px;
-
+const CustomIcon = styled(Icon)<{ $isleftType?: boolean; $dimmed: boolean }>`
   ${({ $isleftType }) =>
     $isleftType &&
     css`
