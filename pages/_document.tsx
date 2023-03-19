@@ -42,6 +42,7 @@ export default class CustomDocument extends Document {
             as="style"
             href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css"
           />
+          <link rel="icon" href="/favicon.svg" />
         </Head>
         <body>
           <Main />
