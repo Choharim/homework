@@ -10,6 +10,7 @@ export const POSTS_PATH = join(process.cwd(), POST_DIRECTORY)
 export const CATEGORIES: Array<Category> = [
   'all',
   'javascript',
+  'typescript',
   'operating-system',
   'algorithms',
   'data-structure',

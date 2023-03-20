@@ -23,3 +23,4 @@ export type Category =
   | 'algorithms'
   | 'data-structure'
   | 'dev'
+  | 'typescript'
