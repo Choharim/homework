@@ -1,0 +1,159 @@
+---
+title: 네트워크 데이터 통신
+description: TCP/IP 계층을 통해 네트워크 통신이 이루어지는 일련의 과정을 살펴보며, 웹 브라우저에서 데이터를 어떻게 주고 받는지 이해해보자.
+createDate: 2023.2.5
+category: dev
+---
+
+## 네트워크 통신 방식
+
+- 유니 캐스트
+
+출발지와 목적지가 명확한 1:1 통신 방법이다.
+
+- 애니 캐스트
+
+가장 가깝거나 효율적 통신이 가능한 호스트와 통신하는 방법이다.
+
+DNS 서버에 IP를 요청할 때 사용하는 방법이다.
+
+- 브로드 캐스트
+
+동일한 네트워크에 연결된 모든 호스트에게 데이터를 전송하는 방식이다.
+
+- 멀티 캐스트
+
+특정 그룹에게 데이터를 전송하는 방식이다.
+
+## Internet Protocol Stack 4계층
+
+<Picture src="network-data-communication.png" />
+
+### 응용 계층 (Application Layer)
+
+응용 프로세스 간의 네트워크 통신을 위한 Protocol이 추상화 되어 있는 계층이다.
+
+응용 계층에서 사용되는 데이터 단위 PDU (Protocol Data Unit)는 Stream으로 크기가 정해지지 않고 입력된 양에 따라 정해진다. Socket을 통해 Stream을 전송 계층에 보내게 된다.
+
+<aside>
+❓ **Protocol**  
+네트워크의 장치 간 통신을 관리하는 표준화된 규칙 및 절차이다. 대부분 bit기반으로 만들어져있으나 응용 계층은 문자 기반이 많이 사용된다.
+
+</aside>
+
+<aside>
+❓ **Socket**  
+원격 장치에서 실행되는 다른 응용 프로그램과 통신하기 위해 사용되는 것이다.
+
+</aside>
+
+> HTTP (Hypertext Transfer Protocol)
+
+웹 페이지, 이미지 및 비디오를 포함하여 World Wide Web(WWW)에서 데이터를 송수신하는 데 사용되는 프로토콜이다.
+
+- HTML, TEXT
+- IMAGE, 음성, 영상, 파일
+- JSON, XML (API)
+- 거의 모든 형태의 데이터 전송 가능
+- 서버간 데이터 주고 받을 때도 대부분 사용
+
+> SMTP (Simple Mail Transfer Protocol)
+
+인터넷을 통해 이메일 메시지를 송수신할 때 사용되는 프로토콜이다.
+
+> FTP (File Transfer Protocol)
+
+인터넷을 통해 컴퓨터 간에 파일을 전송하는 데 사용되는 프로토콜이다.
+
+> DNS (Domain Name System)
+
+응용 프로그램이 인터넷의 웹 사이트 및 기타 리소스에 액세스할 때 사용자가 읽을 수 있는 도메인(ex) google.com)을 IP 주소(200.200.200.2)로 변경하여 통신한다. DNS는 도메인에 해당하는 IP 주소가 저장되어 있는 응용 프로그램으로 IP는 변경될 수 있고 기억하기 어렵기 때문에 DNS에 등록하여 사용한다.
+
+### 전송 계층 (Trasport Layer)
+
+응용 계층 아래에 있는 계층으로 응용 계층의 프로토콜을 Port 번호로 구분한다. HTTP의 경우 Port 번호가 80번이다.
+
+전송 계층은 TCP과 UDP로 구분된다.
+
+> TCP(Transmission Control Protocol)
+
+TCP는 안정적이고 연결 지향적인 통신 서비스를 제공하는 프로토콜이다.
+
+1.  응용 계층에서 온 Stream을 1460Byte 단위로 분할하는 Segmentation 과정을 거쳐 전송 계층에서의 PDU인 Segment를 생성한다.
+
+<aside>
+❓ **1460Byte단위로 Stream을 분할하는 이유**  
+데이터를 보낼 때는 일정 단위로 나눠서 전송한다. 데이터를 받는 곳에서는 TCP Buffer에 데이터 조각을 저장하는데, TCP Buffer가 모두 채워져야 데이터를 올릴 수 있다. 때문에 버퍼에 남은 크기가 데이터 조각보다 작아 wait가 걸리는 상황을 줄이고자 데이터 조각의 최대 크기를 1500Byte으로 제한했다.
+TCP, IP Header의 자리인 20Byte \* 2 = 40Byte를 제외한 1460Byte단위로 Stream을 분할하는 이유이다.
+
+</aside>
+
+2. 데이터가 전송되기 전에 두 장치 간에 안정적인 연결을 설정하기 위해 Segment 단위로 Three Way Handshake가 이루어진다. 이는 실제 연결이 아닌 개념적인 연결을 이야기한다.
+
+- 데이터의 순서를 보장하기 위해 Segment에는 Sequence 번호가 부여된다.
+
+<aside>
+❓ **Three Way Handshake**  
+두 장치가 통신할 준비가 되어 있고 장치 간의 통신이 안정적인지 확인하고, 데이터가 전송되기 전에 두 장치가 초기 Sequence 번호 및 최대 Segment 크기와 같은 통신 매개변수에 동의하는 메커니즘을 제공한다.
+1. 연결 시작(SYN)
+시작 장치가 연결 설정을 요청하는 SYN(동기화) 메시지를 수신 장치로 보낸다.
+- Segment에 Sequence 번호를 부여하고 SYN 플래그를 1로 표시해 전송한다.
+2. 연결 승인(SYN-ACK)
+수신 장치는 시작 장치로 SYN-ACK(동기화 승인) 메시지를 다시 보냄으로써 연결 요청을 승인한다.
+- 전달받은 Segment의 SYN를 확인하고, Sequence 번호에 TCP 계층에서의 길이 또는 양을 더한 것과 같은 값을 ACK에 포함하고 자신의 Sequence 번호도 포함해 전송한다.
+3. 연결 확인(ACK)
+시작 장치는 수신 장치에 ACK(Acknowledgement) 메시지를 보냄으로써 연결이 설정되었음을 확인한다. - Sequence 번호에 TCP 계층에서의 길이 또는 양을 더한 것과 같은 값을 ACK에 포함하고 자신의 Sequence 번호도 포함해 전송한다.
+
+</aside>
+
+3.  각 Segment에 TCP Header를 추가하여 인터넷 계층에 보내게 된다.
+    - Segment의 TCP Header는 20Byte로 출발지 Port 번호, 목적지 Port 번호, Sequence 번호 등으로 구성되어 있다.
+
+> UDP(User Datagram Protocol)
+
+비연결적인 통신 서비스를 제공하는 것으로 TCP와 달리 데이터 전달과 데이터 수신 순서를 보장하지 않는다.
+
+데이터가 전송되기 전에 Three Way Handshake와 같은 안정적 연결을 확인하는 과정이 없기 때문에 TCP보다 빠르지만 데이터가 유실될 수 있어 신뢰성이 떨어진다.
+
+### 인터넷 계층 (Internet Layer)
+
+인터넷 계층에서 사용되는 프로토콜은 IP(Internet Protocol)로 목적지로 데이터를 전송하기 위해 고유한 IP 주소를 이용한다.
+
+전송 계층에서 온 Segment에 IP Header를 추가하여 인터넷 계층의 PDU인 Packet을 생성한다. IP Header는 TCP Header와 동일하게 20Byte로 출발지 IP, 목적지 IP 등이 포함된다.
+
+<aside> 
+❓ **IP 주소와 Port 번호**  
+IP 주소는 네트워크에서 장치를 식별하고 Port번호는 해당 장치에서 실행되는 특정 서비스 또는 응용 프로그램을 식별한다.
+
+</aside>
+
+### 네트워크 엑세스 계층
+
+하드웨어 NIC 카드에 할당된 고유 주소인 MAC(Media Access Control)을 이해하며 수신된 데이터의 주소를 판별하여 수용하거나 폐기한다. NIC 카드는 물리적인 전기 신호로 송수신이 이루어지기 때문에 MAC은 물리적 주소라고도 한다.
+
+인터넷 계층에서 온 Packet과 MAC을 포함해 네트워크 엑세스 계층의 PDU인 Frame을 생성한다.
+
+NIC은 전기 신호가 들어오면 수신된 Frame을 디캡슐레이션하여 Header의 목적지 MAC 주소를 확인한다. 목적지 주소가 자신이거나 브로드 캐스트 또는 멀티 캐스트인 경우 인터넷 계층으로 넘겨주고 아닌 경우 폐기한다.
+
+## 웹 브라우저 요청 흐름
+
+1. HTTP 요청 메세지 생성
+   1. Domain을 가지고 DNS에서 IP를 조회 (local hosts 파일에서 조회 후 없다면 DNS를 통해 조회한다.)
+
+<aside>
+➕ **DNS Cache**
+
+다시 동일한 주소에 접속했을 때 과정을 반복하지 않게 하기 위해 DNS Cache에 저장 한다.
+
+로컬에서 도메인과 IP 주소를 관리하는 파일을 `hosts` 파일이라 한다. 이곳에 저장해 두면 `DNS Cache`에 항상 저장된다.
+
+따라서 동일한 도메인을 요청할 때 DNS 서버에 요청하지 않아도 캐싱되어 있는 주소를 사용할 수 있다.
+
+</aside>
+
+2. SOCKET 라이브러리를 통해 전송 계층으로 데이터 전달
+   1. TCP segmentation
+   2. TCP segment단위로 3 way handshake(가상 연결)
+3. TCP/IP packet 생성
+4. 인터넷 망에 있는 수많은 인터넷 노드를 통해 목적지로 이동
+5. 도착하면 목적지에서 TCP/IP 패킷을 벗기고 요청 메세지를 읽어 응답 메세지를 생성하고 응답 패킷을 만들어 전달
