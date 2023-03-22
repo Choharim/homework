@@ -43,10 +43,6 @@ export default class CustomDocument extends Document {
             href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css"
           />
           <link rel="icon" href="/favicon.svg" />
-          <meta
-            name="google-site-verification"
-            content={process.env.GOOGLE_SITE_VERIFICATION}
-          />
         </Head>
         <body>
           <Main />
