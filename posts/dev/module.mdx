@@ -31,24 +31,24 @@ ES6에서 클라이언트 사이드 자바스크립트에서도 동작하는 모
 
 ## 모듈 내에서의 자바스크립트
 
-1. 모듈은 최초 호출시 단 한 번만 실행되고, 실행된 모듈은 필요한 곳에 공유된다.
-2. 해당 모듈 스코프의 상단에 위치한 this는 전역 객체를 가리키지 않고 undefined이다. var 키워드로 선언한 변수도 더이상 전역 변수가 아니며 전역 객체의 프로퍼티도 아니다.
+1.  모듈은 최초 호출시 단 한 번만 실행되고, 실행된 모듈은 필요한 곳에 공유된다.
+2.  해당 모듈 스코프의 상단에 위치한 this는 전역 객체를 가리키지 않고 undefined이다. var 키워드로 선언한 변수도 더이상 전역 변수가 아니며 전역 객체의 프로퍼티도 아니다.
 
-   ```jsx
-   <script>
-     alert(this); // window
+```jsx
+<script>
+  alert(this); // window
 
-     var data = 'data'
-     window.data // 'data'
-   </script>
+  var data = 'data'
+  window.data // 'data'
+</script>
 
-   <script type="module">
-     alert(this); // undefined
+<script type="module">
+  alert(this); // undefined
 
-     var data = 'data'
-     window.data // undefined
-   </script>
-   ```
+  var data = 'data'
+  window.data // undefined
+</script>
+```
 
 3. defer 속성을 부여한 것 처럼 실행된다. (async 속성을 부여할 수도 있다.)
 
