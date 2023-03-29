@@ -37,5 +37,7 @@ export default Icon
 Icon.displayName = 'Icon'
 
 const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
   padding: 5px;
 `
