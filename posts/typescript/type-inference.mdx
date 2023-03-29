@@ -1,0 +1,246 @@
+---
+title: 타입 추론
+description: 타입 추론에서 발생할 수 있는 문제와 해법을 알아보자. 타입스크립트가 어떻게 타입을 추론하는 지 이해하고, 타입 추론이 가능해도 언제 명시적으로 타입을 선언해야 하는지 파악해보자.
+createDate: 2023.3.28
+category: typescript
+---
+
+<aside>
+❓ **동적 타입 vs 정적 타입**  
+자바스크립트는 **런타임에** 타입이 **결정**되는 동적 타입 언어이고,   
+타입스크립트는 **사전에 타입을 명시**적으로 선언하고 **타입에 맞는 값**을 **할당**해야 하는 정적 타입 언어이다.
+
+</aside>
+
+타입스크립트의 타입 추론을 이용해 모든 곳에 수동으로 타입을 명시하지 않아도 된다.
+정보가 부족해 타입스크립트가 **타입을 추론하기 어려울 때 명시적 타입 구문**이 필요하다.
+
+함수 내에 선언된 지역 변수의 경우, 구현 로직에 집중할 수 있게 타입 구문을 추가하지 않는 것이 좋다.
+
+> 타입을 명시하기 좋은 상황
+
+1. `객체 리터럴`에 타입 명시하기
+
+```tsx
+type Product = {
+  id: number
+  name: string
+}
+// 1. 잉여 속성 체크
+const product: Product = {
+  id: 1,
+  name: 'bag',
+  price: 1000, // Product에 해당 속성이 없다는 오류 발생
+}
+// 2. 사용되는 곳이 아닌, 선언한 곳에서 오류 발생
+getProduct(product) // 오류 발생하지 않음
+function getProduct(product: Product) {
+  //...
+}
+```
+
+- 객체 리터럴로 작성된 변수에 타입을 명시하면, `잉여 속성 체크`가 동작하기 때문에 더 안전하게 코드를 작성할 수 있다.
+- 잘못된 값을 할당했을 경우, 사용하는 곳이 아닌 선언한 부분에서 오류가 발생한다
+
+2. `함수 반환 값`에 타입 명시하기
+
+- **구현상의 오류를 방지하기 위해** 함수의 반환 값에는 타입 추론이 아닌 타입 명시를 사용한다.
+- 명시한 타입이 다른 경우, 함수를 사용하는 곳이 아닌 함수를 선언한 곳에서 오류가 발생한다.
+
+<aside>
+➕ 린터의 Estlint 규칙 중 no-inferrable-types를 사용해 작성된 타입 구문이 정말 필요한지 확인할 수 있다.
+
+</aside>
+
+## 타입 넓히기 (widening)
+
+```tsx
+let x = 'x' // string으로 추론된다.
+
+const arr = [1, 2, 3] // number[]로 추론된다.
+
+const obj = {
+  // { key: number }로 추론된다.
+  key: 1,
+}
+```
+
+위와 같이 타입스크립트는 타입 넓히기로 상수의 타입을 추론한다.
+
+타입스크립트의 타입 넓히기로 인해 오류가 발생해, 타입을 좁혀야 한다면 다음과 같이 할 수 있다.
+
+```tsx
+const x = 'x' // 'x'로 추론된다.
+
+const obj: { key: 1 | 2 } = {
+  //{ key: 1 | 2 }로 추론된다.
+  key: 1,
+}
+
+const obj = {
+  // { readonly key: 1 }로 추론된다.
+  key: 1,
+} as const
+```
+
+1. let으로 선언된 원시 값의 경우, const 사용
+2. 명시적 타입 구문 추가
+3. as const 사용
+
+## 타입 좁히기
+
+조건문을 이용해 타입을 좁혀갈 수 있다.
+
+```tsx
+function search(text: string | RegExp) {
+  if (text instanceof RegExp) {
+    // text 타입이 RegExp로 좁혀진다.
+  } else {
+    // text 타입이 string으로 좁혀진다.
+  }
+}
+
+type A = { a: number }
+type B = { b: number }
+function pickAB(ab: A | B) {
+  if ('a' in ab) {
+    // ab 타입이 A으로 좁혀진다.
+  } else {
+    // ab 타입이 B으로 좁혀진다.
+  }
+}
+```
+
+### 사용자 정의 타입 가드
+
+타입 가드 함수를 이용해 타입을 좁힘으로써 **함수의 역할을 분리**하고 **가독성**을 높일 수 있다.
+
+```tsx
+function isRegExp(text: string | RegExp): text is RegExp {
+  return text instanceof RegExp
+}
+
+function isA(ab: A | B): ab is A {
+  return 'a' in ab
+}
+
+function isNotUndefined<T>(data: T | undefined): data is T {
+  return data !== undefined
+}
+```
+
+함수가 true를 반환할 경우, 타입 체커에게 매개변수의 타입을 좁힐 수 있다고 알려준다.
+
+## 타입 추론에 문맥이 어떻게 사용하는지 이해하기
+
+타입스크립트는 타입을 추론할 때 값이 존재하는 곳의 문맥도 파악한다.
+
+```tsx
+type Language = 'Javascript' | 'Typescript'
+
+function setLanguage(language: Language) {
+  //..
+}
+
+// 문맥과 값을 이어간 경우
+setLanguage('Javascript') // 오류 X
+
+// 문맥과 값을 분리한 경우
+let language = 'Javascript'
+setLanguage(language) // 오류 O
+```
+
+const로 선언된 language 변수에 값을 할당할 경우 ‘Javascript’로 타입이 추론돼 오류가 나지 않았겠지만,
+let으로 선언된 language변수에 값을 할당했으므로 타입이 string으로 추론돼 오류가 나타난다.
+
+<aside>
+⚠️ 객체의 경우, 타입스크립트의 구조적 타이핑으로 인해   
+함수에 전달되는 인수의 타입이 매개변수에 지정된 타입과 호환이 가능하면 해당 인수를 사용하여 함수를 호출할 수 있다.   
+즉, 매개변수 타입을 포함하고 있는 타입을 갖는 인수를 사용할 수 있다는 것이다.
+
+</aside>
+
+```tsx
+const javascript = 'Javascript'
+setLanguage(javascript) // 오류 X
+
+let typescript: Language = 'Typescript'
+setLanguage(typescript) // 오류 X
+```
+
+const로 선언하거나, 변수의 타입을 지정하면 오류가 발생하지 않는다.
+
+> 이는 여전히 문맥으로부터 값을 분리한 것이다.
+> **문맥의 소실로 인해 오류가 발생**할 수 있는 경우를 살펴보자.
+
+### 튜플 사용 시 주의점
+
+```tsx
+type Where = [number, number]
+
+function panTo(where: Where) {
+  //..
+}
+
+panTo([10, 20]) // 오류 X
+
+const where = [10, 20] // number[] 타입으로 추론
+panTo(where) // 오류 O
+
+const whereWithReadonly = [10, 20] as const // readonly [10, 20] 타입으로 추론
+panTo(whereWithReadonly) // 오류 O
+```
+
+1. number[] 타입으로 추론한 경우
+
+길이를 알 수 없는 배열의 경우 지정된 요소의 개수만 갖는 튜플 타입에 맞지 않기 때문에 오류를 나타낸다.
+변수에 Where 타입을 선언해 오류를 해결할 수 있다.
+
+2. readonly [10, 20] 타입으로 추론한 경우
+
+panTo함수 내에서 where이 불변일 것을 보장하지 못하기 때문에 오류를 나타낸다.
+panTo 함수의 매개변수 타입에 readonly를 추가해 오류를 해결할 수 있다.
+
+다음과 같이 작성하면 두 경우의 오류를 모두 해결할 수 있다.
+
+```tsx
+type Where = [number, number]
+
+function panTo(where: Readonly<Where>) {
+  //..
+}
+
+const where: Where = [10, 20]
+panTo(where) // 오류 X
+
+const whereWithReadonly = [10, 20] as const
+panTo(whereWithReadonly) // 오류 X
+```
+
+그러나, as const를 사용했을 때 잘못된 값을 사용했을 경우
+
+값을 정의한 곳이 아닌, 호출한 곳에서 오류가 발생하기 때문에 오류 파악이 어려울 수 있다.
+
+```tsx
+const whereWithReadonly = [10, 20, 30] as const
+
+panTo(whereWithReadonly) // 사용 하는 곳에서 오류 발생
+```
+
+## 함수형 기법과 라이브러리로 타입 흐름 유지하기
+
+명령형으로 작성하면 타입 구문이 필요하다.
+
+**함수형**으로 작성하면 **타입 정보가 그대로 유지되며 타임 흐름을 계속 전달**할 수 있다.
+함수 호출 시 전달된 매개변수 값을 건드리지 않고 매번 새로운 값을 반환함으로써
+새로운 타입으로 안전하게 반환할 수 있다.
+
+```tsx
+let allPlayers: BasketballPlayer[] = [] // 타입을 선언해야 한다.
+
+for (const players of Object.values(rosters)) {
+  allPlayers = allPlayers.concat(players)
+}
+
+const allPlayers2 = Object.values(rosters).flat()
+```
