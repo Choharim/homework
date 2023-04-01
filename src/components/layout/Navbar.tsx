@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { GITHUB_URL } from '@/domain/owner/constant'
 import useScrollDirection from '@/hooks/useScrollDirection'
 import { Z_INDEX } from '@/styles/constant'
-import { convertHEXToRGB } from '@/utils/convertColorFormat'
+import { convertHEXToRGB } from '@/utils/string'
 import { PAGE_PATH } from '@/constants/common'
 import useScrollTop from '@/hooks/useScrollTop'
 

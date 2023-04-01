@@ -7,6 +7,8 @@ import Document, {
 } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
+export const TOAST_PORTAL_ID = 'toast-portal'
+
 export default class CustomDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet()
@@ -46,6 +48,7 @@ export default class CustomDocument extends Document {
         </Head>
         <body>
           <Main />
+          <div id={TOAST_PORTAL_ID} />
           <NextScript />
         </body>
       </Html>

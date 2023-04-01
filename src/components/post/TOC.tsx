@@ -6,7 +6,7 @@ import { Z_INDEX } from '@/styles/constant'
 import { NAVBAR_HEIGHT } from '../layout/Navbar'
 import { HeadersOfContents } from '@/application/post/type'
 import { setTOCId } from '@/application/post'
-import { convertHEXToRGB } from '@/utils/convertColorFormat'
+import { convertHEXToRGB } from '@/utils/string'
 
 export const TOC_WIDTH_IN_PC = 280
 
