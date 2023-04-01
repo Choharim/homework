@@ -19,7 +19,7 @@ export const VARIETY: { [key in Variety]: CSSObject } = {
 }
 
 export const DESC: { [key in Variety]: string } = {
-  confirm: '✅ 확인되었습니다.',
+  confirm: '✅ 확인 되었습니다.',
   error: '오류가 발생했습니다.',
   normal: '',
 }

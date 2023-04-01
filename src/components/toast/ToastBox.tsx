@@ -32,7 +32,7 @@ const fadeOut = keyframes`
 
 const slideIn = keyframes`
 from {
-  transform: translateY(${TOAST_TOP_POSITION}px)
+  transform: translateY(-${TOAST_TOP_POSITION}px)
 }
 `
 

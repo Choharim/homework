@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 import { DESC, TOAST_TOP_POSITION } from './constant'
 import { Toast } from './type'
+import { Z_INDEX } from '@/styles/constant'
 
 import ToastBox from './ToastBox'
 import ToastPortal from './ToastPortal'
@@ -16,7 +17,7 @@ const ToastContainer = ({ toasts }: Props) => {
       <Container>
         {toasts.map(({ id, variety, desc }) => (
           <ToastBox key={id} variety={variety}>
-            {DESC[variety] || desc}
+            {desc || DESC[variety]}
           </ToastBox>
         ))}
       </Container>
@@ -35,4 +36,6 @@ const Container = styled.div`
   top: ${TOAST_TOP_POSITION}px;
   left: 50%;
   transform: translateX(-50%);
+
+  z-index: ${Z_INDEX.toast};
 `

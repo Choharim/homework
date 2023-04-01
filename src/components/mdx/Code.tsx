@@ -5,8 +5,11 @@ import rangeParser from 'parse-numeric-range'
 import { useCallback } from 'react'
 import Image from 'next/image'
 
-import { copyToClipboard } from '@/utils/copy'
-import { COPY_FAILURE, COPY_SUCCESS } from '@/constants/common'
+import useToast from '@/hooks/useToast'
+import ToastContainer from '../toast/ToastContainer'
+
+const COPY_SUCCESS = '클립보드에 복사되었습니다.'
+const COPY_FAILURE = '복사를 다시 시도해주세요.'
 
 type Props = {
   children: string
@@ -15,6 +18,8 @@ type Props = {
 
 const Code = ({ className, children }: Props) => {
   const match = /language-(\w+)/.exec(className || '')
+
+  const { toasts, addToast } = useToast()
 
   /**
    * @example
@@ -38,16 +43,19 @@ const Code = ({ className, children }: Props) => {
     [className]
   )
 
-  const copyCode = () => {
-    copyToClipboard({
-      text: children,
-      onSuccess: () => alert(COPY_SUCCESS),
-      onFailure: () => alert(COPY_FAILURE),
-    })
+  const copyCode = async () => {
+    try {
+      await navigator.clipboard.writeText(children)
+
+      addToast({ variety: 'normal', desc: COPY_SUCCESS })
+    } catch (error) {
+      addToast({ variety: 'error', desc: COPY_FAILURE })
+    }
   }
 
   return match ? (
     <Wrapper>
+      <ToastContainer toasts={toasts} />
       <CopyCodeButton onClick={copyCode}>
         <Image
           src="/copy.svg"
