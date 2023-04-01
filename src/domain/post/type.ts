@@ -9,9 +9,9 @@ export default Post
 export type BriefPost = Pick<Post, 'data' | 'slug'>
 
 export type FrontMatter = {
-  title: Title
-  description: Description
-  createDate: DateString
+  title: string
+  description: string
+  createDate: string
   category: Category
   thumbnailSrc?: string
 }
