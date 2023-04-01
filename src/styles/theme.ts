@@ -2,9 +2,10 @@ import { DefaultTheme } from 'styled-components'
 
 import { DEVICE_SIZE } from '@/constants/common'
 
-export const color = {
+export const COLOR = {
   white: '#ffffff',
   black: '#000000',
+  warning: '#f66570',
 
   grey50: '#f9fafb',
   grey100: '#f2f4f6',
@@ -28,7 +29,7 @@ export const color = {
   primary800: '#0c1b70',
 } as const
 
-export const font = {
+export const FONT = {
   header_1: {
     fontSize: '42px',
     lineHeight: '1.2',
@@ -86,13 +87,13 @@ export const font = {
   },
 } as const
 
-export const media = {
+export const MEDIA = {
   mobile: `@media screen and (max-width: ${DEVICE_SIZE.tablet}px)`,
   tablet: `@media screen and (max-width: ${DEVICE_SIZE.pc}px)`,
 } as const
 
-export const theme: DefaultTheme = {
-  color,
-  font,
-  media,
+export const THEME: DefaultTheme = {
+  color: COLOR,
+  font: FONT,
+  media: MEDIA,
 }

@@ -3,7 +3,7 @@ import { NextPage } from 'next/types'
 import { ThemeProvider } from 'styled-components'
 
 import { GlobalStyles } from '@/styles/GlobalStyles'
-import { theme } from '@/styles/theme'
+import { THEME } from '@/styles/theme'
 
 import Layout from '@/components/layout/Layout'
 
@@ -21,7 +21,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
     : (page: React.ReactElement) => <Layout>{page}</Layout>
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={THEME}>
       <GlobalStyles />
       {layout(<Component {...pageProps} />)}
     </ThemeProvider>

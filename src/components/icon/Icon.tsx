@@ -1,14 +1,14 @@
 import React, { SVGAttributes } from 'react'
 import styled, { useTheme } from 'styled-components'
 
-import { color } from '@/styles/theme'
+import { COLOR } from '@/styles/theme'
 import { ICON_COMPONENT } from './constant'
 
 interface IconProps
   extends Pick<SVGAttributes<SVGAElement>, 'width' | 'height' | 'className'> {
   type: keyof typeof ICON_COMPONENT
-  stroke?: keyof typeof color
-  fill?: keyof typeof color
+  stroke?: keyof typeof COLOR
+  fill?: keyof typeof COLOR
 }
 const Icon = React.forwardRef<HTMLDivElement, IconProps>(
   (
