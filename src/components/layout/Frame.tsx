@@ -1,7 +1,7 @@
 import React, { HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
-import { DEVICE_SIZE } from '@/constants/common'
+import { DEVICE_SIZE } from '@/constants/layout'
 
 const X_PADDING = 20
 
