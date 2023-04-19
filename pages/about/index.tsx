@@ -1,6 +1,7 @@
 import Layout from '@/components/layout/Layout'
 import Logo from '@/components/Logo'
-import { DEVICE_SIZE, PAGE_PATH } from '@/constants/common'
+import { PAGE_PATH } from '@/constants/route'
+import { DEVICE_SIZE } from '@/constants/layout'
 import { BLOG_NAME } from '@/domain/owner/constant'
 import React from 'react'
 import styled, { css } from 'styled-components'
