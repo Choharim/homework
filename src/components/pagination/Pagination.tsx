@@ -116,7 +116,7 @@ const Page = styled(Chip)<{ $active: boolean }>`
   justify-content: center;
   width: 32px;
   height: 32px;
-  margin: 10px;
+  margin: 5px;
   border-radius: 4px;
   ${({ theme }) => theme.font.subtitle_3};
 

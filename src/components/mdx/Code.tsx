@@ -3,10 +3,10 @@ import theme from 'prism-react-renderer/themes/vsDark'
 import styled, { css } from 'styled-components'
 import rangeParser from 'parse-numeric-range'
 import { useCallback } from 'react'
-import Image from 'next/image'
 
 import useToast from '@/hooks/useToast'
 import ToastContainer from '../toast/ToastContainer'
+import Icon from '../icon/Icon'
 
 const COPY_SUCCESS = '클립보드에 복사되었습니다.'
 const COPY_FAILURE = '복사를 다시 시도해주세요.'
@@ -56,15 +56,8 @@ const Code = ({ className, children }: Props) => {
   return match ? (
     <Wrapper>
       <ToastContainer toasts={toasts} />
-      <CopyCodeButton onClick={copyCode}>
-        <Image
-          src="/copy.svg"
-          alt="code-copy_icon"
-          width="22px"
-          height="22px"
-        />
-      </CopyCodeButton>
       <HighlightWrapper>
+        <CopyCodeButton onClick={copyCode} type="Copy" />
         <Highlight
           {...defaultProps}
           language={match[1] as Language}
@@ -99,12 +92,32 @@ const Code = ({ className, children }: Props) => {
 export default Code
 
 const PADDING_X = {
-  pc: '15px',
-  tablet: '10px',
+  pc: '20px',
+  tablet: '15px',
 } as const
+
+const CopyCodeButton = styled(Icon)`
+  position: absolute;
+  top: ${PADDING_X.pc};
+  right: ${PADDING_X.pc};
+
+  fill: ${({ theme }) => theme.color.grey400};
+
+  ${({ theme }) => css`
+    ${theme.media.tablet} {
+      top: ${PADDING_X.tablet};
+      right: ${PADDING_X.tablet};
+    }
+  `}
+`
 
 const Wrapper = styled.div`
   position: relative;
+  &:hover {
+    ${CopyCodeButton} {
+      fill: ${({ theme }) => theme.color.white};
+    }
+  }
 `
 
 const HighlightWrapper = styled.pre`
@@ -116,29 +129,6 @@ const HighlightWrapper = styled.pre`
   ${({ theme }) => css`
     ${theme.media.tablet} {
       padding: ${PADDING_X.tablet};
-    }
-  `}
-`
-
-const CopyCodeButton = styled.button`
-  position: absolute;
-  top: ${PADDING_X.pc};
-  right: ${PADDING_X.pc};
-  width: 32px;
-  height: 32px;
-  outline: none;
-  border: none;
-  border-radius: 4px;
-  background-color: ${({ theme }) => theme.color.grey400};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.color.grey300};
-  }
-
-  ${({ theme }) => css`
-    ${theme.media.tablet} {
-      top: ${PADDING_X.tablet};
-      right: ${PADDING_X.tablet};
     }
   `}
 `
