@@ -179,6 +179,16 @@ person.hasOwnProperty('address') // false
 person.hasOwnProperty('toString') // false
 ```
 
+### instanceof 연산자
+
+```tsx
+if(instance instanceof Constructor)
+//...
+```
+
+생성자 함수의 prototype 프로퍼티에 저장된 객체를 상속 받은 객체가 맞는지 확인하는 연산자이다.
+위의 경우, 생성자 함수인 Constructor의 prototype을 instance 객체가 상속받았는지 확인한다.
+
 ## 프로퍼티 열거(Enumeration)
 
 ### for … in 문
