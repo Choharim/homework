@@ -135,13 +135,17 @@ const Page = styled(Chip)<{ $active: boolean }>`
 `
 
 const CustomPageLink = styled(PageLink)<{ $dimmed: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   ${({ $dimmed, theme }) =>
     $dimmed
       ? css`
           cursor: default;
           pointer-events: none;
           ${CustomIcon} {
-            > svg {
+             {
               stroke: ${theme.color.grey300};
             }
           }
@@ -157,4 +161,11 @@ const CustomIcon = styled(Icon)<{ $isleftType?: boolean }>`
     css`
       transform: rotate(180deg);
     `}
+
+  padding: 5px;
+  width: 30px;
+  ${({ theme }) => theme.media.tablet} {
+    padding: 5px;
+    width: 25px;
+  }
 `
