@@ -1,0 +1,234 @@
+---
+title: 타입스크립트 챌린지 - easy(2)
+createDate: 2023.4.20
+category: typescript
+---
+
+## 특정 타입을 제거한 Exclude 타입 만들기
+
+### 목표
+
+유니온 타입 중 제거하고 싶은 타입을 제외한 타입을 반환하는 타입을 만들어보자.
+
+```tsx
+type Remain = MyExclude<'a' | 'b' | 'c', 'a' | 'b'> // 'c'
+
+type Remain2 = MyExclude<string | number | (() => void), Function> // string | number
+```
+
+### 구현
+
+첫번째 제네릭 타입이 두번째 제네릭 타입의 부분집합이라면 never 타입, 그렇지 않으면 타입을 그대로 반환한다.
+
+1.  'a' extends 'a' | 'b' → never
+2.  ‘b’ extends 'a' | 'b' → never
+3.  ‘c’ extends 'a' | 'b' → ‘c’
+4.  최종적으로 ‘c’가 반환된다.
+
+```tsx
+type MyExclude<T, U> = T extends U ? never : T
+```
+
+## 프로미스 반환 타입 만들기🔥
+
+### 목표
+
+제네릭으로 넘어오는 타입의 반환 타입을 만들어보자.
+
+```tsx
+type X = Promise<string> // MyAwaited<X> -> string
+type Y = Promise<{ field: number }> // MyAwaited<Y> -> { field: number }
+type Z = Promise<Promise<string | number>> // MyAwaited<Z> -> string | number
+type Z1 = Promise<Promise<Promise<string | boolean>>> // MyAwaited<Z1> -> string | boolean
+type T = { then: (onfulfilled: (arg: number) => any) => any } // MyAwaited<T> -> number
+```
+
+### 구현
+
+1. MyAwaited의 제네릭 타입은 PromiseLike 타입의 부분집합이다.
+
+```tsx
+type MyAwaited<T extends PromiseLike<any>> = ...
+```
+
+2. Promise의 리턴 타입이 Promise 형태가 아닐 때까지
+   재귀적으로 처리하기 위해 리턴 타입을 MyAwaited 제네릭에 넘긴다. 이때 리턴 타입을 변수로 사용해야 하기 때문에 infer 키워드를 사용한다.
+
+<aside>
+❓ **infer**
+extends 오른쪽에 사용할 수 있는 키워드로, 타입에서 변수처럼 사용된다.
+
+```tsx
+type Unpack<A> = A extends Array<infer E> ? E : A
+
+type Test = Unpack<Apple[]>
+// => Apple
+type Test = Unpack<Apple>
+// => Apple
+
+type Parameters<T> = T extends (...args: infer P) => any ? P : never
+```
+
+</aside>
+
+```tsx
+type MyAwaited<T extends PromiseLike<any>> = T extends PromiseLike<infer R>
+  ? R extends PromiseLike<any>
+    ? MyAwaited<R>
+    : R
+  : never
+```
+
+## if 조건에 따라 타입 반환하기
+
+### 목표
+
+if 문처럼 조건에 따라 반환하는 타입을 다르게 설정해보자.
+
+첫번째 제네릭 타입이 true일 경우 두번째 제네릭 타입을 반환하고, false라면 세번째 제네릭 타입을 반환해보자.
+
+```tsx
+type A = If<true, 'a', 'b'> // expected to be 'a'
+type B = If<false, 'a', 'b'> // expected to be 'b'
+```
+
+### 구현
+
+1. 첫번째 제네릭 타입은 boolean이어야 한다.
+
+```tsx
+type If<C extends boolean, T, F> = ...
+```
+
+2. true를 포함하면 해당 타입은 true 타입이므로 두번째 타입을 반환하고, 그렇지 않으면 세번째 타입을 반환한다.
+
+```tsx
+type If<C extends boolean, T, F> = C extends true ? T : F
+```
+
+## 두 배열을 연결하는 Concat 타입 만들기
+
+### 목표
+
+```tsx
+type Result = Concat<[1], [2]> // expected to be [1, 2]
+```
+
+### 구현
+
+제네릭으로 받아오는 두 배열 타입을 스프레드로 연결해준다.
+
+```tsx
+type Concat<T extends Array<unknown>, U extends Array<unknown>> = [...T, ...U]
+```
+
+## Array.includes 역할을 하는 타입 만들기🔥
+
+### 목표
+
+배열 요소에 포함된 타입인지 boolean으로 나타내는 includes 타입을 구현해보자.
+
+```tsx
+type IsIncludeded = Includes<['Kars', 'Esidisi'], 'Dio'> // false
+
+type IsIncluded2 = Includes<[{}], { a: 'A' }> // false
+```
+
+### 구현
+
+1. 배열 내 요소의 타입을 Union으로 만들고,
+   이에 부분집합이라면 true를 반환하고 그렇지 않으면 false를 반환한다.
+
+```tsx
+// ❌
+type Includes<T extends Array<unknown>, U> = U extends T[number] ? true : false
+```
+
+위의 코드는 두번째로 오는 타입과 완전히 같아야 하기 때문에 맞지 않다.
+예를 들어, true extends boolean은 true가 된다.
+
+요소 하나씩 모두 Equal 유틸 타입으로 비교해보자.
+
+2. 배열 내 요소를 구조분해 하여 infer 값에 담아 비교해보자.
+   첫번째 infer 타입 변수가 U와 완전히 동일하다면 true를 리턴하고,
+   그렇지 않으면 배열 내 나머지 요소를 담은 배열을 넘겨 판단하게 한다. 모두 확인을 했음에도 같은 타입이 없으면(넘겨지는 배열이 빈배열이 되면) false를 반환한다.
+
+```tsx
+// ❌
+type Includes<T extends readonly unknown[], U> = T extends [infer I, ...infer A]
+  ? [I, U] extends [U, I]
+    ? true
+    : Includes<A, U>
+  : false
+```
+
+⚠️ [I, U] extends [U, I] 조건에서 `{ a: "A" }`의 타입과 `{ readonly a: "A" }`의 타입이 같게 나온다.
+
+```tsx
+type Test1 = Includes<[{ a: 'A' }], { readonly a: 'A' }> // true
+type Test2 = Includes<[{ readonly a: 'A' }], { a: 'A' }> // true
+```
+
+위의 문제를 해결하기 위해 Equal 이라는 내장 유틸 타입을 사용했다.
+
+```tsx
+type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y
+  ? 1
+  : 2
+  ? true
+  : false
+```
+
+```tsx
+type Includes<T extends Array<unknown>, U> = T extends [infer I, ...infer A]
+  ? Equal<U, I> extends true
+    ? true
+    : Includes<A, U>
+  : false
+```
+
+1. 배열 요소를 처음부터 순회하며 Equal 유틸 타입으로 두번째 제네릭과 동일한지 확인한다.
+2. 동일하지 않으면 나머지 배열을 Includes 제네릭으로 넘겨 마지막 요소까지 반복하도록 한다.
+3. 넘겨지는 배열이 빈배열일 경우, 동일한 요소가 없다는 것이므로 false를 반환한다.
+
+## 함수의 매개변수를 나타내는 타입 만들기
+
+### 목표
+
+내장 제네릭 `Parameters<T>`를 이를 사용하지 않고 구현해보자.
+
+```tsx
+const foo = (arg1: string, arg2: number): void => {}
+const bar = (arg1: boolean, arg2: { a: 'A' }): void => {}
+const baz = (): void => {}
+
+type cases = [
+  Expect<Equal<MyParameters<typeof foo>, [string, number]>>,
+  Expect<Equal<MyParameters<typeof bar>, [boolean, { a: 'A' }]>>,
+  Expect<Equal<MyParameters<typeof baz>, []>>
+]
+```
+
+### 구현
+
+1. 첫번째 제네릭은 함수 타입을 받는다.
+
+```tsx
+type MyParameters<T extends (...arg: any[]) => unknown> = ...
+```
+
+2. 함수의 매개변수를 배열로 받기 위해서는, 매개변수에 infer 타입 변수를 사용해야 한다.
+
+```tsx
+type MyParameters<T extends (...args: any[]) => any> = T extends (
+  ...args: infer Args
+) => any
+  ? Args
+  : never
+```
+
+Parameters util 타입과 동일하다.
+
+```tsx
+type MyParameters<T extends (...args: any[]) => any> = Parameters<T>
+```
