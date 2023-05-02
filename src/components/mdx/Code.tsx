@@ -57,7 +57,7 @@ const Code = ({ className, children }: Props) => {
     <Wrapper>
       <ToastContainer toasts={toasts} />
       <HighlightWrapper>
-        <CopyCodeButton onClick={copyCode} type="Copy" />
+        <CopyCodeButton onClick={copyCode} type="Copy" fill="grey400" />
         <Highlight
           {...defaultProps}
           language={match[1] as Language}
@@ -101,8 +101,6 @@ const CopyCodeButton = styled(Icon)`
   top: ${PADDING_X.pc};
   right: ${PADDING_X.pc};
 
-  fill: ${({ theme }) => theme.color.grey400};
-
   ${({ theme }) => css`
     ${theme.media.tablet} {
       top: ${PADDING_X.tablet};
@@ -134,6 +132,7 @@ const HighlightWrapper = styled.pre`
 `
 
 const LineContainer = styled.div`
+  display: inline-table;
   width: 100%;
   ${({ theme }) => theme.font.body_2};
 
