@@ -133,7 +133,6 @@ const HighlightWrapper = styled.pre`
 
 const LineContainer = styled.div`
   width: 100%;
-  display: grid;
 
   padding: 0;
 
@@ -176,12 +175,6 @@ const LineContainer = styled.div`
 
 const CodeText = styled.span`
   ${({ theme }) => theme.font.body_2};
-
-  ${({ theme }) => css`
-    ${theme.media.mobile} {
-      ${theme.font.body_3};
-    }
-  `}
 `
 
 const Line = styled.div<{ $isHighlight: boolean }>`
