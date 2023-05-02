@@ -132,9 +132,7 @@ const HighlightWrapper = styled.pre`
 `
 
 const LineContainer = styled.div`
-  display: inline-table;
   width: 100%;
-  ${({ theme }) => theme.font.body_2};
 
   padding: 0;
 
@@ -175,7 +173,9 @@ const LineContainer = styled.div`
   }
 `
 
-const CodeText = styled.span``
+const CodeText = styled.span`
+  ${({ theme }) => theme.font.body_2};
+`
 
 const Line = styled.div<{ $isHighlight: boolean }>`
   ${({ $isHighlight }) =>
