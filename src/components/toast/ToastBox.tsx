@@ -43,6 +43,7 @@ const Box = styled.div<Pick<Props, 'variety'>>`
   border-radius: 4px;
   width: fit-content;
   min-height: 32px;
+  white-space: nowrap;
 
   ${({ variety }) => VARIETY[variety]};
 

@@ -132,6 +132,7 @@ const HighlightWrapper = styled.pre`
 `
 
 const LineContainer = styled.div`
+  display: inline-table;
   width: 100%;
   ${({ theme }) => theme.font.body_2};
 
