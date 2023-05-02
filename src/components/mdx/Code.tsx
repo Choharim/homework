@@ -132,8 +132,8 @@ const HighlightWrapper = styled.pre`
 `
 
 const LineContainer = styled.div`
-  display: inline-table;
   width: 100%;
+  display: grid;
   ${({ theme }) => theme.font.body_2};
 
   padding: 0;
