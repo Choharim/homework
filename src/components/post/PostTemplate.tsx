@@ -98,7 +98,7 @@ const CustomThumbnail = styled(Thumbnail)`
 const Title = styled.h1`
   ${({ theme }) => theme.font.header_1};
   color: ${({ theme }) => theme.color.grey800};
-  margin: 20px 0 15px;
+  margin: 30px 0 20px;
 
   ${({ theme }) => css`
     ${theme.media.tablet} {

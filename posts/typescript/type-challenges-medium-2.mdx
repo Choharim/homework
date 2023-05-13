@@ -1,0 +1,346 @@
+---
+title: 타입스크립트 챌린지 - medium(2)
+description: ChainableOption, PromiseAll, TypeLookUp, Trim, Capitalize 유틸 타입을 만들어보자.
+createDate: 2023.5.3
+category: typescript
+---
+
+## 체이닝으로 프로퍼티를 추가하는 타입 만들기
+
+### 목표
+
+option(key, value)를 체이닝으로 객체 프로퍼티 타입을 추가할 수 있고, get으로 최종 결과 타입을 가져올 수 있는 chainable options 타입을 만들어보자.
+
+같은 key는 전달되지 않고, key 타입은 string으로 제한한다.
+
+```tsx
+declare const config: Chainable
+
+const result = config
+  .option('foo', 123)
+  .option('name', 'type-challenges')
+  .option('bar', { value: 'Hello World' })
+  .get()
+
+// 결과
+interface Result {
+  foo: number
+  name: string
+  bar: {
+    value: string
+  }
+}
+```
+
+### 구현
+
+1. Chainable은 제네릭 값을 넘기지 않아도 오류가 나지 않는다.
+   기본 값은 모든 객체 타입이 포함하는 빈 객체로 설정해준다.
+
+```tsx
+type Chainable<T extends {} = {}> = {
+ ...
+};
+```
+
+2. get은 최종 객체 타입을 반환해야 한다.
+
+```tsx
+type Chainable<T extends {} = {}> = {
+  ...
+  get(): T;
+};
+```
+
+3. option은 체이닝이 가능해야 하므로 option과 get을 갖는 Chanable 타입을 반환해야 한다.
+   단, key 값이 중복되어 있으면
+   이전 key 타입은 제거하고 마지막에 추가한 key 타입을 추가해야 한다.
+4. ❗ option에 전달되는 key와 value 타입을 어떻게 가져와야 할까?  
+   option에 제네릭을 사용하자.
+
+```tsx
+type Chainable<T extends {} = {}> = {
+  option<Key extends string, Value>(
+    key: Key,
+    value: Value
+  ): Key extends keyof T
+    ? Chainable<Omit<T, Key> & Record<Key, Value>>
+    : Chainable<T & Record<Key, Value>>
+  get(): T
+}
+```
+
+5. 동일한 key를 추가했을 때 에러를 발생하도록 하자.
+
+```tsx
+type Chainable<T extends {} = {}> = {
+  option<Key extends string, Value>(
+    key: Key extends keyof T ? never : Key,
+    value: Value
+  ): Key extends keyof T
+    ? Chainable<Omit<T, Key> & Record<Key, Value>>
+    : Chainable<T & Record<Key, Value>>
+  get(): T
+}
+```
+
+6. 위의 코드도 정답이지만, 간단히 변경해보자.
+
+```tsx
+type Chainable<T extends object = {}> = {
+  option<Key extends string, Value>(
+    key: Key extends keyof T ? never : Key,
+    value: Value
+  ): Chainable<Record<Key, Value> & Omit<T, Key>>
+  get(): T
+}
+```
+
+## PromiseAll 타입 만들기 🔥🔥
+
+### 목표
+
+PromiseAll에 전달되는 인수를 Promise로 반환하는 타입 만들기
+
+```tsx
+const promiseAllTest1 = PromiseAll([1, 2, 3] as const) // Promise<[1, 2, 3]>
+const promiseAllTest2 = PromiseAll([1, 2, Promise.resolve(3)] as const) // Promise<[1, 2, number]>
+const promiseAllTest3 = PromiseAll([1, 2, Promise.resolve(3)]) // Promise<[number, number, number]>
+const promiseAllTest4 = PromiseAll<Array<number | Promise<number>>>([1, 2, 3]) // Promise<number[]>
+```
+
+### 구현
+
+1. PromiseAll 함수 매개변수 타입은 readonly 타입의 배열 또는 일반 배열이어야 한다.
+   매개변수 타입을 일반 배열로 지정하면 readonly 배열 타입은 인수로 받을 수 없으므로 readonly로 지정해야 한다.
+
+```tsx
+declare function PromiseAll<T extends Readonly<any[]>>(
+  values: T
+): //...
+```
+
+2. Promise를 반환해야 한다.
+
+```tsx
+declare function PromiseAll<T extends Readonly<any[]>>(
+  values: T
+): Promise<...>;
+```
+
+3. Promise 반환 타입은 배열이고, 요소의 타입은 T의 요소 중 Promise resolved된 타입이거나 원시 타입이다.  
+   배열의 요소 타입을 특정 조건일 때 변경해야 하므로 요소 타입을 가져오기 위해 객체로 나타낸다. (배열 또한 객체이기 때문에 가능한 방식이다.)  
+   요소가 PromiseLike의 부분 타입이라면 리턴 타입을 반환해야하므로 infer 타입 변수를 사용한다.
+
+```tsx
+type ArrayItem<I> = I extends PromiseLike<infer R> ? R : I
+
+declare function PromiseAll<T extends Readonly<any[]>>(
+  values: T
+): Promise<{
+  [key in keyof T]: ArrayItem<T[key]>
+}>
+```
+
+❗그러나 위의 코드는 테스트 케이스를 통과하지 못한다.
+
+```tsx
+const promiseAllTest1 = PromiseAll([1, 2, 3] as const) // Promise<[1, 2, 3]> ❌
+const promiseAllTest2 = PromiseAll([1, 2, Promise.resolve(3)] as const) // Promise<[1, 2, number]> ❌
+const promiseAllTest3 = PromiseAll([1, 2, Promise.resolve(3)]) // Promise<[number, number, number]> ❌
+const promiseAllTest4 = PromiseAll<Array<number | Promise<number>>>([1, 2, 3]) // Promise<number[]> ✅
+```
+
+이유는, 다음과 같다.
+
+- 매개변수가 readonly 타입일 때 제네릭 T도 해당 타입을 그대로 가져오므로 Promise리턴 타입도 readonly가 된다.  
+  첫번째, 두번째 케이스가 이에 해당한다.
+
+```tsx
+type FirstCase = typeof promiseAllTest1 // Promise<readonly [1, 2, 3]> ❌ -> Promise<[1, 2, 3]>
+type SecondCase = typeof promiseAllTest2 // Promise<readonly [1, 2, number]> ❌ -> Promise<[1, 2, number]>
+```
+
+- 매개변수 타입으로 배열 통째로 넘겨주지 않고 스프레드로 풀어 넘겨주어야 각 요소의 타입을 나타낼 수 있다.  
+  세번째 케이스가 이에 해당한다.
+
+```tsx
+type ThirdCase = typeof promiseAllTest3 // Promise<number[]> ❌ -> Promise<[number, number, number]>
+```
+
+4. T를 readonly 타입이 아닌 일반 배열로 지정하고, 매개변수 타입에 스프레드로 배열 요소 타입을 나열한다.
+
+```tsx
+// ✅
+type ArrayItem<I> = I extends PromiseLike<infer R> ? R : I
+
+declare function PromiseAll<T extends Array<any>>(
+  values: readonly [...T]
+): Promise<{
+  [key in keyof T]: ArrayItem<T[key]>
+}>
+```
+
+5. 💡Promise의 resolved된 타입을 반환하는 `Awaited` 타입 유틸을 사용해보자.
+   PromiseLike 타입이 아니면 해당 타입을 그대로 반환하기 때문에 사용가능하다.
+
+```tsx
+declare function PromiseAll<T extends Array<any>>(
+  values: readonly [...T]
+): Promise<{ [key in keyof T]: Awaited<T[key]> }>
+```
+
+## 두 객체 타입 중 공통 프로퍼티 타입으로 하나의 객체 타입만 골라내는, LookUp 타입 만들기
+
+### 목표
+
+객체 타입을 구별하기 위해 라벨링 역할을 하는 공통 프로퍼티를 만드는 상황은 흔하다. 이 중 라벨 값으로 하나의 타입만 골라내는 LookUp 유틸 타입을 만들어보자.
+
+```tsx
+interface Cat {
+  type: 'cat'
+  breeds: 'Abyssinian' | 'Shorthair' | 'Curl' | 'Bengal'
+}
+
+interface Dog {
+  type: 'dog'
+  breeds: 'Hound' | 'Brittany' | 'Bulldog' | 'Boxer'
+  color: 'brown' | 'white' | 'black'
+}
+
+type Animal = Cat | Dog
+
+type cases = [
+  Expect<Equal<LookUp<Animal, 'dog'>, Dog>>,
+  Expect<Equal<LookUp<Animal, 'cat'>, Cat>>
+]
+```
+
+### 구현
+
+1. 첫번째 제네릭에 공통 프로퍼티를 갖는 객체 타입이 들어와야 한다.  
+   두번째 제네릭은 공통 프로퍼티의 값 타입이 들어와야 한다.
+
+```tsx
+type LookUp<
+  U extends { type: string },
+  T extends U["type"]
+> = ...
+```
+
+2. type 프로퍼티의 값 타입이 두번째 제네릭 타입이라면 해당 객체 타입을 리턴하고, 그외 타입은 never로 제거한다. (유니온으로 never가 들어가면 제거된다.)
+
+```tsx
+type LookUp<U extends { type: string }, T extends U['type']> = U extends {
+  type: T
+}
+  ? U
+  : never
+```
+
+## 문자열의 시작 공백을 제거하는 trimLeft 타입 만들기
+
+### 목표
+
+문자열 타입의 시작 부분 공백이 제거된 새 문자열을 반환하는 `TrimLeft<T>`를 구현해보자.
+
+```tsx
+type trimed = TrimLeft<'  Hello World  '> // 'Hello World  '
+```
+
+```tsx
+type cases = [
+  Expect<Equal<TrimLeft<'str'>, 'str'>>,
+  Expect<Equal<TrimLeft<' str'>, 'str'>>,
+  Expect<Equal<TrimLeft<'     str'>, 'str'>>,
+  Expect<Equal<TrimLeft<'     str     '>, 'str     '>>,
+  Expect<Equal<TrimLeft<'   \n\t foo bar '>, 'foo bar '>>,
+  Expect<Equal<TrimLeft<''>, ''>>,
+  Expect<Equal<TrimLeft<' \n\t'>, ''>>
+]
+```
+
+### 구현
+
+1. 공백을 모두 제거하기 위해 하나씩(’ ’)제거해야 하므로 재귀를 이용한다.  
+   공백 하나씩 제거된 문자열을 제네릭에 전달하기 위해 infer 타입 변수를 이용한다.
+
+```tsx
+type RemovedSpace = ' '
+
+type TrimLeft<S extends string> = S extends `${RemovedSpace}${infer Rest}`
+  ? TrimLeft<Rest>
+  : S
+```
+
+2. ‘\n’과 ‘\t’도 제거해야 하므로 RemovedSpace 타입에 추가한다.
+
+```tsx
+type RemovedSpace = ' ' | '\n' | '\t'
+
+type TrimLeft<S extends string> = S extends `${RemovedSpace}${infer Rest}`
+  ? TrimLeft<Rest>
+  : S
+```
+
+## 문자열의 양쪽 공백을 제거하는 trim 타입 만들기
+
+### 목표
+
+문자열 타입의 양쪽 끝 공백이 제거된 새 문자열을 반환하는 `Trim<T>`를 구현해보자.
+
+```tsx
+type cases = [
+  Expect<Equal<Trim<'str'>, 'str'>>,
+  Expect<Equal<Trim<' str'>, 'str'>>,
+  Expect<Equal<Trim<'     str'>, 'str'>>,
+  Expect<Equal<Trim<'str   '>, 'str'>>,
+  Expect<Equal<Trim<'     str     '>, 'str'>>,
+  Expect<Equal<Trim<'   \n\t foo bar \t'>, 'foo bar'>>,
+  Expect<Equal<Trim<''>, ''>>,
+  Expect<Equal<Trim<' \n\t '>, ''>>
+]
+```
+
+### 구현
+
+1. 왼쪽 공백부터 오른쪽 공백까지 순차적으로 제거해 나가자.  
+   공백을 제거한 부분만을 선별해내야 하기 때문에 infer 타입 변수를 사용한다.
+2. 왼쪽 공백이 없을 때까지 공백 하나가 제거된 나머지 문자열을 제네릭에 넘겨주고,  
+   왼쪽 공백이 없으면 오른쪽 공백이 없을 때까지 공백 하나가 제거된 나머지 문자열을 제네릭으로 넘겨준다.  
+   양쪽 공백이 모두 없다면 문자열을 그대로 반환하여 재귀를 종료한다.
+
+```tsx
+type RemovedSpace = ' ' | '\n' | '\t'
+
+type Trim<S extends string> = S extends `${Space}${infer Rest}`
+  ? Trim<Rest>
+  : S extends `${infer Rest}${Space}`
+  ? Trim<Rest>
+  : S
+```
+
+## 첫 글자를 대문자로 변경하는 Capitalize 타입 만들기
+
+### 목표
+
+```tsx
+type capitalized = Capitalize<'hello world'> // 'Hello world'
+```
+
+### 구현
+
+1. 첫 글자를 대문자로 변경해야 하므로 infer 타입 변수를 사용하자.
+
+```tsx
+type MyCapitalize<S extends string> = S extends `${infer Fist}${infer Rest}`
+  ? ...
+```
+
+2. Uppercase 타입 유틸을 사용하면 대문자로 변경할 수 있다.
+
+```tsx
+type MyCapitalize<S extends string> = S extends `${infer Fist}${infer Rest}`
+  ? `${Capitalize<Fist>}${Rest}`
+  : S
+```

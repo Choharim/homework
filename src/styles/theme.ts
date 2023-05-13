@@ -31,12 +31,12 @@ export const COLOR = {
 
 export const FONT = {
   header_1: {
-    fontSize: '42px',
-    lineHeight: '1.2',
+    fontSize: '36px',
+    lineHeight: '1.3',
     fontWeight: 700,
   },
   header_2: {
-    fontSize: '32px',
+    fontSize: '30px',
     lineHeight: '1.3',
     fontWeight: 600,
   },
@@ -61,14 +61,14 @@ export const FONT = {
     fontWeight: 600,
   },
   subtitle_3: {
-    fontSize: '17px',
+    fontSize: '16px',
     lineHeight: '1.7',
     fontWeight: 500,
   },
 
   body_1: {
     fontSize: '17px',
-    lineHeight: '1.8',
+    lineHeight: '1.7',
   },
   body_2: {
     fontSize: '16px',

@@ -119,14 +119,14 @@ const Wrapper = styled.div`
 `
 
 const HighlightWrapper = styled.pre`
-  padding: ${PADDING_X.pc};
+  padding: calc(${PADDING_X.pc} * 2) ${PADDING_X.pc};
   border-radius: 10px;
   background-color: #212121;
   overflow-x: auto;
 
   ${({ theme }) => css`
     ${theme.media.tablet} {
-      padding: ${PADDING_X.tablet};
+      padding: calc(${PADDING_X.tablet} * 2) ${PADDING_X.tablet};
     }
   `}
 `
@@ -140,7 +140,8 @@ const LineContainer = styled.div`
     color: #ececec84 !important;
   }
   .function,
-  .method {
+  .method,
+  .constant {
     color: #7fa6f9 !important;
   }
   .imports.maybe-class-name {
@@ -183,10 +184,6 @@ const Line = styled.div<{ $isHighlight: boolean }>`
     css`
       background-color: rgb(47, 53, 60);
     `}
-
-  &:hover {
-    background-color: rgb(53, 59, 69);
-  }
 
   &:last-child {
     ${CodeText} {
