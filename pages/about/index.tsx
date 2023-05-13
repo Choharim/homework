@@ -63,18 +63,18 @@ const Box = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
+  margin: 30px 0;
 `
 const LogoWrapper = styled.div`
   display: flex;
   width: fit-content;
   flex-wrap: wrap;
+  margin-bottom: 30px;
 `
 
 const MIN_SIZE = `@media screen and (max-width: ${DEVICE_SIZE.mobile}px)`
 
 const CustomLogo = styled(Logo)`
-  margin-bottom: 50px;
-
   ${({ theme }) => css`
     ${theme.font.header_1};
 
@@ -91,8 +91,7 @@ const DescriptionWrapper = styled.div`
 
 const Paragraph = styled.p`
   word-break: keep-all;
-  ${({ theme }) => theme.font.subtitle_2};
-  font-weight: 400;
+  ${({ theme }) => theme.font.body_1};
   color: ${({ theme }) => theme.color.grey800};
   margin: 10px 0;
 `
