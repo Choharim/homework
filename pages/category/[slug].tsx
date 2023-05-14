@@ -7,18 +7,17 @@ import {
 import React from 'react'
 import { ParsedUrlQuery } from 'querystring'
 
-import { Category } from '@/domain/post/type'
-import { CATEGORIES } from '@/domain/post/constant'
-import { NextPageWithLayout } from 'pages/_app'
-import { CATEGORY_TITLE } from '@/application/post/constant'
-
 import PostCardLink from '@/components/post/PostCardLink'
 import CardListFrame from '@/components/post/CardListFrame'
 import CategoryFilter from '@/components/post/CategoryFilter'
-import Layout from '@/components/layout/Layout'
-import usePagination from '@/hooks/usePagination'
+import usePagination from '@/components/pagination/usePagination'
 import Pagination from '@/components/pagination/Pagination'
+
 import { getPosts } from '@/domain/post'
+import { NextPageWithLayout } from '@/shared/types/layout'
+import { Category } from '@/domain/post/type'
+import { CATEGORIES } from '@/domain/post/constant'
+import { CATEGORY_TITLE } from '@/application/post/constant'
 
 const Posts: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -45,12 +44,6 @@ const Posts: NextPageWithLayout<
 
 export default Posts
 
-Posts.getLayout = function getLayout(
-  page: React.ReactElement<InferGetStaticPropsType<typeof getStaticProps>>
-) {
-  return <Layout title={CATEGORY_TITLE[page.props.category]}>{page}</Layout>
-}
-
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: CATEGORIES.map((category) => `/category/${category}`),
@@ -72,6 +65,7 @@ export const getStaticProps = async (
     props: {
       posts,
       category: slug,
+      title: CATEGORY_TITLE[slug],
     },
   }
 }

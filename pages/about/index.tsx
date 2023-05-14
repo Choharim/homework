@@ -1,12 +1,15 @@
-import Layout from '@/components/layout/Layout'
-import Logo from '@/components/Logo'
-import { PAGE_PATH } from '@/constants/route'
-import { DEVICE_SIZE } from '@/constants/layout'
-import { BLOG_NAME } from '@/domain/owner/constant'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-const About = () => {
+import Layout from '@/components/layout/Layout'
+import Logo from '@/components/Logo'
+
+import { PAGE_PATH } from '@/constants/route'
+import { DEVICE_SIZE } from '@/constants/layout'
+import { BLOG_NAME } from '@/domain/owner/constant'
+import { NextPageWithLayout } from '@/shared/types/layout'
+
+const About: NextPageWithLayout = () => {
   return (
     <Box>
       <LogoWrapper>
@@ -49,7 +52,7 @@ export default About
 About.getLayout = function getLayout(page: React.ReactElement) {
   return (
     <Layout
-      title={PAGE_PATH.About.label}
+      title={PAGE_PATH.about.label}
       description={`${BLOG_NAME.fullName}의 의미`}
     >
       {page}
