@@ -2,11 +2,11 @@ import React, { MouseEvent, useEffect, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 
 import { HEADERS_OF_CONTENTS } from '@/application/post/constant'
-import { Z_INDEX } from '@/styles/constant'
 import { NAVBAR_HEIGHT } from '../layout/Navbar'
 import { HeadersOfContents } from '@/application/post/type'
 import { setTOCId } from '@/application/post'
 import { convertHEXToRGB } from '@/utils/string'
+import Z_INDEX from '@/styles/constants/zIndex'
 
 export const TOC_WIDTH_IN_PC = 280
 

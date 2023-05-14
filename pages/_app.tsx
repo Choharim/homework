@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components'
 import Layout from '@/components/layout/Layout'
 
 import GlobalStyle from '@/styles/GlobalStyle'
-import { THEME } from '@/styles/theme'
+import { THEME } from '@/styles/constants/theme'
 import { AppPropsWithLayout, GetLayout } from '@/shared/types/layout'
 
 function App({ Component, pageProps }: AppPropsWithLayout) {

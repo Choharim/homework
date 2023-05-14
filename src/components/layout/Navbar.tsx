@@ -5,13 +5,13 @@ import { useRouter } from 'next/router'
 
 import { GITHUB_URL } from '@/domain/owner/constant'
 import useScrollDirection from '@/hooks/useScrollDirection'
-import { Z_INDEX } from '@/styles/constant'
 import { convertHEXToRGB } from '@/utils/string'
 import { PAGE_PATH } from '@/constants/route'
 import useScrollTop from '@/hooks/useScrollTop'
 
 import Frame from './Frame'
 import Logo from '../Logo'
+import Z_INDEX from '@/styles/constants/zIndex'
 
 export const NAVBAR_HEIGHT = 60
 
@@ -23,9 +23,9 @@ type TextMenu = {
 
 const MENUS: Array<TextMenu> = [
   {
-    href: PAGE_PATH.About.path,
+    href: PAGE_PATH.about.path,
     isOutlink: false,
-    label: PAGE_PATH.About.label,
+    label: PAGE_PATH.about.label,
   },
   {
     href: GITHUB_URL,
