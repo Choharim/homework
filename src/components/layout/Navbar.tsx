@@ -21,7 +21,7 @@ type TextMenu = {
   label: string
 }
 
-const MENUS: Array<TextMenu> = [
+const MENUS: Readonly<Array<TextMenu>> = [
   {
     href: PAGE_PATH.about.path,
     isOutlink: false,

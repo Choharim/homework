@@ -7,7 +7,7 @@ export const MDX_EXTENSION = 'mdx'
 
 export const POSTS_PATH = join(process.cwd(), POST_DIRECTORY)
 
-export const CATEGORIES: Array<Category> = [
+export const CATEGORIES: Readonly<Array<Category>> = [
   'all',
   'javascript',
   'typescript',

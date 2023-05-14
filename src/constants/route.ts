@@ -1,6 +1,6 @@
 export const PAGE_PATH = {
-  About: {
+  about: {
     label: 'About',
     path: '/about',
   },
-}
+} as const
