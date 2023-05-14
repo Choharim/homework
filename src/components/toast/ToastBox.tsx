@@ -1,59 +1,57 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
-import { TOAST_TIMEOUT, TOAST_TOP_POSITION, VARIETY } from './constant'
-import { Variety } from './type'
+import Flex from '../flex'
+import Typo from '../typo'
 
-type Props = {
-  children: React.ReactNode
+import { Variety } from './type'
+import { TOAST_TIMEOUT, TOAST_TOP_POSITION } from './constant'
+import getVariety from './getVariety'
+
+export interface ToastBoxStyle {
   variety: Variety
 }
-const ToastBox = ({ children, variety }: Props) => {
+
+interface ToastBoxProps extends ToastBoxStyle {
+  children: React.ReactNode
+}
+const ToastBox = ({ children, variety }: ToastBoxProps) => {
   return (
-    <Box variety={variety}>
-      <Text>{children}</Text>
-    </Box>
+    <ToastWrapper justify="center" variety={variety}>
+      <Typo color="inherit">{children}</Typo>
+    </ToastWrapper>
   )
 }
 
 export default ToastBox
 
-const fadeIn = keyframes`
+const ANIMATED_DURATION = 300
+
+const FadeIn = keyframes`
 from { 
   opacity: 0;
 }
 `
 
-const fadeOut = keyframes`
+const FadeOut = keyframes`
   to { 
     opacity: 0;
   }
 `
 
-const slideIn = keyframes`
+const SlideIn = keyframes`
 from {
-  transform: translateY(-${TOAST_TOP_POSITION}px)
-}
-`
+  transform: translateY(${TOAST_TOP_POSITION}px)
+}`
 
-const ANIMATED_DURATION = 300
-
-const Box = styled.div<Pick<Props, 'variety'>>`
+const ToastWrapper = styled(Flex)<ToastBoxStyle>`
   padding: 10px 12px;
-  border-radius: 4px;
-  width: fit-content;
+  min-width: 200px;
   min-height: 32px;
-  white-space: nowrap;
-
-  ${({ variety }) => VARIETY[variety]};
-
-  animation: ${fadeIn} ${ANIMATED_DURATION}ms ease,
-    ${slideIn} ${ANIMATED_DURATION}ms ease,
-    ${fadeOut} ${ANIMATED_DURATION}ms ease
+  border-radius: 4px;
+  ${({ theme, variety }) => getVariety(variety, theme)};
+  animation: ${FadeIn} ${ANIMATED_DURATION}ms ease,
+    ${SlideIn} ${ANIMATED_DURATION}ms ease,
+    ${FadeOut} ${ANIMATED_DURATION}ms ease
       ${TOAST_TIMEOUT - ANIMATED_DURATION}ms;
-`
-
-const Text = styled.p`
-  color: inherit;
-  ${({ theme }) => theme.font.body_1};
 `
