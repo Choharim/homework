@@ -4,11 +4,8 @@ import styled, { css } from 'styled-components'
 import Navbar, { NAVBAR_HEIGHT } from './Navbar'
 import Footer, { FOOTER_HEIGHT } from './Footer'
 import Frame from './Frame'
-import HeadMeta, { HeadMetaProps } from '../HeadMeta'
 
-interface Props
-  extends Pick<HTMLAttributes<HTMLElement>, 'className'>,
-    HeadMetaProps {
+interface Props extends Pick<HTMLAttributes<HTMLElement>, 'className'> {
   children: React.ReactNode
 
   resetFrameStyle?: boolean
@@ -16,8 +13,6 @@ interface Props
 }
 
 const Layout = ({
-  title,
-  description,
   resetFrameStyle,
   className,
   children,
@@ -25,8 +20,6 @@ const Layout = ({
 }: Props) => {
   return (
     <LayoutFrame className={className}>
-      <HeadMeta title={title} description={description} />
-
       <Navbar />
       {resetFrameStyle ? (
         <main>{children}</main>

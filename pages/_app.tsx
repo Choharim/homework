@@ -1,31 +1,32 @@
-import type { AppProps } from 'next/app'
-import { NextPage } from 'next/types'
 import { ThemeProvider } from 'styled-components'
 
-import { GlobalStyles } from '@/styles/GlobalStyles'
-import { THEME } from '@/styles/theme'
-
 import Layout from '@/components/layout/Layout'
+import MetaHead from '@/components/layout/MetaHead'
 
-export type NextPageWithLayout<T = Record<string, unknown>> = NextPage<T> & {
-  getLayout?: (page: React.ReactElement) => JSX.Element
-}
-
-type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
-}
+import GlobalStyle from '@/styles/GlobalStyle'
+import { THEME } from '@/styles/constants/theme'
+import { AppPropsWithLayout, GetLayout } from '@/shared/types/layout'
 
 function App({ Component, pageProps }: AppPropsWithLayout) {
-  const layout = Component?.getLayout
-    ? Component.getLayout
-    : (page: React.ReactElement) => <Layout>{page}</Layout>
+  const _getLayout = Component.getLayout || getLayout
 
   return (
     <ThemeProvider theme={THEME}>
-      <GlobalStyles />
-      {layout(<Component {...pageProps} />)}
+      <GlobalStyle />
+      {_getLayout(<Component {...pageProps} />)}
     </ThemeProvider>
   )
 }
 
 export default App
+
+const getLayout: GetLayout = (page) => (
+  <Layout>
+    <MetaHead
+      title={page.props?.title}
+      description={page.props?.description}
+      image={page.props?.image}
+    />
+    {page}
+  </Layout>
+)

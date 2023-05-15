@@ -1,4 +1,4 @@
-import { BLOG_NAME } from '@/domain/owner/constant'
+import { BLOG } from '@/domain/owner/constant'
 import Link from 'next/link'
 import React, { HTMLAttributes } from 'react'
 import styled, { css, keyframes } from 'styled-components'
@@ -8,7 +8,7 @@ interface Props extends Pick<HTMLAttributes<HTMLElement>, 'className'> {
   isHighlightInitial?: boolean
 }
 const Logo = ({ isFold, isHighlightInitial, ...rest }: Props) => {
-  const alphabets = BLOG_NAME.fullName.split('')
+  const alphabets = BLOG.fullName.split('')
 
   const isInitial = (alphabet: string) => {
     return alphabet.toUpperCase() === alphabet

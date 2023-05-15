@@ -4,9 +4,10 @@ import styled, { css } from 'styled-components'
 import rangeParser from 'parse-numeric-range'
 import { useCallback } from 'react'
 
-import useToast from '@/hooks/useToast'
-import ToastContainer from '../toast/ToastContainer'
 import Icon from '../icon/Icon'
+
+import useToast from '@/components/toast/useToast'
+import ToastPortal from '../toast/ToastPortal'
 
 const COPY_SUCCESS = '클립보드에 복사되었습니다.'
 const COPY_FAILURE = '복사를 다시 시도해주세요.'
@@ -55,7 +56,7 @@ const Code = ({ className, children }: Props) => {
 
   return match ? (
     <Wrapper>
-      <ToastContainer toasts={toasts} />
+      <ToastPortal toasts={toasts} />
       <HighlightWrapper>
         <CopyCodeButton onClick={copyCode} type="Copy" fill="grey400" />
         <Highlight
