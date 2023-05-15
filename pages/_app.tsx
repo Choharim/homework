@@ -1,6 +1,7 @@
 import { ThemeProvider } from 'styled-components'
 
 import Layout from '@/components/layout/Layout'
+import MetaHead from '@/components/layout/MetaHead'
 
 import GlobalStyle from '@/styles/GlobalStyle'
 import { THEME } from '@/styles/constants/theme'
@@ -20,7 +21,12 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
 export default App
 
 const getLayout: GetLayout = (page) => (
-  <Layout title={page.props?.title} description={page.props?.description}>
+  <Layout>
+    <MetaHead
+      title={page.props?.title}
+      description={page.props?.description}
+      image={page.props?.image}
+    />
     {page}
   </Layout>
 )

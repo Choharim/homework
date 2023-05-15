@@ -17,7 +17,6 @@ import { getPosts } from '@/domain/post'
 import { NextPageWithLayout } from '@/shared/types/layout'
 import { Category } from '@/domain/post/type'
 import { CATEGORIES } from '@/domain/post/constant'
-import { CATEGORY_TITLE } from '@/application/post/constant'
 
 const Posts: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -65,7 +64,7 @@ export const getStaticProps = async (
     props: {
       posts,
       category: slug,
-      title: CATEGORY_TITLE[slug],
+      title: slug,
     },
   }
 }

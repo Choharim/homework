@@ -13,6 +13,7 @@ import * as mdx from '@mdx-js/react'
 import MDX_STYLE from '@/components/mdx'
 import PostTemplate from '@/components/post/PostTemplate'
 import Layout from '@/components/layout/Layout'
+import MetaHead from '@/components/layout/MetaHead'
 
 import Post from '@/domain/post/type'
 import {
@@ -46,11 +47,12 @@ Detail.getLayout = function getLayout(
   page: React.ReactElement<InferGetStaticPropsType<typeof getStaticProps>>
 ) {
   return (
-    <Layout
-      title={page.props.data.title}
-      description={page.props.data.description}
-      resetFrameStyle
-    >
+    <Layout resetFrameStyle>
+      <MetaHead
+        title={page.props.data.title}
+        description={page.props.data.description}
+        ogType="article"
+      />
       {page}
     </Layout>
   )

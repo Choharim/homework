@@ -8,9 +8,10 @@ export const EN_NAME = {
   last: 'Cho',
 } as const
 
-export const BLOG_NAME = {
+export const BLOG = {
   shortName: 'RIM',
   fullName: 'RootInMeaningful',
+  domain: 'https://rootinmeaningful.vercel.app',
 } as const
 
 export const GITHUB_URL = 'https://github.com/Choharim'

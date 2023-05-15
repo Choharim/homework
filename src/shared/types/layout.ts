@@ -3,9 +3,9 @@ import { AppInitialProps, AppProps } from 'next/app'
 import { ReactElement, ReactNode } from 'react'
 
 import { CombineType } from './extendable'
-import { HeadMetaProps } from '@/components/HeadMeta'
+import { MetaHeadProps } from '@/components/layout/MetaHead'
 
-type PageProps = CombineType<AppInitialProps['pageProps'], HeadMetaProps>
+type PageProps = CombineType<AppInitialProps['pageProps'], MetaHeadProps>
 
 export type GetLayout<T = PageProps> = (page: ReactElement<T>) => ReactNode
 

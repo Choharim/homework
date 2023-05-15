@@ -8,7 +8,7 @@ import Pagination from '@/components/pagination/Pagination'
 import usePagination from '@/components/pagination/usePagination'
 import { getPosts } from '@/domain/post'
 import { NextPageWithLayout } from '@/shared/types/layout'
-import { BLOG_NAME } from '@/domain/owner/constant'
+import { BLOG } from '@/domain/owner/constant'
 
 const Home: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -41,7 +41,7 @@ export async function getStaticProps() {
   return {
     props: {
       posts,
-      title: BLOG_NAME.fullName,
+      title: BLOG.fullName,
     },
   }
 }
