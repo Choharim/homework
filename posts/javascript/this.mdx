@@ -10,7 +10,8 @@ category: javascript
 자신이 속한 객체 또는 자신이 생성할 인스턴스를 가리키는 `자기 참조 변수`이다.
 
 - this는 함수 호출 방식에 의해 동적으로 바인딩 된다. strict mode도 this 바인딩에 영향을 준다.
-- 자바스크립트 엔진에 의해 암묵적으로 this가 생성되며, 코드 어디서든 참조할 수 있다. 함수를 호출하면 arguments객체와 this가 암묵적으로 함수 내부에 전달된다.
+- 자바스크립트 엔진에 의해 암묵적으로 this가 생성되며, 코드 어디서든 참조할 수 있다.  
+  함수(화살표 함수가 아닌)를 호출하면 arguments객체와 this가 암묵적으로 함수 내부에 전달된다.
 
 ## this 바인딩
 
@@ -22,25 +23,36 @@ console.log(this) // window or browser
 
 > **일반 함수로 작성된 메서드** 내의 this는 메서드를 호출한 객체를 가리킨다.
 >
-> > 화살표 함수의 경우, 상위 스코프의 this를 참조하기 때문에 이를 따르지 않는다.
+> > 화살표 함수의 경우, this가 존재하지 않아 상위 스코프의 this를 참조한다.
 
 ```jsx
 const person = {
   name: 'kim',
   getName() {
+    // this가 결정되지 않음.
+    return this.name
+  },
+  getName2: () => {
+    // 화살표 함수 내부에는 this가 존재하지 않기 때문에 상위 스코프의 this를 참조한다.
+    // 이 경우는 전역에서의 this를 참조해 전역 객체를 가리킨다.
     return this.name
   },
 }
 
-person.getName() // kim
+person.getName() // 'kim'
+
+// 브라우저 환경일 때 window.name이 되어 '' 빈 문자열을 리턴한다.
+person.getName2() // ''
 
 const anotherPerson = {
   name: 'lee',
 }
 
 anotherPerson.getName = person.getName
+anotherPerson.getName() // 'lee'
 
-anotherPerson.getName() // lee
+anotherPerson.getName2 = person.getName2
+anotherPerson.getName2() // ''
 ```
 
 > **생성자 함수** 내에서 this는 생성자 함수가 생성할 인스턴스를 가리킨다.
@@ -53,7 +65,8 @@ function Person(name) {
 const person = new Person('lee') // {name: 'lee'}
 ```
 
-> **일반 함수** 선언문으로 정의된 함수 내에서 this는 전역 객체를 가리킨다. (strict mode일 때는 undefined이다.)
+> **일반 함수** 선언문으로 정의된 함수 내에서 this는 전역 객체를 가리킨다.  
+> (단, strict mode일 때는 undefined이다.)
 >
 > > 콜백 함수 내부와 내부 함수의 this는 전역 객체를 가리킨다.
 
@@ -71,11 +84,11 @@ foo()
 
 > **화살표 함수** 내에서 this는 상위 스코프의 this를 가리킨다.
 
-`화살표 함수는 함수 자체의 this 바인딩을 갖지 않아서` 화살표 함수 내에서 this를 참조하면 `상위 스코프의 this를 참조`하게 된다. 이를 **Lexical this** 라 한다.
+`화살표 함수는 함수 자체의 this 바인딩을 갖지 않아서` 화살표 함수 내에서 this를 참조하면 `상위 스코프의 this를 참조`하게 된다. 정적으로 this가 결정되기 때문에 이를 **Lexical this** 라 한다.
 
-화살표 함수의 this는 정적으로 결정되기 때문에 call, apply, bind 메소드를 사용하여 this를 변경할 수 없다.
+화살표 함수의 this는 정적이므로 call, apply, bind 메소드를 사용해 변경할 수 없다.
 
-## 명시적/정적 this 바인딩
+## 명시적(정적) this 바인딩
 
 ### Function.prototype.call / apply / bind 메서드
 

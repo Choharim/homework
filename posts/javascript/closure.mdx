@@ -134,8 +134,10 @@ console.log(counter1.value()) // 2
 변수 값을 유지할 수 있다.
 
 <aside>
-⚠️ **counter1, counter2의 내부 변수가 독립적인 이유**   
-makeCounter 함수가 호출되면 makeCounter 함수의 실행 컨텍스트가 생성되고 내부 함수의 정의가 평가된다. 이때, 내부 함수의 내부 슬롯에 상위 렉시컬 환경 참조 값을 저장하여 기억한다. 변수에 makeCounter 함수의 내부 함수를 반환하면 makeCounter함수의 실행 컨텍스트는 스택에서 제거되고, 변수 counter1과 counter2에 담긴 내부함수는 서로 다른 상위 렉시컬 환경 참조 값을 저장하고 있으므로 내부 변수가 공유되지 않고 독립적으로 유지될 수 있다.
+⚠️ **counter1, counter2의 내부 변수가 독립적인 이유**
+
+`makeCounter 함수는 호출되어 실행될 때`마다 `새로운 렉시컬 환경을 생성`하고, 그 환경 내부에 privateCounter와 changeBy 함수를 포함한 변수와 함수를 정의한다.
+때문에 counter1과 counter2는 `서로 다른 렉시컬 환경`을 갖게 되고, 각각의 환경 내부에는 독립적인 privateCounter 변수와 changeBy 함수가 존재해 counter1과 counter2는 서로 `독립`적으로 동작한다.
 
 </aside>
 
