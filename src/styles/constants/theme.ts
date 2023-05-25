@@ -1,7 +1,7 @@
-import { DefaultTheme } from 'styled-components'
+import { Theme } from '@emotion/react'
 
 import COLOR from './color'
 
-export const THEME: DefaultTheme = {
+export const THEME: Theme = {
   color: COLOR,
 }

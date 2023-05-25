@@ -1,9 +1,9 @@
-import { ThemeProvider } from 'styled-components'
+import { Global, ThemeProvider } from '@emotion/react'
 
 import Layout from '@/components/layout/Layout'
 import MetaHead from '@/components/layout/MetaHead'
 
-import GlobalStyle from '@/styles/GlobalStyle'
+import resetStyle from '@/styles/resetStyle'
 import { THEME } from '@/styles/constants/theme'
 import { AppPropsWithLayout, GetLayout } from '@/shared/types/layout'
 
@@ -12,7 +12,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <ThemeProvider theme={THEME}>
-      <GlobalStyle />
+      <Global styles={resetStyle} />
       {_getLayout(<Component {...pageProps} />)}
     </ThemeProvider>
   )

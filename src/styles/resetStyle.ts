@@ -1,18 +1,20 @@
-import { createGlobalStyle } from 'styled-components'
+import { css } from '@emotion/react'
 
-const GlobalStyle = createGlobalStyle`
+const resetStyle = css`
   html,
   body {
     padding: 0;
     margin: 0;
     height: 100%;
+    scroll-behavior: smooth;
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: auto;
 
-   font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-
-   
+    font-family: 'Pretendard Variable', Pretendard, -apple-system,
+      BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',
+      'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',
+      'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
   }
   a {
     color: inherit;
@@ -47,9 +49,8 @@ const GlobalStyle = createGlobalStyle`
   ul,
   ol {
     margin: 0;
-    padding:0;
+    padding: 0;
     list-style: none;
-    
   }
   * {
     box-sizing: border-box;
@@ -61,4 +62,4 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-export default GlobalStyle
+export default resetStyle
