@@ -123,7 +123,7 @@ const LinkWrapper = styled.a`
 const MenuWrapper = styled.li<{ isActive: boolean }>`
   border-radius: 4px;
 
-  &:not(:first-child) {
+  &:not(:first-of-type) {
     margin-left: 10px;
   }
 

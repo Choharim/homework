@@ -162,6 +162,7 @@ const CustomPageLink = styled(PageLink)<{ disabled: boolean }>`
 const CustomIcon = styled(Icon)`
   padding: 5px;
   width: 30px;
+  cursor: pointer;
 
   ${MEDIA.tablet} {
     padding: 5px;
