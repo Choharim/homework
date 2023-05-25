@@ -1,14 +1,17 @@
-import { BLOG } from '@/domain/owner/constant'
-import Link from 'next/link'
 import React, { ComponentProps } from 'react'
-import styled, { css, keyframes } from 'styled-components'
+import { css, keyframes } from '@emotion/react'
+import styled from '@emotion/styled'
+import Link from 'next/link'
+
 import Typo from './typo'
+import Flex from './flex'
+
+import { BLOG } from '@/domain/owner/constant'
 
 interface Props extends ComponentProps<typeof Typo> {
   isFold: boolean
-  isHighlightInitial?: boolean
 }
-const Logo = ({ isFold, isHighlightInitial, ...typoProps }: Props) => {
+const Logo = ({ isFold, ...typoProps }: Props) => {
   const alphabets = BLOG.fullName.split('')
 
   const isInitial = (alphabet: string) => {
@@ -17,31 +20,29 @@ const Logo = ({ isFold, isHighlightInitial, ...typoProps }: Props) => {
 
   return (
     <Link href="/">
-      <LogWrapper>
+      <Flex
+        css={css`
+          cursor: pointer;
+        `}
+      >
         {alphabets.map((alphabet, i) => (
           <Name
             key={`${alphabet}_${i}`}
-            $isInitial={isInitial(alphabet)}
-            $isFold={isFold}
-            $isHighlightInitial={isHighlightInitial}
+            isFold={isFold}
+            isInitial={isInitial(alphabet)}
             variety={typoProps.variety ?? 'header_4'}
+            color="primary300"
             {...typoProps}
           >
             {alphabet}
           </Name>
         ))}
-      </LogWrapper>
+      </Flex>
     </Link>
   )
 }
 
 export default React.memo(Logo)
-
-const LogWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-`
 
 const acordian = keyframes`
   0% {
@@ -60,22 +61,17 @@ const acordian = keyframes`
 `
 
 const Name = styled(Typo)<{
-  $isInitial: boolean
-  $isFold: Props['isFold']
-  $isHighlightInitial: Props['isHighlightInitial']
+  isInitial: boolean
+  isFold: Props['isFold']
 }>`
-  ${({ $isInitial, theme, $isFold, $isHighlightInitial }) =>
-    $isInitial
+  ${({ isInitial, theme, isFold }) =>
+    isInitial
       ? css`
           color: ${theme.color.primary500};
           font-weight: bold;
         `
       : css`
-          color: ${$isHighlightInitial
-            ? theme.color.primary300
-            : theme.color.primary500};
-
           animation: ${acordian} 3s ease-in-out 0.5s
-            ${$isFold && 'reverse forwards'};
+            ${isFold && 'reverse forwards'};
         `}
 `

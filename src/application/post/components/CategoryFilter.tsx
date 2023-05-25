@@ -1,15 +1,15 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
 import { useRouter } from 'next/router'
+import styled from '@emotion/styled'
+import { css } from '@emotion/react'
 
 import CategoryLink from './CategoryLink'
+import Typo from '@/components/typo'
+import Flex from '@/components/flex'
 
 import { CATEGORIES } from '@/domain/post/constant'
 import { CATEGORY_TITLE } from '@/application/post/constant'
 import { Category } from '@/domain/post/type'
-import FONT from '@/styles/constants/font'
-
-const GAP = 10
 
 const CategoryFilter = () => {
   const { query } = useRouter()
@@ -27,18 +27,18 @@ const CategoryFilter = () => {
   }
 
   return (
-    <CategoryContainer>
+    <CategoryContainer align="center" gap="18px" wrap="wrap">
       {CATEGORIES.map((category, i) => (
-        <Wrapper key={`${category}_${i}`}>
-          <CategoryLink category={category}>
-            <CategoryWrapper
-              $isAll={category === 'all'}
-              $active={isActive(category)}
-            >
-              {CATEGORY_TITLE[category]}
-            </CategoryWrapper>
-          </CategoryLink>
-        </Wrapper>
+        <CategoryLink key={`${category}_${i}`} category={category}>
+          <CategoryText
+            variety="title_3"
+            color="grey700"
+            wrap="nowrap"
+            active={isActive(category)}
+          >
+            {CATEGORY_TITLE[category]}
+          </CategoryText>
+        </CategoryLink>
       ))}
     </CategoryContainer>
   )
@@ -46,34 +46,23 @@ const CategoryFilter = () => {
 
 export default CategoryFilter
 
-const CategoryContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin: -${GAP}px;
+const CategoryContainer = styled(Flex)`
+  margin: 32px 0;
 `
-
-const Wrapper = styled.div`
-  margin: ${GAP}px;
-`
-
-const CategoryWrapper = styled.div<{ $isAll: boolean; $active: boolean }>`
-  padding: 2px 12px;
+const CategoryText = styled(Typo)<{ active: boolean }>`
+  padding: 8px 12px;
   border-radius: 8px;
-  white-space: nowrap;
-  color: ${({ theme }) => theme.color.grey700};
 
-  ${FONT.title_3};
-
-  ${({ $active, theme }) =>
-    $active &&
-    css`
-      color: ${theme.color.primary500};
-      background-color: ${theme.color.grey100};
-      cursor: default;
-    `};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.color.grey100};
-  }
+  ${({ active, theme }) =>
+    active
+      ? css`
+          color: ${theme.color.primary500};
+          background-color: ${theme.color.grey100};
+          cursor: default;
+        `
+      : css`
+          &:hover {
+            background-color: ${theme.color.grey100};
+          }
+        `};
 `

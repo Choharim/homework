@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
 import Logo from '@/components/Logo'
 import MetaHead from '@/components/layout/MetaHead'
@@ -18,7 +18,7 @@ const About: NextPageWithLayout = () => {
       />
       <Box>
         <LogoWrapper>
-          <Logo isFold={false} isHighlightInitial variety="header_1" />
+          <Logo isFold={false} variety="header_1" />
         </LogoWrapper>
         <DescriptionWrapper>
           <Description>
@@ -77,8 +77,8 @@ const DescriptionWrapper = styled.div`
 
 const Description = styled.p`
   word-break: keep-all;
-  ${FONT.body_1};
-  color: ${({ theme }) => theme.color.grey800};
+  ${FONT.title_2};
+  color: ${({ theme }) => theme.color.grey700};
   margin: 10px 0;
 `
 

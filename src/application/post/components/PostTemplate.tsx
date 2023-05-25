@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
-import styled, { css } from 'styled-components'
+import styled from '@emotion/styled'
+import { css } from '@emotion/react'
 
 import CategoryChip from './CategoryChip'
 import TOC, { TOC_WIDTH_IN_PC } from './TOC'
 import Frame from '@/components/layout/Frame'
-import Thumbnail from '@/components/Thumbnail'
 
-import { HighlightBlock } from './mdx/style'
+import Flex from '@/components/flex'
+import Thumbnail from '@/components/Thumbnail'
+import Typo from '@/components/typo'
+
 import { FrontMatter } from '@/domain/post/type'
 import MEDIA from '@/styles/constants/media'
-import FONT from '@/styles/constants/font'
 import { NAVBAR_HEIGHT } from '@/components/layout/Navbar'
+import { HighlightBlock } from './mdx/style'
 
 type Props = {
   children: React.ReactNode
@@ -23,7 +26,7 @@ const PostTemplate = ({ data, children }: Props) => {
   const { title, createDate, category, thumbnailSrc, description } = data
   const [showThumbnail, setShowThumbnail] = useState(!!thumbnailSrc)
 
-  const handleSrcError = () => {
+  const handleImageError = () => {
     try {
       return require(`/public/post/${thumbnailSrc}`)
     } catch (error) {
@@ -33,35 +36,46 @@ const PostTemplate = ({ data, children }: Props) => {
   }
 
   return (
-    <Article>
+    <Article as="article" direction="column">
       <HeaderFrame>
-        <Title>{title}</Title>
-        <SubInfo>
-          {!!category && <CategoryChip category={category} />}
-          <CreateDate dateTime={createDate}>{createDate}</CreateDate>
-        </SubInfo>
-        <Summary>{description}</Summary>
-
         {showThumbnail && (
           <CustomThumbnail
-            src={handleSrcError()}
+            src={handleImageError()}
             layout="responsive"
             objectFit="contain"
             placeholder="blur"
             round
           />
         )}
+
+        <Title as="h1" variety="header_1" color="grey800">
+          {title}
+        </Title>
+        <SubInfo>
+          {!!category && <CategoryChip category={category} />}
+          <Typo
+            as="time"
+            variety="title_3"
+            color="grey600"
+            dateTime={createDate}
+          >
+            {createDate}
+          </Typo>
+        </SubInfo>
+        <Summary variety="title_2" color="grey800">
+          {description}
+        </Summary>
       </HeaderFrame>
 
       <BodyFrame>
         {!showThumbnail && (
-          <Aside $direction="top">
+          <Aside direction="top">
             <TOC />
           </Aside>
         )}
         <BodyWrapper>
           <MDXWrapper>{children}</MDXWrapper>
-          <Aside $direction="right">
+          <Aside direction="right">
             <TOC />
           </Aside>
         </BodyWrapper>
@@ -72,12 +86,9 @@ const PostTemplate = ({ data, children }: Props) => {
 
 export default PostTemplate
 
-const Article = styled.article`
-  display: flex;
-  flex-direction: column;
+const Article = styled(Flex)`
   margin-bottom: 100px;
-
-  color: ${({ theme }) => theme.color.grey800};
+  color: ${({ theme }) => theme.color.grey900};
   word-break: keep-all;
 `
 
@@ -85,8 +96,8 @@ const HeaderFrame = styled(Frame)`
   display: flex;
   flex-direction: column;
   max-width: ${WIDTH}px;
-  margin-bottom: 40px;
   margin-top: ${NAVBAR_HEIGHT}px;
+  margin-bottom: 40px;
 
   ${MEDIA.mobile} {
     margin-bottom: 20px;
@@ -94,12 +105,10 @@ const HeaderFrame = styled(Frame)`
 `
 
 const CustomThumbnail = styled(Thumbnail)`
-  margin-top: 15px; ;
+  margin-top: 15px;
 `
 
-const Title = styled.h1`
-  ${FONT.header_1};
-  color: ${({ theme }) => theme.color.grey800};
+const Title = styled(Typo)`
   margin: 30px 0 20px;
 `
 
@@ -107,17 +116,11 @@ const SubInfo = styled.div`
   display: grid;
   grid-auto-flow: column;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
   width: fit-content;
 `
 
-const CreateDate = styled.time`
-  ${FONT.title_4};
-  color: ${({ theme }) => theme.color.grey600};
-`
-
-const Summary = styled.p`
-  ${FONT.body_1};
+const Summary = styled(Typo)`
   margin-top: 10px;
 `
 
@@ -143,13 +146,13 @@ const BodyWrapper = styled.div`
   }
 `
 
-const Aside = styled.aside<{ $direction: 'right' | 'top' }>`
+const Aside = styled.aside<{ direction: 'right' | 'top' }>`
   &:empty {
     display: none;
   }
 
-  ${({ $direction }) =>
-    $direction === 'right'
+  ${({ direction }) =>
+    direction === 'right'
       ? css`
           ${MEDIA_SCREEN_FOR_TOC} {
             display: none;
@@ -173,6 +176,7 @@ const Aside = styled.aside<{ $direction: 'right' | 'top' }>`
           ${TOC.TOCBox} {
             position: unset;
             width: 100%;
+            margin-bottom: 20px;
           }
         `}
 
@@ -186,10 +190,8 @@ const MDXWrapper = styled.div`
   width: -webkit-fill-available;
 
   aside {
-    ${HighlightBlock}
-
-    p:last-child {
-      margin-bottom: 0;
-    }
+    ${({ theme }) => css`
+      ${HighlightBlock(theme)};
+    `}
   }
 `

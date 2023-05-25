@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
 
 import Thumbnail, { ThumbnailProps } from '@/components/Thumbnail'
 
@@ -8,7 +7,7 @@ type Props = Pick<ThumbnailProps, 'src' | 'alt' | 'height'>
 const Picture = ({ src, alt, height }: Props) => {
   const [error, setError] = useState(false)
 
-  const handleSrcError = () => {
+  const handleImageError = () => {
     try {
       return require(`/public/post/${src}`)
     } catch (error) {
@@ -19,21 +18,15 @@ const Picture = ({ src, alt, height }: Props) => {
   if (error) return <></>
 
   return (
-    <Wrapper>
-      <Thumbnail
-        src={handleSrcError()}
-        layout="fill"
-        objectFit="contain"
-        height={height ?? 300}
-        alt={alt}
-        placeholder="blur"
-      />
-    </Wrapper>
+    <Thumbnail
+      src={handleImageError()}
+      layout="fill"
+      objectFit="contain"
+      height={height ?? 300}
+      alt={alt}
+      placeholder="blur"
+    />
   )
 }
 
 export default Picture
-
-const Wrapper = styled.div`
-  margin: 20px 0;
-`

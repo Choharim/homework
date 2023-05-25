@@ -1,69 +1,93 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
-import {
-  BlockQuote,
-  HighlightWord,
-  ListContainer,
-  ParagrahFont,
-  HeaderFont,
-} from './style'
+import { HighlightWord, ListContainer, ParagrahFont, HeaderFont } from './style'
 import Code from './Code'
 import Picture from './Picture'
 import Outlink from './Outlink'
 import FONT from '@/styles/constants/font'
+import { css } from '@emotion/react'
 
 const MDX_STYLE = {
   h2: styled.h2`
+    margin: 35px 0 20px;
+
     ${FONT.header_2};
-    margin: 30px 0 20px;
-    ${HeaderFont}
+    ${({ theme }) => css`
+      ${HeaderFont(theme)}
+    `}
   `,
   h3: styled.h3`
+    margin: 30px 0 15px;
+
     ${FONT.header_3};
-    margin: 15px 0 10px;
-    ${HeaderFont}
+    ${({ theme }) => css`
+      ${HeaderFont(theme)}
+    `}
   `,
 
   h4: styled.h4`
+    margin: 25px 0 10px;
+
     ${FONT.header_4};
-    margin: 15px 0 10px;
-    ${HeaderFont}
+    ${({ theme }) => css`
+      ${HeaderFont(theme)}
+    `}
   `,
   p: styled.p`
-    ${ParagrahFont}
-    margin-bottom: 10px;
+    ${ParagrahFont};
+
+    margin-bottom: 12px;
     &:last-child {
       margin-bottom: 0;
     }
 
     > code {
-      ${HighlightWord}
+      ${({ theme }) => css`
+        ${HighlightWord(theme)}
+      `}
     }
+  `,
+  strong: styled.strong`
+    ${FONT.title_3};
+    color: ${({ theme }) => theme.color.primary500};
   `,
   ol: styled.ol`
-    ${ListContainer}
+    ${ListContainer};
 
     list-style-type: decimal;
-    > li {
-      &::marker {
-        font-weight: bold;
-      }
-    }
   `,
   ul: styled.ul`
-    ${ListContainer}
+    ${ListContainer};
 
     list-style-type: disc;
   `,
   li: styled.li`
-    ${ParagrahFont}
+    margin: 8px 0;
+    ${ParagrahFont};
 
-    margin: 6px 0;
+    &::marker {
+      ${FONT.title_3};
+    }
+
     > code {
-      ${HighlightWord}
+      ${({ theme }) => css`
+        ${HighlightWord(theme)}
+      `}
     }
   `,
-  blockquote: BlockQuote,
+  blockquote: styled.blockquote`
+    padding: 8px 10px 8px 20px;
+    margin: 20px 0;
+
+    ${FONT.title_1};
+    border-left: 4px solid ${({ theme }) => theme.color.primary500};
+    background-color: ${({ theme }) => theme.color.grey100};
+    border-radius: 2px;
+
+    code {
+      color: ${({ theme }) => theme.color.primary400};
+    }
+  `,
   code: Code,
   Picture,
   a: Outlink,

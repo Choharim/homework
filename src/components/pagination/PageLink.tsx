@@ -1,15 +1,16 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { HTMLAttributes } from 'react'
+import React, { ComponentProps } from 'react'
 
 import { PaginationProps } from './Pagination'
 
 interface PageLinkProps
   extends Pick<PaginationProps, 'pageQueryKey'>,
-    HTMLAttributes<HTMLLinkElement> {
+    ComponentProps<'link'> {
   pageQueryValue: number
   children: React.ReactElement
 }
+
 function PageLink({
   pageQueryKey,
   pageQueryValue,
@@ -20,6 +21,7 @@ function PageLink({
 
   return (
     <Link
+      className={className}
       href={{
         query: {
           ...router.query,
@@ -27,7 +29,7 @@ function PageLink({
         },
       }}
     >
-      <a className={className}>{children}</a>
+      {children}
     </Link>
   )
 }

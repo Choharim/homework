@@ -1,9 +1,9 @@
 import React, { HTMLAttributes } from 'react'
-import styled, { css } from 'styled-components'
+import styled from '@emotion/styled'
 
+import Frame from './Frame'
 import Navbar, { NAVBAR_HEIGHT } from './Navbar'
 import Footer, { FOOTER_HEIGHT } from './Footer'
-import Frame from './Frame'
 
 interface Props extends Pick<HTMLAttributes<HTMLElement>, 'className'> {
   children: React.ReactNode
@@ -24,9 +24,7 @@ const Layout = ({
       {resetFrameStyle ? (
         <main>{children}</main>
       ) : (
-        <Main css={mainStyle} asTag="main">
-          {children}
-        </Main>
+        <Main as="main">{children}</Main>
       )}
       {hasFooter && <Layout.Footer />}
     </LayoutFrame>
@@ -46,9 +44,6 @@ const LayoutFrame = styled.div`
   display: flex;
   flex-direction: column;
 `
-const mainStyle = css`
-  padding-top: ${NAVBAR_HEIGHT}px;
-`
 
 /**
  * @remarks
@@ -60,4 +55,5 @@ const Main = styled(Frame)`
   display: flex;
   flex-direction: column;
   min-height: calc((100vh - ${FOOTER_HEIGHT}px));
+  padding-top: ${NAVBAR_HEIGHT}px;
 `

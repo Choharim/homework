@@ -1,100 +1,91 @@
-import React from 'react'
+import React, { ComponentProps, PropsWithChildren } from 'react'
+import styled from '@emotion/styled'
 import Link from 'next/link'
-import styled from 'styled-components'
-
-import CategoryChip from './CategoryChip'
 
 import Post from '@/domain/post/type'
-import { limitTextLine } from '@/styles/mixin'
+import Typo from '@/components/typo'
+import Flex from '@/components/flex'
+
 import { POST_DIRECTORY } from '@/domain/post/constant'
-import FONT from '@/styles/constants/font'
+import { limitTextLine } from '@/styles/mixin'
 
-const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
-  const { data, slug } = props
-
+const PostCardLink = ({
+  children,
+  slug,
+}: PropsWithChildren<Pick<Post, 'slug'>>) => {
   return (
-    <Link
-      href={`/${POST_DIRECTORY}/[slug]`}
-      as={`/${POST_DIRECTORY}/${slug}`}
-      passHref
-    >
-      <Wrapper>
-        <PostCardLink.Content {...data} />
-      </Wrapper>
+    <Link href={`/${POST_DIRECTORY}/[slug]`} as={`/${POST_DIRECTORY}/${slug}`}>
+      <CardWrapper direction="column" as="article" gap="15px">
+        {children}
+      </CardWrapper>
     </Link>
   )
 }
 
 export default PostCardLink
 
-PostCardLink.Content = function Component(content: Post['data']) {
-  const { title, createDate, description, category } = content
-
-  return (
-    <Content>
-      <Top>
-        <Title>{title}</Title>
-        <Desc>{description}</Desc>
-      </Top>
-      <Bottom>
-        <CategoryChip category={category} />
-        <CreateDate dateTime={createDate}>{createDate}</CreateDate>
-      </Bottom>
-    </Content>
-  )
-}
-
-const Title = styled.h3`
-  ${FONT.header_3};
-  color: ${({ theme }) => theme.color.grey800};
-
-  ${limitTextLine(2)}
-
+const TitleWrapper = styled(Typo)`
+  ${limitTextLine(2)};
   transition: color 0.2s ease-in-out;
 `
 
-const Desc = styled.p`
-  ${FONT.title_2};
-  color: ${({ theme }) => theme.color.grey700};
-
-  ${limitTextLine(2)}
-
-  transition: color 0.2s ease-in-out;
-`
-
-const Wrapper = styled.article`
-  display: flex;
-  width: 100%;
+const CardWrapper = styled(Flex)`
   cursor: pointer;
 
-  :hover {
-    ${Title} {
+  &:hover {
+    ${TitleWrapper} {
       color: ${({ theme }) => theme.color.primary300};
     }
   }
 `
 
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+PostCardLink.Title = function Title({ children }: PropsWithChildren) {
+  return (
+    <TitleWrapper as="h3" variety="header_3" color="grey800">
+      {children}
+    </TitleWrapper>
+  )
+}
+
+PostCardLink.Desc = function Desc({ children }: PropsWithChildren) {
+  return (
+    <DescWrapper as="p" variety="title_2" color="grey700">
+      {children}
+    </DescWrapper>
+  )
+}
+
+const DescWrapper = styled(Typo)`
+  ${limitTextLine(2)};
 `
 
-const Top = styled.div`
+PostCardLink.Date = function Date({
+  dateTime,
+}: Pick<ComponentProps<'time'>, 'dateTime'>) {
+  return (
+    <Typo as="time" dateTime={dateTime} variety="title_3" color="grey600">
+      {dateTime}
+    </Typo>
+  )
+}
+
+PostCardLink.Top = function Top({ children }: PropsWithChildren) {
+  return <TopWrapper>{children}</TopWrapper>
+}
+
+const TopWrapper = styled.div`
   display: grid;
   gap: 10px;
 `
 
-const Bottom = styled.div`
+PostCardLink.Bottom = function Bottom({ children }: PropsWithChildren) {
+  return <BottomWrapper>{children}</BottomWrapper>
+}
+
+const BottomWrapper = styled.div`
   display: grid;
   grid-auto-flow: column;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
   width: fit-content;
-  margin-top: 10px;
-`
-
-const CreateDate = styled.time`
-  ${FONT.title_4};
-  color: ${({ theme }) => theme.color.grey700};
 `

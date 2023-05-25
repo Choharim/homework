@@ -1,14 +1,15 @@
 import Highlight, { defaultProps, Language } from 'prism-react-renderer'
 import theme from 'prism-react-renderer/themes/vsDark'
-import styled, { css } from 'styled-components'
 import rangeParser from 'parse-numeric-range'
 import { useCallback } from 'react'
+import styled from '@emotion/styled'
+import { css } from '@emotion/react'
 
-import MEDIA from '@/styles/constants/media'
-import FONT from '@/styles/constants/font'
 import Icon from '@/components/icon'
 import ToastPortal from '@/components/toast/ToastPortal'
+
 import useToast from '@/components/toast/useToast'
+import FONT from '@/styles/constants/font'
 
 const COPY_SUCCESS = '클립보드에 복사되었습니다.'
 const COPY_FAILURE = '복사를 다시 시도해주세요.'
@@ -58,34 +59,32 @@ const Code = ({ className, children }: Props) => {
   return match ? (
     <Wrapper>
       <ToastPortal toasts={toasts} />
-      <HighlightWrapper>
-        <CopyCodeButton onClick={copyCode} type="Copy" fill="grey400" />
-        <Highlight
-          {...defaultProps}
-          language={match[1] as Language}
-          code={children}
-          theme={theme}
-        >
-          {({ tokens, getLineProps, getTokenProps }) => (
-            <LineContainer>
-              {tokens.map((line, i) => (
-                <Line
-                  key={`code-line_${i}`}
-                  {...getLineProps({
-                    line,
-                    key: i,
-                  })}
-                  $isHighlight={isHighlightLine(i)}
-                >
-                  {line.map((token, key) => (
-                    <CodeText key={key} {...getTokenProps({ token, key })} />
-                  ))}
-                </Line>
-              ))}
-            </LineContainer>
-          )}
-        </Highlight>
-      </HighlightWrapper>
+      <CopyCodeButton onClick={copyCode} type="Copy" fill="grey600" />
+      <Highlight
+        {...defaultProps}
+        theme={theme}
+        language={match[1] as Language}
+        code={children}
+      >
+        {({ tokens, getLineProps, getTokenProps }) => (
+          <LineContainer>
+            {tokens.map((line, i) => (
+              <Line
+                key={`code-line_${i}`}
+                {...getLineProps({
+                  line,
+                  key: i,
+                })}
+                isHighlight={isHighlightLine(i)}
+              >
+                {line.map((token, key) => (
+                  <CodeToken key={key} {...getTokenProps({ token, key })} />
+                ))}
+              </Line>
+            ))}
+          </LineContainer>
+        )}
+      </Highlight>
     </Wrapper>
   ) : (
     <code>{children}</code>
@@ -93,98 +92,65 @@ const Code = ({ className, children }: Props) => {
 }
 export default Code
 
-const PADDING_X = {
-  pc: '20px',
-  tablet: '15px',
-} as const
+const PADDING = '15px'
 
 const CopyCodeButton = styled(Icon)`
   position: absolute;
-  top: ${PADDING_X.pc};
-  right: ${PADDING_X.pc};
-
-  ${MEDIA.tablet} {
-    top: ${PADDING_X.tablet};
-    right: ${PADDING_X.tablet};
-  }
+  top: ${PADDING};
+  right: ${PADDING};
 `
 
 const Wrapper = styled.div`
   position: relative;
+
   &:hover {
     ${CopyCodeButton} {
-      fill: ${({ theme }) => theme.color.white};
+      fill: ${({ theme }) => theme.color.grey100};
     }
   }
 `
 
-const HighlightWrapper = styled.pre`
-  padding: calc(${PADDING_X.pc} * 2) ${PADDING_X.pc};
+const LineContainer = styled.ol`
+  display: grid;
+  padding: calc(${PADDING} * 2) ${PADDING};
+  overflow-x: auto;
   border-radius: 10px;
   background-color: #212121;
-  overflow-x: auto;
 
-  ${MEDIA.tablet} {
-    padding: calc(${PADDING_X.tablet} * 2) ${PADDING_X.tablet};
+  &::-webkit-scrollbar {
+    height: 20px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.color.primary50};
+    background-clip: padding-box;
+    border: 7px solid transparent;
+
+    border-radius: 9999px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #212121;
   }
 `
 
-const LineContainer = styled.div`
-  width: 100%;
-
-  padding: 0;
-
-  .comment {
-    color: #ececec84 !important;
-  }
-  .function,
-  .method,
-  .constant {
-    color: #7fa6f9 !important;
-  }
-  .imports.maybe-class-name {
-    color: #f8f8f2 !important;
-  }
-  .maybe-class-name {
-    color: #ffcb6b !important;
-  }
-
-  .keyword,
-  .punctuation {
-    color: #b283cf !important;
-  }
-  .module,
-  .control-flow,
-  .operator {
-    color: #88deff !important;
-  }
-
-  .plain,
-  .literal-property {
-    color: #eeffff !important;
-  }
-
-  .string {
-    color: #c0e58b !important;
-  }
-  .number {
-    color: #f2896a !important;
-  }
+const CodeToken = styled.span`
+  ${FONT.body_1};
 `
 
-const CodeText = styled.span`
-  ${FONT.body_2};
-`
-
-const Line = styled.div<{ $isHighlight: boolean }>`
-  ${({ $isHighlight }) =>
-    $isHighlight &&
+const Line = styled.li<{ isHighlight: boolean }>`
+  ${({ isHighlight }) =>
+    isHighlight &&
     css`
       background-color: rgb(47, 53, 60);
     `}
 
+  &:hover {
+    background-color: rgb(47, 53, 60);
+  }
+
   &:last-child {
-    ${CodeText} {
+    ${CodeToken} {
       display: none !important;
     }
   }

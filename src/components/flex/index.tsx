@@ -1,5 +1,6 @@
 import { CSSProperties, ElementType, forwardRef, useMemo } from 'react'
-import styled, { css } from 'styled-components'
+import styled from '@emotion/styled'
+import { css } from '@emotion/react'
 
 import {
   PolymorphicComponentProps,
@@ -22,7 +23,7 @@ type ElementTag = Extract<
   | 'label'
 >
 
-interface FlexStyle {
+type FlexStyle = {
   direction: CSSProperties['flexDirection']
   justify: CSSProperties['justifyContent']
   align: CSSProperties['alignItems']
@@ -51,7 +52,13 @@ const Flex = forwardRef(
     forwardRef: PolymorphicRef<E>
   ) => {
     const styles = useMemo(
-      () => ({ direction, justify, align, gap, wrap }),
+      () => ({
+        direction: direction,
+        justify: justify,
+        align: align,
+        gap: gap,
+        wrap: wrap,
+      }),
       [direction, justify, align, gap, wrap]
     )
 
@@ -74,7 +81,7 @@ export default Flex as <E extends ElementTag>(
 
 Flex.displayName = 'Flex'
 
-const FlexWrapper = styled(DEFAULT_TAG)<Partial<FlexStyle>>`
+const FlexWrapper = styled(DEFAULT_TAG)<FlexStyle>`
   display: flex;
 
   ${({ direction, justify, align, gap, wrap }) => css`

@@ -1,11 +1,7 @@
-import React from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
+import React, { PropsWithChildren } from 'react'
 
-type Props = {
-  children: React.ReactNode
-}
-
-const CardListFrame = ({ children }: Props) => {
+const CardListFrame = ({ children }: PropsWithChildren) => {
   return <Wrapper>{children}</Wrapper>
 }
 
@@ -13,8 +9,7 @@ export default CardListFrame
 
 const Wrapper = styled.div`
   display: grid;
-  gap: 30px;
-  margin-top: 20px;
-  height: 100%;
   align-content: flex-start;
+  gap: 40px;
+  height: 100%;
 `

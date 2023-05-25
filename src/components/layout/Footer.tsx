@@ -1,5 +1,5 @@
 import React, { HtmlHTMLAttributes } from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
 import { EN_NAME } from '@/domain/owner/constant'
 import FONT from '@/styles/constants/font'
@@ -26,7 +26,7 @@ const Desc = styled.footer`
   align-items: center;
   width: '100%';
   margin: 0 auto;
-  color: ${({ theme }) => theme.color.grey700};
+  color: ${({ theme }) => theme.color.grey900};
   height: ${FOOTER_HEIGHT}px;
   ${FONT.body_1};
 `

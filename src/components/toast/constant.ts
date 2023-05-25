@@ -1,3 +1,4 @@
+import { NAVBAR_HEIGHT } from '../layout/Navbar'
 import { Variety } from './type'
 
 export const TOAST_PORTAL_ID = 'toast-portal'
@@ -8,6 +9,6 @@ export const DESC: Readonly<Record<Variety, string>> = {
   normal: '',
 }
 
-export const TOAST_TOP_POSITION = 24
+export const TOAST_TOP_POSITION: number = NAVBAR_HEIGHT + 20
 
 export const TOAST_TIMEOUT = 3000

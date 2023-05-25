@@ -1,16 +1,15 @@
 import { HTMLAttributes } from 'react'
 import Image, { ImageProps } from 'next/image'
-import styled, { css } from 'styled-components'
+import styled from '@emotion/styled'
+import { css } from '@emotion/react'
 
 export interface ThumbnailProps
-  extends Pick<
-      ImageProps,
-      'src' | 'width' | 'objectFit' | 'placeholder' | 'alt'
-    >,
+  extends Pick<ImageProps, 'width' | 'objectFit' | 'placeholder' | 'alt'>,
     Pick<HTMLAttributes<HTMLDivElement>, 'className'> {
   layout: 'fill' | 'responsive'
   height?: number
   round?: boolean
+  src: string
 }
 
 const Thumbnail = ({

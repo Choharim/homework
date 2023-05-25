@@ -1,5 +1,5 @@
-import { HEADERS_OF_CONTENTS } from './constant'
-import { HeadersOfContents } from './type'
+import { HEADERS_OF_CONTENTS } from '../constant'
+import { HeadersOfContents } from '../type'
 
 const isHeadersOfContents = (
   headerName: string
