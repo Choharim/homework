@@ -40,27 +40,6 @@
           {
             "target": "./src/domain",
             "from": "./pages"
-          },
-
-          {
-            "target": "./src/application",
-            "from": "./src/utils"
-          },
-          {
-            "target": "./src/application",
-            "from": "./src/constants"
-          },
-          {
-            "target": "./src/application",
-            "from": "./src/hooks"
-          },
-          {
-            "target": "./src/application",
-            "from": "./src/components"
-          },
-          {
-            "target": "./src/application",
-            "from": "./pages"
           }
         ]
       }
