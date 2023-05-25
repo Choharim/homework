@@ -10,8 +10,8 @@ import { serialize } from 'next-mdx-remote/serialize'
 import { ParsedUrlQuery } from 'querystring'
 import * as mdx from '@mdx-js/react'
 
-import MDX_STYLE from '@/components/mdx'
-import PostTemplate from '@/components/post/PostTemplate'
+import MDX_STYLE from '@/application/post/components/mdx'
+import PostTemplate from '@/application/post/components/PostTemplate'
 import Layout from '@/components/layout/Layout'
 import MetaHead from '@/components/layout/MetaHead'
 

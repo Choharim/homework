@@ -1,8 +1,8 @@
 import { InferGetStaticPropsType } from 'next'
 
-import PostCardLink from '@/components/post/PostCardLink'
-import CardListFrame from '@/components/post/CardListFrame'
-import CategoryFilter from '@/components/post/CategoryFilter'
+import PostCardLink from '@/application/post/components/PostCardLink'
+import CardListFrame from '@/application/post/components/CardListFrame'
+import CategoryFilter from '@/application/post/components/CategoryFilter'
 import Pagination from '@/components/pagination/Pagination'
 
 import usePagination from '@/components/pagination/usePagination'

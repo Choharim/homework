@@ -7,9 +7,9 @@ import {
 import React from 'react'
 import { ParsedUrlQuery } from 'querystring'
 
-import PostCardLink from '@/components/post/PostCardLink'
-import CardListFrame from '@/components/post/CardListFrame'
-import CategoryFilter from '@/components/post/CategoryFilter'
+import PostCardLink from '@/application/post/components/PostCardLink'
+import CardListFrame from '@/application/post/components/CardListFrame'
+import CategoryFilter from '@/application/post/components/CategoryFilter'
 import usePagination from '@/components/pagination/usePagination'
 import Pagination from '@/components/pagination/Pagination'
 
