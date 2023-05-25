@@ -6,11 +6,10 @@ import { PaginationProps } from './Pagination'
 
 interface PageLinkProps
   extends Pick<PaginationProps, 'pageQueryKey'>,
-    ComponentProps<'link'> {
+    ComponentProps<'a'> {
   pageQueryValue: number
   children: React.ReactElement
 }
-
 function PageLink({
   pageQueryKey,
   pageQueryValue,
