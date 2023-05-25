@@ -14,8 +14,10 @@ const Outlink = ({
   return (
     <>
       {sameDomain ? (
-        <Link {...linkAttributes} href={href} target="_blank">
-          <Text>{children}</Text>
+        <Link {...linkAttributes} href={href} passHref>
+          <a target="_blank" rel="noreferrer">
+            <Text>{children}</Text>
+          </a>
         </Link>
       ) : (
         <a href={href} target="_blank" rel="noreferrer">
