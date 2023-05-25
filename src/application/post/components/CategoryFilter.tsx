@@ -2,11 +2,12 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { useRouter } from 'next/router'
 
+import CategoryLink from './CategoryLink'
+
 import { CATEGORIES } from '@/domain/post/constant'
 import { CATEGORY_TITLE } from '@/application/post/constant'
 import { Category } from '@/domain/post/type'
-
-import CategoryLink from './CategoryLink'
+import FONT from '@/styles/constants/font'
 
 const GAP = 10
 
@@ -57,19 +58,12 @@ const Wrapper = styled.div`
 `
 
 const CategoryWrapper = styled.div<{ $isAll: boolean; $active: boolean }>`
-  padding: 4px 10px;
+  padding: 2px 12px;
   border-radius: 8px;
   white-space: nowrap;
   color: ${({ theme }) => theme.color.grey700};
 
-  ${({ $isAll, theme }) =>
-    $isAll
-      ? css`
-          ${theme.font.subtitle_2};
-        `
-      : css`
-          ${theme.font.subtitle_3};
-        `};
+  ${FONT.title_3};
 
   ${({ $active, theme }) =>
     $active &&

@@ -1,13 +1,14 @@
 import { BLOG } from '@/domain/owner/constant'
 import Link from 'next/link'
-import React, { HTMLAttributes } from 'react'
+import React, { ComponentProps } from 'react'
 import styled, { css, keyframes } from 'styled-components'
+import Typo from './typo'
 
-interface Props extends Pick<HTMLAttributes<HTMLElement>, 'className'> {
+interface Props extends ComponentProps<typeof Typo> {
   isFold: boolean
   isHighlightInitial?: boolean
 }
-const Logo = ({ isFold, isHighlightInitial, ...rest }: Props) => {
+const Logo = ({ isFold, isHighlightInitial, ...typoProps }: Props) => {
   const alphabets = BLOG.fullName.split('')
 
   const isInitial = (alphabet: string) => {
@@ -23,7 +24,8 @@ const Logo = ({ isFold, isHighlightInitial, ...rest }: Props) => {
             $isInitial={isInitial(alphabet)}
             $isFold={isFold}
             $isHighlightInitial={isHighlightInitial}
-            {...rest}
+            variety={typoProps.variety ?? 'header_4'}
+            {...typoProps}
           >
             {alphabet}
           </Name>
@@ -57,13 +59,11 @@ const acordian = keyframes`
   }
 `
 
-const Name = styled.div<{
+const Name = styled(Typo)<{
   $isInitial: boolean
   $isFold: Props['isFold']
   $isHighlightInitial: Props['isHighlightInitial']
 }>`
-  ${({ theme }) => theme.font.header_4};
-
   ${({ $isInitial, theme, $isFold, $isHighlightInitial }) =>
     $isInitial
       ? css`
@@ -75,7 +75,7 @@ const Name = styled.div<{
             ? theme.color.primary300
             : theme.color.primary500};
 
-          animation: ${acordian} 3.5s ease-in-out 1s
+          animation: ${acordian} 3s ease-in-out 0.5s
             ${$isFold && 'reverse forwards'};
         `}
 `

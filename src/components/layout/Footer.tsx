@@ -2,6 +2,7 @@ import React, { HtmlHTMLAttributes } from 'react'
 import styled from 'styled-components'
 
 import { EN_NAME } from '@/domain/owner/constant'
+import FONT from '@/styles/constants/font'
 
 export const FOOTER_HEIGHT = 100
 
@@ -20,12 +21,12 @@ const Footer = ({ className }: Props) => {
 
 export default Footer
 
-const Desc = styled.footer(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '100%',
-  height: `${FOOTER_HEIGHT}px`,
-  color: theme.color.grey700,
-  ...theme.font.body_3,
-}))
+const Desc = styled.footer`
+  display: flex;
+  align-items: center;
+  width: '100%';
+  margin: 0 auto;
+  color: ${({ theme }) => theme.color.grey700};
+  height: ${FOOTER_HEIGHT}px;
+  ${FONT.body_1};
+`

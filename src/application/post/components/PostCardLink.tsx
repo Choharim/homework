@@ -1,12 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
-import styled, { css } from 'styled-components'
-
-import { POST_DIRECTORY } from '@/domain/post/constant'
-import Post from '@/domain/post/type'
-import { limitTextLine } from '@/styles/mixin'
+import styled from 'styled-components'
 
 import CategoryChip from './CategoryChip'
+
+import Post from '@/domain/post/type'
+import { limitTextLine } from '@/styles/mixin'
+import { POST_DIRECTORY } from '@/domain/post/constant'
+import FONT from '@/styles/constants/font'
 
 const PostCardLink = (props: Pick<Post, 'data' | 'slug'>) => {
   const { data, slug } = props
@@ -44,22 +45,16 @@ PostCardLink.Content = function Component(content: Post['data']) {
 }
 
 const Title = styled.h3`
-  ${({ theme }) => theme.font.header_2};
+  ${FONT.header_3};
   color: ${({ theme }) => theme.color.grey800};
 
   ${limitTextLine(2)}
 
   transition: color 0.2s ease-in-out;
-
-  ${({ theme }) => css`
-    ${theme.media.mobile} {
-      ${theme.font.header_3};
-    }
-  `}
 `
 
 const Desc = styled.p`
-  ${({ theme }) => theme.font.subtitle_3};
+  ${FONT.title_2};
   color: ${({ theme }) => theme.color.grey700};
 
   ${limitTextLine(2)}
@@ -87,7 +82,7 @@ const Content = styled.div`
 
 const Top = styled.div`
   display: grid;
-  gap: 6px;
+  gap: 10px;
 `
 
 const Bottom = styled.div`
@@ -100,6 +95,6 @@ const Bottom = styled.div`
 `
 
 const CreateDate = styled.time`
-  ${({ theme }) => theme.font.body_3};
-  color: ${({ theme }) => theme.color.grey600};
+  ${FONT.title_4};
+  color: ${({ theme }) => theme.color.grey700};
 `

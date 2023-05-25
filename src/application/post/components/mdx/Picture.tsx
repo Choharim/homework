@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import Thumbnail, { ThumbnailProps } from '../Thumbnail'
+import Thumbnail, { ThumbnailProps } from '@/components/Thumbnail'
 
 type Props = Pick<ThumbnailProps, 'src' | 'alt' | 'height'>
 

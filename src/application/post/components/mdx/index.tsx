@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import {
   BlockQuote,
@@ -10,41 +10,24 @@ import {
 import Code from './Code'
 import Picture from './Picture'
 import Outlink from './Outlink'
+import FONT from '@/styles/constants/font'
 
 const MDX_STYLE = {
   h2: styled.h2`
-    ${({ theme }) => theme.font.header_2};
-    margin: 40px 0 20px;
+    ${FONT.header_2};
+    margin: 30px 0 20px;
     ${HeaderFont}
-
-    ${({ theme }) => css`
-      ${theme.media.tablet} {
-        ${theme.font.header_3};
-      }
-    `}
   `,
   h3: styled.h3`
-    ${({ theme }) => theme.font.header_3};
+    ${FONT.header_3};
     margin: 15px 0 10px;
     ${HeaderFont}
-
-    ${({ theme }) => css`
-      ${theme.media.tablet} {
-        ${theme.font.header_4};
-      }
-    `}
   `,
 
   h4: styled.h4`
-    ${({ theme }) => theme.font.header_4};
+    ${FONT.header_4};
     margin: 15px 0 10px;
     ${HeaderFont}
-
-    ${({ theme }) => css`
-      ${theme.media.tablet} {
-        ${theme.font.subtitle_1};
-      }
-    `}
   `,
   p: styled.p`
     ${ParagrahFont}

@@ -4,8 +4,10 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import Chip from '../Chip'
-import Icon from '../icon/Icon'
+import Icon from '../icon'
 import PageLink from './PageLink'
+import MEDIA from '@/styles/constants/media'
+import FONT from '@/styles/constants/font'
 
 const DISPLAY_PAGE_COUNT = 5
 const HALF = Math.floor(DISPLAY_PAGE_COUNT / 2)
@@ -118,7 +120,6 @@ const Page = styled(Chip)<{ $active: boolean }>`
   height: 32px;
   margin: 5px;
   border-radius: 4px;
-  ${({ theme }) => theme.font.subtitle_3};
 
   ${({ $active, theme }) =>
     $active
@@ -132,6 +133,7 @@ const Page = styled(Chip)<{ $active: boolean }>`
           color: ${theme.color.primary400};
           cursor: pointer;
         `}
+  ${FONT.title_3};
 `
 
 const CustomPageLink = styled(PageLink)<{ $dimmed: boolean }>`
@@ -164,7 +166,7 @@ const CustomIcon = styled(Icon)<{ $isleftType?: boolean }>`
 
   padding: 5px;
   width: 30px;
-  ${({ theme }) => theme.media.tablet} {
+  ${MEDIA.tablet} {
     padding: 5px;
     width: 25px;
   }

@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 
-import { FrontMatter } from '@/domain/post/type'
-import { HighlightBlock } from '../mdx/style'
-
 import CategoryChip from './CategoryChip'
-import Thumbnail from '../Thumbnail'
-import Frame from '../layout/Frame'
 import TOC, { TOC_WIDTH_IN_PC } from './TOC'
-import { NAVBAR_HEIGHT } from '../layout/Navbar'
+import Frame from '@/components/layout/Frame'
+import Thumbnail from '@/components/Thumbnail'
+
+import { HighlightBlock } from './mdx/style'
+import { FrontMatter } from '@/domain/post/type'
+import MEDIA from '@/styles/constants/media'
+import FONT from '@/styles/constants/font'
+import { NAVBAR_HEIGHT } from '@/components/layout/Navbar'
 
 type Props = {
   children: React.ReactNode
@@ -75,7 +77,7 @@ const Article = styled.article`
   flex-direction: column;
   margin-bottom: 100px;
 
-  color: ${({ theme }) => theme.color.grey700};
+  color: ${({ theme }) => theme.color.grey800};
   word-break: keep-all;
 `
 
@@ -86,7 +88,7 @@ const HeaderFrame = styled(Frame)`
   margin-bottom: 40px;
   margin-top: ${NAVBAR_HEIGHT}px;
 
-  ${({ theme }) => theme.media.mobile} {
+  ${MEDIA.mobile} {
     margin-bottom: 20px;
   }
 `
@@ -96,15 +98,9 @@ const CustomThumbnail = styled(Thumbnail)`
 `
 
 const Title = styled.h1`
-  ${({ theme }) => theme.font.header_1};
+  ${FONT.header_1};
   color: ${({ theme }) => theme.color.grey800};
   margin: 30px 0 20px;
-
-  ${({ theme }) => css`
-    ${theme.media.tablet} {
-      ${theme.font.header_2};
-    }
-  `}
 `
 
 const SubInfo = styled.div`
@@ -116,12 +112,12 @@ const SubInfo = styled.div`
 `
 
 const CreateDate = styled.time`
-  ${({ theme }) => theme.font.body_3};
+  ${FONT.title_4};
   color: ${({ theme }) => theme.color.grey600};
 `
 
 const Summary = styled.p`
-  ${({ theme }) => theme.font.subtitle_3};
+  ${FONT.body_1};
   margin-top: 10px;
 `
 
@@ -180,7 +176,7 @@ const Aside = styled.aside<{ $direction: 'right' | 'top' }>`
           }
         `}
 
-  ${({ theme }) => theme.media.mobile} {
+  ${MEDIA.mobile} {
     display: none;
   }
 `

@@ -1,10 +1,13 @@
 import styled, { css } from 'styled-components'
 
+import FONT from '@/styles/constants/font'
+import MEDIA from '@/styles/constants/media'
+
 export const HeaderFont = css`
   color: ${({ theme }) => theme.color.grey800};
 `
 export const ParagrahFont = css`
-  ${({ theme }) => theme.font.body_1};
+  ${FONT.body_2};
 `
 
 export const ListContainer = css`
@@ -14,15 +17,15 @@ export const ListContainer = css`
 
 export const HighlightWord = css`
   display: inline;
-  padding: 3px 5px;
-  ${({ theme }) => theme.font.body_2};
+  padding: 4px 8px;
+  ${FONT.title_3};
   background-color: ${({ theme }) => theme.color.grey100};
   color: ${({ theme }) => theme.color.grey800};
   border-radius: 6px;
 `
 
 export const BlockQuote = styled.blockquote`
-  ${({ theme }) => theme.font.subtitle_3};
+  ${FONT.title_1};
 
   border-left: 4px solid ${({ theme }) => theme.color.primary500};
   background-color: ${({ theme }) => theme.color.grey100};
@@ -41,12 +44,9 @@ export const HighlightBlock = css`
   border: 1px dashed ${({ theme }) => theme.color.primary400};
   border-radius: 12px;
 
-  ${({ theme }) =>
-    css`
-      ${theme.media.tablet} {
-        margin: 22px 0 28px;
-      }
-    `}
+  ${MEDIA.tablet} {
+    margin: 22px 0 28px;
+  }
 
   ul,
   ol {

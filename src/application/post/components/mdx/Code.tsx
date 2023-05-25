@@ -4,10 +4,11 @@ import styled, { css } from 'styled-components'
 import rangeParser from 'parse-numeric-range'
 import { useCallback } from 'react'
 
-import Icon from '../icon/Icon'
-
+import MEDIA from '@/styles/constants/media'
+import FONT from '@/styles/constants/font'
+import Icon from '@/components/icon'
+import ToastPortal from '@/components/toast/ToastPortal'
 import useToast from '@/components/toast/useToast'
-import ToastPortal from '../toast/ToastPortal'
 
 const COPY_SUCCESS = '클립보드에 복사되었습니다.'
 const COPY_FAILURE = '복사를 다시 시도해주세요.'
@@ -102,12 +103,10 @@ const CopyCodeButton = styled(Icon)`
   top: ${PADDING_X.pc};
   right: ${PADDING_X.pc};
 
-  ${({ theme }) => css`
-    ${theme.media.tablet} {
-      top: ${PADDING_X.tablet};
-      right: ${PADDING_X.tablet};
-    }
-  `}
+  ${MEDIA.tablet} {
+    top: ${PADDING_X.tablet};
+    right: ${PADDING_X.tablet};
+  }
 `
 
 const Wrapper = styled.div`
@@ -125,11 +124,9 @@ const HighlightWrapper = styled.pre`
   background-color: #212121;
   overflow-x: auto;
 
-  ${({ theme }) => css`
-    ${theme.media.tablet} {
-      padding: calc(${PADDING_X.tablet} * 2) ${PADDING_X.tablet};
-    }
-  `}
+  ${MEDIA.tablet} {
+    padding: calc(${PADDING_X.tablet} * 2) ${PADDING_X.tablet};
+  }
 `
 
 const LineContainer = styled.div`
@@ -176,7 +173,7 @@ const LineContainer = styled.div`
 `
 
 const CodeText = styled.span`
-  ${({ theme }) => theme.font.body_2};
+  ${FONT.body_2};
 `
 
 const Line = styled.div<{ $isHighlight: boolean }>`

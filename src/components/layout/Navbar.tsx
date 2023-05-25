@@ -12,6 +12,7 @@ import useScrollTop from '@/hooks/useScrollTop'
 import Frame from './Frame'
 import Logo from '../Logo'
 import Z_INDEX from '@/styles/constants/zIndex'
+import FONT from '@/styles/constants/font'
 
 export const NAVBAR_HEIGHT = 60
 
@@ -114,7 +115,7 @@ const MenuContainer = styled.ul`
 
 const MenuText = styled.span`
   color: ${({ theme }) => theme.color.grey700};
-  ${({ theme }) => theme.font.subtitle_3};
+  ${FONT.title_3};
 `
 
 const LinkWrapper = styled.a`

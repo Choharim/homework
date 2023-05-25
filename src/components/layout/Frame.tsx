@@ -2,6 +2,7 @@ import React, { HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
 import { DEVICE_SIZE } from '@/constants/layout'
+import MEDIA from '@/styles/constants/media'
 
 const X_PADDING = 20
 
@@ -25,7 +26,7 @@ Frame.Layout = styled.div`
   max-width: ${DEVICE_SIZE.tablet}px;
   margin: 0 auto;
 
-  ${({ theme }) => theme.media.tablet} {
+  ${MEDIA.tablet} {
     padding: 0 ${X_PADDING}px;
   }
 `

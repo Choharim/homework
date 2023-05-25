@@ -2,11 +2,12 @@ import React, { MouseEvent, useEffect, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 
 import { HEADERS_OF_CONTENTS } from '@/application/post/constant'
-import { NAVBAR_HEIGHT } from '../layout/Navbar'
+import { NAVBAR_HEIGHT } from '../../../components/layout/Navbar'
 import { HeadersOfContents } from '@/application/post/type'
 import { setTOCId } from '@/application/post'
 import { convertHEXToRGB } from '@/utils/string'
 import Z_INDEX from '@/styles/constants/zIndex'
+import FONT from '@/styles/constants/font'
 
 export const TOC_WIDTH_IN_PC = 280
 
@@ -99,14 +100,14 @@ const List = styled.li<{ $headerType: HeadersOfContents; $highlight: boolean }>`
     switch ($headerType) {
       case 'h2':
         return css`
-          ${theme.font.body_2};
+          ${FONT.title_3};
           color: ${theme.color.grey800};
         `
       case 'h3':
       default:
         return css`
           margin-left: 15px;
-          ${theme.font.body_3};
+          ${FONT.title_4};
           color: ${theme.color.grey700};
         `
     }
