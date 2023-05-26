@@ -44,7 +44,7 @@ const Navbar = () => {
   const isScrollTop = useScrollTop()
 
   return (
-    <Navigation hidden={direction === 'down' && !isScrollTop}>
+    <Navigation isHidden={direction === 'down' && !isScrollTop}>
       <CustomFrame>
         <Logo isFold />
         <Navbar.Menu />
@@ -78,7 +78,7 @@ Navbar.Menu = React.memo(function Component() {
   )
 })
 
-const Navigation = styled.nav<{ hidden: boolean }>`
+const Navigation = styled.nav<{ isHidden: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -94,8 +94,8 @@ const Navigation = styled.nav<{ hidden: boolean }>`
   z-index: ${Z_INDEX.nav};
 
   display: block;
-  ${({ hidden }) =>
-    hidden
+  ${({ isHidden }) =>
+    isHidden
       ? css`
           transform: translateY(-100%);
         `

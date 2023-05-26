@@ -65,14 +65,14 @@ const Pagination = ({
   return (
     <Container align="center">
       <CustomPageLink
-        disabled={currentPage === 1}
+        isDisabled={currentPage === 1}
         pageQueryKey={pageQueryKey}
         pageQueryValue={1}
       >
         <CustomIcon css={rotateHalf} type="DoubleArrowRight" stroke="grey500" />
       </CustomPageLink>
       <CustomPageLink
-        disabled={currentPage === 1}
+        isDisabled={currentPage === 1}
         pageQueryKey={pageQueryKey}
         pageQueryValue={currentPage - 1}
       >
@@ -89,7 +89,7 @@ const Pagination = ({
       ))}
 
       <CustomPageLink
-        disabled={totalPage === currentPage}
+        isDisabled={totalPage === currentPage}
         pageQueryKey={pageQueryKey}
         pageQueryValue={currentPage + 1}
       >
@@ -97,7 +97,7 @@ const Pagination = ({
       </CustomPageLink>
 
       <CustomPageLink
-        disabled={totalPage === currentPage}
+        isDisabled={totalPage === currentPage}
         pageQueryKey={pageQueryKey}
         pageQueryValue={totalPage}
       >
@@ -138,13 +138,13 @@ const Page = styled(Chip)<{ isActive: boolean }>`
         `}
 `
 
-const CustomPageLink = styled(PageLink)<{ disabled: boolean }>`
+const CustomPageLink = styled(PageLink)<{ isDisabled: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
 
-  ${({ disabled, theme }) =>
-    disabled
+  ${({ isDisabled, theme }) =>
+    isDisabled
       ? css`
           cursor: default;
           pointer-events: none;

@@ -20,7 +20,7 @@ const OBSERVER_OPTIONS: IntersectionObserverInit = {
 
 const TOC = () => {
   const [headingElements, setHeadingElements] = useState<Element[]>([])
-  const [highlightId, setHighlightId] = useState<string>('')
+  const [isHighlightId, setisHighlightId] = useState<string>('')
   const entriesRef = useRef<Record<string, IntersectionObserverEntry>>({})
 
   useEffect(() => {
@@ -29,11 +29,11 @@ const TOC = () => {
         entriesRef.current[entry.target.id] = entry
       })
 
-      const highlightEntry = Object.values(entriesRef.current).find(
+      const isHighlightEntry = Object.values(entriesRef.current).find(
         (entry) => entry.isIntersecting
       )
 
-      if (highlightEntry) setHighlightId(highlightEntry.target.id)
+      if (isHighlightEntry) setisHighlightId(isHighlightEntry.target.id)
     }, OBSERVER_OPTIONS)
 
     const headingElements = Array.from(
@@ -60,7 +60,7 @@ const TOC = () => {
           target.getBoundingClientRect().top + window.scrollY - NAVBAR_HEIGHT,
       })
 
-      setTimeout(() => setHighlightId(target.id), 100)
+      setTimeout(() => setisHighlightId(target.id), 100)
     }
   }
 
@@ -73,7 +73,7 @@ const TOC = () => {
           <List
             key={heading.id}
             id={heading.id}
-            highlight={heading.id === highlightId}
+            isHighlight={heading.id === isHighlightId}
             headerType={heading.localName as HeadersOfContents}
             onClick={scrollToTargetHeading}
           >
@@ -91,7 +91,7 @@ TOC.TOCBox = styled.div`
   z-index: ${Z_INDEX.aside};
 `
 
-const List = styled.li<{ headerType: HeadersOfContents; highlight: boolean }>`
+const List = styled.li<{ headerType: HeadersOfContents; isHighlight: boolean }>`
   cursor: pointer;
 
   ${({ headerType, theme }) => {
@@ -113,8 +113,8 @@ const List = styled.li<{ headerType: HeadersOfContents; highlight: boolean }>`
     }
   }}
 
-  ${({ theme, highlight }) =>
-    highlight &&
+  ${({ theme, isHighlight }) =>
+    isHighlight &&
     css`
       color: ${theme.color.primary500};
       filter: drop-shadow(

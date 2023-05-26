@@ -34,7 +34,7 @@ const CategoryFilter = () => {
             variety="title_3"
             color="grey700"
             wrap="nowrap"
-            active={isActive(category)}
+            isActive={isActive(category)}
           >
             {CATEGORY_TITLE[category]}
           </CategoryText>
@@ -49,12 +49,12 @@ export default CategoryFilter
 const CategoryContainer = styled(Flex)`
   margin: 32px 0;
 `
-const CategoryText = styled(Typo)<{ active: boolean }>`
+const CategoryText = styled(Typo)<{ isActive: boolean }>`
   padding: 8px 12px;
   border-radius: 8px;
 
-  ${({ active, theme }) =>
-    active
+  ${({ isActive, theme }) =>
+    isActive
       ? css`
           color: ${theme.color.primary500};
           background-color: ${theme.color.grey100};
