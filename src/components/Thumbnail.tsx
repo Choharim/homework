@@ -8,7 +8,7 @@ export interface ThumbnailProps
     Pick<HTMLAttributes<HTMLDivElement>, 'className'> {
   layout: 'fill' | 'responsive'
   height?: number
-  round?: boolean
+  variety?: 'round'
   src: string
 }
 
@@ -19,11 +19,18 @@ const Thumbnail = ({
   objectFit,
   width,
   height,
+  variety,
   placeholder,
   ...rest
 }: ThumbnailProps) => {
   return (
-    <Container layout={layout} width={width} height={height} {...rest}>
+    <Container
+      layout={layout}
+      width={width}
+      height={height}
+      variety={variety}
+      {...rest}
+    >
       <Image
         src={src}
         layout={layout}
@@ -40,7 +47,7 @@ const Thumbnail = ({
 export default Thumbnail
 
 const Container = styled.div<
-  Pick<ThumbnailProps, 'layout' | 'width' | 'height' | 'round'>
+  Pick<ThumbnailProps, 'layout' | 'width' | 'height' | 'variety'>
 >`
   ${({ layout, width, height }) => {
     switch (layout) {
@@ -67,8 +74,8 @@ const Container = styled.div<
     }
   }}
 
-  ${({ round }) =>
-    round &&
+  ${({ variety }) =>
+    variety === 'round' &&
     css`
       img {
         border-radius: 25px;

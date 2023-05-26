@@ -44,7 +44,7 @@ const PostTemplate = ({ data, children }: Props) => {
             layout="responsive"
             objectFit="contain"
             placeholder="blur"
-            round
+            variety="round"
           />
         )}
 
