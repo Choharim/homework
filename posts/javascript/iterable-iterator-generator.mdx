@@ -71,22 +71,11 @@ const iterator = [1,2].[Symbol.iterator]()
 3. 이터레이터의 next 메소드를 호출해 이터레이터의 결과 객체를 반환한다.
 4. 결과 객체에서 done이 false일 때의 value를 순차적으로 data 변수에 할당한다.
 
-<aside>
-❓ for … of 문 vs for 문  
-for … of 문을 이용해 배열이라는 이터러블을 순회하는 것이 for문을 이용해 배열의 index로 순회하는 것보다 더 느리다. for … of 문에서는 이터레이터를 생성해야 하고, next를 호출해가며 리턴된 결과 객체의 done에 따라 변수에 value를 할당하기 때문이다.
-
-</aside>
-
-<aside>
-❓ for … in 문의 경우 순회하려는 객체의 프로토타입 체인 상에 존재하는 프로퍼티 중 [[Enumable]] 값이 true인 프로퍼티만 순회하며 열거하는 방식이다.
-
-</aside>
-
 ## 유사 배열 객체
 
-index와 length를 프로퍼티 key로 갖는 객체이다.
+index와 length를 프로퍼티 key로 갖는 객체이다. 배열도 index와 length를 프로퍼티로 갖는 유사 배열 객체이다.
 
-유사 배열 객체 중 이터러블이 아닌 객체도 존재한다. 이터러블이 아닌 유사 배열 객체의 경우 Symbol.iterator 메소드가 없어 for … of 문을 순회할 수 없고, 스프레드 문법과 디스트럭처링 할당도 할 수 없다. 이를 Array.from 메소드를 사용해 이터러블인 배열로 변환하여 사용할 수 있다.
+그러나 유사 배열 객체라고 이터러블이라는 것은 아니다. 이터러블이 아닌 유사 배열 객체의 경우 Symbol.iterator 메소드가 없어 for … of 문을 순회할 수 없고, 스프레드 문법과 디스트럭처링 할당도 할 수 없다. Array.from 메소드를 사용하면 이터러블인 배열로 변환하여 사용할 수 있다.
 
 ```jsx
 const arrayLike = {

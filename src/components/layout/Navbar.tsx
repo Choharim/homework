@@ -1,16 +1,19 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import styled from '@emotion/styled'
+import { css } from '@emotion/react'
+
+import Frame from './Frame'
+import Logo from '../Logo'
+import Flex from '../flex'
+import Typo from '../typo'
 
 import { GITHUB_URL } from '@/domain/owner/constant'
 import useScrollDirection from '@/hooks/useScrollDirection'
 import { convertHEXToRGB } from '@/utils/string'
 import { PAGE_PATH } from '@/constants/route'
 import useScrollTop from '@/hooks/useScrollTop'
-
-import Frame from './Frame'
-import Logo from '../Logo'
 import Z_INDEX from '@/styles/constants/zIndex'
 
 export const NAVBAR_HEIGHT = 60
@@ -56,20 +59,22 @@ Navbar.Menu = React.memo(function Component() {
   const { pathname } = useRouter()
 
   return (
-    <MenuContainer>
+    <Flex as="ul" align="baseline">
       {MENUS.map((menu, i) => (
-        <Menu key={`menu_${i}`} $active={pathname === menu.href}>
+        <MenuWrapper key={`menu_${i}`} isActive={pathname === menu.href}>
           <Link href={menu.href} passHref>
             <LinkWrapper
               target={menu.isOutlink ? '_blank' : '_self'}
               rel="noopener noreferrer"
             >
-              <MenuText>{menu.label}</MenuText>
+              <Menu variety="title_3" color="grey700">
+                {menu.label}
+              </Menu>
             </LinkWrapper>
           </Link>
-        </Menu>
+        </MenuWrapper>
       ))}
-    </MenuContainer>
+    </Flex>
   )
 })
 
@@ -107,15 +112,7 @@ const CustomFrame = styled(Frame)`
   justify-content: space-between;
 `
 
-const MenuContainer = styled.ul`
-  display: flex;
-  align-items: baseline;
-`
-
-const MenuText = styled.span`
-  color: ${({ theme }) => theme.color.grey700};
-  ${({ theme }) => theme.font.subtitle_3};
-`
+const Menu = styled(Typo)``
 
 const LinkWrapper = styled.a`
   display: flex;
@@ -123,27 +120,27 @@ const LinkWrapper = styled.a`
   padding: 3px 8px;
 `
 
-const Menu = styled.li<{ $active: boolean }>`
+const MenuWrapper = styled.li<{ isActive: boolean }>`
   border-radius: 4px;
 
-  &:not(:first-child) {
+  &:not(:first-of-type) {
     margin-left: 10px;
   }
 
-  &:hover {
-    ${MenuText} {
-      color: ${({ theme }) => theme.color.primary400};
-    }
-  }
-
-  ${({ $active, theme }) =>
-    $active &&
+  ${({ isActive, theme }) =>
+    isActive &&
     css`
       pointer-events: none;
       background-color: ${theme.color.grey100};
 
-      ${MenuText} {
+      ${Menu} {
         color: ${theme.color.primary400};
       }
     `}
+
+  &:hover {
+    ${Menu} {
+      color: ${({ theme }) => theme.color.primary400};
+    }
+  }
 `

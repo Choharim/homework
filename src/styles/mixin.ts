@@ -1,4 +1,4 @@
-import { css } from 'styled-components'
+import { css } from '@emotion/react'
 
 export const limitTextLine = (lineCount: number) => css`
   overflow: hidden;
@@ -7,4 +7,8 @@ export const limitTextLine = (lineCount: number) => css`
   -webkit-line-clamp: ${lineCount}; /* number of lines to show */
   line-clamp: ${lineCount};
   -webkit-box-orient: vertical;
+`
+
+export const rotateHalf = () => css`
+  transform: rotate(180deg);
 `

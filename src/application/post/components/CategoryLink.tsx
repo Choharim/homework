@@ -1,14 +1,13 @@
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import Link from 'next/link'
 
 import { Category } from '@/domain/post/type'
 
 type Props = {
   category: Category
-  children: React.ReactNode
 }
 
-const CategoryLink = ({ category, children }: Props) => {
+const CategoryLink = ({ category, children }: PropsWithChildren<Props>) => {
   return (
     <Link
       href={{

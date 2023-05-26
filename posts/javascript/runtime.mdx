@@ -36,11 +36,11 @@ category: javascript
 
 브라우저 종류에 따라 다른 JS 엔진이 내장되어 있다. 대표적인 JIT 컴파일 엔진은 다음과 같다.
 
-- V8
+- V8  
   대표적으로 크롬에서 사용되는 JS 엔진이다.
-- JavascriptCore
+- JavascriptCore  
   Safari에서 사용되는 JS 엔진이다.
-- SpiderMonkey
+- SpiderMonkey  
   Firefox에서 사용되는 JS 엔진이다.
 
 ### Node.js
@@ -59,8 +59,8 @@ V8 JS 엔진으로 빌드된 자바스크립트 런타임이다. 런타임 (runt
 하나의 `프로세스에 하나의 스레드`만 작업하는 것이 싱글 스레드이다. 한 스레드에는 프로그램이 실행될 때 작업의 실행 환경을 저장하기 위한 `스택 1개`가 할당된다. 실행은 LIFO 방식으로 한 블록씩 순차적으로 처리한다. 이로 인해 싱글 스레드는 `한 번에 하나의 작업`만 실행할 수 있다.
 
 <aside>
-⭐ **자바스크립트에서 코드는 싱글 스레드 환경에서 실행된다. 즉, 한 번에 하나의 명령문만 실행할 수 있다. 브라우저가 멀티 스레드를 실행하는 경우에도 자바스크립트 코드는 한 번에 하나의 명령문만 실행할 수 있음을 의미한다. 
-그럼, 브라우저에서 어떻게 자바스크립트를 비동기적으로 처리하는지 살펴보자.**
+⭐ **자바스크립트에서 코드는 싱글 스레드 환경에서 실행된다. 즉, 한 번에 하나의 명령문만 실행할 수 있다. 브라우저가 멀티 스레드를 실행하는 경우에도 자바스크립트 코드는 한 번에 하나의 명령문만 실행할 수 있음을 의미한다.   
+그럼, 브라우저에서 어떻게 자바스크립트를 비동기적으로 처리하는지 살펴보자.**  
  브라우저는 멀티 스레드로 동작한다. 브라우저에서 제공하는 Web API는 별도의 스레드에서 따로 실행되고, 그와 동시에 자바스크립트 코드는 JS 엔진의 기본 스레드에서 실행된다.
  브라우저가 제공하는 이벤트 루프와 우선순위 별로 나눠진 여러 Queue를 이용해 자바스크립트 비동기 callback을 처리하고 Web API callback을 JS 엔진의 스레드로 연결해준다.
 즉, 브라우저와 JS 엔진이 협력하여 여러 테스크를 동시에 처리할 수 있다.
@@ -105,27 +105,33 @@ V8 JS 엔진으로 빌드된 자바스크립트 런타임이다. 런타임 (runt
 
 먼저 들어간 데이터 순서대로 처리되는 FIFO(First In First Out)로 동작하는 자료구조인 Queue이다.
 
-callback을 처리하기 위한 여러 Queue가 있고 각 Queue에는 우선순위가 부여된다. 우선순위가 높은 순서는 Microtask Queue > Animation Frame > Task Queue이다.
+callback을 처리하기 위한 여러 Queue가 있고 각 Queue에는 우선순위가 부여된다. 우선순위가 높은 순서는 `Microtask Queue` > `Animation Frame Queue` > `Render Queue` > `Macrotask Queue`이다.
 
 > Microtask Queue (= Job Queue)
 
-- Promise와 같은 `자바스크립트 비동기 함수의 callback`을 처리한다.
+- Promise와 함께 사용되는 then/catch/finally 핸들러 같은 `자바스크립트 비동기 함수의 callback`을 처리한다.
+- queueMicrotask 함수를 사용하면 Microtask Queue에 넣어 작업을 처리할 수 있다.
 - 자바스크립트 비동기 함수가 실행되어 Call Stack에 들어갔다 Pop되면 callback이 Microtask Queue에 들어간다.
 - Call Stack이 비면 Microtask Queue에 있는 모든 task가 Call Stack으로 순차적으로 이동하여 실행된다.
 
-> Animation Frame (= Render Queue)
+> Animation Frame Queue
+
+- 초당 60 frame을 그려야 (`60fps`) 애니메이션이 부드럽게 표시될 수 있다.  
+  브라우저는 1초에 60개의 frame을 그리기 위해, `각 프레임마다 수행해야 하는 작업`을 Animation Frame Queue에 push한다.
+  - requestAnimationFrame 함수를 사용해 추가된다.
+- 하나의 프레임을 그리기 위한 작업이 `16.7ms(1000ms/60frame)보다 지연`되면, 다음 처리해야 하는 프레임 작업이 지연되어(병목 현상) `버벅임`이 발생하게 된다.
+
+> Render Queue
 
 - 브라우저의 렌더링 엔진에 의해 실행되는 task를 담는 Queue이다.
-- Call Stack이 비고 Microtask Queue에도 Call Stack으로 이동할 task가 없다면, 해당 Queue에 있는 모든 task가 Call Stack으로 순차적으로 이동하여 실행된다.
-- 불필요한 task가 Call Stack에 많이 적재되어있으면 Render Queue에 있는 task가 처리되지 못해 렌더링 되지 못한다.
 
-> Task Queue (= Macrotask Queue, Callback Queue)
+> Macrotask Queue (= Task Queue, Callback Queue)
 
-- setTimeout, DOM API, http 요청과 같은 Web API가 실행되면 Call Stack에 갔다가 Pop된 후 브라우저/런타임 백그라운드에서 시간이 걸리는 작업을 실행한다.
+- setTimeout, DOM API, http 요청과 같은 `Web API`가 실행되면 Call Stack에 갔다가 Pop된 후 브라우저/런타임 백그라운드에서 시간이 걸리는 작업을 실행한다.
   - setTimeout의 경우 주어진 시간을 할애한다.
   - 이벤트는 해당 이벤트가 발생할 때까지 백그라운드에서 대기한다.
-- 백그라운드에서 작업을 실행한 후(해당 이벤트가 발생하면) `Web API callback`이 Task Queue로 push된다.
-- Task Queue의 경우 task가 하나씩 Call Stack으로 이동된다.
+- 백그라운드에서 작업을 실행한 후(해당 이벤트가 발생하면) `Web API callback`이 Macrotask Queue로 push된다.
+- Macrotask Queue의 경우 task가 하나씩 Call Stack으로 이동된다.
 
 ### 코드로 이해하기
 

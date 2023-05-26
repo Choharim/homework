@@ -1,11 +1,17 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from '@emotion/styled'
+import { css } from '@emotion/react'
 
 import Chip from '../Chip'
-import Icon from '../icon/Icon'
+import Icon from '../icon'
 import PageLink from './PageLink'
+
+import MEDIA from '@/styles/constants/media'
+import FONT from '@/styles/constants/font'
+import { rotateHalf } from '@/styles/mixin'
+import Flex from '../flex'
 
 const DISPLAY_PAGE_COUNT = 5
 const HALF = Math.floor(DISPLAY_PAGE_COUNT / 2)
@@ -57,20 +63,20 @@ const Pagination = ({
   if (totalPage === 1) return null
 
   return (
-    <Container>
+    <Container align="center">
       <CustomPageLink
-        $dimmed={currentPage === 1}
+        disabled={currentPage === 1}
         pageQueryKey={pageQueryKey}
         pageQueryValue={1}
       >
-        <CustomIcon $isleftType type="DoubleArrowRight" stroke="grey500" />
+        <CustomIcon css={rotateHalf} type="DoubleArrowRight" stroke="grey500" />
       </CustomPageLink>
       <CustomPageLink
-        $dimmed={currentPage === 1}
+        disabled={currentPage === 1}
         pageQueryKey={pageQueryKey}
         pageQueryValue={currentPage - 1}
       >
-        <CustomIcon $isleftType type="ArrowRight" stroke="grey500" />
+        <CustomIcon css={rotateHalf} type="ArrowRight" stroke="grey500" />
       </CustomPageLink>
 
       {pages.map((page) => (
@@ -78,12 +84,12 @@ const Pagination = ({
           key={page}
           href={{ query: { ...router.query, [pageQueryKey]: page } }}
         >
-          <Page $active={page === currentPage}>{page}</Page>
+          <Page isActive={page === currentPage}>{page}</Page>
         </Link>
       ))}
 
       <CustomPageLink
-        $dimmed={totalPage === currentPage}
+        disabled={totalPage === currentPage}
         pageQueryKey={pageQueryKey}
         pageQueryValue={currentPage + 1}
       >
@@ -91,7 +97,7 @@ const Pagination = ({
       </CustomPageLink>
 
       <CustomPageLink
-        $dimmed={totalPage === currentPage}
+        disabled={totalPage === currentPage}
         pageQueryKey={pageQueryKey}
         pageQueryValue={totalPage}
       >
@@ -103,14 +109,12 @@ const Pagination = ({
 
 export default Pagination
 
-const Container = styled.div`
-  display: flex;
-  align-items: center;
+const Container = styled(Flex)`
   margin: 0 auto;
   padding: 30px 0;
 `
 
-const Page = styled(Chip)<{ $active: boolean }>`
+const Page = styled(Chip)<{ isActive: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,10 +122,10 @@ const Page = styled(Chip)<{ $active: boolean }>`
   height: 32px;
   margin: 5px;
   border-radius: 4px;
-  ${({ theme }) => theme.font.subtitle_3};
+  ${FONT.title_3};
 
-  ${({ $active, theme }) =>
-    $active
+  ${({ isActive, theme }) =>
+    isActive
       ? css`
           background-color: ${theme.color.primary300};
           color: ${theme.color.white};
@@ -134,13 +138,13 @@ const Page = styled(Chip)<{ $active: boolean }>`
         `}
 `
 
-const CustomPageLink = styled(PageLink)<{ $dimmed: boolean }>`
+const CustomPageLink = styled(PageLink)<{ disabled: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
 
-  ${({ $dimmed, theme }) =>
-    $dimmed
+  ${({ disabled, theme }) =>
+    disabled
       ? css`
           cursor: default;
           pointer-events: none;
@@ -155,16 +159,12 @@ const CustomPageLink = styled(PageLink)<{ $dimmed: boolean }>`
         `}
 `
 
-const CustomIcon = styled(Icon)<{ $isleftType?: boolean }>`
-  ${({ $isleftType }) =>
-    $isleftType &&
-    css`
-      transform: rotate(180deg);
-    `}
-
+const CustomIcon = styled(Icon)`
   padding: 5px;
   width: 30px;
-  ${({ theme }) => theme.media.tablet} {
+  cursor: pointer;
+
+  ${MEDIA.tablet} {
     padding: 5px;
     width: 25px;
   }

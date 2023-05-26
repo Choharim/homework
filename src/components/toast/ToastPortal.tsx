@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
 import Portal from '../portal'
 import ToastBox from './ToastBox'

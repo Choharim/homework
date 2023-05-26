@@ -1,12 +1,16 @@
 import React, { MouseEvent, useEffect, useRef, useState } from 'react'
-import styled, { css } from 'styled-components'
+import { css } from '@emotion/react'
+import styled from '@emotion/styled'
+
+import Flex from '@/components/flex'
 
 import { HEADERS_OF_CONTENTS } from '@/application/post/constant'
-import { NAVBAR_HEIGHT } from '../layout/Navbar'
 import { HeadersOfContents } from '@/application/post/type'
-import { setTOCId } from '@/application/post'
+import { setTOCId } from '@/application/post/utils/tableOfContents'
 import { convertHEXToRGB } from '@/utils/string'
 import Z_INDEX from '@/styles/constants/zIndex'
+import FONT from '@/styles/constants/font'
+import { NAVBAR_HEIGHT } from '@/components/layout/Navbar'
 
 export const TOC_WIDTH_IN_PC = 280
 
@@ -64,19 +68,19 @@ const TOC = () => {
 
   return (
     <TOC.TOCBox>
-      <ListContainer>
+      <Flex as="ol" direction="column">
         {headingElements.map((heading) => (
           <List
             key={heading.id}
             id={heading.id}
-            $highlight={heading.id === highlightId}
-            $headerType={heading.localName as HeadersOfContents}
+            highlight={heading.id === highlightId}
+            headerType={heading.localName as HeadersOfContents}
             onClick={scrollToTargetHeading}
           >
             {heading.textContent}
           </List>
         ))}
-      </ListContainer>
+      </Flex>
     </TOC.TOCBox>
   )
 }
@@ -87,33 +91,30 @@ TOC.TOCBox = styled.div`
   z-index: ${Z_INDEX.aside};
 `
 
-const ListContainer = styled.ol`
-  display: flex;
-  flex-direction: column;
-`
-
-const List = styled.li<{ $headerType: HeadersOfContents; $highlight: boolean }>`
+const List = styled.li<{ headerType: HeadersOfContents; highlight: boolean }>`
   cursor: pointer;
 
-  ${({ $headerType, theme }) => {
-    switch ($headerType) {
+  ${({ headerType, theme }) => {
+    switch (headerType) {
       case 'h2':
         return css`
-          ${theme.font.body_2};
+          ${FONT.title_3};
           color: ${theme.color.grey800};
         `
       case 'h3':
       default:
         return css`
-          margin-left: 15px;
-          ${theme.font.body_3};
+          margin-left: 12px;
+          padding-left: 12px;
+          border-left: 1px solid ${theme.color.grey300};
+          ${FONT.caption_1};
           color: ${theme.color.grey700};
         `
     }
   }}
 
-  ${({ theme, $highlight }) =>
-    $highlight &&
+  ${({ theme, highlight }) =>
+    highlight &&
     css`
       color: ${theme.color.primary500};
       filter: drop-shadow(

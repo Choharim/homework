@@ -1,17 +1,18 @@
-import React, { HTMLAttributes } from 'react'
-import styled from 'styled-components'
+import React, { PropsWithChildren } from 'react'
+import styled from '@emotion/styled'
 
 import { DEVICE_SIZE } from '@/constants/layout'
+import MEDIA from '@/styles/constants/media'
 
 const X_PADDING = 20
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode
-  asTag?: React.ElementType | keyof JSX.IntrinsicElements
+interface Props {
+  className?: string
+  as?: React.ElementType
 }
-const Frame = ({ children, className, asTag }: Props) => {
+const Frame = ({ children, className, as }: PropsWithChildren<Props>) => {
   return (
-    <Frame.Layout className={className} as={asTag}>
+    <Frame.Layout className={className} as={as}>
       {children}
     </Frame.Layout>
   )
@@ -25,7 +26,8 @@ Frame.Layout = styled.div`
   max-width: ${DEVICE_SIZE.tablet}px;
   margin: 0 auto;
 
-  ${({ theme }) => theme.media.tablet} {
-    padding: 0 ${X_PADDING}px;
+  ${MEDIA.tablet} {
+    padding-left: ${X_PADDING}px;
+    padding-right: ${X_PADDING}px;
   }
 `

@@ -3,8 +3,8 @@ import React from 'react'
 import { Category } from '@/domain/post/type'
 import { CATEGORY_TITLE } from '@/application/post/constant'
 
-import Chip from '../Chip'
 import CategoryLink from './CategoryLink'
+import Chip from '@/components/Chip'
 
 type Props = {
   category: Category

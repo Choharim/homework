@@ -1,5 +1,6 @@
+import FONT from '@/styles/constants/font'
+import styled from '@emotion/styled'
 import React from 'react'
-import styled from 'styled-components'
 
 interface Props
   extends Pick<React.HTMLAttributes<HTMLDivElement>, 'className'> {
@@ -24,8 +25,8 @@ const Wrapper = styled.div`
   width: fit-content;
   padding: 4px 12px;
   border-radius: 30px;
+  ${FONT.caption_1};
 
-  ${({ theme }) => theme.font.body_4};
   color: ${({ theme }) => theme.color.grey700};
   background-color: ${({ theme }) => theme.color.grey100};
 

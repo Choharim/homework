@@ -1,12 +1,12 @@
-import React, { HTMLAttributes, SVGAttributes } from 'react'
-import { useTheme } from 'styled-components'
+import React, { ComponentProps, SVGAttributes } from 'react'
+import { useTheme } from '@emotion/react'
 
 import { ICON_COMPONENT } from './constant'
 import { ColorKey } from '@/styles/type'
 
 interface IconProps
   extends Pick<SVGAttributes<SVGAElement>, 'width' | 'height'>,
-    Pick<HTMLAttributes<HTMLDivElement>, 'className' | 'onClick'> {
+    Pick<ComponentProps<'svg'>, 'className' | 'onClick'> {
   type: keyof typeof ICON_COMPONENT
   stroke?: ColorKey
   fill?: ColorKey
