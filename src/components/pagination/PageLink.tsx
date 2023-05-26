@@ -20,15 +20,15 @@ function PageLink({
 
   return (
     <Link
-      className={className}
       href={{
         query: {
           ...router.query,
           [pageQueryKey]: pageQueryValue,
         },
       }}
+      passHref
     >
-      {children}
+      <a className={className}>{children}</a>
     </Link>
   )
 }

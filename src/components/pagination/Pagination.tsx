@@ -149,9 +149,7 @@ const CustomPageLink = styled(PageLink)<{ isDisabled: boolean }>`
           cursor: default;
           pointer-events: none;
           ${CustomIcon} {
-             {
-              stroke: ${theme.color.grey300};
-            }
+            stroke: ${theme.color.grey300};
           }
         `
       : css`
