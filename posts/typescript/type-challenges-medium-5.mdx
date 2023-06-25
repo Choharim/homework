@@ -1,0 +1,226 @@
+---
+title: 타입스크립트 챌린지 - medium(5)
+description: Merge, KebabCase, Diff 유틸 타입을 만들어보자.
+createDate: 2023.6.10
+category: typescript
+---
+
+## 두 객체 타입을 하나로 합치는 Merge 타입 만들기
+
+### 목표
+
+두 객체 타입을 하나로 합치는 Merge 타입을 구현해보자. 중복 키의 경우 마지막에 온 타입으로 오버라이드 한다.
+
+```tsx
+type foo = {
+  name: string
+  age: string
+}
+type coo = {
+  age: number
+  address: string
+}
+
+type Result = Merge<foo, coo> // {name: string, age: number, address: string}
+```
+
+### 구현
+
+1. 하나의 객체로 합쳐야 하기 때문에 아래는 틀리다.
+
+```tsx
+type Merge<F, S> = Omit<F, keyof S> & S // ❌
+```
+
+1. key는 유니온으로 이루어진 두 객체 타입의 모든 키를 매핑하면 된다.
+
+```tsx
+type Merge<F, S> = {
+  [key in keyof S | keyof F]: ...
+};
+```
+
+1. 두번째 제네릭으로 오는 객체 타입이 더 우선순위가 높기 때문에, key가 S의 키 타입이면 S[key]로 지정해야 한다. 그렇지 않으면 F 타입으로 지정한다.
+
+```tsx
+type Merge<F, S> = {
+  [key in keyof S | keyof F]: key extends keyof S
+    ? S[key]
+    : key extends keyof F
+    ? F[key]
+    : never
+}
+```
+
+## camelCase 또는 PascalCase를 kebab-case로 변환하는 타입 만들기
+
+### 목표 🔥
+
+camelCase 또는 PascalCase인 문자열 타입을 kebab-case로 변환하는 `KebabCase`타입을 구현해보자.
+
+```tsx
+type FooBarBaz1 = KebabCase<'FooBarBaz'> // "foo-bar-baz"
+type FooBarBaz2 = KebabCase<'fooBarBaz'> // "foo-bar-baz"
+type FooBarBaz3 = KebabCase<'foo-bar-baz'> // "foo-bar-baz"
+```
+
+### 구현
+
+1. 제네릭으로는 string 타입을 상속 받는 타입이 들어와야 한다.
+
+```tsx
+type KebabCase<S extends string> = ...
+```
+
+1. 문자 하나씩 순차적으로 확인하며 올바르게 변환하고,
+   변환된 문자열을 순차적으로 합쳐 결과값으로 반환하기 위해 임시 결과 제네릭을 추가하자.
+
+```tsx
+type KebabCase<
+  S extends string,
+  Result extends string = ""
+> = ...
+```
+
+1. 문자 하나씩 순차적으로 확인하기 위해 infer 타입 변수를 사용하자.
+   더이상 비교할 문자열이 없으면 결과 타입을 반환하자.
+
+```tsx
+type KebabCase<
+  S extends string,
+  Result extends string = ""
+> = S extends `${infer First}${infer Rest}`
+  ? ...
+  : Result;
+```
+
+1. 대문자라면 소문자로 변환하고, 그 중 첫번째 문자가 아닌 대문자의 경우 바로 앞에 ‘-’를 붙여주자.
+
+```tsx
+type KebabCase<
+  S extends string,
+  Result extends string = ''
+> = S extends `${infer First}${infer Rest}`
+  ? First extends Uppercase<First>
+    ? KebabCase<
+        Rest,
+        `${Result}${Result extends '' ? '' : '-'}${Lowercase<First>}`
+      >
+    : KebabCase<Rest, `${Result}${First}`>
+  : Result
+```
+
+❌ 위의 코드는 camelCase와 PascalCase는 keb-case 타입으로 변환 되지만, 알파벳이 아닌 문자열 또한 `First extends Uppercase<First>` 조건에서 true로 나오기 때문에
+아래와 같은 경우 원치 않은 결과가 나온다.
+
+- “foo_bar”는 “foo-\_bar”
+- “foo-bar”는 “foo--bar”
+
+<aside>
+❗ 자바스크립트 문자열은 UTF-16으로 인코딩되어서 이모지의 경우 예상치 못한 결과가 나온다.
+"😎” 이모지는 `"\uD83D\uDE0E"` 로 인코딩 되고 
+⇒ `“\uD83D"` 디코딩 된 값 - `"\uDE0E"` 디코딩 된 값
+으로 결과가 나오게 된다.
+
+</aside>
+
+💡 알파벳이 아닌 문자는 `First extends Lowercase<First>` 조건 에서도 true가 나온다. 이를 이용하자.
+
+```tsx
+type KebabCase<
+  S extends string,
+  Result extends string = ''
+> = S extends `${infer First}${infer Rest}`
+  ? First extends Lowercase<First>
+    ? KebabCase<Rest, `${Result}${First}`>
+    : KebabCase<
+        Rest,
+        `${Result}${Result extends '' ? '' : '-'}${Lowercase<First>}`
+      >
+  : Result
+```
+
+## 두 객체 타입에서 다른 필드를 갖는 객체 타입을 반환하는 Diff 타입 만들기
+
+### 목표
+
+두 객체 타입을 비교했을 때 다른 필드만을 모은 객체 타입을 반환해보자.
+
+```tsx
+type Foo = {
+  name: string
+  age: string
+}
+type Bar = {
+  name: string
+  age: string
+  gender: number
+}
+type Coo = {
+  name: string
+  gender: number
+}
+
+type cases = [
+  Expect<Equal<Diff<Foo, Bar>, { gender: number }>>,
+  Expect<Equal<Diff<Bar, Foo>, { gender: number }>>,
+  Expect<Equal<Diff<Foo, Coo>, { age: string; gender: number }>>,
+  Expect<Equal<Diff<Coo, Foo>, { age: string; gender: number }>>
+]
+```
+
+### 구현
+
+1. 두 객체 타입을 합친 타입에서 공통 필드만 제거하면 된다.
+   Omit 유틸 타입을 사용하자.
+
+```tsx
+type Diff<O extends object, O1 extends object> = Omit<O & O1,...>
+```
+
+1.  공통 필드는 keyof (A | B) 이처럼 구할 수 있다.
+    A, B 각 객체 타입에 `| 연산자`를 사용하면 A,B 각 필드를 모두 포함할 수 있되 공통 필드를 필수적으로 포함해야 하는 객체 타입이 나온다.
+
+    ````tsx
+    type Test = Foo | Bar;
+
+        const test: Test = {
+          'name':'', // 필수
+          'age':'', // 필수
+          'gender':1, // 선택
+        };
+        ```
+
+        keyof 를 사용해서 key를 유니온으로 나타내게 되면 공통 필드만 남게 된다.
+
+        ```tsx
+        type Test = keyof (Foo | Bar); // 'name' | 'age'
+        ```
+
+    ````
+
+2.  공통 필드를 제거한다.
+
+```tsx
+type Diff<O extends object, O1 extends object> = Omit<O & O1, keyof (O | O1)>
+```
+
+<aside>
+❗ `keyof (A | B)` 와 `keyof A | keyof B` 는 다르다.
+첫번째의 경우, A | B를 먼저 실행하기 때문에 
+공통 필드를 갖는 객체 타입의 key가 유니온으로 되어 공통 필드만 나오게 된다.
+두번째의 경우, 각 객체 타입의 key를 유니온이 되고 | 로 유니온을 연결하기 때문에 모든 필드가 나오게 된다.
+
+</aside>
+
+<aside>
+❗ 아래는 하나의 객체 타입을 만드는 것이 아니고 (Merge X), 
+두 객체 타입을 연결한 (Combine) 합집합 형태의 객체 타입이기 때문에
+위의 정답과 다른 결과이다.
+
+```tsx
+type Diff<O extends object, O1 extends object> = Omit<O, keyof O1> &
+  Omit<O1, keyof O>
+```
+
+</aside>
