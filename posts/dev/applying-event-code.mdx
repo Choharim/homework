@@ -1,0 +1,210 @@
+---
+title: 이벤트 코드 적용 - 관심사 분리
+description: 관심사 분리에 초점을 맞추어 이벤트 코드를 적용해보자.
+createDate: 2023.8.5
+category: dev
+---
+
+## 1. 배경
+
+### 1-1. 이벤트 코드의 추가
+
+Data-Driven 기반으로 의사 결정을 하기 위해서,
+프로젝트에는 특정 이벤트(사용자 행동 분석을 위한 데이터)를 추적하기 위한 코드가 포함될 수 있다.
+그렇기 때문에 이벤트를 누락 없이 등록하고 `잘 관리하는 것` 또한 프론트엔드 개발자가 신경써야 하는 부분이다.
+
+### 1-2. 다른 관심사
+
+서비스 연결을 위한 기본 세팅과 이벤트 코드 적용은 어렵지 않다.
+
+다만, `기능 코드`와 `데이터 축적을 위한 이벤트 코드`는
+`서비스 구현을 위한 코드 vs 서비스 분석을 위한 코드`로 관심사가 다르기 때문에 `관심사 분리`가 중요하고 가장 고민이 되는 부분이다.
+
+이들이 혼합되어 있으면 가독성을 해치게 되고,
+서비스 코드가 이벤트 코드에 의존하는 경우 이벤트 값이 변경될 때 불필요한 수정이 이루어질 수 있다.
+
+그래서 GA, Hackle등 이벤트 관련 코드는 비지니스 로직과 관심사가 다르기 때문에 ‘분리’를 중점으로 신경써야 한다.
+
+## 2. 해결 방법 - 관심사 분리
+
+서비스 구현을 위한 코드와 분리되어야 하는 부분을 살펴보자.
+
+### 2-1. 디렉토리 분리
+
+> 기본 세팅을 위한 코드
+
+‘한 번만 작업하면 되는 외부 패키지’ 코드로, 관심사가 달라 분리되어야 한다.
+
+초기 세팅을 위한 config 추가, initialize, instance 생성, connection, provider 등이 있다.
+
+1. config, initialize, instance
+
+```tsx
+// Hackle/index.ts
+
+const hackleClient = createInstance(HACKLE_BROWSER_SDK_KEY, CONFIG)
+
+export default hackleClient
+```
+
+2. provider, connection
+
+```tsx
+// Hackle/Provider.tsx
+// 하나의 Provider 컴포넌트에 적용이 필요한 코드를 담아 추상화시킨다.
+const HackleProvider = ({ children }: PropsWithChildren) => {
+  useEffect(() => {
+    setHackleClient(user)
+    //...
+  }, [])
+
+  return <Provider hackleClient={hackleClient}>{children}</Provider>
+}
+
+export default HackleProvider
+```
+
+3. 이벤트 관련 상수
+
+```tsx
+// Hackle/eventKey.ts
+
+export const HACKLE_EVENT_KEY = {
+  key1: 'key1',
+  // ...
+}
+```
+
+> 디렉토리 구조
+
+같은 목적을 갖는 코드, 서로 연관된 코드는 가까운 곳에 위치해야 한다. 그래야 쉽게 파악되어 관리하기 쉽고 가독성도 좋아진다.
+
+이러한 이유로 이 모든 게 하나의 디렉터리 내에서 관리되어야 한다.
+
+```tsx
+├──🗂️ Hackle
+│ ├── eventKey
+│ ├── Provider
+│ ├── index
+│ ├── ...
+```
+
+### 2-2. 실행 코드 분리
+
+> 외부 패키지에서 제공되는 함수, 타입 분리
+
+외부 패키지의 변경점이 내부로 확산된 것을 방지하기 위해, 직접 import해서 사용하지 않고 재가공한 함수와 타입을 import해서 사용한다.
+
+그리고 현재 hackleClient.track의 파라미터 타입으로, string 타입의 이벤트 키 또는 HackleEvent 타입의 객체를 받을 수 있지만!
+추적할 property가 추가될 경우에 추가적으로 수정이 이루어지지 않기 위해, 그리고 통일된 방법을 사용하기 위해 HackleEvent 객체 타입만 받도록 허용했다.
+
+이벤트 키를 상수화했지만 해당 상수를 사용하지 않아 발생하는 휴먼 에러가 발생할 수 있기 때문에, 이벤트 키 타입도 지정 해준다.
+
+```tsx
+interface CustomHackleEvent extends HackleEvent {
+  key: EventKey
+}
+
+/**
+ * @param event
+ * 추후 key 외의 필드를 추가할 경우를 대비하고, 일관된 코드 베이스를 유지하기 위해 객체 타입의 이벤트로 통일합니다.
+ */
+export const trackHackleEvent = (event: CustomHackleEvent, user?: User) => {
+  hackleClient.track(event, user)
+}
+```
+
+> 이벤트 등록
+
+이벤트를 등록하는 경우는 크게
+
+‘click등 특정 이벤트 핸들러가 발생했을 때’ 실행되어야 하는 이벤트 코드와
+’해당 페이지에 진입했을 때 등 side-effect가 발생했을 때’ 실행되어야 하는 이벤트 코드로 나누어진다.
+
+1. 이벤트 핸들러에 의한 실행
+
+이벤트 함수를 실행되어야 하는 컴포넌트에서 아예 분리하는 방법은 오버엔지니어링 같기도 하고, 좋은 방법이 떠오르지 않았다. 그래서 아래와 같이 간단한 규칙을 적용했다.
+
+- 특정 조건일 때 return 시켜버리는 경우가 있기 때문에 이벤트 함수가 실행되지 않는 이슈가 발생하지 않기 위해 상단에서 호출한다.
+- 이벤트 추적을 위한 함수는 상단(실행되어야 하는 조건내 상단)에 모두 위치 시킨다.
+- 최대한 트레킹을 위한 함수를 분리한다.
+
+```tsx
+const trackEvent = () => {
+  trackHackleEvent({ key: HACKLE_EVENT_KEY.click_something })
+  trackAirbirdgeEvent(AIRBRIDGE_EVENT_KEY.click_something)
+}
+
+const handleClickButton = () => {
+  if (something) {
+    trackEvent()
+    //...
+  }
+  //...
+}
+```
+
+2. side-effect에 의한 실행
+
+useEffect를 사용한 이벤트 로직을 비지니스 로직과 분리하는 방법은 아래와 같다.
+
+- 커스텀 훅으로 분리하기
+  그러나 이 방법은 여전히 해당 컴포넌트 내에 존재한다는 단점이 있다.
+- Higher-Order Components(HOC) ✅
+  아래와 같은 장점이 있어서 HOC를 선택했다.
+  - 실행시킬 컴포넌트와 분리될 수 있다.
+  - 이벤트 코드만 모아둘 수 있다.
+
+```tsx
+// 이벤트 트레킹을 위한 로직이 분리되어 있는 HOC
+const withTrackEvent = <T extends AppProps['Component']>(
+  Component: T,
+  useTrackEvent: () => void
+) => {
+  const WithUserEvent = (props: ComponentProps<T>) => {
+    useTrackEvent()
+
+    return <Component {...props} />
+  }
+
+  WithUserEvent.displayName = `WithUserEvent(${
+    Component.displayName || Component.name
+  })`
+
+  return WithUserEvent
+}
+
+export default withTrackEvent
+```
+
+```tsx
+      // withTrackEvent HOC 적용
+      function SomethingComponent() {
+        //...
+      }
+
+      const useTackEvent = () => {
+        //...
+         useEffect(() => {
+            trackHackleEvent({
+              key: HACKLE_EVENT_KEY.something,
+              properties: {
+               //...
+              },
+            });
+          }, []);
+
+          useEffect(() => {
+            trackAirbirdgeEvent(key: HACKLE_EVENT_KEY.something,);
+          }, []);
+      };
+
+      export default withTrackEvent(SomethingComponent, useTackEvent);
+```
+
+## 3. 느낀점
+
+‘hackle 이벤트 적용’은 단순 반복 작업이었지만 배움 없이 흘려보내기 싫었기에, 어떻게 하면 ‘잘’ 적용할 지 고민하게 되었다.
+그 결과 이벤트 코드를 어떻게 관리하면 유지보수에 좋고, 가독성이 좋을지 생각하고 적용할 수 있었다.
+
+어떤 업무인지가 아니라 내가 어떻게 생각하고 행동하는 지에 따라 ‘내가 얻게되는 부분’이 크게 달라지는 것 같다.
