@@ -1,0 +1,191 @@
+---
+title: IOS 완성형 유니코드로 한글을 나타내어 생기는 이슈
+description: IOS 환경에서 발생한 한글 입력 이슈에 대한 원인을 짐작해보자.
+createDate: 2023.9.25
+category: dev
+---
+
+## 1. 문제
+
+### 1-1. 문제 인식
+
+입력 값이 존재할 때 특정 요소를 보여줘야 하고 해당 요소에 animation이 적용되었을 때, iOS에서 자음 + 모음 순으로 입력 시 깜빡이는 문제가 발생했다.
+
+예를 들면 아래와 같은 상황이다.
+
+textarea에 한글을 입력할 때 파란색인 Background 요소가 깜빡인다.
+
+```tsx
+import React, { ChangeEvent, useState } from 'react'
+import { css, keyframes } from '@emotion/react'
+import styled from '@emotion/styled'
+
+function Something() {
+  const [value, setValue] = useState('')
+
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(e.target.value)
+  }
+
+  return (
+    <>
+      <textarea onChange={handleChange} value={value} />
+      {!!value.trim() && (
+        <Background
+          css={css`
+            animation: ${fadeIn} 300ms ease;
+          `}
+        />
+      )}
+    </>
+  )
+}
+
+export default Something
+
+const fadeIn = keyframes`
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  `
+
+const Background = styled.div`
+  width: 500px;
+  height: 500px;
+  background-color: blue;
+`
+```
+
+여기서 특이한 점은
+알파벳이나 자음과 자음, 모음과 모음으로 입력하는 경우에는 깜빡임 문제가 발생하지 않았고, 자음과 모음을 입력하는 초반에만 나타났다.
+
+### 1-2. 상황 파악
+
+> value 값
+
+알파벳, 자음 + 자음, 모음 + 모음을 입력했을 때는 올바르게 입력 값 하나 하나가 추가되고 삭제 되는 것이 확인된다. 그러나, 자음 + 모음을 입력했을 때는 자음과 모음이 합쳐진 하나의 글자 값만 확인할 수 있었다.
+
+예를들어, `아아` 를 입력했을 때 value 값은 다음과 같다.
+
+**기대한 결과**
+
+1. ㅇ
+2. 아
+3. 아ㅇ
+4. 아아
+
+**실제 결과**
+
+1. 아아
+
+어떻게 된건지 입력창 onChange 이벤트의 event.target.value 값을 확인해보자.
+
+> event.target.value 값
+
+자음과 모음이 합쳐져 한글자가 되면 합쳐진 글자가 삭제된다.
+예를들어,`ㅏ라랄` 을 입력했을 때 다음과 같다.
+
+**기대한 결과**
+
+1. ㅏ
+2. ㅏㄹ
+3. ㅏ라
+4. ㅏ랄
+5. ㅏ라라
+6. ㅏ라랄
+
+**실제 결과**
+
+1. ㅏ
+2. ㅏㄹ
+3. ㅏ // ‘라’로 합쳐지면 ’라’가 삭제됨
+4. ㅏ라 // ‘라‘가 추가됨
+5. ㅏ // ‘랄’로 합쳐지면 ‘랄’이 삭제됨
+6. ㅏ랄 // ‘랄’이 추가됨
+7. ㅏ // ‘라’로 합쳐지면 ‘라라’가 삭제됨
+8. ㅏ라라 // ‘라라’가 추가됨
+9. ㅏ라 // ‘랄’로 합쳐지면 ‘랄’이 삭제됨
+10. ㅏ라랄 // ‘랄’이 추가됨
+
+## 2-1. 원인 유추
+
+### 유니코드로 한글을 표현하는 방법
+
+**1. 조합형 (decomposed)**
+
+초성,중성,종성 3개를 조합해서 한 글자를 표현
+
+ex. 단 = ㄷ + ㅏ + ㄴ // `\u{1103}\u{1161}\u{11AB}`
+
+**2. 완성형 (precomposed)**
+
+유니코드에 등록된 모든 한글 중, 1개를 골라서 사용
+
+ex. 단 = 단 // `\u{B2E8}`
+
+<aside>
+❓ IOS는 완성형으로 입력되어서, 자음과 모음이 합쳐져 한 글자가 되면 해당 한 글자는 하나의 문자로 인코딩되는 것일까?
+IOS 에서 완성형으로 입력이되어, 자음과 모음이 모여 한 글자로 합쳐져 하나의 유니코드로 변환된다면 해당 상황이 이해된다.
+
+</aside>
+
+예를들어, `ㅏ라랄`을 입력했을 때 다음과 같다.
+
+1. `ㅏ`가 입력되면, `\u314f`
+2. `ㅏㄹ`이 입력되면, `\u314f\u3139`
+3. `ㅏ라`가 입력되면,  `\u314f\ub77c`
+   1. ‘ㄹ+ㅏ=라’가 되며, ‘ㄹ’이 없어지고 ‘라’가 추가된다.
+4. `ㅏ랄`이 입력되면,  `\u314f\ub784`
+   1. ‘라+ㄹ=랄’이 되며, ‘라’가 없어지고 ‘랄’이 추가된다.
+5. `ㅏ라라`가 입력되면,  `\u314f\ub77c\ub77c`
+   1. ‘ㄹ+ㅏ’가 되며, ‘랄’이 없어지고 ‘라라’가 추가된다.
+6. `ㅏ라랄`이 입력되면, `\u314f\ub77c\ub784`
+   1. ‘라+ㄹ’가 되며, ‘라’가 없어지고 ‘랄’이 추가된다.
+
+이러한 이유로 , 자음+모음 조합 예를 들어 ‘가나’를 초반에 작성하면 다음과 같이 값의 유무가 달라진다.
+
+‘ㄱ’ (\u3131, 값 유무 True) → ‘’ (,값 유무 False) → ‘가’ (\uac00, 값 유무 True) → ‘’ (,값 유무 False) → ‘간‘ (\uac04, 값 유무 True) → ‘’ (,값 유무 False) → ‘가나’ (\uac00\ub098, 값 유무 True)
+
+값 유무가 True일 때 렌더트리에 요소가 추가되어 애니메이션이 실행될 때 총 3번의 깜빡임이 발생하게 된 것이다.
+
+유추한 원인이 맞는지 찾아보자
+
+## 2-2. 원인 파악
+
+[https://docs.swift.org Extended-Grapheme-Clusters](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters/#Extended-Grapheme-Clusters)
+
+_Extended grapheme clusters are a flexible way to represent many complex script characters as a single `Character` value. For example, Hangul syllables from the Korean alphabet can be represented as either a precomposed or decomposed sequence. Both of these representations qualify as a single `Character` value in Swift_
+
+_확장 문자소 클러스터는 (결합 시) 사람이 읽을 수 있는 단일 문자를 생성하는 하나 이상의 유니코드 스칼라 시퀀스입니다._
+
+iOS에서 '한'을 입력했을 때 `\u{1112}\u{1161}\u{11AB}`가 아닌 `\u{D55C}`로 인코딩된다.
+
+iOS는 한글을 완성형(precomposed) 형태로 저장하고 처리하기 때문에, '한'을 입력하면 `\u{D55C}`로 인코딩된다. decomposed 형태는 주로 한글을 다른 글자로 분해하거나 합성할 때 사용된다.
+
+```swift
+// **Swift** precomposed
+let hangul: Character = "한"
+print(hangul.unicodeScalars) // U+D55C
+```
+
+```swift
+// **Swift** decomposed
+let decomposedHangul: Character = "\u{1112}\u{1161}\u{11AB}"
+print(decomposedHangul.unicodeScalars) // U+1112, U+1161, U+11AB
+```
+
+## 3. 해결
+
+문제 해결을 위해 iOS에서 한글 처리 방식을 직접 변경하는 것은 어려워서, 본질을 해결하기 보다 현상을 해결하는 방법을 선택했다.
+
+자음 + 모음이 합쳐져 하나의 글자가 되었을 때 인코딩 값이 변경되면서 값이 제거되는 문제를 해결하기 위해, debounce를 적용했다.
+값 업데이트에 debounce를 적용해 입력 도중 값이 제거되는 시점을 건너뛰게 한 것이다.
+
+## 4. 마무리
+
+IOS에서 React 컴포넌트를 사용해 한글을 입력하는 도중, 특정 상황에서 입력값이 예상과 다르게 처리되어 이해가 필요한 상황이었다. 그래서 정확한 원인 분석은 아니지만, 문제의 원인을 유추하는 과정을 담아보았다.
+
+나중에 정확한 원인을 알고 분석하게 된다면, 덧붙일 예정이다.
