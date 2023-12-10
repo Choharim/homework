@@ -1,0 +1,70 @@
+---
+title: Resize 이벤트 최적화를 하며, 브라우저 setTimeout 동작 원리 파악
+description: Resize 이벤트 최적화하는 과정에서, 브라우저 setTimeout 동작 원리를 살펴보자.
+createDate: 2023.7.31
+category: dev
+---
+
+## 1. Resize 이벤트 최적화하기
+
+### 1-1. 배경
+
+브라우저 resize 이벤트가 발생하는 동안, 특정 요소에 접근하고 위치와 크기를 계산해야 하는 상황이었다.
+
+주목할 점은 다음과 같다.
+
+1. resize 이벤트가 발생한다는 것은 연속해서 이벤트가 발생할 가능성이 있다.
+2. `요소에 접근하는 것과 요소의 레이아웃을 계산하는 것은` 레이아웃을 재계산하는 `reflow를 발생시킨다.`
+
+이로 인해 resize 이벤트가 발생할 때마다 레이아웃을 재계산하는 reflow가 연속적으로 발생하는 성능 문제가 발생한다.
+
+### 1-2. 해결 방법 - Debounce
+
+reflow를 줄이기 위해, ’일정 시간 동안 동일한 함수가 호출되면 해당 함수는 무시되다가, 일정 시간 동안 더 이상 해당 함수가 호출되지 않으면 마지막에 호출한 함수가 실행되는’ `debounce`를 적용하자.
+
+debounce 함수는 callback을 setTimout에 적용하고, 등록된 타이머가 존재하면 삭제하고 재 등록하는 방식으로 구현했다.
+
+```tsx
+export const debounce = <Params extends unknown[]>(
+  func: (...args: Params) => void,
+  milliseconds: number
+) => {
+  let timer: NodeJS.Timeout
+
+  return (...args: Params) => {
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      func(...args)
+    }, milliseconds)
+  }
+}
+```
+
+## 2. 문제 인식
+
+resize 이벤트가 연속해서 발생했을 때, setTimout의 대기시간(주어진 시간ms)이 짧다면 이전 타이머가 취소되지 않아 등록된 함수가 호출된다. 이로인해 reflow를 발생시키는 계산이 여전히 불필요하게 실행된다.
+
+### 2-1. setTimeout 분석
+
+자세히 살펴보려면 브라우저 내에서 setTimeout이 어떻게 동작하는 지 알아야 한다.
+
+1. setTimeout는 메인 스레드의 Call Stack에 Push 된 후 바로 Pop되어 브라우저/런타임 백그라운드에서 주어진 시간ms을 할애한다.
+2. taskQueue에 setTimeout의 callback이 Push된다.
+3. Call Stack이 비어있고 우선순위가 높은 Queue에 task가 존재하지 않을 때, callback은 Call Stack에 Push되어 실행된다.
+
+이러한 원리로, `대기 시간이 연속적으로 발생하는 resize 이벤트의 주기보다 짧다`면, taskQueue에 setTimeout의 callback이 Push되기 때문에 `callback은 여전히 실행된다.`
+
+resize 이벤트가 연속해서 발생할 때, 브라우저/런타임 백그라운드에서 시간을 할애하는 동안 이전 타이머를 취소할 수 있도록 어느 정도의 대기 시간이 필요하다.
+
+<aside>
+🔍 브라우저 환경에 따라 필요한 대기 시간이 다르겠지만 Mac Air M2 기준으로 테스트 해본 결과,
+연속적 resize 이벤트가 발생할 때 이전 타이머가 제대로 취소되고 의도한 대로 마지막 callback만 실행되기 위해 필요한 시간은 300ms 이상이었다.
+
+</aside>
+
+## 느낀점
+
+DOM에 접근하고 위치와 크기를 계산하는 과정은 레이아웃을 재계산하는 과정인 Reflow를 발생시킨다. 때문에 최대한 불필요한 Reflow를 방지하기 위해 Debouncing을 이용했다. 그리고 그 과정에서 아래 지식을 얻었다.
+
+1. setTimout이 주어진 시간을 할애하고 taskQueue에 들어간 것은, 타이머가 만료된 것이기 때문에 타이머를 취소할 수 없어 해당 callback 실행을 중단할 수 없다.
+2. 연속적인 이벤트 발생으로 인해 여러 setTimout이 등록되면, setTimout을 clearTimout으로 해제할 수 있도록 ‘적절한 대기시간’을 주어야한다.
