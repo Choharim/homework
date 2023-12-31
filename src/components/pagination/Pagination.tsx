@@ -23,20 +23,15 @@ const getDisplayPageNumbers = (
   let startIndex: number
   let endIndex: number
 
-  if (totalPage <= DISPLAY_PAGE_COUNT) {
+  if (currentPage <= HALF) {
     startIndex = 0
     endIndex = DISPLAY_PAGE_COUNT
+  } else if (currentPage > totalPage - HALF) {
+    startIndex = totalPage - DISPLAY_PAGE_COUNT
+    endIndex = totalPage
   } else {
-    if (currentPage <= HALF) {
-      startIndex = 0
-      endIndex = DISPLAY_PAGE_COUNT
-    } else if (currentPage > totalPage - HALF) {
-      startIndex = totalPage - DISPLAY_PAGE_COUNT
-      endIndex = totalPage
-    } else {
-      startIndex = totalPage + HALF - DISPLAY_PAGE_COUNT
-      endIndex = currentPage + HALF
-    }
+    startIndex = currentPage + HALF - DISPLAY_PAGE_COUNT
+    endIndex = currentPage + HALF
   }
 
   return [startIndex, endIndex]
