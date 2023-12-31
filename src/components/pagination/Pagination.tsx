@@ -34,7 +34,7 @@ const getDisplayPageNumbers = (
       startIndex = totalPage - DISPLAY_PAGE_COUNT
       endIndex = totalPage
     } else {
-      startIndex = totalPage + HALF - DISPLAY_PAGE_COUNT
+      startIndex = currentPage + HALF - DISPLAY_PAGE_COUNT
       endIndex = currentPage + HALF
     }
   }
