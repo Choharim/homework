@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
-import React, { PropsWithChildren } from 'react'
+import React, { ComponentProps } from 'react'
 
-const CardListFrame = ({ children }: PropsWithChildren) => {
-  return <Wrapper>{children}</Wrapper>
+const CardListFrame = ({ children, ...props }: ComponentProps<'div'>) => {
+  return <Wrapper {...props}>{children}</Wrapper>
 }
 
 export default CardListFrame

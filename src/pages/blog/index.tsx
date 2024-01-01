@@ -8,6 +8,7 @@ import CardListFrame from '@/feature/post/components/CardListFrame'
 import PostCardLink from '@/feature/post/components/PostCardLink'
 import CategoryChip from '@/feature/post/components/CategoryChip'
 import postFeature from '@/feature/post'
+import { css } from '@emotion/react'
 
 const Blog: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -15,7 +16,11 @@ const Blog: NextPageWithLayout<
   const router = useRouter()
 
   return (
-    <CardListFrame>
+    <CardListFrame
+      css={css`
+        margin-top: 40px;
+      `}
+    >
       {posts?.map((post) => {
         const { id, title, description, create_date, category } = post
         return (
