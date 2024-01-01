@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { getRandomNumber } from '@/utils/number'
 import { Toast } from '@/components/toast/type'
@@ -14,20 +14,23 @@ const useToast = () => {
     }, TOAST_TIMEOUT)
   }
 
-  const addToast = ({ variety, desc }: Pick<Toast, 'desc' | 'variety'>) => {
-    const id = getRandomNumber()
+  const addToast = useCallback(
+    ({ variety, desc }: Pick<Toast, 'desc' | 'variety'>) => {
+      const id = getRandomNumber()
 
-    setToasts((prev) => [
-      ...prev,
-      {
-        id,
-        variety,
-        desc,
-      },
-    ])
+      setToasts((prev) => [
+        ...prev,
+        {
+          id,
+          variety,
+          desc,
+        },
+      ])
 
-    clear(id)
-  }
+      clear(id)
+    },
+    []
+  )
 
   return { addToast, toasts }
 }

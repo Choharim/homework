@@ -19,7 +19,7 @@ const MetaHead = ({ title, description, image, ogType }: MetaHeadProps) => {
       ogType: ogType ?? 'website',
       siteName: `${BLOG.shortName}의 개발 블로그`,
       author: `${EN_NAME.first} ${EN_NAME.last}`,
-      title: `${title} | ${BLOG.shortName}의 개발 블로그`,
+      title: `${title ?? BLOG.fullName} | ${BLOG.shortName}의 개발 블로그`,
       url: `${BLOG.domain}${getURLRemovedQuery(router.asPath) ?? ''}`,
     }),
     [ogType, title, router.asPath]
