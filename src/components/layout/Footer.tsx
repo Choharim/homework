@@ -1,7 +1,7 @@
 import React, { HtmlHTMLAttributes } from 'react'
 import styled from '@emotion/styled'
 
-import { EN_NAME } from '@/domain/owner/constant'
+import { EN_NAME } from '@/feature/app/constants/owner'
 import FONT from '@/styles/constants/font'
 
 export const FOOTER_HEIGHT = 100

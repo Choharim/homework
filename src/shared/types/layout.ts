@@ -3,7 +3,7 @@ import { AppInitialProps, AppProps } from 'next/app'
 import { ReactElement, ReactNode } from 'react'
 
 import { CombineType } from './extendable'
-import { MetaHeadProps } from '@/components/layout/MetaHead'
+import { MetaHeadProps } from '@/components/seo/MetaHead'
 
 type PageProps = CombineType<AppInitialProps['pageProps'], MetaHeadProps>
 

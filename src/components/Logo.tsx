@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Typo from './typo'
 import Flex from './flex'
 
-import { BLOG } from '@/domain/owner/constant'
+import { BLOG } from '@/feature/app/constants/owner'
 
 interface Props extends ComponentProps<typeof Typo> {
   isFold: boolean

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { getRandomNumber } from '@/utils/number'
+import { getRandomNumber } from '@/shared/utils/number'
 import { Toast } from '@/components/toast/type'
 import { TOAST_TIMEOUT } from '@/components/toast/constant'
 

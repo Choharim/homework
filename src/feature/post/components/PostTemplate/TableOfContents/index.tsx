@@ -4,13 +4,13 @@ import styled from '@emotion/styled'
 
 import Flex from '@/components/flex'
 
-import { HEADERS_OF_CONTENTS } from '@/application/post/constant'
-import { HeadersOfContents } from '@/application/post/type'
-import { setTOCId } from '@/application/post/utils/tableOfContents'
-import { convertHEXToRGB } from '@/utils/string'
+import { HEADERS_OF_CONTENTS } from '@/feature/post/components/PostTemplate/TableOfContents/constant'
+import { HeadersOfContents } from '@/feature/post/components/PostTemplate/TableOfContents/type'
+import { convertHEXToRGB } from '@/shared/utils/string'
 import Z_INDEX from '@/styles/constants/zIndex'
 import FONT from '@/styles/constants/font'
 import { NAVBAR_HEIGHT } from '@/components/layout/Navbar'
+import { setTOCId } from './util'
 
 export const TOC_WIDTH_IN_PC = 280
 
@@ -18,7 +18,7 @@ const OBSERVER_OPTIONS: IntersectionObserverInit = {
   rootMargin: `-${NAVBAR_HEIGHT}px`,
 }
 
-const TOC = () => {
+const TableOfContents = () => {
   const [headingElements, setHeadingElements] = useState<Element[]>([])
   const [isHighlightId, setisHighlightId] = useState<string>('')
   const entriesRef = useRef<Record<string, IntersectionObserverEntry>>({})
@@ -67,7 +67,7 @@ const TOC = () => {
   if (!headingElements.length) <></>
 
   return (
-    <TOC.TOCBox>
+    <TableOfContents.TOCBox>
       <Flex as="ol" direction="column">
         {headingElements.map((heading) => (
           <List
@@ -81,13 +81,13 @@ const TOC = () => {
           </List>
         ))}
       </Flex>
-    </TOC.TOCBox>
+    </TableOfContents.TOCBox>
   )
 }
 
-export default TOC
+export default TableOfContents
 
-TOC.TOCBox = styled.div`
+TableOfContents.TOCBox = styled.div`
   z-index: ${Z_INDEX.aside};
 `
 

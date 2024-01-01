@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React, { MetaHTMLAttributes, useMemo } from 'react'
 
-import { BLOG, EN_NAME } from '@/domain/owner/constant'
+import { BLOG, EN_NAME } from '@/feature/app/constants/owner'
 import { useRouter } from 'next/router'
 import { getURLRemovedQuery } from '@/shared/utils/url'
 

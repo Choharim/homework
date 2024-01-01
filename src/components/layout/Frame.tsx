@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react'
 import styled from '@emotion/styled'
 
-import { DEVICE_SIZE } from '@/constants/layout'
+import { DEVICE_SIZE } from '@/feature/app/constants/layout'
 import MEDIA from '@/styles/constants/media'
 
 const X_PADDING = 20
