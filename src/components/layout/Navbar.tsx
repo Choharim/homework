@@ -9,10 +9,9 @@ import Logo from '../Logo'
 import Flex from '../flex'
 import Typo from '../typo'
 
-import { GITHUB_URL } from '@/domain/owner/constant'
+import { GITHUB_URL } from '@/feature/app/constants/owner'
 import useScrollDirection from '@/hooks/useScrollDirection'
-import { convertHEXToRGB } from '@/utils/string'
-import { PAGE_PATH } from '@/constants/route'
+import { convertHEXToRGB } from '@/shared/utils/string'
 import useScrollTop from '@/hooks/useScrollTop'
 import Z_INDEX from '@/styles/constants/zIndex'
 
@@ -25,11 +24,6 @@ type TextMenu = {
 }
 
 const MENUS: Readonly<Array<TextMenu>> = [
-  {
-    href: PAGE_PATH.about.path,
-    isOutlink: false,
-    label: PAGE_PATH.about.label,
-  },
   {
     href: GITHUB_URL,
     isOutlink: true,

@@ -1,7 +1,7 @@
 import { Global, ThemeProvider } from '@emotion/react'
 
 import Layout from '@/components/layout/Layout'
-import MetaHead from '@/components/layout/MetaHead'
+import MetaHead from '@/components/seo/MetaHead'
 
 import resetStyle from '@/styles/resetStyle'
 import { THEME } from '@/styles/constants/theme'

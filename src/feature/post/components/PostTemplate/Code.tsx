@@ -1,9 +1,9 @@
-import ToastPortal from '@/components/toast/ToastPortal'
-
-import useToast from '@/components/toast/useToast'
-import { Code as NotionCode } from 'react-notion-x/build/third-party/code'
 import { ComponentProps, useEffect } from 'react'
 import { NotionComponents } from 'react-notion-x'
+import { Code as NotionCode } from 'react-notion-x/build/third-party/code'
+
+import ToastPortal from '@/components/toast/ToastPortal'
+import useToast from '@/components/toast/useToast'
 
 const COPY_MESSAGE = '클립보드에 복사되었습니다.'
 

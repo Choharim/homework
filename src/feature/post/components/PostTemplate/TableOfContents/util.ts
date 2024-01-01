@@ -1,11 +1,5 @@
-import { HEADERS_OF_CONTENTS } from '../constant'
-import { HeadersOfContents } from '../type'
-
-const isHeadersOfContents = (
-  headerName: string
-): headerName is HeadersOfContents => {
-  return HEADERS_OF_CONTENTS.includes(headerName as HeadersOfContents)
-}
+import { HEADERS_OF_CONTENTS } from './constant'
+import { HeadersOfContents } from './type'
 
 export const setTOCId = (headingElements: Element[]) => {
   let h2Count = 0
@@ -30,6 +24,12 @@ export const setTOCId = (headingElements: Element[]) => {
   })
 }
 
+const isHeadersOfContents = (
+  headerName: string
+): headerName is HeadersOfContents => {
+  return HEADERS_OF_CONTENTS.includes(headerName as HeadersOfContents)
+}
+
 type Params = {
   headerText: string
   h2Count: number
@@ -37,12 +37,7 @@ type Params = {
   headerType: HeadersOfContents
 }
 
-export const getTOCId = ({
-  headerText,
-  headerType,
-  h2Count,
-  h3Count,
-}: Params) => {
+const getTOCId = ({ headerText, headerType, h2Count, h3Count }: Params) => {
   const group = headerType === 'h2' ? h2Count : `${h2Count}_${h3Count}`
 
   return `${group}-${headerText.replace(/ /g, '_')}`

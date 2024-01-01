@@ -12,7 +12,7 @@ import Flex from '@/components/flex'
 import MEDIA from '@/styles/constants/media'
 import { NAVBAR_HEIGHT } from '@/components/layout/Navbar'
 
-import TOC, { TOC_WIDTH_IN_PC } from './TOC'
+import TableOfContents, { TOC_WIDTH_IN_PC } from './TableOfContents'
 import PostHeader from './PostHeader'
 
 type Props = {
@@ -31,14 +31,14 @@ const PostTemplate = ({ frontMatter, children }: Props) => {
 
       <BodyFrame>
         <Aside direction="top">
-          <TOC />
+          <TableOfContents />
         </Aside>
 
         <BodyWrapper>
           <ContentsFrame>{children}</ContentsFrame>
 
           <Aside direction="right">
-            <TOC />
+            <TableOfContents />
           </Aside>
         </BodyWrapper>
       </BodyFrame>
@@ -98,7 +98,7 @@ const Aside = styled.aside<{ direction: 'right' | 'top' }>`
             display: none;
           }
 
-          ${TOC.TOCBox} {
+          ${TableOfContents.TOCBox} {
             position: sticky;
             right: 0;
             top: ${NAVBAR_HEIGHT}px;
@@ -113,7 +113,7 @@ const Aside = styled.aside<{ direction: 'right' | 'top' }>`
             display: flex;
           }
 
-          ${TOC.TOCBox} {
+          ${TableOfContents.TOCBox} {
             position: unset;
             width: 100%;
             margin-bottom: 20px;

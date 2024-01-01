@@ -1,6 +1,6 @@
 import notionAPI from '@/adapter/notion'
 import Layout from '@/components/layout/Layout'
-import MetaHead from '@/components/layout/MetaHead'
+import MetaHead from '@/components/seo/MetaHead'
 import PostTemplate from '@/feature/post/components/PostTemplate'
 import CustomStyleProvider from '@/feature/post/components/PostTemplate/CustomStyleProvider'
 
