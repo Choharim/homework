@@ -13,11 +13,12 @@ export type PostTag =
 
 type CreateDate = `${number}-${number}-${number}`
 
-export type Post = {
+export type PostFrontMatter = {
   id: string
   title: string
   description: string
   category: PostCategory
   tag: PostTag[]
   create_date: CreateDate
+  published: boolean
 }
