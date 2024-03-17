@@ -14,16 +14,22 @@ import useScrollDirection from '@/hooks/useScrollDirection'
 import { convertHEXToRGB } from '@/shared/utils/string'
 import useScrollTop from '@/hooks/useScrollTop'
 import Z_INDEX from '@/styles/constants/zIndex'
+import AppFeature from '@/feature/app'
+import { appPageName } from '@/feature/app/constants/navigation'
 
 export const NAVBAR_HEIGHT = 60
 
 type TextMenu = {
   href: string
-  isOutlink: boolean
+  isOutlink?: boolean
   label: string
 }
 
 const MENUS: Readonly<Array<TextMenu>> = [
+  {
+    href: AppFeature.getUri({ name: appPageName.blog }),
+    label: 'Blog',
+  },
   {
     href: GITHUB_URL,
     isOutlink: true,
