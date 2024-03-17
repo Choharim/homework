@@ -33,6 +33,8 @@ export default Outlink
 const A = styled.a`
   text-decoration: 2px underline dashed;
   text-underline-offset: 5px;
+  word-break: break-word;
+
   cursor: pointer;
 
   color: ${({ theme }) => theme.color.primary300};
