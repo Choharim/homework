@@ -12,17 +12,12 @@ import {
   InferGetStaticPropsType,
   PreviewData,
 } from 'next'
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ParsedUrlQuery } from 'querystring'
 import React from 'react'
 import { NotionRenderer } from 'react-notion-x'
-
-const Code = dynamic(
-  () => import('@/feature/post/components/PostTemplate/Code'),
-  { ssr: false }
-)
+import { Code } from 'react-notion-x/build/third-party/code'
 
 const PostDetail: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -99,6 +94,6 @@ export async function getStaticProps(
       frontMatter,
       post,
     },
-    revalidate: 60,
+    revalidate: 1,
   }
 }
