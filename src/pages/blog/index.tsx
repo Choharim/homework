@@ -9,15 +9,13 @@ import PostCardLink from '@/feature/post/components/PostCardLink'
 import CategoryChip from '@/feature/post/components/CategoryChip'
 import postFeature from '@/feature/post'
 import { css } from '@emotion/react'
-import Pagination from '@/components/pagination/Pagination'
 import usePagination from '@/components/pagination/usePagination'
 
 const Blog: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ posts }) => {
   const router = useRouter()
-  const { paginatedPosts, totalPage, currentPage, pageQueryKey } =
-    usePagination({ posts })
+  const { paginatedPosts, Pagination } = usePagination({ posts })
 
   return (
     <>
@@ -42,11 +40,8 @@ const Blog: NextPageWithLayout<
           )
         })}
       </CardListFrame>
-      <Pagination
-        totalPage={totalPage}
-        currentPage={currentPage}
-        pageQueryKey={pageQueryKey}
-      />
+
+      <Pagination />
     </>
   )
 }
@@ -62,6 +57,6 @@ export async function getStaticProps() {
     props: {
       posts,
     },
-    revalidate: 60,
+    revalidate: 1,
   }
 }
