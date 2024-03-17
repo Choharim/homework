@@ -59,8 +59,6 @@ const TableOfContents = () => {
         top:
           target.getBoundingClientRect().top + window.scrollY - NAVBAR_HEIGHT,
       })
-
-      setTimeout(() => setisHighlightId(target.id), 100)
     }
   }
 
@@ -102,25 +100,36 @@ const List = styled.li<{ headerType: HeadersOfContents; isHighlight: boolean }>`
           color: ${theme.color.grey800};
         `
       case 'h3':
-      default:
         return css`
-          margin-left: 12px;
-          padding-left: 12px;
-          border-left: 1px solid ${theme.color.grey300};
+          margin-left: 10px;
+          padding-left: 10px;
           ${FONT.caption_1};
           color: ${theme.color.grey700};
+        `
+
+      case 'h4':
+      default:
+        return css`
+          margin-left: 10px;
+          padding-left: 25px;
+          ${FONT.caption_1};
+          color: ${theme.color.grey500};
         `
     }
   }}
 
   ${({ theme, isHighlight }) =>
-    isHighlight &&
-    css`
-      color: ${theme.color.primary500};
-      filter: drop-shadow(
-        0 0 8px rgba(${convertHEXToRGB(theme.color.primary400)}, 0.7)
-      ); ;
-    `};
+    isHighlight
+      ? css`
+          color: ${theme.color.primary500};
+          filter: drop-shadow(
+            0 0 8px rgba(${convertHEXToRGB(theme.color.primary400)}, 0.7)
+          );
+          border-left: 2px solid ${theme.color.primary200};
+        `
+      : css`
+          border-left: 2px solid ${theme.color.grey200};
+        `};
 
   :hover {
     color: ${({ theme }) => theme.color.primary300};
