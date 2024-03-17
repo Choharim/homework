@@ -6,6 +6,7 @@ import MetaHead from '@/components/seo/MetaHead'
 import resetStyle from '@/styles/resetStyle'
 import { THEME } from '@/styles/constants/theme'
 import { AppPropsWithLayout, GetLayout } from '@/shared/types/layout'
+import ToastProvider from '@/components/toast/_store/ToastProvider'
 
 function App({ Component, pageProps }: AppPropsWithLayout) {
   const _getLayout = Component.getLayout || getLayout
@@ -13,7 +14,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <ThemeProvider theme={THEME}>
       <Global styles={resetStyle} />
-      {_getLayout(<Component {...pageProps} />)}
+      <ToastProvider>{_getLayout(<Component {...pageProps} />)}</ToastProvider>
     </ThemeProvider>
   )
 }
