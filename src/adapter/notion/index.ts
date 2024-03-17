@@ -1,7 +1,7 @@
 import { NotionAPI as NotionClient } from 'notion-client'
 
 import NOTION_ID from './id'
-import { PostCategory, PostFrontMatter, PostTag } from './type'
+import { PostCategory, PostFrontMatter } from './type'
 
 class NotionAPI {
   private baseURL = 'https://notion-api.splitbee.io/v1'
@@ -63,12 +63,6 @@ class NotionAPI {
     const filtes = await this.getFilters()
 
     return (filtes['category'] as PostCategory[]) || []
-  }
-
-  public async getTags(): Promise<PostTag[]> {
-    const filtes = await this.getFilters()
-
-    return (filtes['tag'] as PostTag[]) || []
   }
 }
 
