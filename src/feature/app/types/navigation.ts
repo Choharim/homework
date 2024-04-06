@@ -1,3 +1,4 @@
+import { PostCategory } from '@/adapter/notion/type'
 import { APP_PAGE_NAMES, appPageName } from '../constants/navigation'
 
 export type AppPageName = typeof APP_PAGE_NAMES[number]
@@ -37,8 +38,11 @@ export type AppPageSearchParams = {
     : Partial<RedirectSearchParam>
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-type PageSearchParams = {}
+export type PageSearchParams = {
+  [appPageName.blog]: {
+    category?: PostCategory
+  }
+}
 
 export type RedirectSearchParam = {
   from: string
