@@ -1,4 +1,5 @@
 import notionAPI from '@/adapter/notion'
+import NoResult from '@/components/StatusResult/NoResult'
 import Layout from '@/components/layout/Layout'
 import MetaHead from '@/components/seo/MetaHead'
 import PostTemplate from '@/feature/post/components/PostTemplate'
@@ -17,17 +18,13 @@ import Link from 'next/link'
 import { ParsedUrlQuery } from 'querystring'
 import React from 'react'
 import { NotionRenderer } from 'react-notion-x'
+
 import { Code } from 'react-notion-x/build/third-party/code'
 
 const PostDetail: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ post, frontMatter }) => {
-  if (!frontMatter)
-    return (
-      <div>
-        <h3>No data found.</h3>
-      </div>
-    )
+  if (!post || !frontMatter) return <NoResult />
 
   return (
     <PostTemplate frontMatter={frontMatter}>
@@ -53,11 +50,13 @@ export default PostDetail
 PostDetail.getLayout = function getLayout(
   page: React.ReactElement<InferGetStaticPropsType<typeof getStaticProps>>
 ) {
+  const frontMatter = page.props.frontMatter
+
   return (
-    <Layout resetFrameStyle>
+    <Layout resetFrameStyle={!!page.props.post}>
       <MetaHead
-        title={page.props.frontMatter?.title}
-        description={page.props.frontMatter?.description}
+        title={frontMatter?.title}
+        description={frontMatter?.description}
         ogType="article"
       />
       {page}
@@ -94,6 +93,6 @@ export async function getStaticProps(
       frontMatter,
       post,
     },
-    revalidate: 1,
+    revalidate: 10,
   }
 }

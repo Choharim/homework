@@ -1,17 +1,28 @@
-import React from 'react'
+import React, {
+  ComponentPropsWithoutRef,
+  ForwardedRef,
+  forwardRef,
+} from 'react'
 import Flex from '../flex'
-import styled from '@emotion/styled'
 import Typo from '../typo'
 import Icon from '../icon'
+import { css } from '@emotion/react'
 
-function NoResult() {
+type Props = ComponentPropsWithoutRef<'section'>
+function NoResult(props: Props, forwardedRef: ForwardedRef<HTMLElement>) {
   return (
-    <NoResultSection
+    <Flex
+      {...props}
+      ref={forwardedRef}
       as="section"
       direction="column"
       align="center"
       justify="center"
       gap="24px"
+      css={css`
+        width: 100%;
+        height: 100%;
+      `}
     >
       <Icon
         type="FillTriangleExclamationMark"
@@ -20,14 +31,10 @@ function NoResult() {
         height={48}
       />
       <Typo as="h1" variety="title_1" color="grey700">
-        요청하신 컨텐츠를 찾을 수 없어요.
+        요청하신 컨텐츠를 찾을 수 없어요
       </Typo>
-    </NoResultSection>
+    </Flex>
   )
 }
 
-export default NoResult
-
-const NoResultSection = styled(Flex)`
-  margin: 100px 0;
-`
+export default forwardRef(NoResult)
