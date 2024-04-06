@@ -3,51 +3,42 @@ import { PostCategory } from '@/adapter/notion/type'
 import React, {
   ComponentPropsWithoutRef,
   ForwardedRef,
+  ReactNode,
   forwardRef,
 } from 'react'
 import postFeature from '../..'
 import styled from '@emotion/styled'
-import Typo from '@/components/typo'
-import { css } from '@emotion/react'
 
-interface Props extends ComponentPropsWithoutRef<'span'> {
-  category: PostCategory
-  isActive: boolean
-}
+import { Either } from '@/shared/types/narrow'
+import _Chip from '@/components/Chip'
+
+type Props = Omit<
+  ComponentPropsWithoutRef<typeof _Chip>,
+  'children' | 'color' | 'size' | 'variety'
+> & {
+  isSeleted: boolean
+} & Either<{ category: PostCategory }, { children: ReactNode }>
+
 const Chip = (
-  { category, isActive, ...props }: Props,
+  { children, category, isSeleted, ...props }: Props,
   forwardedRef: ForwardedRef<HTMLSpanElement>
 ) => {
   return (
-    <CategoryText
+    <CategoryChip
       {...props}
+      size="l"
+      color="primary"
+      isSeleted={isSeleted}
+      variety={isSeleted ? 'solid' : 'outline'}
       ref={forwardedRef}
-      variety="title_3"
-      color="grey700"
-      wrap="nowrap"
-      isActive={isActive}
     >
-      {postFeature.getCategoryName(category)}
-    </CategoryText>
+      {category ? postFeature.getCategoryName(category) : children}
+    </CategoryChip>
   )
 }
 
 export default forwardRef(Chip)
 
-const CategoryText = styled(Typo)<{ isActive: boolean }>`
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  border: 1px solid ${({ theme }) => theme.color.grey200};
-
-  ${({ isActive, theme }) =>
-    isActive &&
-    css`
-      color: ${theme.color.primary400};
-      background-color: ${theme.color.grey100};
-    `};
-
-  &:hover {
-    color: ${({ theme }) => theme.color.primary400};
-  }
+const CategoryChip = styled(_Chip)<Pick<Props, 'isSeleted'>>`
+  cursor: ${({ isSeleted }) => (isSeleted ? 'default' : 'pointer')};
 `

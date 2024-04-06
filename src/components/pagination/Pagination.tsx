@@ -4,7 +4,6 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 
-import Chip from '../Chip'
 import Icon from '../icon'
 import PageLink from './PageLink'
 
@@ -109,7 +108,7 @@ const Container = styled(Flex)`
   padding: 30px 0;
 `
 
-const Page = styled(Chip)<{ isActive: boolean }>`
+const Page = styled.span<{ isActive: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
