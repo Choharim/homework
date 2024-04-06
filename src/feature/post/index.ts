@@ -15,6 +15,10 @@ class PostFeature {
     return this.POST_CATEGORY_NAME[category] ?? ''
   }
 
+  public getIsValidCategory(category: PostCategory) {
+    return !!this.getCategoryName(category)
+  }
+
   private POST_TAG_NAME: Record<PostTag, string> = {
     theory: '이론',
     'problem-solving': '문제해결',

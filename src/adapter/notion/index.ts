@@ -30,8 +30,18 @@ class NotionAPI {
     return await notionClient.getPage(id)
   }
 
+  public async getPostByCategory(category: PostCategory) {
+    const posts = await this.getPosts()
+
+    return posts.filter((post) => post.category === category)
+  }
+
+  public async getTable() {
+    return await notionClient.getPage(NOTION_ID.page.blog)
+  }
+
   public async getFilters() {
-    const tableOfPosts = await notionClient.getPage(NOTION_ID.page.blog)
+    const tableOfPosts = await this.getTable()
     const filterCodes: string[] =
       Object.values(
         tableOfPosts.collection_view
