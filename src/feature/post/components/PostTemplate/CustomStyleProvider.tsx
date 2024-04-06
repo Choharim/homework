@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { Theme, css } from '@emotion/react'
 
 import FONT from '@/styles/constants/font'
+import { convertHEXToRGB } from '@/shared/utils/string'
 
 const CustomStyleProvider = ({ children }: PropsWithChildren) => {
   return <Provider>{children}</Provider>
@@ -13,8 +14,9 @@ export default CustomStyleProvider
 const headerFont = (theme: Theme) => css`
   color: ${theme.color.grey800};
 `
-const paragrahFont = css`
+const paragrahFont = (theme: Theme) => css`
   ${FONT.body_1};
+  color: ${theme.color.grey900};
 `
 
 const listContainer = css`
@@ -23,12 +25,14 @@ const listContainer = css`
 
 const highlightWord = (theme: Theme) => css`
   display: inline;
-  padding: 4px 8px;
 
-  ${FONT.caption_1};
-  color: ${theme.color.primary800};
-  background-color: ${theme.color.grey100};
-  border-radius: 6px;
+  border-radius: 0px;
+  padding: 0.2em 0;
+  font-family: inherit;
+  ${FONT.body_1};
+  font-weight: 600;
+  color: ${theme.color.grey900};
+  background-color: rgb(${convertHEXToRGB(theme.color.primary200)}, 0.3);
 `
 
 export const Provider = styled.div`
@@ -64,7 +68,9 @@ export const Provider = styled.div`
   }
 
   div {
-    ${paragrahFont};
+    ${({ theme }) => css`
+      ${paragrahFont(theme)}
+    `}
 
     margin-bottom: 12px;
     &:last-child {
@@ -96,7 +102,9 @@ export const Provider = styled.div`
   }
 
   li {
-    ${paragrahFont};
+    ${({ theme }) => css`
+      ${paragrahFont(theme)}
+    `}
 
     &::marker {
       ${FONT.title_3};
@@ -121,6 +129,11 @@ export const Provider = styled.div`
     code {
       color: ${({ theme }) => theme.color.primary400};
     }
+  }
+
+  .notion-inline-underscore {
+    text-decoration: none;
+    box-shadow: inset 0 -10px 0 rgb(${({ theme }) => convertHEXToRGB(theme.color.primary300)}, 0.7);
   }
 
   .notion-callout {

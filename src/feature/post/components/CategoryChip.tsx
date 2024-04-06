@@ -1,20 +1,26 @@
-import React from 'react'
+import React, {
+  ComponentPropsWithoutRef,
+  ForwardedRef,
+  forwardRef,
+} from 'react'
 
-import CategoryLink from './CategoryLink'
 import Chip from '@/components/Chip'
 import postFeature from '@/feature/post'
 import { PostCategory } from '@/adapter/notion/type'
 
-type Props = {
+interface Props extends ComponentPropsWithoutRef<'span'> {
   category: PostCategory
 }
 
-const CategoryChip = ({ category }: Props) => {
+const CategoryChip = (
+  { category, ...props }: Props,
+  forwardedRef: ForwardedRef<HTMLSpanElement>
+) => {
   return (
-    <CategoryLink category={category}>
-      <Chip>{postFeature.getCategoryName(category)}</Chip>
-    </CategoryLink>
+    <Chip {...props} ref={forwardedRef}>
+      {postFeature.getCategoryName(category)}
+    </Chip>
   )
 }
 
-export default CategoryChip
+export default forwardRef(CategoryChip)

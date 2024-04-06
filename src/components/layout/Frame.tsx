@@ -4,8 +4,6 @@ import styled from '@emotion/styled'
 import { DEVICE_SIZE } from '@/feature/app/constants/layout'
 import MEDIA from '@/styles/constants/media'
 
-const X_PADDING = 20
-
 interface Props {
   className?: string
   as?: React.ElementType
@@ -25,9 +23,11 @@ Frame.Layout = styled.div`
   height: 100%;
   max-width: ${DEVICE_SIZE.tablet}px;
   margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
 
-  ${MEDIA.tablet} {
-    padding-left: ${X_PADDING}px;
-    padding-right: ${X_PADDING}px;
+  ${MEDIA.mobile} {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 `

@@ -64,14 +64,14 @@ const Pagination = ({
         pageQueryKey={pageQueryKey}
         pageQueryValue={1}
       >
-        <CustomIcon css={rotateHalf} type="DoubleArrowRight" stroke="grey500" />
+        <CustomIcon css={rotateHalf} type="DoubleArrowRight" color="grey500" />
       </CustomPageLink>
       <CustomPageLink
         isDisabled={currentPage === 1}
         pageQueryKey={pageQueryKey}
         pageQueryValue={currentPage - 1}
       >
-        <CustomIcon css={rotateHalf} type="ArrowRight" stroke="grey500" />
+        <CustomIcon css={rotateHalf} type="ArrowRight" color="grey500" />
       </CustomPageLink>
 
       {pages.map((page) => (
@@ -88,7 +88,7 @@ const Pagination = ({
         pageQueryKey={pageQueryKey}
         pageQueryValue={currentPage + 1}
       >
-        <CustomIcon type="ArrowRight" stroke="grey500" />
+        <CustomIcon type="ArrowRight" color="grey500" />
       </CustomPageLink>
 
       <CustomPageLink
@@ -96,7 +96,7 @@ const Pagination = ({
         pageQueryKey={pageQueryKey}
         pageQueryValue={totalPage}
       >
-        <CustomIcon type="DoubleArrowRight" stroke="grey500" />
+        <CustomIcon type="DoubleArrowRight" color="grey500" />
       </CustomPageLink>
     </Container>
   )
@@ -144,7 +144,7 @@ const CustomPageLink = styled(PageLink)<{ isDisabled: boolean }>`
           cursor: default;
           pointer-events: none;
           ${CustomIcon} {
-            stroke: ${theme.color.grey300};
+            color: ${theme.color.grey300};
           }
         `
       : css`

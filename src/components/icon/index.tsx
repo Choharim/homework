@@ -8,11 +8,10 @@ interface IconProps
   extends Pick<SVGAttributes<SVGAElement>, 'width' | 'height'>,
     Pick<ComponentProps<'svg'>, 'className' | 'onClick'> {
   type: keyof typeof ICON_COMPONENT
-  stroke?: ColorKey
-  fill?: ColorKey
+  color: ColorKey
 }
 const Icon = React.forwardRef<HTMLDivElement, IconProps>(
-  ({ type, width = 18, height, stroke = 'black', fill, ...restProps }, ref) => {
+  ({ type, width = 18, height, color, ...restProps }, ref) => {
     const theme = useTheme()
     const IconComponent = ICON_COMPONENT[type]
 
@@ -21,8 +20,7 @@ const Icon = React.forwardRef<HTMLDivElement, IconProps>(
         ref={ref}
         width={width}
         height={height}
-        stroke={theme.color[stroke]}
-        fill={!fill ? 'none' : theme.color[fill]}
+        color={theme.color[color]}
         strokeWidth="2.0"
         {...restProps}
       />
