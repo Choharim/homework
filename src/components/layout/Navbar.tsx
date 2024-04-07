@@ -57,15 +57,14 @@ Navbar.Menu = React.memo(function Component() {
     <Flex as="ul" align="baseline">
       {MENUS.map((menu, i) => (
         <MenuWrapper key={`menu_${i}`} isActive={pathname === menu.href}>
-          <Link href={menu.href} passHref>
-            <LinkWrapper
-              target={menu.isOutlink ? '_blank' : '_self'}
-              rel="noopener noreferrer"
-            >
-              <Menu variety="title_3" color="grey700">
-                {menu.label}
-              </Menu>
-            </LinkWrapper>
+          <Link
+            href={menu.href}
+            target={menu.isOutlink ? '_blank' : '_self'}
+            rel="noopener noreferrer"
+          >
+            <Menu variety="title_3" color="grey700">
+              {menu.label}
+            </Menu>
           </Link>
         </MenuWrapper>
       ))}
@@ -104,9 +103,7 @@ const CustomFrame = styled(Frame)`
   justify-content: space-between;
 `
 
-const Menu = styled(Typo)``
-
-const LinkWrapper = styled.a`
+const Menu = styled(Typo)`
   display: flex;
   align-items: center;
   padding: 3px 8px;

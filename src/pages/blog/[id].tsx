@@ -20,7 +20,7 @@ import { ParsedUrlQuery } from 'querystring'
 import React from 'react'
 import { NotionRenderer } from 'react-notion-x'
 
-import { Code } from 'react-notion-x/build/third-party/code'
+import Code from 'react-notion-x/build/third-party/code'
 
 const PostDetail: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -39,6 +39,7 @@ const PostDetail: NextPageWithLayout<
             Link: Outlink,
             nextLink: Link,
             Collection: () => <></>,
+            Equation: () => <></>,
           }}
         />
       </CustomStyleProvider>

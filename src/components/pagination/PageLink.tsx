@@ -26,9 +26,9 @@ function PageLink({
           [pageQueryKey]: pageQueryValue,
         },
       }}
-      passHref
+      className={className}
     >
-      <a className={className}>{children}</a>
+      {children}
     </Link>
   )
 }
