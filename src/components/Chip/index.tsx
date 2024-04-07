@@ -38,4 +38,8 @@ export default forwardRef(Chip)
 const Wrapper = styled.span`
   width: fit-content;
   border-radius: 6px;
+
+  &:empty {
+    display: none;
+  }
 `

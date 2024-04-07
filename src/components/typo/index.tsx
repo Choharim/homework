@@ -73,4 +73,8 @@ const TypoWrapper = styled(DEFAULT_TAG)<TypoStyle>`
     color: ${color === 'inherit' ? 'inherit' : COLOR[color]};
     white-space: ${wrap};
   `};
+
+  &:empty {
+    display: none;
+  }
 `

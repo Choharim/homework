@@ -13,9 +13,11 @@ import postFeature from '..'
 const PostCardLink = ({ children, ...props }: PropsWithChildren<LinkProps>) => {
   return (
     <Link {...props}>
-      <CardWrapper direction="column" as="article" justify="space-between">
-        {children}
-      </CardWrapper>
+      <a>
+        <CardWrapper direction="column" as="article" justify="space-between">
+          {children}
+        </CardWrapper>
+      </a>
     </Link>
   )
 }
@@ -48,7 +50,7 @@ const CardWrapper = styled(Flex)`
 
   &:hover {
     ${TitleWrapper} {
-      color: ${({ theme }) => theme.color.primary300};
+      color: ${({ theme }) => theme.color.primary500};
     }
 
     box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);

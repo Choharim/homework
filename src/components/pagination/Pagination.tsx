@@ -1,13 +1,11 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 
 import Icon from '../icon'
 import PageLink from './PageLink'
 
-import MEDIA from '@/styles/constants/media'
 import FONT from '@/styles/constants/font'
 import { rotateHalf } from '@/styles/mixin'
 import Flex from '../flex'
@@ -57,7 +55,7 @@ const Pagination = ({
   if (totalPage === 1) return null
 
   return (
-    <Container align="center">
+    <Container align="center" gap="4px">
       <CustomPageLink
         isDisabled={currentPage === 1}
         pageQueryKey={pageQueryKey}
@@ -114,20 +112,17 @@ const Page = styled.span<{ isActive: boolean }>`
   justify-content: center;
   width: 32px;
   height: 32px;
-  margin: 5px;
-  border-radius: 4px;
   ${FONT.title_3};
 
   ${({ isActive, theme }) =>
     isActive
       ? css`
-          background-color: ${theme.color.primary300};
-          color: ${theme.color.white};
+          color: ${theme.color.grey900};
           cursor: default;
           pointer-events: none;
         `
       : css`
-          color: ${theme.color.primary400};
+          color: ${theme.color.grey600};
           cursor: pointer;
         `}
 `
@@ -152,12 +147,8 @@ const CustomPageLink = styled(PageLink)<{ isDisabled: boolean }>`
 `
 
 const CustomIcon = styled(Icon)`
-  padding: 5px;
-  width: 30px;
+  padding: 4px;
+  width: 28px;
+  height: 28px;
   cursor: pointer;
-
-  ${MEDIA.tablet} {
-    padding: 5px;
-    width: 25px;
-  }
 `

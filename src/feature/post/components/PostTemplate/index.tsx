@@ -57,7 +57,7 @@ const Article = styled(Flex)`
 const HeaderFrame = styled(Frame)`
   max-width: ${WIDTH}px;
   margin-top: ${NAVBAR_HEIGHT}px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 
   ${MEDIA.mobile} {
     margin-bottom: 20px;
