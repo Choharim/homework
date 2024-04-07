@@ -7,7 +7,7 @@ import Flex from '@/components/flex'
 import { limitTextLine } from '@/styles/mixin'
 import Link, { LinkProps } from 'next/link'
 import MEDIA from '@/styles/constants/media'
-import { PostTag } from '@/adapter/notion/type'
+import { PostTag } from '@/entity/post/type'
 import postFeature from '..'
 import COLOR from '@/styles/constants/color'
 
@@ -94,7 +94,7 @@ function Tag({ tags }: { tags: PostTag[] }) {
     <>
       {tags.map((tag, i) => (
         <Typo key={`${tag}-${i}`} as="span" variety="caption_1" color="grey700">
-          #{postFeature.getTagName(tag)}
+          # {postFeature.getTagName(tag)}
         </Typo>
       ))}
     </>

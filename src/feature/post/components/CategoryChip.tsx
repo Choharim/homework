@@ -5,7 +5,7 @@ import React, {
 } from 'react'
 
 import postFeature from '@/feature/post'
-import { PostCategory } from '@/adapter/notion/type'
+import { PostCategory } from '@/entity/post/type'
 import Chip from '@/components/Chip'
 
 interface Props

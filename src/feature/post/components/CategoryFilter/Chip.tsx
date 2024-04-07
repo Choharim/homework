@@ -1,4 +1,4 @@
-import { PostCategory } from '@/adapter/notion/type'
+import { PostCategory } from '@/entity/post/type'
 
 import React, {
   ComponentPropsWithoutRef,

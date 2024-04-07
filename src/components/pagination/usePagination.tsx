@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
-import { PostFrontMatter } from '@/adapter/notion/type'
+import { PostFrontMatter } from '@/entity/post/type'
 import _Pagination from './Pagination'
 
 const getPaginatedPosts = (

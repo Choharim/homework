@@ -1,4 +1,4 @@
-import { PostFrontMatter } from '@/adapter/notion/type'
+import { PostFrontMatter } from '@/entity/post/type'
 
 import Typo from '@/components/typo'
 import Chip from '@/components/Chip'

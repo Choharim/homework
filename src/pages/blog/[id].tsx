@@ -2,6 +2,7 @@ import notionAPI from '@/adapter/notion'
 import NoResult from '@/components/StatusResult/NoResult'
 import Layout from '@/components/layout/Layout'
 import MetaHead from '@/components/seo/MetaHead'
+import postEntity from '@/entity/post'
 import PostTemplate from '@/feature/post/components/PostTemplate'
 import CustomStyleProvider from '@/feature/post/components/PostTemplate/CustomStyleProvider'
 
@@ -65,7 +66,8 @@ PostDetail.getLayout = function getLayout(
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const ids = await notionAPI.getPostIDs()
+  const all = await notionAPI.getPostFrontMatters()
+  const ids = postEntity.getPostIDs(all)
 
   const paths = ids.map((id) => {
     return {
@@ -85,7 +87,10 @@ export async function getStaticProps(
   context: GetStaticPropsContext<ParsedUrlQuery, PreviewData>
 ) {
   const id = context.params?.id as string
-  const frontMatter = await notionAPI.getPostFrontMatter(id)
+
+  const all = await notionAPI.getPostFrontMatters()
+  const frontMatter = postEntity.getPostFrontMatter({ posts: all, id })
+
   const post = await notionAPI.getPost(id)
 
   return {

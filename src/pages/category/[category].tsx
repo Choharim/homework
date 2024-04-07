@@ -1,9 +1,9 @@
 import notionAPI from '@/adapter/notion'
-import { PostCategory, PostFrontMatter } from '@/adapter/notion/type'
+import { PostCategory, PostFrontMatter } from '@/entity/post/type'
 import usePagination from '@/components/pagination/usePagination'
 import AppFeature from '@/feature/app'
 import { AppPageRouterQuery } from '@/feature/app/types/navigation'
-import postFeature from '@/feature/post'
+
 import CardListFrame from '@/feature/post/components/CardListFrame'
 import CategoryChip from '@/feature/post/components/CategoryChip'
 import CategoryFilter from '@/feature/post/components/CategoryFilter'
@@ -13,15 +13,16 @@ import { css } from '@emotion/react'
 import { GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import React, { MouseEvent } from 'react'
+import postEntity from '@/entity/post'
 
 const CategoryPage: NextPageWithLayout<PageProps> = ({
-  posts,
+  frontMatters,
   categories,
   category,
 }) => {
   const router = useRouter()
 
-  const { Pagination, paginatedPosts } = usePagination({ posts })
+  const { Pagination, paginatedPosts } = usePagination({ posts: frontMatters })
 
   const handleClickAll = () => {
     router.push(AppFeature.getAppURI({ name: 'main' }))
@@ -106,7 +107,7 @@ export const getStaticPaths = async () => {
 }
 
 type PageProps = {
-  posts: PostFrontMatter[]
+  frontMatters: PostFrontMatter[]
   categories: PostCategory[]
   category: PostCategory
 }
@@ -114,15 +115,19 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   const query = context.params as AppPageRouterQuery<'category'>
   const category = query.category
 
-  const allPosts = await notionAPI.getPostByCategory(category)
-  const publishedPosts = postFeature.getPublishedPosts(allPosts)
-  const posts = postFeature.getPostsSortedByNewest(publishedPosts)
+  const all = await notionAPI.getPostFrontMatters()
+  const categorized = postEntity.getPostFrontMattersByCategory({
+    posts: all,
+    category,
+  })
+  const published = postEntity.getPublishedPostFrontMatters(categorized)
+  const frontMatters = postEntity.getPostFrontMattersSortedByNewest(published)
 
   const categories = await notionAPI.getCategories()
 
   return {
     props: {
-      posts,
+      frontMatters,
       categories,
       category,
     },

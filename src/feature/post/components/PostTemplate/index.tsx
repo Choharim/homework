@@ -5,7 +5,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 
-import { PostFrontMatter } from '@/adapter/notion/type'
+import { PostFrontMatter } from '@/entity/post/type'
 
 import Frame from '@/components/layout/Frame'
 import Flex from '@/components/flex'

@@ -2,9 +2,9 @@ import { GetStaticProps } from 'next'
 
 import { NextPageWithLayout } from '@/shared/types/layout'
 import { BLOG } from '@/feature/app/constants/owner'
-import { PostCategory, PostFrontMatter } from '@/adapter/notion/type'
+import { PostCategory, PostFrontMatter } from '@/entity/post/type'
 import notionAPI from '@/adapter/notion'
-import postFeature from '@/feature/post'
+
 import CardListFrame from '@/feature/post/components/CardListFrame'
 import PostCardLink from '@/feature/post/components/PostCardLink'
 import CategoryChip from '@/feature/post/components/CategoryChip'
@@ -13,11 +13,12 @@ import { useRouter } from 'next/router'
 import { MouseEvent } from 'react'
 import { css } from '@emotion/react'
 import AppFeature from '@/feature/app'
+import postEntity from '@/entity/post'
 
-const Home: NextPageWithLayout<PageProps> = ({ posts }) => {
+const Home: NextPageWithLayout<PageProps> = ({ frontMatters }) => {
   const router = useRouter()
 
-  const { Pagination, paginatedPosts } = usePagination({ posts })
+  const { Pagination, paginatedPosts } = usePagination({ posts: frontMatters })
 
   const onClickCategory =
     (category: PostCategory) => (e: MouseEvent<HTMLSpanElement>) => {
@@ -71,16 +72,16 @@ const Home: NextPageWithLayout<PageProps> = ({ posts }) => {
 export default Home
 
 type PageProps = {
-  posts: PostFrontMatter[]
+  frontMatters: PostFrontMatter[]
 }
 export const getStaticProps: GetStaticProps<PageProps> = async () => {
-  const allPosts = await notionAPI.getPosts()
-  const publishedPosts = postFeature.getPublishedPosts(allPosts)
-  const posts = postFeature.getPostsSortedByNewest(publishedPosts)
+  const all = await notionAPI.getPostFrontMatters()
+  const published = postEntity.getPublishedPostFrontMatters(all)
+  const frontMatters = postEntity.getPostFrontMattersSortedByNewest(published)
 
   return {
     props: {
-      posts,
+      frontMatters,
       title: BLOG.fullName,
     },
   }
