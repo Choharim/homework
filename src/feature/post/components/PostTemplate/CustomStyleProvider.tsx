@@ -1,9 +1,10 @@
 import React, { PropsWithChildren } from 'react'
 import styled from '@emotion/styled'
-import { Theme, css } from '@emotion/react'
+import { css } from '@emotion/react'
 
 import FONT from '@/styles/constants/font'
 import { convertHEXToRGB } from '@/shared/utils/string'
+import COLOR from '@/styles/constants/color'
 
 const CustomStyleProvider = ({ children }: PropsWithChildren) => {
   return <Provider>{children}</Provider>
@@ -11,19 +12,19 @@ const CustomStyleProvider = ({ children }: PropsWithChildren) => {
 
 export default CustomStyleProvider
 
-const headerFont = (theme: Theme) => css`
-  color: ${theme.color.grey800};
+const headerFont = css`
+  color: ${COLOR.grey800};
 `
-const paragrahFont = (theme: Theme) => css`
+const paragrahFont = css`
   ${FONT.body_1};
-  color: ${theme.color.grey900};
+  color: ${COLOR.grey900};
 `
 
 const listContainer = css`
   list-style-position: inside;
 `
 
-const highlightWord = (theme: Theme) => css`
+const highlightWord = css`
   display: inline;
 
   border-radius: 0px;
@@ -31,8 +32,8 @@ const highlightWord = (theme: Theme) => css`
   font-family: inherit;
   ${FONT.body_1};
   font-weight: 600;
-  color: ${theme.color.grey900};
-  background-color: rgb(${convertHEXToRGB(theme.color.primary200)}, 0.3);
+  color: ${COLOR.grey900};
+  background-color: rgb(${convertHEXToRGB(COLOR.primary200)}, 0.3);
 `
 
 export const Provider = styled.div`
@@ -44,33 +45,25 @@ export const Provider = styled.div`
     margin: 35px 0 20px;
 
     ${FONT.header_2};
-    ${({ theme }) => css`
-      ${headerFont(theme)}
-    `}
+    ${headerFont};
   }
 
   h3 {
     margin: 30px 0 15px;
 
     ${FONT.header_3};
-    ${({ theme }) => css`
-      ${headerFont(theme)}
-    `}
+    ${headerFont};
   }
 
   h4 {
     margin: 25px 0 10px;
 
     ${FONT.header_4};
-    ${({ theme }) => css`
-      ${headerFont(theme)}
-    `}
+    ${headerFont};
   }
 
   div {
-    ${({ theme }) => css`
-      ${paragrahFont(theme)}
-    `}
+    ${paragrahFont}
 
     margin-bottom: 12px;
     &:last-child {
@@ -78,15 +71,13 @@ export const Provider = styled.div`
     }
 
     code {
-      ${({ theme }) => css`
-        ${highlightWord(theme)}
-      `}
+      ${highlightWord}
     }
   }
 
   strong {
     ${FONT.title_3};
-    color: ${({ theme }) => theme.color.primary500};
+    color: ${COLOR.primary500};
   }
 
   ol {
@@ -102,18 +93,14 @@ export const Provider = styled.div`
   }
 
   li {
-    ${({ theme }) => css`
-      ${paragrahFont(theme)}
-    `}
+    ${paragrahFont}
 
     &::marker {
       ${FONT.title_3};
     }
 
     code {
-      ${({ theme }) => css`
-        ${highlightWord(theme)}
-      `}
+      ${highlightWord}
     }
   }
 
@@ -122,26 +109,26 @@ export const Provider = styled.div`
     margin: 20px 0;
 
     ${FONT.title_2};
-    border-left: 4px solid ${({ theme }) => theme.color.primary500};
-    background-color: ${({ theme }) => theme.color.grey100};
+    border-left: 4px solid ${COLOR.primary500};
+    background-color: ${COLOR.grey100};
     border-radius: 2px;
 
     code {
-      color: ${({ theme }) => theme.color.primary400};
+      color: ${COLOR.primary400};
     }
   }
 
   .notion-inline-underscore {
     text-decoration: none;
-    box-shadow: inset 0 -10px 0 rgb(${({ theme }) => convertHEXToRGB(theme.color.primary300)}, 0.7);
+    box-shadow: inset 0 -10px 0 rgb(${convertHEXToRGB(COLOR.primary300)}, 0.7);
   }
 
   .notion-callout {
-    ${({ theme }) => css`
-      background-color: ${theme.color.white};
+    ${css`
+      background-color: ${COLOR.white};
       margin: 15px 0;
       padding: 15px 20px;
-      border: 1.5px dashed ${theme.color.primary400};
+      border: 1.5px dashed ${COLOR.primary400};
       border-radius: 15px;
 
       ul,
@@ -151,7 +138,7 @@ export const Provider = styled.div`
       }
 
       code {
-        ${highlightWord(theme)}
+        ${highlightWord}
       }
     `}
   }

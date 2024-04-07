@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 
 import { EN_NAME } from '@/feature/app/constants/owner'
 import FONT from '@/styles/constants/font'
+import COLOR from '@/styles/constants/color'
 
 export const FOOTER_HEIGHT = 100
 
@@ -26,7 +27,7 @@ const Desc = styled.footer`
   align-items: center;
   width: '100%';
   margin: 0 auto;
-  color: ${({ theme }) => theme.color.grey900};
+  color: ${COLOR.grey900};
   height: ${FOOTER_HEIGHT}px;
   ${FONT.body_1};
 `

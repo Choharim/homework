@@ -9,6 +9,7 @@ import PageLink from './PageLink'
 import FONT from '@/styles/constants/font'
 import { rotateHalf } from '@/styles/mixin'
 import Flex from '../flex'
+import COLOR from '@/styles/constants/color'
 
 const DISPLAY_PAGE_COUNT = 5
 const HALF = Math.floor(DISPLAY_PAGE_COUNT / 2)
@@ -114,15 +115,15 @@ const Page = styled.span<{ isActive: boolean }>`
   height: 32px;
   ${FONT.title_3};
 
-  ${({ isActive, theme }) =>
+  ${({ isActive }) =>
     isActive
       ? css`
-          color: ${theme.color.grey900};
+          color: ${COLOR.grey900};
           cursor: default;
           pointer-events: none;
         `
       : css`
-          color: ${theme.color.grey600};
+          color: ${COLOR.grey600};
           cursor: pointer;
         `}
 `
@@ -132,13 +133,13 @@ const CustomPageLink = styled(PageLink)<{ isDisabled: boolean }>`
   align-items: center;
   justify-content: center;
 
-  ${({ isDisabled, theme }) =>
+  ${({ isDisabled }) =>
     isDisabled
       ? css`
           cursor: default;
           pointer-events: none;
           ${CustomIcon} {
-            color: ${theme.color.grey300};
+            color: ${COLOR.grey300};
           }
         `
       : css`

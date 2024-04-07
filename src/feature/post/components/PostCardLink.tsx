@@ -9,6 +9,7 @@ import Link, { LinkProps } from 'next/link'
 import MEDIA from '@/styles/constants/media'
 import { PostTag } from '@/adapter/notion/type'
 import postFeature from '..'
+import COLOR from '@/styles/constants/color'
 
 const PostCardLink = ({ children, ...props }: PropsWithChildren<LinkProps>) => {
   return (
@@ -50,7 +51,7 @@ const CardWrapper = styled(Flex)`
 
   &:hover {
     ${TitleWrapper} {
-      color: ${({ theme }) => theme.color.primary500};
+      color: ${COLOR.primary500};
     }
 
     box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);

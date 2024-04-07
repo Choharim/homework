@@ -1,3 +1,4 @@
+import COLOR from '@/styles/constants/color'
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { ComponentPropsWithoutRef } from 'react'
@@ -37,8 +38,8 @@ const A = styled.a`
 
   cursor: pointer;
 
-  color: ${({ theme }) => theme.color.primary300};
+  color: ${COLOR.primary300};
   &:hover {
-    color: ${({ theme }) => theme.color.primary100};
+    color: ${COLOR.primary100};
   }
 `

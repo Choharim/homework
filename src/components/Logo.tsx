@@ -7,6 +7,7 @@ import Typo from './typo'
 import Flex from './flex'
 
 import { BLOG } from '@/feature/app/constants/owner'
+import COLOR from '@/styles/constants/color'
 
 interface Props extends ComponentProps<typeof Typo> {
   isFold: boolean
@@ -44,7 +45,7 @@ const Logo = ({ isFold, ...typoProps }: Props) => {
 
 export default React.memo(Logo)
 
-const acordian = keyframes`
+const accordion = keyframes`
   0% {
     opacity: 0;
     width: 0;
@@ -64,14 +65,14 @@ const Name = styled(Typo)<{
   isInitial: boolean
   isFold: Props['isFold']
 }>`
-  ${({ isInitial, theme, isFold }) =>
+  ${({ isInitial, isFold }) =>
     isInitial
       ? css`
-          color: ${theme.color.primary500};
+          color: ${COLOR.primary500};
           font-weight: bold;
         `
       : css`
-          animation: ${acordian} 3s ease-in-out 0.5s
+          animation: ${accordion} 3s ease-in-out 0.5s
             ${isFold && 'reverse forwards'};
         `}
 `

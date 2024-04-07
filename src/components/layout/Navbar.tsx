@@ -14,6 +14,7 @@ import useScrollDirection from '@/hooks/useScrollDirection'
 import { convertHEXToRGB } from '@/shared/utils/string'
 import useScrollTop from '@/hooks/useScrollTop'
 import Z_INDEX from '@/styles/constants/zIndex'
+import COLOR from '@/styles/constants/color'
 
 export const NAVBAR_HEIGHT = 60
 
@@ -79,12 +80,9 @@ const Navigation = styled.nav<{ isHidden: boolean }>`
   width: 100%;
   height: ${NAVBAR_HEIGHT}px;
 
-  background-color: rgb(
-    ${({ theme }) => convertHEXToRGB(theme.color.white)},
-    0.5
-  );
+  background-color: rgb(${convertHEXToRGB(COLOR.white)}, 0.5);
   backdrop-filter: saturate(180%) blur(5px);
-  border-bottom: 1px solid ${({ theme }) => theme.color.grey200};
+  border-bottom: 1px solid ${COLOR.grey200};
   z-index: ${Z_INDEX.nav};
 
   display: block;
@@ -121,20 +119,20 @@ const MenuWrapper = styled.li<{ isActive: boolean }>`
     margin-left: 10px;
   }
 
-  ${({ isActive, theme }) =>
+  ${({ isActive }) =>
     isActive &&
     css`
       pointer-events: none;
-      background-color: ${theme.color.grey100};
+      background-color: ${COLOR.grey100};
 
       ${Menu} {
-        color: ${theme.color.primary400};
+        color: ${COLOR.primary400};
       }
     `}
 
   &:hover {
     ${Menu} {
-      color: ${({ theme }) => theme.color.primary400};
+      color: ${COLOR.primary400};
     }
   }
 `

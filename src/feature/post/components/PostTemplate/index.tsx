@@ -14,6 +14,7 @@ import { NAVBAR_HEIGHT } from '@/components/layout/Navbar'
 
 import TableOfContents, { TOC_WIDTH_IN_PC } from './TableOfContents'
 import PostHeader from './PostHeader'
+import COLOR from '@/styles/constants/color'
 
 type Props = {
   children: React.ReactNode
@@ -50,7 +51,7 @@ export default PostTemplate
 
 const Article = styled(Flex)`
   margin-bottom: 100px;
-  color: ${({ theme }) => theme.color.grey900};
+  color: ${COLOR.grey900};
   word-break: keep-all;
 `
 
