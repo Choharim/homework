@@ -14,13 +14,20 @@ import {
   InferGetStaticPropsType,
   PreviewData,
 } from 'next'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ParsedUrlQuery } from 'querystring'
 import React from 'react'
 import { NotionRenderer } from 'react-notion-x'
 
-import { Code } from 'react-notion-x/build/third-party/code'
+const Code = dynamic(
+  () =>
+    import('react-notion-x/build/third-party/code').then((m) => {
+      return m.Code
+    }),
+  { ssr: false }
+)
 
 const PostDetail: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -39,6 +46,7 @@ const PostDetail: NextPageWithLayout<
             Link: Outlink,
             nextLink: Link,
             Collection: () => <></>,
+            Equation: () => <></>,
           }}
         />
       </CustomStyleProvider>
