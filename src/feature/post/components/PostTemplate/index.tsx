@@ -5,7 +5,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 
-import { PostFrontMatter } from '@/adapter/notion/type'
+import { PostFrontMatter } from '@/entity/post/type'
 
 import Frame from '@/components/layout/Frame'
 import Flex from '@/components/flex'
@@ -14,6 +14,7 @@ import { NAVBAR_HEIGHT } from '@/components/layout/Navbar'
 
 import TableOfContents, { TOC_WIDTH_IN_PC } from './TableOfContents'
 import PostHeader from './PostHeader'
+import COLOR from '@/styles/constants/color'
 
 type Props = {
   children: React.ReactNode
@@ -50,14 +51,14 @@ export default PostTemplate
 
 const Article = styled(Flex)`
   margin-bottom: 100px;
-  color: ${({ theme }) => theme.color.grey900};
+  color: ${COLOR.grey900};
   word-break: keep-all;
 `
 
 const HeaderFrame = styled(Frame)`
   max-width: ${WIDTH}px;
   margin-top: ${NAVBAR_HEIGHT}px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 
   ${MEDIA.mobile} {
     margin-bottom: 20px;

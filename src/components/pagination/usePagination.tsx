@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
-import { PostFrontMatter } from '@/adapter/notion/type'
+import { PostFrontMatter } from '@/entity/post/type'
+import _Pagination from './Pagination'
 
 const getPaginatedPosts = (
   posts: PostFrontMatter[],
@@ -39,12 +40,17 @@ const usePagination = ({ posts }: Params) => {
     }
   }, [router.query])
 
-  return {
-    paginatedPosts,
-    totalPage,
-    currentPage,
-    pageQueryKey: PAGE_QUERY_KEY,
-  }
+  const Pagination = useCallback(() => {
+    return (
+      <_Pagination
+        totalPage={totalPage}
+        currentPage={currentPage}
+        pageQueryKey={PAGE_QUERY_KEY}
+      />
+    )
+  }, [currentPage, totalPage])
+
+  return { Pagination, paginatedPosts }
 }
 
 export default usePagination

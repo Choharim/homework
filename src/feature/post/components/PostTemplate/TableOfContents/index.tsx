@@ -11,6 +11,7 @@ import Z_INDEX from '@/styles/constants/zIndex'
 import FONT from '@/styles/constants/font'
 import { NAVBAR_HEIGHT } from '@/components/layout/Navbar'
 import { setTOCId } from './util'
+import COLOR from '@/styles/constants/color'
 
 export const TOC_WIDTH_IN_PC = 280
 
@@ -59,8 +60,6 @@ const TableOfContents = () => {
         top:
           target.getBoundingClientRect().top + window.scrollY - NAVBAR_HEIGHT,
       })
-
-      setTimeout(() => setisHighlightId(target.id), 100)
     }
   }
 
@@ -94,35 +93,46 @@ TableOfContents.TOCBox = styled.div`
 const List = styled.li<{ headerType: HeadersOfContents; isHighlight: boolean }>`
   cursor: pointer;
 
-  ${({ headerType, theme }) => {
+  ${({ headerType }) => {
     switch (headerType) {
       case 'h2':
         return css`
           ${FONT.title_3};
-          color: ${theme.color.grey800};
+          color: ${COLOR.grey800};
         `
       case 'h3':
+        return css`
+          margin-left: 10px;
+          padding-left: 10px;
+          ${FONT.caption_1};
+          color: ${COLOR.grey700};
+        `
+
+      case 'h4':
       default:
         return css`
-          margin-left: 12px;
-          padding-left: 12px;
-          border-left: 1px solid ${theme.color.grey300};
+          margin-left: 10px;
+          padding-left: 25px;
           ${FONT.caption_1};
-          color: ${theme.color.grey700};
+          color: ${COLOR.grey500};
         `
     }
   }}
 
-  ${({ theme, isHighlight }) =>
-    isHighlight &&
-    css`
-      color: ${theme.color.primary500};
-      filter: drop-shadow(
-        0 0 8px rgba(${convertHEXToRGB(theme.color.primary400)}, 0.7)
-      ); ;
-    `};
+  ${({ isHighlight }) =>
+    isHighlight
+      ? css`
+          color: ${COLOR.primary500};
+          filter: drop-shadow(
+            0 0 8px rgba(${convertHEXToRGB(COLOR.primary400)}, 0.7)
+          );
+          border-left: 2px solid ${COLOR.primary200};
+        `
+      : css`
+          border-left: 2px solid ${COLOR.grey200};
+        `};
 
   :hover {
-    color: ${({ theme }) => theme.color.primary300};
+    color: ${COLOR.primary300};
   }
 `

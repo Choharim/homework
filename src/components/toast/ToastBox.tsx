@@ -17,8 +17,10 @@ interface ToastBoxProps extends ToastBoxStyle {
   children: React.ReactNode
 }
 const ToastBox = ({ children, variety }: ToastBoxProps) => {
+  const style = getVariety(variety)
+
   return (
-    <ToastWrapper justify="center" variety={variety}>
+    <ToastWrapper justify="center" css={style}>
       <Typo color="inherit">{children}</Typo>
     </ToastWrapper>
   )
@@ -45,12 +47,12 @@ from {
   transform: translateY(${TOAST_TOP_POSITION}px)
 }`
 
-const ToastWrapper = styled(Flex)<ToastBoxStyle>`
+const ToastWrapper = styled(Flex)`
   padding: 10px 12px;
   min-width: 200px;
   min-height: 32px;
   border-radius: 4px;
-  ${({ theme, variety }) => getVariety(variety, theme)};
+
   animation: ${FadeIn} ${ANIMATED_DURATION}ms ease,
     ${SlideIn} ${ANIMATED_DURATION}ms ease,
     ${FadeOut} ${ANIMATED_DURATION}ms ease

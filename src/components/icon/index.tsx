@@ -1,19 +1,17 @@
 import React, { ComponentProps, SVGAttributes } from 'react'
-import { useTheme } from '@emotion/react'
 
 import { ICON_COMPONENT } from './constant'
 import { ColorKey } from '@/styles/type'
+import COLOR from '@/styles/constants/color'
 
 interface IconProps
   extends Pick<SVGAttributes<SVGAElement>, 'width' | 'height'>,
     Pick<ComponentProps<'svg'>, 'className' | 'onClick'> {
   type: keyof typeof ICON_COMPONENT
-  stroke?: ColorKey
-  fill?: ColorKey
+  color: ColorKey
 }
 const Icon = React.forwardRef<HTMLDivElement, IconProps>(
-  ({ type, width = 18, height, stroke = 'black', fill, ...restProps }, ref) => {
-    const theme = useTheme()
+  ({ type, width = 18, height, color, ...restProps }, ref) => {
     const IconComponent = ICON_COMPONENT[type]
 
     return (
@@ -21,8 +19,7 @@ const Icon = React.forwardRef<HTMLDivElement, IconProps>(
         ref={ref}
         width={width}
         height={height}
-        stroke={theme.color[stroke]}
-        fill={!fill ? 'none' : theme.color[fill]}
+        color={COLOR[color]}
         strokeWidth="2.0"
         {...restProps}
       />

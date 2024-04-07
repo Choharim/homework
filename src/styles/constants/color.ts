@@ -14,15 +14,13 @@ const COLOR = {
   grey800: '#333d4b',
   grey900: '#191f28',
 
-  primary50: '#acbbff',
-  primary100: '#98a7fc',
-  primary200: '#8493e8',
-  primary300: '#707fd4',
-  primary400: '#5c6bc0',
-  primary500: '#4857ac',
-  primary600: '#344398',
-  primary700: '#202f84',
-  primary800: '#0c1b70',
+  primary50: '#f8f8fc',
+  primary100: '#dbdff1',
+  primary200: '#bfc5e6',
+  primary300: '#a3abdb',
+  primary400: '#8692d0',
+  primary500: '#6a78c5',
+  primary600: '#4e5ebb',
 } as const
 
 export default COLOR

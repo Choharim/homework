@@ -1,20 +1,21 @@
-import { Global, ThemeProvider } from '@emotion/react'
+import { Global } from '@emotion/react'
 
 import Layout from '@/components/layout/Layout'
 import MetaHead from '@/components/seo/MetaHead'
 
 import resetStyle from '@/styles/resetStyle'
-import { THEME } from '@/styles/constants/theme'
+
 import { AppPropsWithLayout, GetLayout } from '@/shared/types/layout'
+import ToastProvider from '@/components/toast/_store/ToastProvider'
 
 function App({ Component, pageProps }: AppPropsWithLayout) {
   const _getLayout = Component.getLayout || getLayout
 
   return (
-    <ThemeProvider theme={THEME}>
+    <>
       <Global styles={resetStyle} />
-      {_getLayout(<Component {...pageProps} />)}
-    </ThemeProvider>
+      <ToastProvider>{_getLayout(<Component {...pageProps} />)}</ToastProvider>
+    </>
   )
 }
 

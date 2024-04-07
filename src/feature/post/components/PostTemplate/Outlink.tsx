@@ -1,3 +1,4 @@
+import COLOR from '@/styles/constants/color'
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import { ComponentPropsWithoutRef } from 'react'
@@ -33,10 +34,12 @@ export default Outlink
 const A = styled.a`
   text-decoration: 2px underline dashed;
   text-underline-offset: 5px;
+  word-break: break-word;
+
   cursor: pointer;
 
-  color: ${({ theme }) => theme.color.primary300};
+  color: ${COLOR.primary300};
   &:hover {
-    color: ${({ theme }) => theme.color.primary100};
+    color: ${COLOR.primary100};
   }
 `

@@ -1,6 +1,8 @@
 import notionAPI from '@/adapter/notion'
+import NoResult from '@/components/StatusResult/NoResult'
 import Layout from '@/components/layout/Layout'
 import MetaHead from '@/components/seo/MetaHead'
+import postEntity from '@/entity/post'
 import PostTemplate from '@/feature/post/components/PostTemplate'
 import CustomStyleProvider from '@/feature/post/components/PostTemplate/CustomStyleProvider'
 
@@ -12,27 +14,18 @@ import {
   InferGetStaticPropsType,
   PreviewData,
 } from 'next'
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ParsedUrlQuery } from 'querystring'
 import React from 'react'
 import { NotionRenderer } from 'react-notion-x'
 
-const Code = dynamic(
-  () => import('@/feature/post/components/PostTemplate/Code'),
-  { ssr: false }
-)
+import { Code } from 'react-notion-x/build/third-party/code'
 
 const PostDetail: NextPageWithLayout<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ post, frontMatter }) => {
-  if (!frontMatter)
-    return (
-      <div>
-        <h3>No data found.</h3>
-      </div>
-    )
+  if (!post || !frontMatter) return <NoResult />
 
   return (
     <PostTemplate frontMatter={frontMatter}>
@@ -58,11 +51,13 @@ export default PostDetail
 PostDetail.getLayout = function getLayout(
   page: React.ReactElement<InferGetStaticPropsType<typeof getStaticProps>>
 ) {
+  const frontMatter = page.props.frontMatter
+
   return (
-    <Layout resetFrameStyle>
+    <Layout resetFrameStyle={!!page.props.post}>
       <MetaHead
-        title={page.props.frontMatter?.title}
-        description={page.props.frontMatter?.description}
+        title={frontMatter?.title}
+        description={frontMatter?.description}
         ogType="article"
       />
       {page}
@@ -71,7 +66,8 @@ PostDetail.getLayout = function getLayout(
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const ids = await notionAPI.getPostIDs()
+  const all = await notionAPI.getPostFrontMatters()
+  const ids = postEntity.getPostIDs(all)
 
   const paths = ids.map((id) => {
     return {
@@ -91,7 +87,10 @@ export async function getStaticProps(
   context: GetStaticPropsContext<ParsedUrlQuery, PreviewData>
 ) {
   const id = context.params?.id as string
-  const frontMatter = await notionAPI.getPostFrontMatter(id)
+
+  const all = await notionAPI.getPostFrontMatters()
+  const frontMatter = postEntity.getPostFrontMatter({ posts: all, id })
+
   const post = await notionAPI.getPost(id)
 
   return {
@@ -99,6 +98,6 @@ export async function getStaticProps(
       frontMatter,
       post,
     },
-    revalidate: 60,
+    revalidate: 10,
   }
 }

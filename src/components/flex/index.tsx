@@ -7,6 +7,7 @@ import {
   PolymorphicComponentPropsWithRef,
   PolymorphicRef,
 } from '@/shared/types/polymorphic'
+import { PixelSize } from '@/shared/types/unit'
 
 const DEFAULT_TAG: ElementTag = 'div'
 
@@ -27,7 +28,7 @@ type FlexStyle = {
   direction: CSSProperties['flexDirection']
   justify: CSSProperties['justifyContent']
   align: CSSProperties['alignItems']
-  gap: CSSProperties['gap']
+  gap: PixelSize
   wrap: CSSProperties['flexWrap']
 }
 
@@ -81,7 +82,7 @@ export default Flex as <E extends ElementTag>(
 
 Flex.displayName = 'Flex'
 
-const FlexWrapper = styled(DEFAULT_TAG)<FlexStyle>`
+const FlexWrapper = styled(DEFAULT_TAG)<Partial<FlexStyle>>`
   display: flex;
 
   ${({ direction, justify, align, gap, wrap }) => css`

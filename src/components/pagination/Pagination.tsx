@@ -1,17 +1,15 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 
-import Chip from '../Chip'
 import Icon from '../icon'
 import PageLink from './PageLink'
 
-import MEDIA from '@/styles/constants/media'
 import FONT from '@/styles/constants/font'
 import { rotateHalf } from '@/styles/mixin'
 import Flex from '../flex'
+import COLOR from '@/styles/constants/color'
 
 const DISPLAY_PAGE_COUNT = 5
 const HALF = Math.floor(DISPLAY_PAGE_COUNT / 2)
@@ -58,20 +56,20 @@ const Pagination = ({
   if (totalPage === 1) return null
 
   return (
-    <Container align="center">
+    <Container align="center" gap="4px">
       <CustomPageLink
         isDisabled={currentPage === 1}
         pageQueryKey={pageQueryKey}
         pageQueryValue={1}
       >
-        <CustomIcon css={rotateHalf} type="DoubleArrowRight" stroke="grey500" />
+        <CustomIcon css={rotateHalf} type="DoubleArrowRight" color="grey500" />
       </CustomPageLink>
       <CustomPageLink
         isDisabled={currentPage === 1}
         pageQueryKey={pageQueryKey}
         pageQueryValue={currentPage - 1}
       >
-        <CustomIcon css={rotateHalf} type="ArrowRight" stroke="grey500" />
+        <CustomIcon css={rotateHalf} type="ArrowRight" color="grey500" />
       </CustomPageLink>
 
       {pages.map((page) => (
@@ -88,7 +86,7 @@ const Pagination = ({
         pageQueryKey={pageQueryKey}
         pageQueryValue={currentPage + 1}
       >
-        <CustomIcon type="ArrowRight" stroke="grey500" />
+        <CustomIcon type="ArrowRight" color="grey500" />
       </CustomPageLink>
 
       <CustomPageLink
@@ -96,7 +94,7 @@ const Pagination = ({
         pageQueryKey={pageQueryKey}
         pageQueryValue={totalPage}
       >
-        <CustomIcon type="DoubleArrowRight" stroke="grey500" />
+        <CustomIcon type="DoubleArrowRight" color="grey500" />
       </CustomPageLink>
     </Container>
   )
@@ -109,26 +107,23 @@ const Container = styled(Flex)`
   padding: 30px 0;
 `
 
-const Page = styled(Chip)<{ isActive: boolean }>`
+const Page = styled.span<{ isActive: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 32px;
   height: 32px;
-  margin: 5px;
-  border-radius: 4px;
   ${FONT.title_3};
 
-  ${({ isActive, theme }) =>
+  ${({ isActive }) =>
     isActive
       ? css`
-          background-color: ${theme.color.primary300};
-          color: ${theme.color.white};
+          color: ${COLOR.grey900};
           cursor: default;
           pointer-events: none;
         `
       : css`
-          color: ${theme.color.primary400};
+          color: ${COLOR.grey600};
           cursor: pointer;
         `}
 `
@@ -138,13 +133,13 @@ const CustomPageLink = styled(PageLink)<{ isDisabled: boolean }>`
   align-items: center;
   justify-content: center;
 
-  ${({ isDisabled, theme }) =>
+  ${({ isDisabled }) =>
     isDisabled
       ? css`
           cursor: default;
           pointer-events: none;
           ${CustomIcon} {
-            stroke: ${theme.color.grey300};
+            color: ${COLOR.grey300};
           }
         `
       : css`
@@ -153,12 +148,8 @@ const CustomPageLink = styled(PageLink)<{ isDisabled: boolean }>`
 `
 
 const CustomIcon = styled(Icon)`
-  padding: 5px;
-  width: 30px;
+  padding: 4px;
+  width: 28px;
+  height: 28px;
   cursor: pointer;
-
-  ${MEDIA.tablet} {
-    padding: 5px;
-    width: 25px;
-  }
 `

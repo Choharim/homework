@@ -1,11 +1,14 @@
-export type PostCategory = 'CS' | 'FE'
-export type PostTag =
+export type PostCategory =
   | 'network'
   | 'data-structure'
   | 'algorithms'
   | 'operating-system'
   | 'typescript'
   | 'javascript'
+  | 'webview'
+  | 'frontend'
+
+export type PostTag =
   | 'theory'
   | 'problem-solving'
   | 'trouble-shooting'

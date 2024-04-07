@@ -1,37 +1,33 @@
+import { PostCategory, PostFrontMatter } from '@/entity/post/type'
 import { NotionAPI as NotionClient } from 'notion-client'
 
-import NOTION_ID from './id'
-import { PostCategory, PostFrontMatter, PostTag } from './type'
+const notionClient = new NotionClient()
 
 class NotionAPI {
-  private baseURL = 'https://notion-api.splitbee.io/v1'
+  private NOTION_ID = {
+    page: {
+      blog: '51e8461a3f77425aac9bf1d8ccac7720',
+    },
+  } as const
 
-  public async getPosts(): Promise<PostFrontMatter[]> {
-    return await fetch(`${this.baseURL}/table/${NOTION_ID.page.blog}`).then(
-      (res) => res.json()
-    )
-  }
+  private BASE_URL = 'https://notion-api.splitbee.io/v1'
 
-  public async getPostIDs(): Promise<PostFrontMatter['id'][]> {
-    const posts = await this.getPosts()
-
-    return posts.map((post) => post.id)
-  }
-
-  public async getPostFrontMatter(
-    id: string
-  ): Promise<PostFrontMatter | undefined> {
-    const posts = await this.getPosts()
-
-    return posts.find((post) => post.id === id)
+  public async getPostFrontMatters(): Promise<PostFrontMatter[]> {
+    return await fetch(
+      `${this.BASE_URL}/table/${this.NOTION_ID.page.blog}`
+    ).then((res) => res.json())
   }
 
   public async getPost(id: string) {
     return await notionClient.getPage(id)
   }
 
+  public async getTable() {
+    return await notionClient.getPage(this.NOTION_ID.page.blog)
+  }
+
   public async getFilters() {
-    const tableOfPosts = await notionClient.getPage(NOTION_ID.page.blog)
+    const tableOfPosts = await this.getTable()
     const filterCodes: string[] =
       Object.values(
         tableOfPosts.collection_view
@@ -56,23 +52,15 @@ class NotionAPI {
       }
     })
 
-    return filters
+    return filters as { category: PostCategory[] }
   }
 
   public async getCategories(): Promise<PostCategory[]> {
     const filtes = await this.getFilters()
 
-    return (filtes['category'] as PostCategory[]) || []
-  }
-
-  public async getTags(): Promise<PostTag[]> {
-    const filtes = await this.getFilters()
-
-    return (filtes['tag'] as PostTag[]) || []
+    return filtes['category'] || []
   }
 }
-
-const notionClient = new NotionClient()
 
 const notionAPI = new NotionAPI()
 

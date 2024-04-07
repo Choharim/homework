@@ -6,13 +6,19 @@ import Flex from '@/components/flex'
 
 import { limitTextLine } from '@/styles/mixin'
 import Link, { LinkProps } from 'next/link'
+import MEDIA from '@/styles/constants/media'
+import { PostTag } from '@/entity/post/type'
+import postFeature from '..'
+import COLOR from '@/styles/constants/color'
 
 const PostCardLink = ({ children, ...props }: PropsWithChildren<LinkProps>) => {
   return (
     <Link {...props}>
-      <CardWrapper direction="column" as="article" gap="15px">
-        {children}
-      </CardWrapper>
+      <a>
+        <CardWrapper direction="column" as="article" justify="space-between">
+          {children}
+        </CardWrapper>
+      </a>
     </Link>
   )
 }
@@ -21,6 +27,7 @@ export default Object.assign(PostCardLink, {
   Title,
   Desc,
   Date,
+  Tag,
   Top,
   Bottom,
 })
@@ -31,18 +38,32 @@ const TitleWrapper = styled(Typo)`
 `
 
 const CardWrapper = styled(Flex)`
+  padding: 20px 16px;
+  border-radius: 12px;
   cursor: pointer;
+
+  min-height: 260px;
+  ${MEDIA.mobile} {
+    min-height: 220px;
+  }
+
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 
   &:hover {
     ${TitleWrapper} {
-      color: ${({ theme }) => theme.color.primary300};
+      color: ${COLOR.primary500};
     }
+
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
   }
+
+  transition: box-shadow 300ms ease-in-out, transform 300ms ease-in-out;
 `
 
 function Title({ children }: PropsWithChildren) {
   return (
-    <TitleWrapper as="h3" variety="header_3" color="grey800">
+    <TitleWrapper as="h3" variety="header_4" color="grey800">
       {children}
     </TitleWrapper>
   )
@@ -50,7 +71,7 @@ function Title({ children }: PropsWithChildren) {
 
 function Desc({ children }: PropsWithChildren) {
   return (
-    <DescWrapper as="p" variety="title_2" color="grey700">
+    <DescWrapper as="p" variety="body_1" color="grey700">
       {children}
     </DescWrapper>
   )
@@ -62,9 +83,21 @@ const DescWrapper = styled(Typo)`
 
 function Date({ dateTime }: Pick<ComponentProps<'time'>, 'dateTime'>) {
   return (
-    <Typo as="time" dateTime={dateTime} variety="title_3" color="grey600">
+    <Typo as="time" dateTime={dateTime} variety="caption_1" color="grey600">
       {dateTime}
     </Typo>
+  )
+}
+
+function Tag({ tags }: { tags: PostTag[] }) {
+  return (
+    <>
+      {tags.map((tag, i) => (
+        <Typo key={`${tag}-${i}`} as="span" variety="caption_1" color="grey700">
+          # {postFeature.getTagName(tag)}
+        </Typo>
+      ))}
+    </>
   )
 }
 
@@ -74,7 +107,7 @@ function Top({ children }: PropsWithChildren) {
 
 const TopWrapper = styled.div`
   display: grid;
-  gap: 10px;
+  gap: 8px;
 `
 
 function Bottom({ children }: PropsWithChildren) {
@@ -85,6 +118,8 @@ const BottomWrapper = styled.div`
   display: grid;
   grid-auto-flow: column;
   align-items: center;
-  gap: 15px;
+  gap: 8px;
   width: fit-content;
+
+  margin-top: 16px;
 `
