@@ -1,4 +1,4 @@
-import { DEVICE_SIZE } from '@/feature/app/constants/layout'
+import { DEVICE_SIZE } from '@/styles/constants/layout'
 
 const MEDIA = {
   mobile: `@media screen and (max-width: ${DEVICE_SIZE.tablet}px)`,
