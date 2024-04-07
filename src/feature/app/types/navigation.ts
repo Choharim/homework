@@ -1,30 +1,31 @@
 import { PostCategory } from '@/adapter/notion/type'
-import { APP_PAGE_NAMES, appPageName } from '../constants/navigation'
 
-export type AppPageName = typeof APP_PAGE_NAMES[number]
+export type AppPageName = keyof AppPageParams
 
-/**
- * @description
- * 페이지 별 props 타입을 정의합니다.
- */
-export type AppPageProps<Name extends AppPageName> = {
-  params: Name extends keyof AppPageParams
-    ? AppPageParams[Name]
-    : Record<string, never>
-  searchParams: AppPageSearchParams[Name]
-}
-
-/**
- * @description
- * url path에 필요한 타입을 정의합니다.
- * @example
- * /dynamic/[id] -> { id: string }
- */
 export type AppPageParams = {
-  [appPageName.blogDetails]: {
+  main: {
+    searchParams: { page?: string }
+  }
+  category: {
+    category: PostCategory
+    searchParams: { page?: string }
+  }
+  blogDetails: {
     id: string
   }
 }
+
+/**
+ * @description
+ * 특정 페이지의 router.query 타입을 정의합니다.
+ * @example
+ * /something/:something?a=first&b=second -> { something: string, a: string, b: string }
+ */
+export type AppPageRouterQuery<Name extends AppPageName> =
+  'searchParams' extends keyof AppPageParams[Name]
+    ? Omit<AppPageParams[Name], 'searchParams'> &
+        AppPageParams[Name]['searchParams']
+    : AppPageParams[Name]
 
 /**
  * @description
@@ -32,18 +33,19 @@ export type AppPageParams = {
  * @example
  * /something?a=first&b=second -> { a: string, b: string }
  */
-export type AppPageSearchParams = {
-  [key in AppPageName]: key extends keyof PageSearchParams
-    ? PageSearchParams[key] & Partial<RedirectSearchParam>
-    : Partial<RedirectSearchParam>
-}
+export type AppPageSearchParams<Name extends AppPageName> =
+  'searchParams' extends keyof AppPageParams[Name]
+    ? AppPageParams[Name]['searchParams']
+    : // eslint-disable-next-line @typescript-eslint/ban-types
+      {}
 
-export type PageSearchParams = {
-  [appPageName.blog]: {
-    category?: PostCategory
-  }
-}
-
-export type RedirectSearchParam = {
-  from: string
-}
+/**
+ * @description
+ * pathParams에 들어가는 타입을 정의합니다.
+ * @example
+ * /something/:something -> { something: string }
+ */
+export type AppPagePathParams<Name extends AppPageName> = Omit<
+  AppPageParams[Name],
+  'searchParams'
+>

@@ -1,44 +1,33 @@
-import { getSearchParamString, getSearchParams } from '@/shared/utils/url'
-import { APP_PATH } from './constants/navigation'
+import { getSearchParamString } from '@/shared/utils/url'
 import {
   AppPageName,
-  AppPageParams,
+  AppPagePathParams,
   AppPageSearchParams,
 } from './types/navigation'
+import { APP_URL } from './constants/navigation'
 
 class AppFeature {
-  static getUri<Name extends AppPageName>(
-    page: Name extends keyof AppPageParams
-      ? { name: Name; params: AppPageParams[Name] }
-      : { name: Name },
-    searchParams?: AppPageSearchParams[Name]
-  ) {
-    let pathname = ''
+  static getAppURI = <Name extends AppPageName>(
+    page: keyof AppPagePathParams<Name> extends never
+      ? { name: Name }
+      : { name: Name; pathParams: AppPagePathParams<Name> },
+    searchParams?: AppPageSearchParams<Name>
+  ) => {
+    const getURL = APP_URL[page.name]
 
-    const getPath = APP_PATH[page.name]
-    if (typeof getPath === 'function') {
-      if ('params' in page) {
-        pathname = getPath(page.params)
-      }
+    let pathname
+
+    if ('pathParams' in page) {
+      pathname = getURL(page.pathParams)
     } else {
-      pathname = getPath
+      pathname = (getURL as () => string)()
     }
-    const queryString = getSearchParamString(searchParams ?? {})
-    return `${pathname}${queryString ? `?${queryString}` : queryString}`
-  }
 
-  /**
-   * @description
-   * 페이지 별 searchParams을 반환합니다.
-   * useAppSearchParams hook과 동일한 역할을 합니다.
-   */
-  static getSearchParams<PageName extends keyof AppPageSearchParams>(
-    pageName: PageName,
-    searchParams: Record<string, string>
-  ) {
-    return getSearchParams(
-      new URLSearchParams(searchParams)
-    ) as AppPageSearchParams[PageName]
+    const searchParamsString = getSearchParamString(searchParams ?? {})
+
+    return `${pathname}${
+      searchParamsString ? `?${searchParamsString}` : searchParamsString
+    }`
   }
 
   static isLocal = process.env.NEXT_PUBLIC_MODE === 'local'

@@ -1,18 +1,19 @@
-import { getSameKeyValue } from '@/shared/utils/object'
-import { AppPageName, AppPageParams } from '../types/navigation'
+import { AppPageName, AppPagePathParams } from '../types/navigation'
 
-export const APP_PAGE_NAMES = ['main', 'blog', 'blogDetails'] as const
+export const APP_PAGE_NAMES = ['main', 'blogDetails', 'category'] as const
 
-export const appPageName = getSameKeyValue(APP_PAGE_NAMES)
-
-export const APP_PATH: {
-  [name in AppPageName]: name extends keyof AppPageParams
-    ? (params: AppPageParams[name]) => string
-    : string
+export const APP_URL: {
+  [Name in AppPageName]: keyof AppPagePathParams<Name> extends never
+    ? () => string
+    : (params: AppPagePathParams<Name>) => string
 } = {
-  [appPageName.main]: '/',
-  [appPageName.blog]: '/blog',
-  [appPageName.blogDetails]({ id }) {
+  main() {
+    return '/'
+  },
+  blogDetails({ id }) {
     return `/blog/${id}`
+  },
+  category({ category }) {
+    return `/category/${category}`
   },
 }
