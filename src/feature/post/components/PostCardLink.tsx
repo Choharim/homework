@@ -14,11 +14,9 @@ import COLOR from '@/styles/constants/color'
 const PostCardLink = ({ children, ...props }: PropsWithChildren<LinkProps>) => {
   return (
     <Link {...props}>
-      <a>
-        <CardWrapper direction="column" as="article" justify="space-between">
-          {children}
-        </CardWrapper>
-      </a>
+      <CardWrapper direction="column" as="article" justify="space-between">
+        {children}
+      </CardWrapper>
     </Link>
   )
 }
