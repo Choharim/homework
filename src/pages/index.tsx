@@ -6,28 +6,25 @@ import { PostCategory, PostFrontMatter } from '@/entity/post/type'
 import notionAPI from '@/adapter/notion'
 
 import CardListFrame from '@/feature/post/components/CardListFrame'
-import PostCardLink from '@/feature/post/components/PostCardLink'
+import PostCard from '@/feature/post/components/PostCard'
 import CategoryChip from '@/feature/post/components/CategoryChip'
 import usePagination from '@/components/pagination/usePagination'
 import { useRouter } from 'next/router'
-import { MouseEvent } from 'react'
 import { css } from '@emotion/react'
 import AppFeature from '@/feature/app'
 import postEntity from '@/entity/post'
+import Link from 'next/link'
 
 const Home: NextPageWithLayout<PageProps> = ({ frontMatters }) => {
   const router = useRouter()
 
   const { Pagination, paginatedPosts } = usePagination({ posts: frontMatters })
 
-  const onClickCategory =
-    (category: PostCategory) => (e: MouseEvent<HTMLSpanElement>) => {
-      e.stopPropagation()
-
-      router.push(
-        AppFeature.getAppURI({ name: 'category', pathParams: { category } })
-      )
-    }
+  const onClickCategory = (category: PostCategory) => () => {
+    router.push(
+      AppFeature.getAppURI({ name: 'category', pathParams: { category } })
+    )
+  }
 
   return (
     <>
@@ -40,26 +37,27 @@ const Home: NextPageWithLayout<PageProps> = ({ frontMatters }) => {
           const { id, title, description, create_date, category, tag } = post
 
           return (
-            <PostCardLink
-              key={id}
-              href={AppFeature.getAppURI({
-                name: 'blogDetails',
-                pathParams: { id },
-              })}
-            >
-              <PostCardLink.Top>
-                <PostCardLink.Title>{title}</PostCardLink.Title>
-                <PostCardLink.Date dateTime={create_date} />
-                <PostCardLink.Desc>{description}</PostCardLink.Desc>
-              </PostCardLink.Top>
-              <PostCardLink.Bottom>
+            <PostCard key={id}>
+              <Link
+                href={AppFeature.getAppURI({
+                  name: 'blogDetails',
+                  pathParams: { id },
+                })}
+              >
+                <PostCard.Top>
+                  <PostCard.Title>{title}</PostCard.Title>
+                  <PostCard.Date dateTime={create_date} />
+                  <PostCard.Desc>{description}</PostCard.Desc>
+                </PostCard.Top>
+              </Link>
+              <PostCard.Bottom>
                 <CategoryChip
                   category={category}
                   onClick={onClickCategory(category)}
                 />
-                <PostCardLink.Tag tags={tag} />
-              </PostCardLink.Bottom>
-            </PostCardLink>
+                <PostCard.Tag tags={tag} />
+              </PostCard.Bottom>
+            </PostCard>
           )
         })}
       </CardListFrame>

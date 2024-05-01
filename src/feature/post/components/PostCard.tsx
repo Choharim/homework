@@ -5,23 +5,21 @@ import Typo from '@/components/typo'
 import Flex from '@/components/flex'
 
 import { limitTextLine } from '@/styles/mixin'
-import Link, { LinkProps } from 'next/link'
 import MEDIA from '@/styles/constants/media'
 import { PostTag } from '@/entity/post/type'
 import postFeature from '..'
 import COLOR from '@/styles/constants/color'
+import { css } from '@emotion/react'
 
-const PostCardLink = ({ children, ...props }: PropsWithChildren<LinkProps>) => {
+const PostCard = ({ children }: PropsWithChildren) => {
   return (
-    <Link {...props}>
-      <CardWrapper direction="column" as="article" justify="space-between">
-        {children}
-      </CardWrapper>
-    </Link>
+    <CardWrapper direction="column" as="article" justify="space-between">
+      {children}
+    </CardWrapper>
   )
 }
 
-export default Object.assign(PostCardLink, {
+export default Object.assign(PostCard, {
   Title,
   Desc,
   Date,
@@ -69,7 +67,7 @@ function Title({ children }: PropsWithChildren) {
 
 function Desc({ children }: PropsWithChildren) {
   return (
-    <DescWrapper as="p" variety="body_1" color="grey700">
+    <DescWrapper as="p" variety="body_1" color="grey800">
       {children}
     </DescWrapper>
   )
@@ -81,7 +79,7 @@ const DescWrapper = styled(Typo)`
 
 function Date({ dateTime }: Pick<ComponentProps<'time'>, 'dateTime'>) {
   return (
-    <Typo as="time" dateTime={dateTime} variety="caption_1" color="grey600">
+    <Typo as="time" dateTime={dateTime} variety="caption_1" color="grey700">
       {dateTime}
     </Typo>
   )
@@ -91,8 +89,19 @@ function Tag({ tags }: { tags: PostTag[] }) {
   return (
     <>
       {tags.map((tag, i) => (
-        <Typo key={`${tag}-${i}`} as="span" variety="caption_1" color="grey700">
-          # {postFeature.getTagName(tag)}
+        <Typo
+          key={`${tag}-${i}`}
+          as="span"
+          variety="caption_1"
+          color="grey700"
+          css={css`
+            &::before {
+              content: '#';
+              color: ${COLOR.primary600};
+            }
+          `}
+        >
+          {postFeature.getTagName(tag)}
         </Typo>
       ))}
     </>
