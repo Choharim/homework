@@ -14,7 +14,7 @@ class PostFeature {
 
   private POST_TAG_NAME: Record<PostTag, string> = {
     theory: '이론',
-    'problem-solving': '문제해결',
+    'problem-solving': '문제풀이',
     'trouble-shooting': '이슈해결',
     thinking: '생각',
   }
