@@ -11,6 +11,8 @@ import { rotateHalf } from '@/styles/mixin'
 import Flex from '../flex'
 import COLOR from '@/styles/constants/color'
 
+import * as style from './style/pagination.css'
+
 const DISPLAY_PAGE_COUNT = 5
 const HALF = Math.floor(DISPLAY_PAGE_COUNT / 2)
 
@@ -56,7 +58,7 @@ const Pagination = ({
   if (totalPage === 1) return null
 
   return (
-    <Container align="center" gap="4px">
+    <Flex align="center" gap="4px" className={style.wrapper}>
       <CustomPageLink
         isDisabled={currentPage === 1}
         pageQueryKey={pageQueryKey}
@@ -96,16 +98,11 @@ const Pagination = ({
       >
         <CustomIcon type="DoubleArrowRight" color="grey500" />
       </CustomPageLink>
-    </Container>
+    </Flex>
   )
 }
 
 export default Pagination
-
-const Container = styled(Flex)`
-  margin: 0 auto;
-  padding: 30px 0;
-`
 
 const Page = styled.span<{ isActive: boolean }>`
   display: flex;

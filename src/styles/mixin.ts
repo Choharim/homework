@@ -12,3 +12,7 @@ export const limitTextLine = (lineCount: number) => css`
 export const rotateHalf = () => css`
   transform: rotate(180deg);
 `
+
+export const combineClassName = (...className: (string | undefined)[]) => {
+  return className.join(' ')
+}

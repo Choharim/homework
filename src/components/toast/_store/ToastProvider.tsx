@@ -1,9 +1,9 @@
 import React, { PropsWithChildren, useCallback, useMemo, useState } from 'react'
 import { Toast } from '../type'
 import { getRandomNumber } from '@/shared/utils/number'
-import { TOAST_TIMEOUT } from '../constant'
 import ToastPortal from '../ToastPortal'
 import useSafetyContext, { createSateyContext } from '@/hooks/useSafetyContext'
+import { TOAST_TIMEOUT } from '../constant'
 
 type Value = {
   showToast: ({ variety, desc }: Pick<Toast, 'desc' | 'variety'>) => void

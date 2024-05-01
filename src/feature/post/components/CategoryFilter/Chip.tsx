@@ -7,38 +7,45 @@ import React, {
   forwardRef,
 } from 'react'
 import postFeature from '../..'
-import styled from '@emotion/styled'
 
 import { Either } from '@/shared/types/narrow'
 import _Chip from '@/components/Chip'
 
+import * as style from '../style/categoryFilterChip.css'
+import { combineClassName } from '@/styles/mixin'
+
+export type Theme = {
+  isSeleted: boolean
+}
+
 type Props = Omit<
   ComponentPropsWithoutRef<typeof _Chip>,
   'children' | 'color' | 'size' | 'variety'
-> & {
-  isSeleted: boolean
-} & Either<{ category: PostCategory }, { children: ReactNode }>
+> &
+  Theme &
+  Either<{ category: PostCategory }, { children: ReactNode }>
 
 const Chip = (
-  { children, category, isSeleted, ...props }: Props,
+  { children, category, isSeleted, className, ...props }: Props,
   forwardedRef: ForwardedRef<HTMLSpanElement>
 ) => {
+  const _className = combineClassName(
+    className,
+    style.wrapper[isSeleted ? 'selected' : 'default']
+  )
+
   return (
-    <CategoryChip
+    <_Chip
       {...props}
       size="l"
       color="primary"
-      isSeleted={isSeleted}
       variety={isSeleted ? 'solid' : 'outline'}
+      className={_className}
       ref={forwardedRef}
     >
       {category ? postFeature.getCategoryName(category) : children}
-    </CategoryChip>
+    </_Chip>
   )
 }
 
 export default forwardRef(Chip)
-
-const CategoryChip = styled(_Chip)<Pick<Props, 'isSeleted'>>`
-  cursor: ${({ isSeleted }) => (isSeleted ? 'default' : 'pointer')};
-`

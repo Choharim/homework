@@ -1,23 +1,18 @@
 import React, { PropsWithChildren } from 'react'
 
-import styled from '@emotion/styled'
-
 import Flex from '@/components/flex'
 
 import Chip from './Chip'
+import * as style from './style/categoryFilter.css'
 
 const CategoryFilter = ({ children }: PropsWithChildren) => {
   return (
-    <CategoryContainer align="center" gap="18px" wrap="wrap">
+    <Flex align="center" gap="18px" wrap="wrap" className={style.wrapper}>
       {children}
-    </CategoryContainer>
+    </Flex>
   )
 }
 
 export default Object.assign(CategoryFilter, {
   Chip,
 })
-
-const CategoryContainer = styled(Flex)`
-  margin: 32px 0 0;
-`

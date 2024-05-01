@@ -1,7 +1,7 @@
 import 'react-notion-x/src/styles.css'
 import 'prismjs/themes/prism-tomorrow.css'
 
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 
@@ -10,22 +10,21 @@ import { PostFrontMatter } from '@/entity/post/type'
 import Frame from '@/components/layout/Frame'
 import Flex from '@/components/flex'
 import MEDIA from '@/styles/constants/media'
-import { NAVBAR_HEIGHT } from '@/components/layout/Navbar'
 
 import TableOfContents, { TOC_WIDTH_IN_PC } from './TableOfContents'
 import PostHeader from './PostHeader'
-import COLOR from '@/styles/constants/color'
+import * as style from './style/postTemplate.css'
+import { NAVBAR_HEIGHT } from '@/components/layout/style/navbar.css'
 
 type Props = {
-  children: React.ReactNode
   frontMatter: PostFrontMatter
 }
 
 const WIDTH = 644
 
-const PostTemplate = ({ frontMatter, children }: Props) => {
+const PostTemplate = ({ frontMatter, children }: PropsWithChildren<Props>) => {
   return (
-    <Article as="article" direction="column">
+    <Flex as="article" direction="column" className={style.wrapper}>
       <HeaderFrame>
         <PostHeader frontMatter={frontMatter} />
       </HeaderFrame>
@@ -43,17 +42,11 @@ const PostTemplate = ({ frontMatter, children }: Props) => {
           </Aside>
         </BodyWrapper>
       </BodyFrame>
-    </Article>
+    </Flex>
   )
 }
 
 export default PostTemplate
-
-const Article = styled(Flex)`
-  margin-bottom: 100px;
-  color: ${COLOR.grey900};
-  word-break: keep-all;
-`
 
 const HeaderFrame = styled(Frame)`
   max-width: ${WIDTH}px;

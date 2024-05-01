@@ -10,15 +10,16 @@ import PostCard from '@/feature/post/components/PostCard'
 import CategoryChip from '@/feature/post/components/CategoryChip'
 import usePagination from '@/components/pagination/usePagination'
 import { useRouter } from 'next/router'
-import { css } from '@emotion/react'
 import AppFeature from '@/feature/app'
 import postEntity from '@/entity/post'
 import Link from 'next/link'
-
+import * as style from 'src/feature/post/components/style/cardListFrame.css'
 const Home: NextPageWithLayout<PageProps> = ({ frontMatters }) => {
   const router = useRouter()
 
-  const { Pagination, paginatedPosts } = usePagination({ posts: frontMatters })
+  const { Pagination, paginatedPosts } = usePagination({
+    posts: frontMatters,
+  })
 
   const onClickCategory = (category: PostCategory) => () => {
     router.push(
@@ -28,11 +29,7 @@ const Home: NextPageWithLayout<PageProps> = ({ frontMatters }) => {
 
   return (
     <>
-      <CardListFrame
-        css={css`
-          margin-top: 40px;
-        `}
-      >
+      <CardListFrame className={style.topGap}>
         {paginatedPosts.map((post) => {
           const { id, title, description, create_date, category, tag } = post
 

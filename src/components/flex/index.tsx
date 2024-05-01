@@ -1,6 +1,4 @@
 import { CSSProperties, ElementType, forwardRef, useMemo } from 'react'
-import styled from '@emotion/styled'
-import { css } from '@emotion/react'
 
 import {
   PolymorphicComponentProps,
@@ -8,6 +6,9 @@ import {
   PolymorphicRef,
 } from '@/shared/types/polymorphic'
 import { PixelSize } from '@/shared/types/unit'
+import { combineClassName } from '@/styles/mixin'
+import * as style from './style.css'
+import { assignInlineVars } from '@vanilla-extract/dynamic'
 
 const DEFAULT_TAG: ElementTag = 'div'
 
@@ -22,6 +23,7 @@ type ElementTag = Extract<
   | 'ol'
   | 'ul'
   | 'label'
+  | 'footer'
 >
 
 type FlexStyle = {
@@ -40,33 +42,42 @@ export type FlexProps<E extends ElementType> = PolymorphicComponentProps<
 const Flex = forwardRef(
   <E extends ElementType>(
     {
-      direction,
-      justify,
-      align,
-      gap,
-      wrap,
+      direction = 'row',
+      justify = 'normal',
+      align = 'stretch',
+      gap = '0px',
+      wrap = 'nowrap',
 
       as = DEFAULT_TAG,
       children,
+      className,
       ...attributes
     }: FlexProps<E | typeof DEFAULT_TAG>,
     forwardRef: PolymorphicRef<E>
   ) => {
     const styles = useMemo(
       () => ({
-        direction: direction,
-        justify: justify,
-        align: align,
-        gap: gap,
-        wrap: wrap,
+        direction,
+        justify,
+        align,
+        gap,
+        wrap,
       }),
-      [direction, justify, align, gap, wrap]
+      [align, direction, gap, justify, wrap]
     )
 
+    const _className = combineClassName(className, style.wrapper)
+    const Component = as
+
     return (
-      <FlexWrapper {...attributes} {...styles} ref={forwardRef} as={as}>
+      <Component
+        {...attributes}
+        className={_className}
+        style={assignInlineVars(style.themeVars, styles)}
+        ref={forwardRef}
+      >
         {children}
-      </FlexWrapper>
+      </Component>
     )
   }
 )
@@ -81,15 +92,3 @@ export default Flex as <E extends ElementTag>(
 ) => ReturnType<typeof Flex>
 
 Flex.displayName = 'Flex'
-
-const FlexWrapper = styled(DEFAULT_TAG)<Partial<FlexStyle>>`
-  display: flex;
-
-  ${({ direction, justify, align, gap, wrap }) => css`
-    flex-direction: ${direction};
-    justify-content: ${justify};
-    align-items: ${align};
-    gap: ${gap};
-    flex-wrap: ${wrap};
-  `};
-`

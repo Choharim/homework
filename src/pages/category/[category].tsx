@@ -9,7 +9,6 @@ import CategoryChip from '@/feature/post/components/CategoryChip'
 import CategoryFilter from '@/feature/post/components/CategoryFilter'
 import PostCard from '@/feature/post/components/PostCard'
 import { NextPageWithLayout } from '@/shared/types/layout'
-import { css } from '@emotion/react'
 import { GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import React, { MouseEvent } from 'react'
@@ -57,11 +56,7 @@ const CategoryPage: NextPageWithLayout<PageProps> = ({
         ))}
       </CategoryFilter>
 
-      <CardListFrame
-        css={css`
-          margin-top: 40px;
-        `}
-      >
+      <CardListFrame style={{ marginTop: '40px' }}>
         {paginatedPosts.map((post) => {
           const { id, title, description, create_date, category, tag } = post
 
