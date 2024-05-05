@@ -1,13 +1,15 @@
 import { CSSProperties, ElementType, forwardRef, useMemo } from 'react'
-import styled from '@emotion/styled'
-import { css } from '@emotion/react'
 
 import {
   PolymorphicComponentProps,
   PolymorphicRef,
 } from '@/shared/types/polymorphic'
 import { ColorKey, FontKey } from '@/styles/type'
-import FONT from '@/styles/constants/font'
+
+import { combineClassName } from '@/styles/mixin'
+import * as style from './style.css'
+import { assignInlineVars } from '@vanilla-extract/dynamic'
+import { themeVars } from './style.css'
 import COLOR from '@/styles/constants/color'
 
 const DEFAULT_TAG: ElementTag = 'span'
@@ -33,22 +35,36 @@ const Typo = forwardRef(
     {
       variety = 'body_1',
       color = 'black',
-      wrap,
-      as,
+      wrap = 'normal',
+      as = DEFAULT_TAG,
       children,
+      className,
       ...attributes
     }: TypoProps<E | typeof DEFAULT_TAG>,
     forwardRef: PolymorphicRef<E>
   ) => {
     const styles = useMemo(
-      () => ({ variety: variety, color: color, wrap: wrap }),
-      [variety, color, wrap]
+      () => ({ color: color === 'inherit' ? 'inherit' : COLOR[color], wrap }),
+      [color, wrap]
     )
 
+    const _className = combineClassName(
+      className,
+      style.wrapper,
+      style.variety[variety]
+    )
+    const Component = as
+
     return (
-      <TypoWrapper {...attributes} {...styles} ref={forwardRef} as={as}>
+      <Component
+        {...attributes}
+        className={_className}
+        style={assignInlineVars(themeVars, styles)}
+        ref={forwardRef}
+        as={as}
+      >
         {children}
-      </TypoWrapper>
+      </Component>
     )
   }
 )
@@ -66,15 +82,3 @@ export default Typo as <E extends ElementTag>(
 ) => ReturnType<typeof Typo>
 
 Typo.displayName = 'Typo'
-
-const TypoWrapper = styled(DEFAULT_TAG)<TypoStyle>`
-  ${({ variety, color, wrap }) => css`
-    ${FONT[variety]};
-    color: ${color === 'inherit' ? 'inherit' : COLOR[color]};
-    white-space: ${wrap};
-  `};
-
-  &:empty {
-    display: none;
-  }
-`

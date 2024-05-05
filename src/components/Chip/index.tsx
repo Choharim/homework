@@ -1,10 +1,12 @@
-import styled from '@emotion/styled'
 import React, {
   ComponentPropsWithoutRef,
   ForwardedRef,
   forwardRef,
 } from 'react'
-import getTheme from './getTheme'
+import * as style from './style.css'
+import { assignInlineVars } from '@vanilla-extract/dynamic'
+import { COLOR_TYPE_BY_VARIETY } from './style.css'
+import { combineClassName } from '@/styles/mixin'
 
 type Variety = 'solid' | 'soft' | 'surface' | 'outline'
 type Size = 's' | 'm' | 'l'
@@ -21,25 +23,31 @@ interface Props
     Theme {}
 
 const Chip = (
-  { children, variety, size, color, ...rest }: Props,
+  { children, className, variety, size, color, ...rest }: Props,
   forwardedRef: ForwardedRef<HTMLSpanElement>
 ) => {
-  const theme = getTheme({ variety, size, color })
+  const { accent, accentContrast, accentHalf } = COLOR_TYPE_BY_VARIETY[color]
+  const _className = combineClassName(
+    className,
+    style.wrapper,
+    style.size[size],
+    style.variety[variety]
+  )
 
   return (
-    <Wrapper {...rest} css={theme} ref={forwardedRef}>
+    <span
+      {...rest}
+      className={_className}
+      ref={forwardedRef}
+      style={assignInlineVars({
+        [style.accentVar]: accent,
+        [style.accentContrastVar]: accentContrast,
+        [style.accentHalfVar]: accentHalf,
+      })}
+    >
       {children}
-    </Wrapper>
+    </span>
   )
 }
 
 export default forwardRef(Chip)
-
-const Wrapper = styled.span`
-  width: fit-content;
-  border-radius: 6px;
-
-  &:empty {
-    display: none;
-  }
-`

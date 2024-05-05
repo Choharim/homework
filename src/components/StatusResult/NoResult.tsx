@@ -6,7 +6,8 @@ import React, {
 import Flex from '../flex'
 import Typo from '../typo'
 import Icon from '../icon'
-import { css } from '@emotion/react'
+
+import * as style from './style.css'
 
 type Props = ComponentPropsWithoutRef<'section'>
 function NoResult(props: Props, forwardedRef: ForwardedRef<HTMLElement>) {
@@ -19,10 +20,7 @@ function NoResult(props: Props, forwardedRef: ForwardedRef<HTMLElement>) {
       align="center"
       justify="center"
       gap="24px"
-      css={css`
-        width: 100%;
-        height: 100%;
-      `}
+      className={style.wrapper}
     >
       <Icon
         type="FillTriangleExclamationMark"

@@ -2,43 +2,33 @@ import { GetStaticProps } from 'next'
 
 import { NextPageWithLayout } from '@/shared/types/layout'
 import { BLOG } from '@/feature/app/constants/owner'
-import { PostCategory, PostFrontMatter } from '@/entity/post/type'
+import { PostFrontMatter } from '@/entity/post/type'
 import notionAPI from '@/adapter/notion'
 
 import CardListFrame from '@/feature/post/components/CardListFrame'
 import PostCard from '@/feature/post/components/PostCard'
 import CategoryChip from '@/feature/post/components/CategoryChip'
 import usePagination from '@/components/pagination/usePagination'
-import { useRouter } from 'next/router'
-import { css } from '@emotion/react'
 import AppFeature from '@/feature/app'
 import postEntity from '@/entity/post'
 import Link from 'next/link'
+import * as style from 'src/feature/post/components/style/cardListFrame.css'
 
 const Home: NextPageWithLayout<PageProps> = ({ frontMatters }) => {
-  const router = useRouter()
-
-  const { Pagination, paginatedPosts } = usePagination({ posts: frontMatters })
-
-  const onClickCategory = (category: PostCategory) => () => {
-    router.push(
-      AppFeature.getAppURI({ name: 'category', pathParams: { category } })
-    )
-  }
+  const { Pagination, paginatedPosts } = usePagination({
+    posts: frontMatters,
+  })
 
   return (
     <>
-      <CardListFrame
-        css={css`
-          margin-top: 40px;
-        `}
-      >
+      <CardListFrame className={style.topGap}>
         {paginatedPosts.map((post) => {
           const { id, title, description, create_date, category, tag } = post
 
           return (
             <PostCard key={id}>
               <Link
+                className={style.topLink}
                 href={AppFeature.getAppURI({
                   name: 'blogDetails',
                   pathParams: { id },
@@ -51,10 +41,7 @@ const Home: NextPageWithLayout<PageProps> = ({ frontMatters }) => {
                 </PostCard.Top>
               </Link>
               <PostCard.Bottom>
-                <CategoryChip
-                  category={category}
-                  onClick={onClickCategory(category)}
-                />
+                <CategoryChip>{category}</CategoryChip>
                 <PostCard.Tag tags={tag} />
               </PostCard.Bottom>
             </PostCard>

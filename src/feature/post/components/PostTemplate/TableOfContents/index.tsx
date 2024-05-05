@@ -9,9 +9,9 @@ import { HeadersOfContents } from '@/feature/post/components/PostTemplate/TableO
 import { convertHEXToRGB } from '@/shared/utils/string'
 import Z_INDEX from '@/styles/constants/zIndex'
 import FONT from '@/styles/constants/font'
-import { NAVBAR_HEIGHT } from '@/components/layout/Navbar'
 import { setTOCId } from './util'
 import COLOR from '@/styles/constants/color'
+import { NAVBAR_HEIGHT } from '@/components/layout/style/navbar.css'
 
 export const TOC_WIDTH_IN_PC = 280
 

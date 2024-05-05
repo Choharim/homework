@@ -1,16 +1,12 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin')
+
+const withVanillaExtract = createVanillaExtractPlugin()
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  async redirects() {
-    return [
-      {
-        source: '/category',
-        destination: '/category/all',
-        permanent: false,
-      },
-    ]
-  },
   compiler: {
     emotion: true,
   },
@@ -24,4 +20,4 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+module.exports = withVanillaExtract(nextConfig)

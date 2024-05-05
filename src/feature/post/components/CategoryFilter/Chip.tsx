@@ -7,38 +7,58 @@ import React, {
   forwardRef,
 } from 'react'
 import postFeature from '../..'
-import styled from '@emotion/styled'
 
 import { Either } from '@/shared/types/narrow'
 import _Chip from '@/components/Chip'
 
+import * as style from '../style/categoryFilterChip.css'
+import { combineClassName } from '@/styles/mixin'
+import Link from 'next/link'
+import AppFeature from '@/feature/app'
+
+export type Theme = {
+  isSeleted: boolean
+}
+
 type Props = Omit<
   ComponentPropsWithoutRef<typeof _Chip>,
   'children' | 'color' | 'size' | 'variety'
-> & {
-  isSeleted: boolean
-} & Either<{ category: PostCategory }, { children: ReactNode }>
+> &
+  Theme &
+  Either<{ category: PostCategory }, { children: ReactNode }>
 
 const Chip = (
-  { children, category, isSeleted, ...props }: Props,
+  { children, category, isSeleted, className, ...props }: Props,
   forwardedRef: ForwardedRef<HTMLSpanElement>
 ) => {
+  const _className = combineClassName(
+    className,
+    style.link[isSeleted ? 'selected' : 'default']
+  )
+
   return (
-    <CategoryChip
-      {...props}
-      size="l"
-      color="primary"
-      isSeleted={isSeleted}
-      variety={isSeleted ? 'solid' : 'outline'}
-      ref={forwardedRef}
+    <Link
+      href={
+        category
+          ? AppFeature.getAppURI({
+              name: 'category',
+              pathParams: { category },
+            })
+          : AppFeature.getAppURI({ name: 'main' })
+      }
+      className={_className}
     >
-      {category ? postFeature.getCategoryName(category) : children}
-    </CategoryChip>
+      <_Chip
+        {...props}
+        size="l"
+        color="primary"
+        variety={isSeleted ? 'solid' : 'outline'}
+        ref={forwardedRef}
+      >
+        {category ? postFeature.getCategoryName(category) : children}
+      </_Chip>
+    </Link>
   )
 }
 
 export default forwardRef(Chip)
-
-const CategoryChip = styled(_Chip)<Pick<Props, 'isSeleted'>>`
-  cursor: ${({ isSeleted }) => (isSeleted ? 'default' : 'pointer')};
-`

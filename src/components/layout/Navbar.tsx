@@ -1,8 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import styled from '@emotion/styled'
-import { css } from '@emotion/react'
 
 import Frame from './Frame'
 import Logo from '../Logo'
@@ -11,12 +9,9 @@ import Typo from '../typo'
 
 import { GITHUB_URL } from '@/feature/app/constants/owner'
 import useScrollDirection from '@/hooks/useScrollDirection'
-import { convertHEXToRGB } from '@/shared/utils/string'
 import useScrollTop from '@/hooks/useScrollTop'
-import Z_INDEX from '@/styles/constants/zIndex'
-import COLOR from '@/styles/constants/color'
-
-export const NAVBAR_HEIGHT = 60
+import * as style from './style/navbar.css'
+import { assignInlineVars } from '@vanilla-extract/dynamic'
 
 type TextMenu = {
   href: string
@@ -39,12 +34,20 @@ const Navbar = () => {
   const isScrollTop = useScrollTop()
 
   return (
-    <Navigation isHidden={direction === 'down' && !isScrollTop}>
-      <CustomFrame>
+    <nav
+      className={style.navigation}
+      style={assignInlineVars({
+        [style.navigationYVar]:
+          direction === 'down' && !isScrollTop
+            ? style.NAV_Y.hidden
+            : style.NAV_Y.show,
+      })}
+    >
+      <Frame className={style.navigationFrame}>
         <Logo isFold />
         <Navbar.Menu />
-      </CustomFrame>
-    </Navigation>
+      </Frame>
+    </nav>
   )
 }
 
@@ -55,81 +58,30 @@ Navbar.Menu = React.memo(function Component() {
 
   return (
     <Flex as="ul" align="baseline">
-      {MENUS.map((menu, i) => (
-        <MenuWrapper key={`menu_${i}`} isActive={pathname === menu.href}>
-          <Link
-            href={menu.href}
-            target={menu.isOutlink ? '_blank' : '_self'}
-            rel="noopener noreferrer"
+      {MENUS.map((menu, i) => {
+        const isActive = pathname === menu.href
+
+        return (
+          <li
+            key={`menu_${i}`}
+            className={style.menuWrapper[isActive ? 'active' : 'default']}
           >
-            <Menu variety="title_3" color="grey700">
-              {menu.label}
-            </Menu>
-          </Link>
-        </MenuWrapper>
-      ))}
+            <Link
+              href={menu.href}
+              target={menu.isOutlink ? '_blank' : '_self'}
+              rel="noopener noreferrer"
+            >
+              <Typo
+                className={style.menu[isActive ? 'active' : 'default']}
+                variety="title_3"
+                color="grey700"
+              >
+                {menu.label}
+              </Typo>
+            </Link>
+          </li>
+        )
+      })}
     </Flex>
   )
 })
-
-const Navigation = styled.nav<{ isHidden: boolean }>`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: ${NAVBAR_HEIGHT}px;
-
-  background-color: rgb(${convertHEXToRGB(COLOR.white)}, 0.5);
-  backdrop-filter: saturate(180%) blur(5px);
-  border-bottom: 1px solid ${COLOR.grey200};
-  z-index: ${Z_INDEX.nav};
-
-  display: block;
-  ${({ isHidden }) =>
-    isHidden
-      ? css`
-          transform: translateY(-100%);
-        `
-      : css`
-          transform: translateY(0);
-        `};
-
-  transition: transform 0.2s;
-`
-
-const CustomFrame = styled(Frame)`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`
-
-const Menu = styled(Typo)`
-  display: flex;
-  align-items: center;
-  padding: 3px 8px;
-`
-
-const MenuWrapper = styled.li<{ isActive: boolean }>`
-  border-radius: 4px;
-
-  &:not(:first-of-type) {
-    margin-left: 10px;
-  }
-
-  ${({ isActive }) =>
-    isActive &&
-    css`
-      pointer-events: none;
-      background-color: ${COLOR.grey100};
-
-      ${Menu} {
-        color: ${COLOR.primary400};
-      }
-    `}
-
-  &:hover {
-    ${Menu} {
-      color: ${COLOR.primary400};
-    }
-  }
-`

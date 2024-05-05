@@ -9,59 +9,32 @@ import CategoryChip from '@/feature/post/components/CategoryChip'
 import CategoryFilter from '@/feature/post/components/CategoryFilter'
 import PostCard from '@/feature/post/components/PostCard'
 import { NextPageWithLayout } from '@/shared/types/layout'
-import { css } from '@emotion/react'
 import { GetStaticProps } from 'next'
-import { useRouter } from 'next/router'
-import React, { MouseEvent } from 'react'
 import postEntity from '@/entity/post'
 import Link from 'next/link'
+import * as style from 'src/feature/post/components/style/cardListFrame.css'
 
 const CategoryPage: NextPageWithLayout<PageProps> = ({
   frontMatters,
   categories,
   category,
 }) => {
-  const router = useRouter()
-
   const { Pagination, paginatedPosts } = usePagination({ posts: frontMatters })
-
-  const handleClickAll = () => {
-    router.push(AppFeature.getAppURI({ name: 'main' }))
-  }
-
-  const onClickCategory =
-    (category: PostCategory) => (e: MouseEvent<HTMLSpanElement>) => {
-      e.stopPropagation()
-
-      router.push(
-        AppFeature.getAppURI({
-          name: 'category',
-          pathParams: { category },
-        })
-      )
-    }
 
   return (
     <>
       <CategoryFilter>
-        <CategoryFilter.Chip isSeleted={!category} onClick={handleClickAll}>
-          전체
-        </CategoryFilter.Chip>
+        <CategoryFilter.Chip isSeleted={!category}>전체</CategoryFilter.Chip>
         {categories.map((c) => (
           <CategoryFilter.Chip
             key={c}
             category={c}
             isSeleted={category === c}
-            onClick={onClickCategory(c)}
           />
         ))}
       </CategoryFilter>
 
-      <CardListFrame
-        css={css`
-          margin-top: 40px;
-        `}
-      >
+      <CardListFrame style={{ marginTop: '40px' }}>
         {paginatedPosts.map((post) => {
           const { id, title, description, create_date, category, tag } = post
 
@@ -72,6 +45,7 @@ const CategoryPage: NextPageWithLayout<PageProps> = ({
                   name: 'blogDetails',
                   pathParams: { id },
                 })}
+                className={style.topLink}
               >
                 <PostCard.Top>
                   <PostCard.Title>{title}</PostCard.Title>
@@ -80,10 +54,7 @@ const CategoryPage: NextPageWithLayout<PageProps> = ({
                 </PostCard.Top>
               </Link>
               <PostCard.Bottom>
-                <CategoryChip
-                  category={category}
-                  onClick={onClickCategory(category)}
-                />
+                <CategoryChip>{category}</CategoryChip>
                 <PostCard.Tag tags={tag} />
               </PostCard.Bottom>
             </PostCard>

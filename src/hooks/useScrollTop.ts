@@ -1,6 +1,5 @@
+import { NAVBAR_HEIGHT } from '@/components/layout/style/navbar.css'
 import { useEffect, useState } from 'react'
-
-import { NAVBAR_HEIGHT } from '@/components/layout/Navbar'
 
 const useScrollTop = () => {
   const [isTop, setIsTop] = useState<boolean>(false)
