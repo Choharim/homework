@@ -13,7 +13,7 @@ export const NAV_Y = {
 }
 
 export const navigation = style({
-  position: 'fixed',
+  position: 'sticky',
   top: 0,
   left: 0,
   width: '100%',

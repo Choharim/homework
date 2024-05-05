@@ -50,7 +50,6 @@ export default PostTemplate
 
 const HeaderFrame = styled(Frame)`
   max-width: ${WIDTH}px;
-  margin-top: ${NAVBAR_HEIGHT}px;
   margin-bottom: 30px;
 
   ${MEDIA.mobile} {
