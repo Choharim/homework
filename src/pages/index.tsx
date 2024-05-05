@@ -36,6 +36,7 @@ const Home: NextPageWithLayout<PageProps> = ({ frontMatters }) => {
           return (
             <PostCard key={id}>
               <Link
+                className={style.topLink}
                 href={AppFeature.getAppURI({
                   name: 'blogDetails',
                   pathParams: { id },

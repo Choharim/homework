@@ -19,3 +19,7 @@ export const wrapper = style([
 export const topGap = style({
   marginTop: 40,
 })
+
+export const topLink = style({
+  height: '100%',
+})

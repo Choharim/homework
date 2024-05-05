@@ -14,7 +14,7 @@ import { useRouter } from 'next/router'
 import React, { MouseEvent } from 'react'
 import postEntity from '@/entity/post'
 import Link from 'next/link'
-
+import * as style from 'src/feature/post/components/style/cardListFrame.css'
 const CategoryPage: NextPageWithLayout<PageProps> = ({
   frontMatters,
   categories,
@@ -67,6 +67,7 @@ const CategoryPage: NextPageWithLayout<PageProps> = ({
                   name: 'blogDetails',
                   pathParams: { id },
                 })}
+                className={style.topLink}
               >
                 <PostCard.Top>
                   <PostCard.Title>{title}</PostCard.Title>
