@@ -15,12 +15,13 @@ import TableOfContents, { TOC_WIDTH_IN_PC } from './TableOfContents'
 import PostHeader from './PostHeader'
 import * as style from './style/postTemplate.css'
 import { NAVBAR_HEIGHT } from '@/components/layout/style/navbar.css'
+import { DEVICE_BREAK_POINT } from '@/styles/constants/device'
 
 type Props = {
   frontMatter: PostFrontMatter
 }
 
-const WIDTH = 644
+const WIDTH = DEVICE_BREAK_POINT.tablet
 
 const PostTemplate = ({ frontMatter, children }: PropsWithChildren<Props>) => {
   return (

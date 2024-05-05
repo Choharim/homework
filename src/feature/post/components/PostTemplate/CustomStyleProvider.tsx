@@ -39,6 +39,8 @@ const highlightWord = css`
 export const Provider = styled.div`
   main {
     padding: 0;
+    margin: 0;
+    width: 100%;
   }
 
   h2 {
