@@ -20,9 +20,13 @@ const Layout = ({
   return (
     <Flex direction="column" className={className}>
       <Navbar />
-      <Frame as="main" className={resetFrameStyle ? '' : style.main}>
-        {children}
-      </Frame>
+      {resetFrameStyle ? (
+        <main>{children}</main>
+      ) : (
+        <Frame as="main" className={style.main}>
+          {children}
+        </Frame>
+      )}
       {hasFooter && <Footer />}
     </Flex>
   )
