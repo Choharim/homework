@@ -142,4 +142,10 @@ export const Provider = styled.div`
       }
     `}
   }
+
+  .notion-viewport {
+    &:empty {
+      display: none;
+    }
+  }
 `
