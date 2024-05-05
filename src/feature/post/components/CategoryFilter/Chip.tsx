@@ -13,6 +13,8 @@ import _Chip from '@/components/Chip'
 
 import * as style from '../style/categoryFilterChip.css'
 import { combineClassName } from '@/styles/mixin'
+import Link from 'next/link'
+import AppFeature from '@/feature/app'
 
 export type Theme = {
   isSeleted: boolean
@@ -31,20 +33,31 @@ const Chip = (
 ) => {
   const _className = combineClassName(
     className,
-    style.wrapper[isSeleted ? 'selected' : 'default']
+    style.link[isSeleted ? 'selected' : 'default']
   )
 
   return (
-    <_Chip
-      {...props}
-      size="l"
-      color="primary"
-      variety={isSeleted ? 'solid' : 'outline'}
+    <Link
+      href={
+        category
+          ? AppFeature.getAppURI({
+              name: 'category',
+              pathParams: { category },
+            })
+          : AppFeature.getAppURI({ name: 'main' })
+      }
       className={_className}
-      ref={forwardedRef}
     >
-      {category ? postFeature.getCategoryName(category) : children}
-    </_Chip>
+      <_Chip
+        {...props}
+        size="l"
+        color="primary"
+        variety={isSeleted ? 'solid' : 'outline'}
+        ref={forwardedRef}
+      >
+        {category ? postFeature.getCategoryName(category) : children}
+      </_Chip>
+    </Link>
   )
 }
 

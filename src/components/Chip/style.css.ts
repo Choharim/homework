@@ -64,6 +64,7 @@ export const variety = styleVariants(STYLE_BY_VARIETY)
 export const wrapper = style({
   width: 'fit-content',
   borderRadius: 6,
+  display: 'inline-block',
 
   ':empty': {
     display: 'none',

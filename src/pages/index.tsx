@@ -2,30 +2,22 @@ import { GetStaticProps } from 'next'
 
 import { NextPageWithLayout } from '@/shared/types/layout'
 import { BLOG } from '@/feature/app/constants/owner'
-import { PostCategory, PostFrontMatter } from '@/entity/post/type'
+import { PostFrontMatter } from '@/entity/post/type'
 import notionAPI from '@/adapter/notion'
 
 import CardListFrame from '@/feature/post/components/CardListFrame'
 import PostCard from '@/feature/post/components/PostCard'
 import CategoryChip from '@/feature/post/components/CategoryChip'
 import usePagination from '@/components/pagination/usePagination'
-import { useRouter } from 'next/router'
 import AppFeature from '@/feature/app'
 import postEntity from '@/entity/post'
 import Link from 'next/link'
 import * as style from 'src/feature/post/components/style/cardListFrame.css'
-const Home: NextPageWithLayout<PageProps> = ({ frontMatters }) => {
-  const router = useRouter()
 
+const Home: NextPageWithLayout<PageProps> = ({ frontMatters }) => {
   const { Pagination, paginatedPosts } = usePagination({
     posts: frontMatters,
   })
-
-  const onClickCategory = (category: PostCategory) => () => {
-    router.push(
-      AppFeature.getAppURI({ name: 'category', pathParams: { category } })
-    )
-  }
 
   return (
     <>
@@ -49,10 +41,7 @@ const Home: NextPageWithLayout<PageProps> = ({ frontMatters }) => {
                 </PostCard.Top>
               </Link>
               <PostCard.Bottom>
-                <CategoryChip
-                  category={category}
-                  onClick={onClickCategory(category)}
-                />
+                <CategoryChip>{category}</CategoryChip>
                 <PostCard.Tag tags={tag} />
               </PostCard.Bottom>
             </PostCard>

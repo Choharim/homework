@@ -1,35 +1,26 @@
-import React, {
-  ComponentPropsWithoutRef,
-  ForwardedRef,
-  forwardRef,
-} from 'react'
-
 import postFeature from '@/feature/post'
 import { PostCategory } from '@/entity/post/type'
 import Chip from '@/components/Chip'
-
-interface Props
-  extends Omit<
-    ComponentPropsWithoutRef<typeof Chip>,
-    'color' | 'size' | 'variety'
-  > {
-  category: PostCategory
+import AppFeature from '@/feature/app'
+import Link from 'next/link'
+import * as styles from './style/categoryChip.css'
+interface Props {
+  children: PostCategory
 }
-const CategoryChip = (
-  { category, ...props }: Props,
-  forwardedRef: ForwardedRef<HTMLSpanElement>
-) => {
+const CategoryChip = ({ children: category }: Props) => {
   return (
-    <Chip
-      {...props}
-      color="primary"
-      size="s"
-      variety="surface"
-      ref={forwardedRef}
+    <Link
+      href={AppFeature.getAppURI({
+        name: 'category',
+        pathParams: { category },
+      })}
+      className={styles.link}
     >
-      {postFeature.getCategoryName(category)}
-    </Chip>
+      <Chip color="primary" size="s" variety="surface">
+        {postFeature.getCategoryName(category)}
+      </Chip>
+    </Link>
   )
 }
 
-export default forwardRef(CategoryChip)
+export default CategoryChip
