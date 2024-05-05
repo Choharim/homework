@@ -7,7 +7,6 @@ import Icon from '../icon'
 import PageLink from './PageLink'
 
 import FONT from '@/styles/constants/font'
-import { rotateHalf } from '@/styles/mixin'
 import Flex from '../flex'
 import COLOR from '@/styles/constants/color'
 
@@ -64,14 +63,18 @@ const Pagination = ({
         pageQueryKey={pageQueryKey}
         pageQueryValue={1}
       >
-        <CustomIcon css={rotateHalf} type="DoubleArrowRight" color="grey500" />
+        <CustomIcon
+          className={style.icon}
+          type="DoubleArrowRight"
+          color="grey500"
+        />
       </CustomPageLink>
       <CustomPageLink
         isDisabled={currentPage === 1}
         pageQueryKey={pageQueryKey}
         pageQueryValue={currentPage - 1}
       >
-        <CustomIcon css={rotateHalf} type="ArrowRight" color="grey500" />
+        <CustomIcon className={style.icon} type="ArrowRight" color="grey500" />
       </CustomPageLink>
 
       {pages.map((page) => (
