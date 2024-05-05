@@ -1,3 +1,4 @@
+import { convertHEXToRGB } from '@/shared/utils/string'
 import COLOR from '@/styles/constants/color'
 import { responsiveStyle } from '@/styles/constants/device'
 import { style } from '@vanilla-extract/css'
@@ -13,7 +14,7 @@ export const wrapper = style([
     boxShadow: '0 1px 5px rgba(0, 0, 0, 0.1)',
 
     ':hover': {
-      boxShadow: '0 5px 30px rgba(0, 0, 0, 0.15)',
+      boxShadow: `0 5px 30px rgb(${convertHEXToRGB(COLOR.primary400)},0.3)`,
       transform: 'translateY(-4px)',
     },
   },
