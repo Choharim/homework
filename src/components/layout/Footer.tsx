@@ -11,7 +11,7 @@ const Footer = ({ className }: Props) => {
   const _className = combineClassName(className, style.wrapper)
   return (
     <Flex as="footer" align="center" className={_className}>
-      © 2022 by {EN_NAME.last} {EN_NAME.first}
+      &copy; 2022 by {EN_NAME.last} {EN_NAME.first}
     </Flex>
   )
 }
