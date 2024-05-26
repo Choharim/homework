@@ -11,6 +11,7 @@ import COLOR from '@/styles/constants/color'
 import { css } from '@emotion/react'
 
 import * as style from './style/postCard.css'
+import MEDIA from '@/styles/constants/media'
 
 const PostCard = ({ children }: PropsWithChildren) => {
   return (
@@ -59,7 +60,11 @@ function Desc({ children }: PropsWithChildren) {
 }
 
 const DescWrapper = styled(Typo)`
-  ${limitTextLine(2)};
+  ${limitTextLine(4)};
+
+  ${MEDIA.mobile} {
+    ${limitTextLine(3)};
+  }
 `
 
 function Date({ dateTime }: Pick<ComponentProps<'time'>, 'dateTime'>) {
