@@ -1,6 +1,5 @@
 import { convertHEXToRGB } from '@/shared/utils/string'
 import COLOR from '@/styles/constants/color'
-import { responsiveStyle } from '@/styles/constants/device'
 import { style } from '@vanilla-extract/css'
 
 export const wrapper = style([
@@ -18,11 +17,6 @@ export const wrapper = style([
       transform: 'translateY(-4px)',
     },
   },
-  responsiveStyle({
-    mobile: {
-      minHeight: 220,
-    },
-  }),
 ])
 
 export const title = style({
