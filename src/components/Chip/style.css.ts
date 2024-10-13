@@ -9,7 +9,7 @@ import { Theme } from '.'
 import COLOR from '@/styles/constants/color'
 
 const STYLE_BY_SIZE: Record<Theme['size'], ComplexStyleRule> = {
-  s: { padding: '2px 6px', ...FONT.caption_1 },
+  s: { padding: '2px 6px', ...FONT.caption_2 },
   m: { padding: '4px 8px', ...FONT.caption_1 },
   l: { padding: '4px 10px', ...FONT.title_3 },
 }

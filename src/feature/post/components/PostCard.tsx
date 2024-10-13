@@ -1,5 +1,4 @@
 import React, { ComponentProps, PropsWithChildren } from 'react'
-import styled from '@emotion/styled'
 
 import Typo from '@/components/typo'
 import Flex from '@/components/flex'
@@ -11,7 +10,6 @@ import COLOR from '@/styles/constants/color'
 import { css } from '@emotion/react'
 
 import * as style from './style/postCard.css'
-import MEDIA from '@/styles/constants/media'
 
 const PostCard = ({ children }: PropsWithChildren) => {
   return (
@@ -31,8 +29,8 @@ export default Object.assign(PostCard, {
   Desc,
   Date,
   Tag,
-  Top,
-  Bottom,
+  LabelSection,
+  Content,
 })
 
 function Title({ children }: PropsWithChildren) {
@@ -53,24 +51,15 @@ function Title({ children }: PropsWithChildren) {
 
 function Desc({ children }: PropsWithChildren) {
   return (
-    <DescWrapper as="p" variety="body_1" color="grey800">
+    <Typo
+      as="p"
+      variety="title_3"
+      color="grey900"
+      css={css`
+        ${limitTextLine(2)}
+      `}
+    >
       {children}
-    </DescWrapper>
-  )
-}
-
-const DescWrapper = styled(Typo)`
-  ${limitTextLine(4)};
-
-  ${MEDIA.mobile} {
-    ${limitTextLine(3)};
-  }
-`
-
-function Date({ dateTime }: Pick<ComponentProps<'time'>, 'dateTime'>) {
-  return (
-    <Typo as="time" dateTime={dateTime} variety="caption_1" color="grey700">
-      {dateTime}
     </Typo>
   )
 }
@@ -98,14 +87,31 @@ function Tag({ tags }: { tags: PostTag[] }) {
   )
 }
 
-function Top({ children }: PropsWithChildren) {
+function LabelSection({ children }: PropsWithChildren) {
+  return <section className={style.labelContainer}>{children}</section>
+}
+
+function Content({ children }: PropsWithChildren) {
   return (
-    <Flex direction="column" gap="8px">
+    <Flex direction="column" gap="12px" as="section">
       {children}
     </Flex>
   )
 }
 
-function Bottom({ children }: PropsWithChildren) {
-  return <div className={style.bottom}>{children}</div>
+function Date({ dateTime }: Pick<ComponentProps<'time'>, 'dateTime'>) {
+  return (
+    <Typo
+      as="time"
+      dateTime={dateTime}
+      variety="caption_1"
+      color="grey600"
+      css={css`
+        text-align: end;
+        margin-top: 16px;
+      `}
+    >
+      {dateTime}
+    </Typo>
+  )
 }
