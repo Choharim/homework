@@ -27,23 +27,24 @@ const Home: NextPageWithLayout<PageProps> = ({ frontMatters }) => {
 
           return (
             <PostCard key={id}>
+              <PostCard.LabelSection>
+                <CategoryChip>{category}</CategoryChip>
+                <PostCard.Tag tags={tag} />
+              </PostCard.LabelSection>
+
               <Link
-                className={style.topLink}
+                className={style.link}
                 href={AppFeature.getAppURI({
                   name: 'blogDetails',
                   pathParams: { id },
                 })}
               >
-                <PostCard.Top>
+                <PostCard.Content>
                   <PostCard.Title>{title}</PostCard.Title>
-                  <PostCard.Date dateTime={create_date} />
                   <PostCard.Desc>{description}</PostCard.Desc>
-                </PostCard.Top>
+                </PostCard.Content>
+                <PostCard.Date dateTime={create_date} />
               </Link>
-              <PostCard.Bottom>
-                <CategoryChip>{category}</CategoryChip>
-                <PostCard.Tag tags={tag} />
-              </PostCard.Bottom>
             </PostCard>
           )
         })}

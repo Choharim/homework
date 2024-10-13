@@ -20,6 +20,9 @@ export const topGap = style({
   marginTop: 40,
 })
 
-export const topLink = style({
+export const link = style({
   height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
 })

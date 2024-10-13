@@ -7,7 +7,7 @@ import * as style from './style/categoryFilter.css'
 
 const CategoryFilter = ({ children }: PropsWithChildren) => {
   return (
-    <Flex align="center" gap="18px" wrap="wrap" className={style.wrapper}>
+    <Flex align="center" gap="16px" wrap="wrap" className={style.wrapper}>
       {children}
     </Flex>
   )

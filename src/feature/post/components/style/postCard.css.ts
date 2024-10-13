@@ -1,5 +1,6 @@
 import { convertHEXToRGB } from '@/shared/utils/string'
 import COLOR from '@/styles/constants/color'
+import { responsiveStyle } from '@/styles/constants/device'
 import { style } from '@vanilla-extract/css'
 
 export const wrapper = style([
@@ -7,7 +8,7 @@ export const wrapper = style([
     padding: '20px 16px',
     borderRadius: 12,
     cursor: 'pointer',
-    minHeight: 260,
+    minHeight: 250,
 
     transition: 'box-shadow 300ms ease-in-out, transform 300ms ease-in-out',
     boxShadow: '0 1px 5px rgba(0, 0, 0, 0.1)',
@@ -17,6 +18,11 @@ export const wrapper = style([
       transform: 'translateY(-4px)',
     },
   },
+  responsiveStyle({
+    mobile: {
+      minHeight: 245,
+    },
+  }),
 ])
 
 export const title = style({
@@ -29,11 +35,11 @@ export const title = style({
   },
 })
 
-export const bottom = style({
+export const labelContainer = style({
   display: 'grid',
   gridAutoFlow: 'column',
   alignItems: 'center',
   gap: 8,
   width: 'fit-content',
-  marginTop: 16,
+  marginBottom: 8,
 })
