@@ -1,4 +1,4 @@
-import { PostCategory, PostFrontMatter } from './type'
+import { POST_CATEGORY_LIST, PostCategory, PostFrontMatter } from './type'
 
 class PostEntity {
   public getPublishedPostFrontMatters(posts: PostFrontMatter[]) {
@@ -38,8 +38,11 @@ class PostEntity {
   }) {
     return posts.filter((post) => post.category === category)
   }
+
+  public isCategory(category: string) {
+    return POST_CATEGORY_LIST.includes(category as PostCategory)
+  }
 }
 
 const postEntity = new PostEntity()
-
 export default postEntity

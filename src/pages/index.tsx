@@ -69,6 +69,5 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
       frontMatters,
       title: BLOG.fullName,
     },
-    revalidate: 10,
   }
 }

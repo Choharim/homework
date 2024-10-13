@@ -103,6 +103,5 @@ export async function getStaticProps(
       frontMatter,
       post,
     },
-    revalidate: 10,
   }
 }
