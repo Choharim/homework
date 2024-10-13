@@ -23,10 +23,6 @@ class PostFeature {
     return this.POST_CATEGORY_NAME[category] ?? ''
   }
 
-  public getIsValidCategory(category: PostCategory) {
-    return !!this.getCategoryName(category)
-  }
-
   public getTagName(tag: PostTag) {
     return this.POST_TAG_NAME[tag] ?? ''
   }
