@@ -28,7 +28,7 @@ const Home: NextPageWithLayout<PageProps> = ({ frontMatters }) => {
           return (
             <PostCard key={id}>
               <PostCard.LabelSection>
-                <CategoryChip>{category}</CategoryChip>
+                <CategoryChip size="s">{category}</CategoryChip>
                 <PostCard.Tag tags={tag} />
               </PostCard.LabelSection>
 
