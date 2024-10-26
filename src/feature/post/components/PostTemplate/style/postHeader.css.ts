@@ -4,6 +4,6 @@ export const wrapper = style({
   marginTop: 30,
 })
 
-export const date = style({
-  marginBottom: 8,
+export const extra = style({
+  marginTop: 16,
 })
