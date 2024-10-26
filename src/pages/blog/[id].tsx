@@ -96,6 +96,12 @@ export async function getStaticProps(
   const all = await notionAPI.getPostFrontMatters()
   const frontMatter = postEntity.getPostFrontMatter({ posts: all, id })
 
+  if (!frontMatter) {
+    return {
+      props: {},
+    }
+  }
+
   const post = await notionAPI.getPost(id)
 
   return {
