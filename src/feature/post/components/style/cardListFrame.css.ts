@@ -1,19 +1,12 @@
-import { responsiveStyle } from '@/styles/constants/device'
 import { style } from '@vanilla-extract/css'
 
 export const wrapper = style([
   {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    alignContent: 'flex-start',
+    display: 'flex',
+    flexDirection: 'column',
     gap: 24,
     height: '100%',
   },
-  responsiveStyle({
-    mobile: {
-      gridTemplateColumns: 'repeat(1, 1fr)',
-    },
-  }),
 ])
 
 export const topGap = style({
@@ -21,7 +14,7 @@ export const topGap = style({
 })
 
 export const link = style({
-  height: '100%',
+  minHeight: 100,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
