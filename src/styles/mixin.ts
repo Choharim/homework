@@ -1,4 +1,5 @@
 import { css } from '@emotion/react'
+import clsx from 'clsx'
 
 export const limitTextLine = (lineCount: number) => css`
   overflow: hidden;
@@ -9,6 +10,6 @@ export const limitTextLine = (lineCount: number) => css`
   -webkit-box-orient: vertical;
 `
 
-export const combineClassName = (...className: (string | undefined)[]) => {
-  return className.join(' ')
+export const combineClassName = (...params: Parameters<typeof clsx>) => {
+  return clsx(params)
 }
