@@ -7,3 +7,5 @@ export const ICON_COMPONENT = {
   DoubleArrowRight,
   FillTriangleExclamationMark,
 } as const
+
+export type IconType = keyof typeof ICON_COMPONENT
