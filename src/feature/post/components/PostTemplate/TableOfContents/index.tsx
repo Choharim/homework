@@ -1,25 +1,22 @@
 import React, { MouseEvent, useEffect, useRef, useState } from 'react'
-import { css } from '@emotion/react'
-import styled from '@emotion/styled'
 
 import Flex from '@/components/flex'
 
 import { HEADERS_OF_CONTENTS } from '@/feature/post/components/PostTemplate/TableOfContents/constant'
 import { HeadersOfContents } from '@/feature/post/components/PostTemplate/TableOfContents/type'
-import { convertHEXToRGB } from '@/shared/utils/string'
-import Z_INDEX from '@/styles/constants/zIndex'
-import FONT from '@/styles/constants/font'
 import { setTOCId } from './util'
-import COLOR from '@/styles/constants/color'
 import { NAVBAR_HEIGHT } from '@/components/layout/style/navbar.css'
 
-export const TOC_WIDTH_IN_PC = 280
+import * as style from './index.css'
 
 const OBSERVER_OPTIONS: IntersectionObserverInit = {
   rootMargin: `-${NAVBAR_HEIGHT}px`,
 }
 
-const TableOfContents = () => {
+interface Props {
+  direction: 'top' | 'right'
+}
+const TableOfContents = ({ direction }: Props) => {
   const [headingElements, setHeadingElements] = useState<Element[]>([])
   const [isHighlightId, setisHighlightId] = useState<string>('')
   const entriesRef = useRef<Record<string, IntersectionObserverEntry>>({})
@@ -66,73 +63,26 @@ const TableOfContents = () => {
   if (!headingElements.length) <></>
 
   return (
-    <TableOfContents.TOCBox>
-      <Flex as="ol" direction="column">
-        {headingElements.map((heading) => (
-          <List
-            key={heading.id}
-            id={heading.id}
-            isHighlight={heading.id === isHighlightId}
-            headerType={heading.localName as HeadersOfContents}
-            onClick={scrollToTargetHeading}
-          >
-            {heading.textContent}
-          </List>
-        ))}
-      </Flex>
-    </TableOfContents.TOCBox>
+    <aside className={style.asideRecipe({ direction })}>
+      <div className={style.tocBoxRecipe({ direction })}>
+        <Flex as="ol" direction="column">
+          {headingElements.map((heading) => (
+            <li
+              key={heading.id}
+              id={heading.id}
+              className={style.liRecipe({
+                highlight: heading.id === isHighlightId,
+                headerType: heading.localName as HeadersOfContents,
+              })}
+              onClick={scrollToTargetHeading}
+            >
+              {heading.textContent}
+            </li>
+          ))}
+        </Flex>
+      </div>
+    </aside>
   )
 }
 
 export default TableOfContents
-
-TableOfContents.TOCBox = styled.div`
-  z-index: ${Z_INDEX.aside};
-`
-
-const List = styled.li<{ headerType: HeadersOfContents; isHighlight: boolean }>`
-  cursor: pointer;
-
-  ${({ headerType }) => {
-    switch (headerType) {
-      case 'h2':
-        return css`
-          ${FONT.title_3};
-          color: ${COLOR.grey800};
-        `
-      case 'h3':
-        return css`
-          margin-left: 10px;
-          padding-left: 10px;
-          ${FONT.caption_1};
-          color: ${COLOR.grey700};
-        `
-
-      case 'h4':
-      default:
-        return css`
-          margin-left: 10px;
-          padding-left: 25px;
-          ${FONT.caption_1};
-          color: ${COLOR.grey500};
-        `
-    }
-  }}
-
-  ${({ isHighlight }) =>
-    isHighlight
-      ? css`
-          color: ${COLOR.primary500};
-          filter: drop-shadow(
-            0 0 8px rgba(${convertHEXToRGB(COLOR.primary400)}, 0.7)
-          );
-          border-left: 2px solid ${COLOR.primary200};
-        `
-      : css`
-          border-left: 2px solid ${COLOR.grey200};
-        `};
-
-  :hover {
-    color: ${COLOR.primary300};
-  }
-`
