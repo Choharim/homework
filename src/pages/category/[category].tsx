@@ -42,7 +42,9 @@ const CategoryPage: NextPageWithLayout<PageProps> = ({
             <PostCard key={id}>
               <PostCard.LabelSection>
                 <CategoryChip size="s">{category}</CategoryChip>
-                <PostCard.Tag tags={tag} />
+                {tag.map((t, i) => (
+                  <PostCard.Tag key={`${t}-${i}`}>{t}</PostCard.Tag>
+                ))}
               </PostCard.LabelSection>
 
               <Link

@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 import Icon from '../icon'
 import PageController from './PageController'
@@ -40,7 +39,6 @@ export interface PaginationProps {
 }
 
 const Pagination = ({ total, activePage, routerQueryKey }: PaginationProps) => {
-  const router = useRouter()
   const [start, end] = getDisplayPageNumbers(total, activePage)
   const pages = Array.from({ length: total }, (_, i) => i + 1).slice(start, end)
 
@@ -78,7 +76,7 @@ const Pagination = ({ total, activePage, routerQueryKey }: PaginationProps) => {
           className={style.page}
           data-active={page === activePage}
           key={page}
-          href={{ query: { ...router.query, [routerQueryKey]: page } }}
+          href={{ query: { [routerQueryKey]: page } }}
         >
           <span>{page}</span>
         </Link>

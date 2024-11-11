@@ -3,11 +3,8 @@ import React, { ComponentProps, PropsWithChildren } from 'react'
 import Typo from '@/components/typo'
 import Flex from '@/components/flex'
 
-import { limitTextLine } from '@/styles/mixin'
 import { PostTag } from '@/entity/post/type'
 import postFeature from '..'
-import COLOR from '@/styles/constants/color'
-import { css } from '@emotion/react'
 
 import * as style from './style/postCard.css'
 
@@ -39,10 +36,8 @@ function Title({ children }: PropsWithChildren) {
       as="h3"
       variety="header_4"
       color="grey800"
+      lineClamp={2}
       className={style.title}
-      css={css`
-        ${limitTextLine(2)};
-      `}
     >
       {children}
     </Typo>
@@ -51,39 +46,27 @@ function Title({ children }: PropsWithChildren) {
 
 function Desc({ children }: PropsWithChildren) {
   return (
-    <Typo
-      as="p"
-      variety="title_3"
-      color="grey900"
-      css={css`
-        ${limitTextLine(2)}
-      `}
-    >
+    <Typo as="p" variety="title_3" color="grey900" lineClamp={2}>
       {children}
     </Typo>
   )
 }
 
-function Tag({ tags }: { tags: PostTag[] }) {
+function Tag({ children: tag }: { children: PostTag }) {
   return (
-    <>
-      {tags.map((tag, i) => (
-        <Typo
-          key={`${tag}-${i}`}
-          as="span"
-          variety="caption_1"
-          color="grey700"
-          css={css`
-            &::before {
-              content: '#';
-              color: ${COLOR.primary600};
-            }
-          `}
-        >
-          {postFeature.getTagName(tag)}
-        </Typo>
-      ))}
-    </>
+    <Typo
+      as="span"
+      variety="caption_1"
+      color="grey700"
+      // css={css`
+      //   &::before {
+      //     content: '#';
+      //     color: ${COLOR.primary600};
+      //   }
+      // `}
+    >
+      {postFeature.getTagName(tag)}
+    </Typo>
   )
 }
 
@@ -106,10 +89,7 @@ function Date({ dateTime }: Pick<ComponentProps<'time'>, 'dateTime'>) {
       dateTime={dateTime}
       variety="caption_1"
       color="grey600"
-      css={css`
-        text-align: end;
-        margin-top: 16px;
-      `}
+      className={style.date}
     >
       {dateTime}
     </Typo>

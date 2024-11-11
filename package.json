@@ -12,9 +12,6 @@
   },
   "dependencies": {
     "@babel/core": "^7.0.0",
-    "@emotion/babel-preset-css-prop": "^11.11.0",
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.0",
     "@svgr/webpack": "^6.5.1",
     "@vanilla-extract/css": "^1.15.1",
     "@vanilla-extract/dynamic": "^2.1.0",

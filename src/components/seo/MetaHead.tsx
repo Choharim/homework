@@ -2,7 +2,7 @@ import Head from 'next/head'
 import React, { MetaHTMLAttributes, useMemo } from 'react'
 
 import { BLOG, EN_NAME } from '@/feature/app/constants/owner'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { getURLRemovedQuery } from '@/shared/utils/url'
 
 type MetaField = 'title' | 'description' | 'image' | 'ogType'
@@ -12,7 +12,7 @@ export type MetaHeadProps = Partial<
 >
 
 const MetaHead = ({ title, description, image, ogType }: MetaHeadProps) => {
-  const router = useRouter()
+  const pathname = usePathname()
 
   const metaData = useMemo(
     () => ({
@@ -20,9 +20,9 @@ const MetaHead = ({ title, description, image, ogType }: MetaHeadProps) => {
       siteName: `${BLOG.shortName}의 개발 블로그`,
       author: `${EN_NAME.first} ${EN_NAME.last}`,
       title: `${title ?? BLOG.fullName} | ${BLOG.shortName}의 개발 블로그`,
-      url: `${BLOG.domain}${getURLRemovedQuery(router.asPath) ?? ''}`,
+      url: `${BLOG.domain}${getURLRemovedQuery(pathname) ?? ''}`,
     }),
-    [ogType, title, router.asPath]
+    [ogType, title, pathname]
   )
 
   return (

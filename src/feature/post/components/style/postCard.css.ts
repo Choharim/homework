@@ -36,3 +36,8 @@ export const labelContainer = style({
   width: 'fit-content',
   marginBottom: 8,
 })
+
+export const date = style({
+  textAlign: 'end',
+  marginTop: 16,
+})

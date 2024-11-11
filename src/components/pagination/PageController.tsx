@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import React, { ComponentProps, ReactElement } from 'react'
 
 import { PaginationProps } from './Pagination'
@@ -18,13 +17,10 @@ function PageController({
   className,
   children,
 }: PageControllerProps) {
-  const router = useRouter()
-
   return (
     <Link
       href={{
         query: {
-          ...router.query,
           [routerQueryKey]: value,
         },
       }}

@@ -6,6 +6,7 @@ import FONT from '@/styles/constants/font'
 import { NAVBAR_HEIGHT } from '@/components/layout/style/navbar.css'
 import { DEVICE_BREAK_POINT, responsiveStyle } from '@/styles/constants/device'
 import { TOC_WIDTH_IN_PC } from './constant'
+import { convertHEXToRGB } from '@/shared/utils/string'
 
 const WIDTH = DEVICE_BREAK_POINT.tablet
 
@@ -105,7 +106,9 @@ export const liRecipe = recipe({
     highlight: {
       true: {
         color: COLOR.primary500,
-        filter: `drop-shadow(0 0 8px rgba(134, 146, 208, 0.7))`,
+        filter: `drop-shadow(0 0 8px rgba(${convertHEXToRGB(
+          COLOR.primary400
+        )}, 0.7))`,
         borderLeft: `2px solid ${COLOR.primary200}`,
       },
       false: {
