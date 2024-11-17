@@ -57,7 +57,7 @@ async function getFrontMatters(category: PostCategory) {
   return frontMatters
 }
 
-export const getCategoryList = async () => {
+const getCategoryList = async () => {
   const categoryList = await notionAPI.getCategories()
 
   return categoryList
