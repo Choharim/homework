@@ -8,6 +8,7 @@ import postEntity from '@/entity/post'
 import PostCardList from './_components/PostCardList'
 import { AppPageProps } from '@/feature/app/types/navigation'
 import * as style from 'src/feature/post/components/style/cardListFrame.css'
+import { Suspense } from 'react'
 
 async function CategoryPage({
   params: { category },
@@ -29,7 +30,9 @@ async function CategoryPage({
       </CategoryFilter>
 
       <CardListFrame className={style.topGap}>
-        <PostCardList frontMatters={frontMatters} />
+        <Suspense>
+          <PostCardList frontMatters={frontMatters} />
+        </Suspense>
       </CardListFrame>
     </>
   )

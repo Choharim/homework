@@ -1,7 +1,7 @@
 import notionAPI from '@/adapter/notion'
 import postEntity from '@/entity/post'
 import CardListFrame from '@/feature/post/components/CardListFrame'
-import React from 'react'
+import React, { Suspense } from 'react'
 import * as style from 'src/feature/post/components/style/cardListFrame.css'
 import PostList from './_components/PostList'
 
@@ -13,7 +13,9 @@ async function Page() {
   return (
     <>
       <CardListFrame className={style.topGap}>
-        <PostList frontMatters={frontMatters} />
+        <Suspense>
+          <PostList frontMatters={frontMatters} />
+        </Suspense>
       </CardListFrame>
     </>
   )
