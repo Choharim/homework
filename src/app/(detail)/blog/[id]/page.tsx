@@ -68,7 +68,7 @@ export async function generateStaticParams() {
   return paths
 }
 
-export const getFrontMatters = async (id: string) => {
+async function getFrontMatters(id: string) {
   const all = await notionAPI.getPostFrontMatters()
   const frontMatter = postEntity.getPostFrontMatter({ posts: all, id })
 

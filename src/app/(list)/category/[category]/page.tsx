@@ -45,7 +45,7 @@ export async function generateStaticParams() {
   }))
 }
 
-export const getFrontMatters = async (category: PostCategory) => {
+async function getFrontMatters(category: PostCategory) {
   const all = await notionAPI.getPostFrontMatters()
   const categorized = postEntity.getPostFrontMattersByCategory({
     posts: all,
