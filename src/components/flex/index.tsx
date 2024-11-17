@@ -1,3 +1,5 @@
+'use client'
+
 import { CSSProperties, ElementType, forwardRef, useMemo } from 'react'
 
 import {

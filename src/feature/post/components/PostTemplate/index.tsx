@@ -1,6 +1,3 @@
-import 'react-notion-x/src/styles.css'
-import 'prismjs/themes/prism-tomorrow.css'
-
 import React, { PropsWithChildren } from 'react'
 
 import { PostFrontMatter } from '@/entity/post/type'

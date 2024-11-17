@@ -1,3 +1,5 @@
+'use client'
+
 import React, {
   ComponentPropsWithoutRef,
   ForwardedRef,
@@ -10,6 +12,7 @@ import Icon from '../icon'
 import * as style from './style.css'
 
 type Props = ComponentPropsWithoutRef<'section'>
+
 function NoResult(props: Props, forwardedRef: ForwardedRef<HTMLElement>) {
   return (
     <Flex

@@ -1,10 +1,7 @@
 import postEntity from '@/entity/post'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function GET(req: NextApiRequest, res: NextApiResponse) {
   const { query } = req
 
   if (query.secret !== process.env.NEXT_PUBLIC_REVALIDATE_TOKEN) {

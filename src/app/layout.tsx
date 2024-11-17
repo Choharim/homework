@@ -1,4 +1,5 @@
 import Layout from '@/components/layout/Layout'
+import { BLOG, EN_NAME } from '@/feature/app/constants/owner'
 import type { Metadata } from 'next'
 
 import localFont from 'next/font/local'
@@ -20,8 +21,22 @@ const pretendardFont = localFont({
 })
 
 export const metadata: Metadata = {
-  title: 'Home',
-  description: 'Welcome to Next.js',
+  title: {
+    template: `%s | ${BLOG.shortName}의 개발 블로그`,
+    default: `${BLOG.shortName}의 개발 블로그`,
+  },
+  applicationName: `${BLOG.shortName}의 개발 블로그`,
+  authors: [{ name: `${EN_NAME.first} ${EN_NAME.last}`, url: BLOG.domain }],
+  openGraph: {
+    type: 'website',
+    siteName: `${BLOG.shortName}의 개발 블로그`,
+    title: {
+      template: `%s | ${BLOG.shortName}의 개발 블로그`,
+      default: `${BLOG.shortName}의 개발 블로그`,
+    },
+  },
+  metadataBase: new URL(BLOG.domain),
+  robots: 'index, follow',
 }
 
 export default function RootLayout({
@@ -33,6 +48,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
+      <link
+        rel="icon"
+        href="/icon?<generated>"
+        type="image/<generated>"
+        sizes="<generated>"
+      />
       <body className={pretendardFont.className}>
         <Layout>{children}</Layout>
       </body>

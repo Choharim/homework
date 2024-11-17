@@ -1,3 +1,4 @@
+'use client'
 import React, { MouseEvent, useEffect, useRef, useState } from 'react'
 
 import Flex from '@/components/flex'

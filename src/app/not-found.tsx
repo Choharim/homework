@@ -1,8 +1,5 @@
 import NoResult from '@/components/StatusResult/NoResult'
-import React from 'react'
 
-function NotFoundPage() {
+export default function NotFound() {
   return <NoResult />
 }
-
-export default NotFoundPage
