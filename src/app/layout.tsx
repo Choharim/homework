@@ -1,4 +1,3 @@
-import Layout from '@/components/layout/Layout'
 import { BLOG, EN_NAME } from '@/feature/app/constants/owner'
 import type { Metadata } from 'next'
 
@@ -54,9 +53,7 @@ export default function RootLayout({
         type="image/<generated>"
         sizes="<generated>"
       />
-      <body className={pretendardFont.className}>
-        <Layout>{children}</Layout>
-      </body>
+      <body className={pretendardFont.className}>{children}</body>
     </html>
   )
 }
