@@ -5,13 +5,8 @@ import { AppPageProps } from '@/feature/app/types/navigation'
 import PostTemplate from '@/feature/post/components/PostTemplate'
 import CustomStyleProvider from '@/feature/post/components/PostTemplate/CustomStyleProvider'
 
-import { Metadata } from 'next'
-
 import React from 'react'
 import Renderer from './_components/Renderer'
-import { headers } from 'next/headers'
-import { BLOG } from '@/feature/app/constants/owner'
-import { getURLRemovedQuery } from '@/shared/utils/url'
 
 async function PostDetail({ params: { id } }: AppPageProps<'blogDetails'>) {
   const frontMatter = await getFrontMatters(id)
@@ -30,28 +25,6 @@ async function PostDetail({ params: { id } }: AppPageProps<'blogDetails'>) {
 }
 
 export default PostDetail
-
-export async function generateMetadata({
-  params,
-}: AppPageProps<'blogDetails'>): Promise<Metadata> {
-  const headersList = headers()
-  const pathname = headersList.get('x-pathname') ?? ''
-
-  const id = (await params).id
-
-  const frontMatter = await getFrontMatters(id)
-
-  return {
-    title: frontMatter?.title,
-    description: frontMatter?.description,
-    openGraph: {
-      type: 'article',
-      title: frontMatter?.title,
-      description: frontMatter?.description,
-      url: `${BLOG.domain}${getURLRemovedQuery(pathname) ?? ''}`,
-    },
-  }
-}
 
 export async function generateStaticParams() {
   const all = await notionAPI.getPostFrontMatters()
