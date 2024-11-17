@@ -1,29 +1,29 @@
-import postEntity from '@/entity/post'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { revalidatePath } from 'next/cache'
+import { type NextRequest } from 'next/server'
 
-export default async function GET(req: NextApiRequest, res: NextApiResponse) {
-  const { query } = req
+export async function GET(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams
+  const secret = searchParams.get('secret')
 
-  if (query.secret !== process.env.NEXT_PUBLIC_REVALIDATE_TOKEN) {
-    return res.status(401).json({ message: 'Invalid token' })
+  if (secret !== process.env.NEXT_PUBLIC_REVALIDATE_TOKEN) {
+    return new Response('Invalid token', {
+      status: 401,
+    })
   }
 
   try {
-    await res.revalidate('/')
+    revalidatePath('/')
+    revalidatePath(`/category/[category]`)
+    revalidatePath(`/blog/[id]`)
 
-    const category = req.query.category as string
-    if (postEntity.isCategory(category)) {
-      await res.revalidate(`/category/${category}`)
-    }
-
-    const blogId = req.query.id
-    if (blogId) {
-      await res.revalidate(`/blog/${blogId}`)
-    }
-
-    return res.json({ revalidated: true })
+    return new Response('revalidated', {
+      status: 200,
+    })
   } catch (err) {
     console.log(err)
-    return res.status(500).send('Error revalidating')
+
+    return new Response('Error revalidating', {
+      status: 500,
+    })
   }
 }
