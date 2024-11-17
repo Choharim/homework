@@ -17,7 +17,6 @@ export const asideRecipe = recipe({
         display: 'none',
       },
     },
-
     ...responsiveStyle({
       mobile: {
         display: 'none',
@@ -26,8 +25,8 @@ export const asideRecipe = recipe({
   },
   variants: {
     direction: {
-      right: {
-        ...responsiveStyle({
+      right: [
+        responsiveStyle({
           custom: {
             value: WIDTH + TOC_WIDTH_IN_PC * 2,
             css: {
@@ -35,11 +34,12 @@ export const asideRecipe = recipe({
             },
           },
         }),
-      },
-      top: {
-        display: 'none',
-
-        ...responsiveStyle({
+      ],
+      top: [
+        {
+          display: 'none',
+        },
+        responsiveStyle({
           custom: {
             value: WIDTH + TOC_WIDTH_IN_PC * 2,
             css: {
@@ -47,7 +47,7 @@ export const asideRecipe = recipe({
             },
           },
         }),
-      },
+      ],
     },
   },
 })

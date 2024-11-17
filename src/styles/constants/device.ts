@@ -19,10 +19,10 @@ export const responsiveStyle = ({
   }
 }): StyleRule => ({
   '@media': {
-    [`screen and (max-width: ${DEVICE_BREAK_POINT.tablet}px)`]: mobile ?? {},
-    [`screen and (max-width: ${DEVICE_BREAK_POINT.pc}px)`]: tablet ?? {},
     ...(custom?.value
       ? { [`screen and (max-width: ${custom.value}px)`]: custom.css }
       : {}),
+    [`screen and (max-width: ${DEVICE_BREAK_POINT.tablet}px)`]: mobile ?? {},
+    [`screen and (max-width: ${DEVICE_BREAK_POINT.pc}px)`]: tablet ?? {},
   },
 })

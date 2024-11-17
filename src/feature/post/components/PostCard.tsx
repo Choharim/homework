@@ -54,17 +54,7 @@ function Desc({ children }: PropsWithChildren) {
 
 function Tag({ children: tag }: { children: PostTag }) {
   return (
-    <Typo
-      as="span"
-      variety="caption_1"
-      color="grey700"
-      // css={css`
-      //   &::before {
-      //     content: '#';
-      //     color: ${COLOR.primary600};
-      //   }
-      // `}
-    >
+    <Typo as="span" variety="caption_1" color="grey700" className={style.tag}>
       {postFeature.getTagName(tag)}
     </Typo>
   )

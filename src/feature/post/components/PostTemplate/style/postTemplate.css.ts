@@ -11,19 +11,23 @@ export const wrapper = style({
 
 const WIDTH = DEVICE_BREAK_POINT.tablet
 
-export const headerFrame = style({
-  maxWidth: WIDTH,
-  marginBottom: 40,
-  ...responsiveStyle({
+export const headerFrame = style([
+  {
+    maxWidth: WIDTH,
+    marginBottom: 40,
+  },
+  responsiveStyle({
     mobile: {
       marginBottom: 20,
     },
   }),
-})
+])
 
-export const bodyFrame = style({
-  maxWidth: `calc(${WIDTH}px + ${TOC_WIDTH_IN_PC * 2}px)`,
-  ...responsiveStyle({
+export const bodyFrame = style([
+  {
+    maxWidth: `calc(${WIDTH}px + ${TOC_WIDTH_IN_PC * 2}px)`,
+  },
+  responsiveStyle({
     custom: {
       value: WIDTH + TOC_WIDTH_IN_PC * 2,
       css: {
@@ -31,14 +35,15 @@ export const bodyFrame = style({
       },
     },
   }),
-})
+])
 
-export const bodyWrapper = style({
-  position: 'relative',
-  display: 'flex',
-  marginLeft: TOC_WIDTH_IN_PC,
-
-  ...responsiveStyle({
+export const bodyWrapper = style([
+  {
+    position: 'relative',
+    display: 'flex',
+    marginLeft: TOC_WIDTH_IN_PC,
+  },
+  responsiveStyle({
     custom: {
       value: WIDTH + TOC_WIDTH_IN_PC * 2,
       css: {
@@ -46,7 +51,7 @@ export const bodyWrapper = style({
       },
     },
   }),
-})
+])
 
 export const content = style({
   maxWidth: WIDTH,

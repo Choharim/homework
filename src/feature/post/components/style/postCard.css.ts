@@ -28,6 +28,15 @@ export const title = style({
   },
 })
 
+export const tag = style({
+  selectors: {
+    '&::before': {
+      content: '#',
+      color: COLOR.primary600,
+    },
+  },
+})
+
 export const labelContainer = style({
   display: 'grid',
   gridAutoFlow: 'column',
