@@ -24,7 +24,7 @@ export const wrapper = styleVariants({
   },
   fullname: {
     animation: `${accordion} 3s ease-in-out 0.5s ${
-      isFoldVar && 'reverse forwards'
+      !!isFoldVar && 'reverse forwards'
     }`,
   },
 })

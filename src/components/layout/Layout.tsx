@@ -1,21 +1,18 @@
-import React, { HTMLAttributes, PropsWithChildren } from 'react'
+import React, { ComponentProps, PropsWithChildren } from 'react'
 
-import Frame from './Frame'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import Flex from '../flex'
+import Frame from './Frame'
 import * as style from './style/layout.css'
-
-interface Props extends Pick<HTMLAttributes<HTMLElement>, 'className'> {
+interface Props extends Pick<ComponentProps<'div'>, 'className'> {
   resetFrameStyle?: boolean
-  hasFooter?: boolean
 }
 
 const Layout = ({
   resetFrameStyle,
   className,
   children,
-  hasFooter = true,
 }: PropsWithChildren<Props>) => {
   return (
     <Flex direction="column" className={className}>
@@ -27,7 +24,7 @@ const Layout = ({
           {children}
         </Frame>
       )}
-      {hasFooter && <Footer />}
+      <Footer />
     </Flex>
   )
 }

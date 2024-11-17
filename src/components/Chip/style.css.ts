@@ -11,7 +11,7 @@ import COLOR from '@/styles/constants/color'
 const STYLE_BY_SIZE: Record<Theme['size'], ComplexStyleRule> = {
   s: { padding: '2px 6px', ...FONT.caption_1 },
   m: { padding: '4px 8px', ...FONT.title_3 },
-  l: { padding: '6px 10px', ...FONT.title_2 },
+  l: { padding: '4px 10px', ...FONT.title_2 },
 }
 
 export const size = styleVariants(STYLE_BY_SIZE)

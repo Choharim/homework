@@ -1,6 +1,7 @@
+'use client'
 import React from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 
 import Frame from './Frame'
 import Logo from '../Logo'
@@ -54,7 +55,7 @@ const Navbar = () => {
 export default Navbar
 
 Navbar.Menu = React.memo(function Component() {
-  const { pathname } = useRouter()
+  const pathname = usePathname()
 
   return (
     <Flex as="ul" align="baseline">

@@ -10,7 +10,7 @@ export const wrapper = style([
 ])
 
 export const topGap = style({
-  marginTop: 40,
+  marginTop: 28,
 })
 
 export const link = style({

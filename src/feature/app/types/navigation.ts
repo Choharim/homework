@@ -49,3 +49,14 @@ export type AppPagePathParams<Name extends AppPageName> = Omit<
   AppPageParams[Name],
   'searchParams'
 >
+
+/**
+ * @description
+ * 페이지 별 props 타입을 정의합니다.
+ */
+export type AppPageProps<Name extends AppPageName> = {
+  params: Name extends keyof AppPageParams
+    ? AppPageParams[Name]
+    : Record<string, never>
+  searchParams: AppPagePathParams<Name>
+}

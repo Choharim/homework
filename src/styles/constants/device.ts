@@ -11,8 +11,17 @@ type CSSProps = Omit<StyleRule, '@media' | '@supports'>
 export const responsiveStyle = ({
   mobile,
   tablet,
-}: Partial<Record<'mobile' | 'tablet', CSSProps>>): StyleRule => ({
+  custom,
+}: Partial<Record<'mobile' | 'tablet', CSSProps>> & {
+  custom?: {
+    value: number
+    css: CSSProps
+  }
+}): StyleRule => ({
   '@media': {
+    ...(custom?.value
+      ? { [`screen and (max-width: ${custom.value}px)`]: custom.css }
+      : {}),
     [`screen and (max-width: ${DEVICE_BREAK_POINT.tablet}px)`]: mobile ?? {},
     [`screen and (max-width: ${DEVICE_BREAK_POINT.pc}px)`]: tablet ?? {},
   },

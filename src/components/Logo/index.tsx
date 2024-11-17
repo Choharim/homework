@@ -7,6 +7,7 @@ import Flex from '../flex'
 import { BLOG } from '@/feature/app/constants/owner'
 import * as style from './style.css'
 import { assignInlineVars } from '@vanilla-extract/dynamic'
+import AppFeature from '@/feature/app'
 
 interface Props extends ComponentProps<typeof Typo> {
   isFold: boolean
@@ -19,7 +20,7 @@ const Logo = ({ isFold, ...typoProps }: Props) => {
   }
 
   return (
-    <Link href="/">
+    <Link href={AppFeature.getAppURI({ name: 'main' })}>
       <Flex>
         {alphabets.map((alphabet, i) => (
           <Typo
@@ -31,7 +32,7 @@ const Logo = ({ isFold, ...typoProps }: Props) => {
               [style.isFoldVar]: isFold ? 'fold' : '',
             })}
             variety={typoProps.variety ?? 'header_4'}
-            color="primary300"
+            color="primary400"
             {...typoProps}
           >
             {alphabet}

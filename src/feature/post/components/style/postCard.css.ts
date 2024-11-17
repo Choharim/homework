@@ -28,6 +28,15 @@ export const title = style({
   },
 })
 
+export const tag = style({
+  selectors: {
+    '&::before': {
+      content: '#',
+      color: COLOR.primary600,
+    },
+  },
+})
+
 export const labelContainer = style({
   display: 'grid',
   gridAutoFlow: 'column',
@@ -35,4 +44,9 @@ export const labelContainer = style({
   gap: 8,
   width: 'fit-content',
   marginBottom: 8,
+})
+
+export const date = style({
+  textAlign: 'end',
+  marginTop: 16,
 })

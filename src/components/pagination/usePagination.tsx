@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+import { useSearchParams } from 'next/navigation'
 
 import { PostFrontMatter } from '@/entity/post/type'
 import _Pagination from './Pagination'
@@ -13,39 +13,37 @@ const getPaginatedPosts = (
   return posts.slice(startIndex, startIndex + pageSize)
 }
 
-const PAGE_QUERY_KEY = 'page'
-const PAGINATION_PAGE_SIZE = 10
+const ROUTER_QUERY_KEY = 'page'
+const PAGE_SIZE = 10
+
+const getValidPage = (page?: number) => {
+  if (!page || isNaN(page) || page < 1) return 1
+
+  return page
+}
 
 type Params = {
   posts: PostFrontMatter[]
 }
 const usePagination = ({ posts }: Params) => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const paginatedPosts = getPaginatedPosts(
-    posts,
-    currentPage,
-    PAGINATION_PAGE_SIZE
-  )
-  const totalPage = Math.ceil(posts.length / PAGINATION_PAGE_SIZE)
+  const searchParams = useSearchParams()
+  const page = Number(searchParams.get(ROUTER_QUERY_KEY))
 
-  const router = useRouter()
+  const [currentPage, setCurrentPage] = useState(getValidPage(page))
 
   useEffect(() => {
-    const page = Number(router.query[PAGE_QUERY_KEY])
+    setCurrentPage(getValidPage(page))
+  }, [page, searchParams])
 
-    if (!isNaN(page)) {
-      setCurrentPage(page)
-    } else {
-      setCurrentPage(1)
-    }
-  }, [router.query])
+  const paginatedPosts = getPaginatedPosts(posts, currentPage, PAGE_SIZE)
+  const totalPage = Math.ceil(posts.length / PAGE_SIZE)
 
   const Pagination = useCallback(() => {
     return (
       <_Pagination
-        totalPage={totalPage}
-        currentPage={currentPage}
-        pageQueryKey={PAGE_QUERY_KEY}
+        total={totalPage}
+        activePage={currentPage}
+        routerQueryKey={ROUTER_QUERY_KEY}
       />
     )
   }, [currentPage, totalPage])

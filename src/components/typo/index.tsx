@@ -1,4 +1,4 @@
-import { CSSProperties, ElementType, forwardRef, useMemo } from 'react'
+import { ElementType, forwardRef, useMemo } from 'react'
 
 import {
   PolymorphicComponentProps,
@@ -6,7 +6,7 @@ import {
 } from '@/shared/types/polymorphic'
 import { ColorKey, FontKey } from '@/styles/type'
 
-import { combineClassName } from '@/styles/mixin'
+import { combineClassName, limitTextLine } from '@/styles/mixin'
 import * as style from './style.css'
 import { assignInlineVars } from '@vanilla-extract/dynamic'
 import { themeVars } from './style.css'
@@ -19,15 +19,15 @@ type ElementTag = Extract<
   'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'label' | 'time'
 >
 
-export type TypoStyle = {
+type StyleProps = {
   variety: FontKey
   color: ColorKey | 'inherit'
-  wrap: CSSProperties['whiteSpace']
+  lineClamp?: number
 }
 
 export type TypoProps<E extends ElementType> = PolymorphicComponentProps<
   E,
-  Partial<TypoStyle>
+  Partial<StyleProps>
 >
 
 const Typo = forwardRef(
@@ -35,7 +35,7 @@ const Typo = forwardRef(
     {
       variety = 'body_1',
       color = 'black',
-      wrap = 'normal',
+      lineClamp,
       as = DEFAULT_TAG,
       children,
       className,
@@ -44,8 +44,10 @@ const Typo = forwardRef(
     forwardRef: PolymorphicRef<E>
   ) => {
     const styles = useMemo(
-      () => ({ color: color === 'inherit' ? 'inherit' : COLOR[color], wrap }),
-      [color, wrap]
+      () => ({
+        color: color === 'inherit' ? 'inherit' : COLOR[color],
+      }),
+      [color]
     )
 
     const _className = combineClassName(
@@ -59,7 +61,11 @@ const Typo = forwardRef(
       <Component
         {...attributes}
         className={_className}
-        style={assignInlineVars(themeVars, styles)}
+        style={{
+          ...attributes.style,
+          ...(lineClamp ? limitTextLine(lineClamp) : {}),
+          ...assignInlineVars(themeVars, styles),
+        }}
         ref={forwardRef}
         as={as}
       >
