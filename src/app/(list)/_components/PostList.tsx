@@ -1,6 +1,6 @@
 'use client'
 
-import usePagination from '@/components/pagination/usePagination'
+import usePagination from '@/components/Pagination/usePagination'
 import { PostFrontMatter } from '@/entity/post/type'
 import AppFeature from '@/feature/app'
 import CategoryChip from '@/feature/post/components/CategoryChip'

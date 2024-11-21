@@ -23,7 +23,7 @@ export const title = style({
 
   selectors: {
     [`${wrapper}:hover &`]: {
-      color: COLOR.primary500,
+      color: COLOR.primary400,
     },
   },
 })
@@ -32,7 +32,7 @@ export const tag = style({
   selectors: {
     '&::before': {
       content: '#',
-      color: COLOR.primary600,
+      color: COLOR.primary400,
     },
   },
 })

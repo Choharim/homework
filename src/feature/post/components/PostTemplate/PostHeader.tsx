@@ -1,7 +1,7 @@
 import { PostFrontMatter } from '@/entity/post/type'
 
-import Typo from '@/components/typo'
-import Flex from '@/components/flex'
+import Typo from '@/components/Typo'
+import Flex from '@/components/Flex'
 
 import * as style from './style/postHeader.css'
 import CategoryChip from '../CategoryChip'
@@ -16,7 +16,7 @@ const PostHeader = ({ frontMatter }: Props) => {
   return (
     <Flex direction="column" className={style.wrapper}>
       <Flex direction="column" gap="24px">
-        <Typo as="h1" variety="header_1" color="grey800">
+        <Typo as="h1" variety="header_1" color="grey900">
           {title}
         </Typo>
 
@@ -25,7 +25,7 @@ const PostHeader = ({ frontMatter }: Props) => {
         </Typo>
       </Flex>
 
-      <Flex align="center" justify="space-between" className={style.extra}>
+      <Flex align="center" justify="between" className={style.extra}>
         <CategoryChip size="m">{category}</CategoryChip>
         <Typo
           as="time"

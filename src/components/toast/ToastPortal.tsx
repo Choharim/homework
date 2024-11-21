@@ -1,6 +1,6 @@
-import Portal from '../portal'
+import Portal from '../Portal'
 import ToastBox from './ToastBox'
-import Flex from '../flex'
+import Flex from '../Flex'
 
 import { DESC, TOAST_PORTAL_ID } from './constant'
 import { Toast } from './type'

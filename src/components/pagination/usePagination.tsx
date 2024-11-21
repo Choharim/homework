@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 
 import { PostFrontMatter } from '@/entity/post/type'
-import _Pagination from './Pagination'
+import _Pagination from '.'
 
 const getPaginatedPosts = (
   posts: PostFrontMatter[],

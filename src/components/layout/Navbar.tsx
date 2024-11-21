@@ -5,13 +5,13 @@ import { usePathname } from 'next/navigation'
 
 import Frame from './Frame'
 import Logo from '../Logo'
-import Flex from '../flex'
-import Typo from '../typo'
+import Flex from '../Flex'
+import Typo from '../Typo'
 
 import { GITHUB_URL } from '@/feature/app/constants/owner'
 import useScrollDirection from '@/hooks/useScrollDirection'
 import useScrollTop from '@/hooks/useScrollTop'
-import * as style from './style/navbar.css'
+import * as style from './navbar.css'
 import { assignInlineVars } from '@vanilla-extract/dynamic'
 
 type TextMenu = {
@@ -65,18 +65,15 @@ Navbar.Menu = React.memo(function Component() {
         return (
           <li
             key={`menu_${i}`}
-            className={style.menuWrapper[isActive ? 'active' : 'default']}
+            className={style.menuWrapper}
+            data-active={isActive}
           >
             <Link
               href={menu.href}
               target={menu.isOutlink ? '_blank' : '_self'}
               rel="noopener noreferrer"
             >
-              <Typo
-                className={style.menu[isActive ? 'active' : 'default']}
-                variety="title_3"
-                color="grey700"
-              >
+              <Typo className={style.menu} variety="title_3" color="grey800">
                 {menu.label}
               </Typo>
             </Link>

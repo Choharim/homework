@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React, { ComponentProps, ReactElement } from 'react'
 
-import { PaginationProps } from './Pagination'
+import { PaginationProps } from '.'
 
 interface PageControllerProps
   extends Pick<PaginationProps, 'routerQueryKey'>,

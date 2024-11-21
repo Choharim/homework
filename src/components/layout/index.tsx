@@ -2,9 +2,9 @@ import React, { ComponentProps, PropsWithChildren } from 'react'
 
 import Navbar from './Navbar'
 import Footer from './Footer'
-import Flex from '../flex'
+import Flex from '../Flex'
 import Frame from './Frame'
-import * as style from './style/layout.css'
+import * as style from './layout.css'
 interface Props extends Pick<ComponentProps<'div'>, 'className'> {
   resetFrameStyle?: boolean
 }
@@ -20,7 +20,7 @@ const Layout = ({
       {resetFrameStyle ? (
         <main>{children}</main>
       ) : (
-        <Frame as="main" className={style.main}>
+        <Frame as="main" className={style.frame}>
           {children}
         </Frame>
       )}

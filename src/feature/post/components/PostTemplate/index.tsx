@@ -2,8 +2,8 @@ import React, { PropsWithChildren } from 'react'
 
 import { PostFrontMatter } from '@/entity/post/type'
 
-import Frame from '@/components/layout/Frame'
-import Flex from '@/components/flex'
+import Frame from '@/components/Layout/Frame'
+import Flex from '@/components/Flex'
 
 import TableOfContents from './TableOfContents'
 import PostHeader from './PostHeader'

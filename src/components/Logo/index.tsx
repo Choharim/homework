@@ -1,8 +1,8 @@
 import React, { ComponentProps } from 'react'
 import Link from 'next/link'
 
-import Typo from '../typo'
-import Flex from '../flex'
+import Typo from '../Typo'
+import Flex from '../Flex'
 
 import { BLOG } from '@/feature/app/constants/owner'
 import * as style from './style.css'

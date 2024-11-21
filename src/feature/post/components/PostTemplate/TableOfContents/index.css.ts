@@ -3,7 +3,7 @@ import { recipe } from '@vanilla-extract/recipes'
 import COLOR from '@/styles/constants/color'
 import FONT from '@/styles/constants/font'
 
-import { NAVBAR_HEIGHT } from '@/components/layout/style/navbar.css'
+import { NAVBAR_HEIGHT } from '@/components/Layout/navbar.css'
 import { DEVICE_BREAK_POINT, responsiveStyle } from '@/styles/constants/device'
 import { TOC_WIDTH_IN_PC } from './constant'
 import { convertHEXToRGB } from '@/shared/utils/string'
@@ -105,14 +105,14 @@ export const liRecipe = recipe({
     },
     highlight: {
       true: {
-        color: COLOR.primary500,
+        color: COLOR.primary400,
         filter: `drop-shadow(0 0 8px rgba(${convertHEXToRGB(
           COLOR.primary400
         )}, 0.7))`,
-        borderLeft: `2px solid ${COLOR.primary200}`,
+        borderLeft: `2px solid ${COLOR.primary300}`,
       },
       false: {
-        borderLeft: `2px solid ${COLOR.grey200}`,
+        borderLeft: `2px solid ${COLOR.grey100}`,
       },
     },
   },

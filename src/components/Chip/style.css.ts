@@ -1,72 +1,70 @@
 import FONT from '@/styles/constants/font'
-import {
-  ComplexStyleRule,
-  createVar,
-  style,
-  styleVariants,
-} from '@vanilla-extract/css'
-import { Theme } from '.'
+
+import { ChipStyle } from '.'
 import COLOR from '@/styles/constants/color'
+import { recipe } from '@vanilla-extract/recipes'
+import { CSSProperties } from 'react'
+import { createThemeContract } from '@vanilla-extract/css'
 
-const STYLE_BY_SIZE: Record<Theme['size'], ComplexStyleRule> = {
-  s: { padding: '2px 6px', ...FONT.caption_1 },
-  m: { padding: '4px 8px', ...FONT.title_3 },
-  l: { padding: '4px 10px', ...FONT.title_2 },
+const SIZE: Record<ChipStyle['size'], CSSProperties> = {
+  s: { padding: '2px 6px', borderRadius: 6, ...FONT.caption_2 },
+  m: { padding: '4px 8px', borderRadius: 8, ...FONT.caption_1 },
+  l: { padding: '4px 10px', borderRadius: 8, ...FONT.title_3 },
 }
 
-export const size = styleVariants(STYLE_BY_SIZE)
-
-type ColorType = {
-  accent: string
-  accentHalf: string
-  accentContrast: string
-}
-
-export const COLOR_TYPE_BY_VARIETY: Record<Theme['color'], ColorType> = {
+type ColorVariant = 'accent' | 'accentHalf' | 'accentContrast'
+export const COLOR_VARIANT: Record<
+  ChipStyle['color'],
+  Record<ColorVariant, string>
+> = {
   grey: {
-    accent: COLOR.grey800,
+    accent: COLOR.grey900,
     accentHalf: COLOR.grey400,
     accentContrast: COLOR.grey50,
   },
   primary: {
-    accent: COLOR.primary600,
-    accentHalf: COLOR.primary100,
+    accent: COLOR.primary400,
+    accentHalf: COLOR.primary200,
     accentContrast: COLOR.primary50,
   },
 }
 
-export const accentVar = createVar()
-export const accentContrastVar = createVar()
-export const accentHalfVar = createVar()
+export const vars = createThemeContract({
+  accent: '',
+  accentHalf: '',
+  accentContrast: '',
+})
 
-const STYLE_BY_VARIETY: Record<Theme['variety'], ComplexStyleRule> = {
+const VARIANT: Record<ChipStyle['variety'], CSSProperties> = {
   solid: {
-    backgroundColor: accentVar,
-    color: accentContrastVar,
+    backgroundColor: vars.accent,
+    color: vars.accentContrast,
   },
   soft: {
-    backgroundColor: accentHalfVar,
-    color: accentVar,
+    backgroundColor: vars.accentContrast,
+    color: vars.accent,
   },
   surface: {
-    backgroundColor: accentContrastVar,
-    color: accentVar,
-    border: `1px solid ${accentHalfVar}`,
+    border: `1px solid ${vars.accentHalf}`,
+    backgroundColor: vars.accentContrast,
+    color: vars.accent,
   },
   outline: {
-    color: accentVar,
-    border: `1px solid ${accentVar}`,
+    border: `1px solid ${vars.accent}`,
+    color: vars.accent,
   },
 }
 
-export const variety = styleVariants(STYLE_BY_VARIETY)
-
-export const wrapper = style({
-  width: 'fit-content',
-  borderRadius: 8,
-  display: 'inline-block',
-
-  ':empty': {
-    display: 'none',
+export const chip = recipe({
+  base: {
+    width: 'fit-content',
+    display: 'inline-block',
+    ':empty': {
+      display: 'none',
+    },
+  },
+  variants: {
+    variety: VARIANT,
+    size: SIZE,
   },
 })

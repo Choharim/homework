@@ -3,7 +3,7 @@
 import React from 'react'
 import PostCard from '@/feature/post/components/PostCard'
 import CategoryChip from '@/feature/post/components/CategoryChip'
-import usePagination from '@/components/pagination/usePagination'
+import usePagination from '@/components/Pagination/usePagination'
 import AppFeature from '@/feature/app'
 import * as style from 'src/feature/post/components/style/cardListFrame.css'
 import Link from 'next/link'

@@ -1,7 +1,7 @@
 import { DEVICE_BREAK_POINT, responsiveStyle } from '@/styles/constants/device'
 import { style } from '@vanilla-extract/css'
 
-export const wrapper = style([
+export const frame = style([
   {
     width: '100%',
     height: '100%',

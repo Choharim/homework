@@ -27,3 +27,5 @@ export type PolymorphicComponentPropsWithRef<
   E extends ElementType,
   Props
 > = PolymorphicComponentProps<E, Props> & { ref?: PolymorphicRef<E> }
+
+export type ObjectKey = string | number | symbol

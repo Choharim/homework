@@ -1,15 +1,27 @@
+import { createObjectByFormatter, getObjectKeys } from '@/shared/utils/object'
+import COLOR from '@/styles/constants/color'
 import FONT from '@/styles/constants/font'
-import { createThemeContract, style, styleVariants } from '@vanilla-extract/css'
+import { recipe } from '@vanilla-extract/recipes'
+import { TypoStyle } from '.'
+import { CSSProperties } from 'react'
 
-export const themeVars = createThemeContract({
-  color: null,
-})
-
-export const wrapper = style({
-  color: themeVars.color,
-  ':empty': {
-    display: 'none',
+export const typo = recipe({
+  base: {
+    selectors: {
+      '&:empty': {
+        display: 'none',
+      },
+    },
+  },
+  variants: {
+    variety: FONT,
+    color: createObjectByFormatter<TypoStyle['color'], CSSProperties>(
+      [...getObjectKeys(COLOR), 'inherit'],
+      (key) => {
+        return {
+          color: key === 'inherit' ? 'inherit' : COLOR[key],
+        }
+      }
+    ),
   },
 })
-
-export const variety = styleVariants(FONT)

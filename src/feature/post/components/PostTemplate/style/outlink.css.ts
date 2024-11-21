@@ -3,14 +3,14 @@ import { style } from '@vanilla-extract/css'
 
 export const wrapper = style({
   all: 'unset',
-  textDecoration: '2px underline dashed',
-  textUnderlineOffset: 5,
+  textDecoration: '1.5px underline dashed',
+  textUnderlineOffset: 6,
   wordBreak: 'break-word',
 
   cursor: 'pointer',
 
-  color: COLOR.primary600,
+  color: COLOR.primary400,
   ':hover': {
-    color: COLOR.primary400,
+    color: COLOR.primary300,
   },
 })

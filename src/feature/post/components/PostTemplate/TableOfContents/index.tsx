@@ -1,12 +1,12 @@
 'use client'
 import React, { MouseEvent, useEffect, useRef, useState } from 'react'
 
-import Flex from '@/components/flex'
+import Flex from '@/components/Flex'
 
 import { HEADERS_OF_CONTENTS } from '@/feature/post/components/PostTemplate/TableOfContents/constant'
 import { HeadersOfContents } from '@/feature/post/components/PostTemplate/TableOfContents/type'
 import { setTOCId } from './util'
-import { NAVBAR_HEIGHT } from '@/components/layout/style/navbar.css'
+import { NAVBAR_HEIGHT } from '@/components/Layout/navbar.css'
 
 import * as style from './index.css'
 

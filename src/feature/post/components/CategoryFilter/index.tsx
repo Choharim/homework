@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react'
 
-import Flex from '@/components/flex'
+import Flex from '@/components/Flex'
 
 import Chip from './Chip'
 import * as style from './style/categoryFilter.css'

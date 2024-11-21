@@ -11,6 +11,10 @@ const pretendardFont = localFont({
       weight: '400',
     },
     {
+      path: '../../public/font/Pretendard-Medium.woff2',
+      weight: '500',
+    },
+    {
       path: '../../public/font/Pretendard-SemiBold.woff2',
       weight: '600',
     },
