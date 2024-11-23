@@ -57,10 +57,12 @@ globalStyle(`${base} ol, ul, li`, {
 
 globalStyle(`${base} ol`, {
   listStyleType: 'decimal',
+  display: 'grid',
 })
 
 globalStyle(`${base} ul`, {
   listStyleType: 'disc',
+  display: 'grid',
 })
 
 globalStyle(`${base} li::marker`, {

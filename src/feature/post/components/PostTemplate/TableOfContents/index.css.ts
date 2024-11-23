@@ -50,6 +50,7 @@ export const asideRecipe = recipe({
 export const tocBoxRecipe = recipe({
   base: {
     zIndex: Z_INDEX.aside,
+    marginTop: 20,
   },
   variants: {
     direction: {
@@ -59,7 +60,6 @@ export const tocBoxRecipe = recipe({
         top: NAVBAR_HEIGHT,
         width: TOC_WIDTH_IN_PC,
         paddingLeft: 40,
-        marginTop: 40,
       },
       top: {
         position: 'unset',
