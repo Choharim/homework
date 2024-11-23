@@ -52,13 +52,12 @@ export async function generateStaticParams() {
 }
 
 async function getFrontMatters(category: PostCategory) {
-  const all = await notionAPI.getPostFrontMatters()
+  const all = await notionAPI.getPublishedPostFrontMatters()
   const categorized = postEntity.getPostFrontMattersByCategory({
     posts: all,
     category,
   })
-  const published = postEntity.getPublishedPostFrontMatters(categorized)
-  const frontMatters = postEntity.getPostFrontMattersSortedByNewest(published)
+  const frontMatters = postEntity.getPostFrontMattersSortedByNewest(categorized)
 
   return frontMatters
 }

@@ -28,7 +28,7 @@ async function PostDetail({ params: { id } }: AppPageProps<'blogDetails'>) {
 export default PostDetail
 
 export async function generateStaticParams() {
-  const all = await notionAPI.getPostFrontMatters()
+  const all = await notionAPI.getPublishedPostFrontMatters()
   const ids = postEntity.getPostIDs(all)
 
   const paths = ids.map((id) => {
@@ -43,7 +43,7 @@ export async function generateStaticParams() {
 }
 
 async function getFrontMatters(id: string) {
-  const all = await notionAPI.getPostFrontMatters()
+  const all = await notionAPI.getPublishedPostFrontMatters()
   const frontMatter = postEntity.getPostFrontMatter({ posts: all, id })
 
   return frontMatter

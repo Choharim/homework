@@ -7,9 +7,8 @@ import PostList from './_components/PostList'
 import { Metadata } from 'next'
 
 async function Page() {
-  const all = await notionAPI.getPostFrontMatters()
-  const published = postEntity.getPublishedPostFrontMatters(all)
-  const frontMatters = postEntity.getPostFrontMattersSortedByNewest(published)
+  const all = await notionAPI.getPublishedPostFrontMatters()
+  const frontMatters = postEntity.getPostFrontMattersSortedByNewest(all)
 
   return (
     <CardListFrame className={style.topGap}>

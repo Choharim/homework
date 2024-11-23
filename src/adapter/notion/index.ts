@@ -1,3 +1,4 @@
+import postEntity from '@/entity/post'
 import { PostCategory, PostFrontMatter } from '@/entity/post/type'
 import { NotionAPI as NotionClient } from 'notion-client'
 
@@ -12,10 +13,14 @@ class NotionAPI {
 
   private BASE_URL = 'https://notion-api.splitbee.io/v1'
 
-  public async getPostFrontMatters(): Promise<PostFrontMatter[]> {
+  private async getPostFrontMatters(): Promise<PostFrontMatter[]> {
     return await fetch(
       `${this.BASE_URL}/table/${this.NOTION_ID.page.blog}`
     ).then((res) => res.json())
+  }
+  public async getPublishedPostFrontMatters(): Promise<PostFrontMatter[]> {
+    const all = await this.getPostFrontMatters()
+    return postEntity.getPublishedPostFrontMatters(all)
   }
 
   public async getPost(id: string) {
