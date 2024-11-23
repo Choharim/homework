@@ -9,7 +9,7 @@ import { assignInlineVars } from '@vanilla-extract/dynamic'
 
 type Variety = 'solid' | 'soft' | 'surface' | 'outline'
 type Size = 's' | 'm' | 'l'
-type Color = 'grey' | 'primary'
+type Color = 'primary'
 
 export type ChipStyle = {
   variety: Variety

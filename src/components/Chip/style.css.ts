@@ -5,6 +5,7 @@ import COLOR from '@/styles/constants/color'
 import { recipe } from '@vanilla-extract/recipes'
 import { CSSProperties } from 'react'
 import { createThemeContract } from '@vanilla-extract/css'
+import { createObjectByFormatter } from '@/shared/utils/object'
 
 const SIZE: Record<ChipStyle['size'], CSSProperties> = {
   s: { padding: '2px 6px', borderRadius: 6, ...FONT.caption_2 },
@@ -17,11 +18,6 @@ export const COLOR_VARIANT: Record<
   ChipStyle['color'],
   Record<ColorVariant, string>
 > = {
-  grey: {
-    accent: COLOR.grey900,
-    accentHalf: COLOR.grey400,
-    accentContrast: COLOR.grey50,
-  },
   primary: {
     accent: COLOR.primary400,
     accentHalf: COLOR.primary200,
@@ -35,22 +31,25 @@ export const vars = createThemeContract({
   accentContrast: '',
 })
 
-const VARIANT: Record<ChipStyle['variety'], CSSProperties> = {
+const VARIANT: Record<
+  ChipStyle['variety'],
+  Partial<Record<'border' | 'color' | 'background', string>>
+> = {
   solid: {
-    backgroundColor: vars.accent,
+    background: vars.accent,
     color: vars.accentContrast,
   },
   soft: {
-    backgroundColor: vars.accentContrast,
+    background: vars.accentContrast,
     color: vars.accent,
   },
   surface: {
-    border: `1px solid ${vars.accentHalf}`,
-    backgroundColor: vars.accentContrast,
+    border: vars.accentHalf,
+    background: vars.accentContrast,
     color: vars.accent,
   },
   outline: {
-    border: `1px solid ${vars.accent}`,
+    border: vars.accent,
     color: vars.accent,
   },
 }
@@ -64,7 +63,21 @@ export const chip = recipe({
     },
   },
   variants: {
-    variety: VARIANT,
+    variety: createObjectByFormatter<ChipStyle['variety'], CSSProperties>(
+      ['outline', 'soft', 'solid', 'surface'],
+      (key) => {
+        const variant = VARIANT[key]
+        return {
+          color: variant.color,
+          backgroundColor: variant.background
+            ? variant.background
+            : 'transparent',
+          border: `1px solid ${
+            variant.border ? variant.border : 'transparent'
+          }`,
+        }
+      }
+    ),
     size: SIZE,
   },
 })
