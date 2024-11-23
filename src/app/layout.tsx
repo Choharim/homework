@@ -70,6 +70,10 @@ export default function RootLayout({
         type="image/<generated>"
         sizes="<generated>"
       />
+      <meta
+        name="google-site-verification"
+        content={process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION}
+      />
       <body className={pretendardFont.className}>{children}</body>
     </html>
   )
