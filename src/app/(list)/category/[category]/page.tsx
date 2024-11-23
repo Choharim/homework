@@ -6,9 +6,12 @@ import CategoryFilter from '@/feature/post/components/CategoryFilter'
 
 import postEntity from '@/entity/post'
 import PostCardList from './_components/PostCardList'
-import { AppPageProps } from '@/feature/app/types/navigation'
+import { AppPageProps } from '@/feature/application/types/navigation'
 import * as style from 'src/feature/post/components/style/cardListFrame.css'
 import { Suspense } from 'react'
+import { Metadata } from 'next'
+import postFeature from '@/feature/post'
+import { toPascalCase } from '@/shared/utils/string'
 
 async function CategoryPage({
   params: { category },
@@ -64,4 +67,19 @@ const getCategoryList = async () => {
   const categoryList = await notionAPI.getCategories()
 
   return categoryList
+}
+
+export async function generateMetadata({
+  params,
+}: AppPageProps<'category'>): Promise<Metadata> {
+  const category = (await params).category
+
+  return {
+    title: `${postFeature.getCategoryName(category)}(${toPascalCase(
+      category
+    )}) 글 목록`,
+    description: `${postFeature.getCategoryName(
+      category
+    )} 개발에 관한 인사이트를 제공해요.`,
+  }
 }

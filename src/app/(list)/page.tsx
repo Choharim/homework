@@ -4,6 +4,7 @@ import CardListFrame from '@/feature/post/components/CardListFrame'
 import React, { Suspense } from 'react'
 import * as style from 'src/feature/post/components/style/cardListFrame.css'
 import PostList from './_components/PostList'
+import { Metadata } from 'next'
 
 async function Page() {
   const all = await notionAPI.getPostFrontMatters()
@@ -20,3 +21,7 @@ async function Page() {
 }
 
 export default Page
+
+export const metadata: Metadata = {
+  title: '글 목록',
+}
