@@ -8,7 +8,7 @@ import Logo from '../Logo'
 import Flex from '../Flex'
 import Typo from '../Typo'
 
-import { GITHUB_URL } from '@/feature/app/constants/owner'
+import { GITHUB_URL } from '@/feature/application/constants/owner'
 import useScrollDirection from '@/hooks/useScrollDirection'
 import useScrollTop from '@/hooks/useScrollTop'
 import * as style from './navbar.css'

@@ -4,10 +4,10 @@ import Link from 'next/link'
 import Typo from '../Typo'
 import Flex from '../Flex'
 
-import { BLOG } from '@/feature/app/constants/owner'
+import { BLOG } from '@/feature/application/constants/owner'
 import * as style from './style.css'
 import { assignInlineVars } from '@vanilla-extract/dynamic'
-import AppFeature from '@/feature/app'
+import AppFeature from '@/feature/application'
 
 interface Props extends ComponentProps<typeof Typo> {
   isFold: boolean

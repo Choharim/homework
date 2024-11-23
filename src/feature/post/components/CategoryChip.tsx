@@ -1,7 +1,7 @@
 import postFeature from '@/feature/post'
 import { PostCategory } from '@/entity/post/type'
 import Chip from '@/components/Chip'
-import AppFeature from '@/feature/app'
+import AppFeature from '@/feature/application'
 import Link from 'next/link'
 import * as styles from './style/categoryChip.css'
 import { ComponentProps } from 'react'

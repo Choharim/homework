@@ -14,7 +14,7 @@ import _Chip from '@/components/Chip'
 import * as style from '../style/categoryFilterChip.css'
 import { combineClassName } from '@/styles/mixin'
 import Link from 'next/link'
-import AppFeature from '@/feature/app'
+import AppFeature from '@/feature/application'
 
 export type Theme = {
   isSeleted: boolean
