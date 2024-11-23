@@ -2,7 +2,7 @@
 
 import usePagination from '@/components/Pagination/usePagination'
 import { PostFrontMatter } from '@/entity/post/type'
-import AppFeature from '@/feature/app'
+import AppFeature from '@/feature/application'
 import CategoryChip from '@/feature/post/components/CategoryChip'
 import PostCard from '@/feature/post/components/PostCard'
 import Link from 'next/link'

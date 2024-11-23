@@ -1,6 +1,6 @@
 import React, { HtmlHTMLAttributes } from 'react'
 
-import { EN_NAME } from '@/feature/app/constants/owner'
+import { EN_NAME } from '@/feature/application/constants/owner'
 import Flex from '../Flex'
 
 import * as style from './footer.css'
