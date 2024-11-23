@@ -15,12 +15,12 @@ const PostHeader = ({ frontMatter }: Props) => {
 
   return (
     <Flex direction="column" className={style.wrapper}>
-      <Flex direction="column" gap="24px">
+      <Flex direction="column" gap="16px">
         <Typo as="h1" variety="header_1" color="grey900">
           {title}
         </Typo>
 
-        <Typo variety="title_1" color="grey800">
+        <Typo variety="title_2" color="grey800">
           {description}
         </Typo>
       </Flex>
@@ -30,7 +30,7 @@ const PostHeader = ({ frontMatter }: Props) => {
         <Typo
           as="time"
           dateTime={create_date}
-          variety="title_3"
+          variety="subtitle_1"
           color="grey600"
         >
           {create_date}

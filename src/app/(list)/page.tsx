@@ -11,13 +11,11 @@ async function Page() {
   const frontMatters = postEntity.getPostFrontMattersSortedByNewest(published)
 
   return (
-    <>
-      <CardListFrame className={style.topGap}>
-        <Suspense>
-          <PostList frontMatters={frontMatters} />
-        </Suspense>
-      </CardListFrame>
-    </>
+    <CardListFrame className={style.topGap}>
+      <Suspense>
+        <PostList frontMatters={frontMatters} />
+      </Suspense>
+    </CardListFrame>
   )
 }
 

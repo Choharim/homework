@@ -5,7 +5,7 @@ import {
   styleVariants,
 } from '@vanilla-extract/css'
 import { ToastBoxStyle } from '../ToastBox'
-import COLOR from '@/styles/constants/color'
+import COLOR from '@/styles/color'
 import { TOAST_TIMEOUT, TOAST_TOP_POSITION } from '../constant'
 
 const ANIMATED_DURATION = 300

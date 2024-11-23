@@ -24,6 +24,7 @@ const Logo = ({ isFold, ...typoProps }: Props) => {
       <Flex>
         {alphabets.map((alphabet, i) => (
           <Typo
+            responsive={false}
             key={`${alphabet}_${i}`}
             className={
               style.wrapper[isInitial(alphabet) ? 'initial' : 'fullname']
@@ -31,7 +32,7 @@ const Logo = ({ isFold, ...typoProps }: Props) => {
             style={assignInlineVars({
               [style.isFoldVar]: isFold ? 'fold' : '',
             })}
-            variety={typoProps.variety ?? 'header_4'}
+            variety={typoProps.variety ?? 'header_3'}
             color="primary400"
             {...typoProps}
           >

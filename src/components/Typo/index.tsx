@@ -13,13 +13,25 @@ const DEFAULT_TAG: ElementTag = 'span'
 
 type ElementTag = Extract<
   ElementType,
-  'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'label' | 'time'
+  | 'span'
+  | 'p'
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'label'
+  | 'time'
+  | 'strong'
+  | 'em'
 >
 
 export type TypoStyle = {
   variety: FontKey
   color: ColorKey | 'inherit'
   lineClamp?: number
+  responsive?: boolean
 }
 
 export type TypoProps<E extends ElementType> = PolymorphicComponentProps<
@@ -33,6 +45,7 @@ const Typo = forwardRef(
       variety = 'body_1',
       color = 'black',
       lineClamp,
+      responsive = true,
       as = DEFAULT_TAG,
       children,
       className,
@@ -54,6 +67,7 @@ const Typo = forwardRef(
           ...attributes.style,
           ...(lineClamp ? limitTextLine(lineClamp) : {}),
         }}
+        data-responsive={responsive}
         ref={forwardRef}
         as={as}
       >

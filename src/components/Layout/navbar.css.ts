@@ -1,6 +1,6 @@
 import { convertHEXToRGB } from '@/shared/utils/string'
-import COLOR from '@/styles/constants/color'
-import Z_INDEX from '@/styles/constants/zIndex'
+import COLOR from '@/styles/color'
+import Z_INDEX from '@/styles/zIndex'
 import { createVar, style } from '@vanilla-extract/css'
 
 export const NAVBAR_HEIGHT = 60
@@ -44,6 +44,10 @@ export const menuWrapper = style({
     '&[data-active="true"]': {
       pointerEvents: 'none',
       backgroundColor: COLOR.grey100,
+    },
+
+    '&:hover': {
+      backgroundColor: COLOR.grey50,
     },
   },
 })

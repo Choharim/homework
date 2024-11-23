@@ -1,16 +1,16 @@
-import FONT from '@/styles/constants/font'
+import FONT from '@/styles/font'
 
 import { ChipStyle } from '.'
-import COLOR from '@/styles/constants/color'
+import COLOR from '@/styles/color'
 import { recipe } from '@vanilla-extract/recipes'
 import { CSSProperties } from 'react'
 import { createThemeContract } from '@vanilla-extract/css'
 import { createObjectByFormatter } from '@/shared/utils/object'
 
 const SIZE: Record<ChipStyle['size'], CSSProperties> = {
-  s: { padding: '2px 6px', borderRadius: 6, ...FONT.caption_2 },
-  m: { padding: '4px 8px', borderRadius: 8, ...FONT.caption_1 },
-  l: { padding: '4px 10px', borderRadius: 8, ...FONT.title_3 },
+  s: { padding: '2px 6px', borderRadius: 8, ...FONT.subtitle_3 },
+  m: { padding: '3px 8px', borderRadius: 10, ...FONT.subtitle_2 },
+  l: { padding: '3px 10px', borderRadius: 12, ...FONT.subtitle_1 },
 }
 
 type ColorVariant = 'accent' | 'accentHalf' | 'accentContrast'

@@ -7,6 +7,7 @@ import Flex from '../Flex'
 
 import * as style from './pagination.css'
 import { combineClassName } from '@/styles/mixin'
+import Typo from '../Typo'
 
 const DISPLAY_PAGE_COUNT = 5
 const HALF = Math.floor(DISPLAY_PAGE_COUNT / 2)
@@ -78,7 +79,9 @@ const Pagination = ({ total, activePage, routerQueryKey }: PaginationProps) => {
           key={page}
           href={{ query: { [routerQueryKey]: page } }}
         >
-          <span>{page}</span>
+          <Typo variety="title_3" color="inherit">
+            {page}
+          </Typo>
         </Link>
       ))}
 

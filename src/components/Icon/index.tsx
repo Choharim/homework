@@ -2,7 +2,7 @@ import React, { ComponentProps, SVGAttributes } from 'react'
 
 import { ICON_COMPONENT, IconType } from './shared'
 import { ColorKey } from '@/styles/type'
-import COLOR from '@/styles/constants/color'
+import COLOR from '@/styles/color'
 
 interface IconProps
   extends Pick<SVGAttributes<SVGAElement>, 'width' | 'height'>,

@@ -1,4 +1,6 @@
 import { StyleRule } from '@vanilla-extract/css'
+import { Device } from './type'
+import { CSSProperties } from 'react'
 
 export const DEVICE_BREAK_POINT = {
   mobile: 360,
@@ -6,16 +8,14 @@ export const DEVICE_BREAK_POINT = {
   pc: 1024,
 } as const
 
-type CSSProps = Omit<StyleRule, '@media' | '@supports'>
-
 export const responsiveStyle = ({
   mobile,
   tablet,
   custom,
-}: Partial<Record<'mobile' | 'tablet', CSSProps>> & {
+}: Partial<Record<Device, CSSProperties>> & {
   custom?: {
     value: number
-    css: CSSProps
+    css: CSSProperties
   }
 }): StyleRule => ({
   '@media': {

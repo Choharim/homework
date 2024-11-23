@@ -1,10 +1,10 @@
-import Z_INDEX from '@/styles/constants/zIndex'
+import Z_INDEX from '@/styles/zIndex'
 import { recipe } from '@vanilla-extract/recipes'
-import COLOR from '@/styles/constants/color'
-import FONT from '@/styles/constants/font'
+import COLOR from '@/styles/color'
+import FONT from '@/styles/font'
 
 import { NAVBAR_HEIGHT } from '@/components/Layout/navbar.css'
-import { DEVICE_BREAK_POINT, responsiveStyle } from '@/styles/constants/device'
+import { DEVICE_BREAK_POINT, responsiveStyle } from '@/styles/device'
 import { TOC_WIDTH_IN_PC } from './constant'
 import { convertHEXToRGB } from '@/shared/utils/string'
 
@@ -17,11 +17,6 @@ export const asideRecipe = recipe({
         display: 'none',
       },
     },
-    ...responsiveStyle({
-      mobile: {
-        display: 'none',
-      },
-    }),
   },
   variants: {
     direction: {
@@ -88,19 +83,19 @@ export const liRecipe = recipe({
     headerType: {
       h2: {
         color: COLOR.grey800,
-        ...FONT.title_3,
+        ...FONT.subtitle_1,
       },
       h3: {
         marginLeft: 10,
         paddingLeft: 10,
-        color: COLOR.grey700,
-        ...FONT.caption_1,
+        color: COLOR.grey800,
+        ...FONT.subtitle_2,
       },
       h4: {
         marginLeft: 10,
         paddingLeft: 25,
-        color: COLOR.grey500,
-        ...FONT.caption_1,
+        color: COLOR.grey700,
+        ...FONT.subtitle_3,
       },
     },
     highlight: {

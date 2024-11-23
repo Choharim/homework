@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 import { TOAST_TOP_POSITION } from '../constant'
-import Z_INDEX from '@/styles/constants/zIndex'
+import Z_INDEX from '@/styles/zIndex'
 
 export const wrapper = style({
   position: 'fixed',

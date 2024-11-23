@@ -27,11 +27,11 @@ function NoResult(props: Props, forwardedRef: ForwardedRef<HTMLElement>) {
     >
       <Icon
         type="FillTriangleExclamationMark"
-        color="grey700"
-        width={48}
-        height={48}
+        color="warning"
+        width={56}
+        height={56}
       />
-      <Typo as="h1" variety="title_1" color="grey700">
+      <Typo as="h1" variety="title_1" color="grey800">
         요청하신 컨텐츠를 찾을 수 없어요
       </Typo>
     </Flex>

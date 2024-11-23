@@ -1,5 +1,5 @@
 import { convertHEXToRGB } from '@/shared/utils/string'
-import COLOR from '@/styles/constants/color'
+import COLOR from '@/styles/color'
 import { style } from '@vanilla-extract/css'
 
 export const wrapper = style([
@@ -18,15 +18,17 @@ export const wrapper = style([
   },
 ])
 
-export const title = style({
-  transition: 'color 0.2s ease-in-out',
+export const title = style([
+  {
+    transition: 'color 0.2s ease-in-out',
 
-  selectors: {
-    [`${wrapper}:hover &`]: {
-      color: COLOR.primary400,
+    selectors: {
+      [`${wrapper}:hover &`]: {
+        color: COLOR.primary400,
+      },
     },
   },
-})
+])
 
 export const tag = style({
   selectors: {

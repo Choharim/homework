@@ -1,4 +1,4 @@
-import COLOR from '@/styles/constants/color'
+import COLOR from '@/styles/color'
 import { style } from '@vanilla-extract/css'
 
 export const wrapper = style({

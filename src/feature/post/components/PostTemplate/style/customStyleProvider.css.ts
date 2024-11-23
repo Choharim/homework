@@ -1,7 +1,7 @@
 import { globalStyle, style } from '@vanilla-extract/css'
-import FONT from '@/styles/constants/font'
+import FONT from '@/styles/font'
 import { convertHEXToRGB } from '@/shared/utils/string'
-import COLOR from '@/styles/constants/color'
+import COLOR from '@/styles/color'
 
 export const base = style({})
 
@@ -18,17 +18,17 @@ globalStyle(`${base} h2, h3, h4`, {
 
 globalStyle(`${base} h2`, {
   margin: '35px 0 20px',
-  ...FONT.header_2,
+  ...FONT.header_1,
 })
 
 globalStyle(`${base} h3`, {
   margin: '30px 0 15px',
-  ...FONT.header_3,
+  ...FONT.header_2,
 })
 
 globalStyle(`${base} h4`, {
   margin: '25px 0 10px',
-  ...FONT.header_4,
+  ...FONT.header_3,
 })
 
 globalStyle(`${base} div, div code`, {
@@ -45,7 +45,7 @@ globalStyle(`${base} div:last-child`, {
 })
 
 globalStyle(`${base} strong`, {
-  ...FONT.title_3,
+  ...FONT.subtitle_1,
   color: COLOR.primary500,
 })
 
@@ -64,16 +64,19 @@ globalStyle(`${base} ul`, {
 })
 
 globalStyle(`${base} li::marker`, {
-  ...FONT.title_3,
+  ...FONT.subtitle_1,
 })
 
 globalStyle(`${base} blockquote`, {
   padding: '8px 10px 8px 20px',
   margin: '20px 0',
-  ...FONT.title_2,
+  ...FONT.subtitle_1,
   borderLeft: `4px solid ${COLOR.primary400}`,
   backgroundColor: COLOR.grey50,
   borderRadius: '4px',
+})
+globalStyle(`${base} blockquote div`, {
+  ...FONT.subtitle_1,
 })
 
 globalStyle(`${base} blockquote code`, {
