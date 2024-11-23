@@ -1,7 +1,6 @@
 import { globalStyle, style } from '@vanilla-extract/css'
 
 export const base = style({
-  position: 'relative',
   margin: '20px 0',
   padding: '24px 0',
   borderRadius: '3px',
@@ -10,7 +9,14 @@ export const base = style({
   overflowY: 'hidden',
 })
 
-// 전역 스타일 정의
+globalStyle(`${base} code`, {
+  width: '100%',
+})
+
+globalStyle(`${base} .notion-code-copy`, {
+  display: 'none',
+})
+
 globalStyle(`${base} .comment`, {
   color: '#999',
 })

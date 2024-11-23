@@ -5,6 +5,6 @@ import * as style from './style/code.css'
 type Props = ComponentProps<NotionComponents['Code']>
 
 const Code = (props: Props) => {
-  return <NotionCode className={style.base} {...props} />
+  return <NotionCode {...props} className={style.base} />
 }
 export default Code
