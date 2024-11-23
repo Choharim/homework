@@ -1,5 +1,4 @@
-import COLOR from '@/styles/constants/color'
-import FONT from '@/styles/constants/font'
+import COLOR from '@/styles/color'
 import { style } from '@vanilla-extract/css'
 
 export const wrapper = style({
@@ -26,7 +25,6 @@ const base = style({
 export const page = style([
   base,
   {
-    ...FONT.title_2,
     color: COLOR.grey500,
 
     selectors: {

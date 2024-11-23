@@ -1,4 +1,4 @@
-import COLOR from '@/styles/constants/color'
+import COLOR from '@/styles/color'
 import { createVar, keyframes, styleVariants } from '@vanilla-extract/css'
 
 const accordion = keyframes({

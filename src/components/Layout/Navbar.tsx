@@ -73,7 +73,7 @@ Navbar.Menu = React.memo(function Component() {
               target={menu.isOutlink ? '_blank' : '_self'}
               rel="noopener noreferrer"
             >
-              <Typo className={style.menu} variety="title_3" color="grey800">
+              <Typo className={style.menu} variety="title_3" color="grey700">
                 {menu.label}
               </Typo>
             </Link>

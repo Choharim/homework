@@ -34,8 +34,8 @@ function Title({ children }: PropsWithChildren) {
   return (
     <Typo
       as="h3"
-      variety="header_4"
-      color="grey800"
+      variety="header_2"
+      color="grey900"
       lineClamp={2}
       className={style.title}
     >
@@ -46,7 +46,7 @@ function Title({ children }: PropsWithChildren) {
 
 function Desc({ children }: PropsWithChildren) {
   return (
-    <Typo as="p" variety="title_3" color="grey900" lineClamp={2}>
+    <Typo as="p" variety="title_3" color="grey800" lineClamp={2}>
       {children}
     </Typo>
   )
@@ -54,7 +54,13 @@ function Desc({ children }: PropsWithChildren) {
 
 function Tag({ children: tag }: { children: PostTag }) {
   return (
-    <Typo as="span" variety="caption_1" color="grey600" className={style.tag}>
+    <Typo
+      responsive={false}
+      as="span"
+      variety="subtitle_2"
+      color="grey700"
+      className={style.tag}
+    >
       {postFeature.getTagName(tag)}
     </Typo>
   )
@@ -66,7 +72,7 @@ function LabelSection({ children }: PropsWithChildren) {
 
 function Content({ children }: PropsWithChildren) {
   return (
-    <Flex direction="column" gap="12px" as="section">
+    <Flex direction="column" gap="8px" as="section">
       {children}
     </Flex>
   )
@@ -77,7 +83,7 @@ function Date({ dateTime }: Pick<ComponentProps<'time'>, 'dateTime'>) {
     <Typo
       as="time"
       dateTime={dateTime}
-      variety="caption_1"
+      variety="subtitle_2"
       color="grey600"
       className={style.date}
     >

@@ -1,4 +1,4 @@
-import { DEVICE_BREAK_POINT } from '@/styles/constants/device'
+import { DEVICE_BREAK_POINT } from '@/styles/device'
 
 const MEDIA = {
   mobile: `@media screen and (max-width: ${DEVICE_BREAK_POINT.tablet}px)`,

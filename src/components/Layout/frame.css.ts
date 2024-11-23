@@ -1,4 +1,4 @@
-import { DEVICE_BREAK_POINT, responsiveStyle } from '@/styles/constants/device'
+import { DEVICE_BREAK_POINT, responsiveStyle } from '@/styles/device'
 import { style } from '@vanilla-extract/css'
 
 export const frame = style([

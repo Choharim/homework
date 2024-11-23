@@ -1,5 +1,5 @@
-import COLOR from '@/styles/constants/color'
-import { DEVICE_BREAK_POINT, responsiveStyle } from '@/styles/constants/device'
+import COLOR from '@/styles/color'
+import { DEVICE_BREAK_POINT, responsiveStyle } from '@/styles/device'
 import { style } from '@vanilla-extract/css'
 import { TOC_WIDTH_IN_PC } from '../TableOfContents/constant'
 
