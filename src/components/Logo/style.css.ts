@@ -19,8 +19,7 @@ export const isFoldVar = createVar()
 
 export const wrapper = styleVariants({
   initial: {
-    color: COLOR.primary500,
-    fontWeight: 'bold',
+    color: COLOR.primary400,
   },
   fullname: {
     animation: `${accordion} 3s ease-in-out 0.5s ${

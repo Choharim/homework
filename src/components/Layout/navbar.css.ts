@@ -1,7 +1,7 @@
 import { convertHEXToRGB } from '@/shared/utils/string'
 import COLOR from '@/styles/constants/color'
 import Z_INDEX from '@/styles/constants/zIndex'
-import { createVar, style, styleVariants } from '@vanilla-extract/css'
+import { createVar, style } from '@vanilla-extract/css'
 
 export const NAVBAR_HEIGHT = 60
 
@@ -20,7 +20,7 @@ export const navigation = style({
   height: NAVBAR_HEIGHT,
   backgroundColor: `rgb(${convertHEXToRGB(COLOR.white)}, 0.5)`,
   backdropFilter: 'saturate(180%) blur(5px)',
-  borderBottom: `1px solid ${COLOR.grey200}`,
+  borderBottom: `1px solid ${COLOR.grey100}`,
   zIndex: Z_INDEX.nav,
   display: 'block',
   transition: 'transform 0.2s',
@@ -33,42 +33,33 @@ export const navigationFrame = style({
   justifyContent: 'space-between',
 })
 
-const menuWrapperBase = style({
+export const menuWrapper = style({
   borderRadius: 4,
 
   selectors: {
     '&:not(:first-of-type)': {
       marginLeft: 10,
     },
+
+    '&[data-active="true"]': {
+      pointerEvents: 'none',
+      backgroundColor: COLOR.grey100,
+    },
   },
 })
 
-export const menuWrapper = styleVariants({
-  default: [menuWrapperBase],
-  active: [
-    menuWrapperBase,
-    { pointerEvents: 'none', backgroundColor: COLOR.grey100 },
-  ],
-})
-
-const menuBase = style({
+export const menu = style({
   display: 'flex',
   alignItems: 'center',
   padding: '3px 8px',
 
   selectors: {
-    [`${menuWrapperBase}:hover &`]: {
+    [`${menuWrapper}:hover &`]: {
       color: COLOR.primary400,
+    },
+
+    [`${menuWrapper}[data-active="true"] &`]: {
+      color: COLOR.primary500,
     },
   },
-})
-
-export const menu = styleVariants({
-  default: [menuBase],
-  active: [
-    menuBase,
-    {
-      color: COLOR.primary400,
-    },
-  ],
 })

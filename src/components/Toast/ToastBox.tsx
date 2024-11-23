@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Flex from '../flex'
-import Typo from '../typo'
+import Flex from '../Flex'
+import Typo from '../Typo'
 
 import { Variety } from './type'
 import * as style from './style/toastBox.css'

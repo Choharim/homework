@@ -18,7 +18,7 @@ const base = style({
 
   selectors: {
     '&:hover': {
-      backgroundColor: COLOR.grey100,
+      backgroundColor: COLOR.grey50,
     },
   },
 })
@@ -27,13 +27,13 @@ export const page = style([
   base,
   {
     ...FONT.title_2,
-    color: COLOR.grey600,
+    color: COLOR.grey500,
 
     selectors: {
       '&[data-active="true"]': {
         pointerEvents: 'none',
 
-        color: COLOR.primary600,
+        color: COLOR.primary400,
       },
     },
   },
@@ -56,7 +56,7 @@ export const icon = style({
 
   selectors: {
     [`${pageController}[data-disabled="true"] &`]: {
-      color: COLOR.grey300,
+      color: COLOR.grey200,
     },
   },
 })

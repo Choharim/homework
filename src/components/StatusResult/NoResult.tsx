@@ -5,9 +5,9 @@ import React, {
   ForwardedRef,
   forwardRef,
 } from 'react'
-import Flex from '../flex'
-import Typo from '../typo'
-import Icon from '../icon'
+import Flex from '../Flex'
+import Typo from '../Typo'
+import Icon from '../Icon'
 
 import * as style from './style.css'
 

@@ -1,4 +1,4 @@
-import { NAVBAR_HEIGHT } from '@/components/layout/style/navbar.css'
+import { NAVBAR_HEIGHT } from '@/components/Layout/navbar.css'
 import { useEffect, useState } from 'react'
 
 const useScrollTop = () => {

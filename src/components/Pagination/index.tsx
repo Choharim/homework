@@ -1,11 +1,11 @@
 import Link from 'next/link'
 
-import Icon from '../icon'
+import Icon from '../Icon'
 import PageController from './PageController'
 
-import Flex from '../flex'
+import Flex from '../Flex'
 
-import * as style from './style/pagination.css'
+import * as style from './pagination.css'
 import { combineClassName } from '@/styles/mixin'
 
 const DISPLAY_PAGE_COUNT = 5
@@ -55,7 +55,7 @@ const Pagination = ({ total, activePage, routerQueryKey }: PaginationProps) => {
         <Icon
           className={combineClassName(style.icon, style.iconRotate)}
           type="DoubleArrowRight"
-          color="grey500"
+          color="grey400"
         />
       </PageController>
       <PageController
@@ -67,7 +67,7 @@ const Pagination = ({ total, activePage, routerQueryKey }: PaginationProps) => {
         <Icon
           className={combineClassName(style.icon, style.iconRotate)}
           type="ArrowRight"
-          color="grey500"
+          color="grey400"
         />
       </PageController>
 
@@ -88,7 +88,7 @@ const Pagination = ({ total, activePage, routerQueryKey }: PaginationProps) => {
         disabled={total === activePage}
         className={style.pageController}
       >
-        <Icon type="ArrowRight" color="grey500" className={style.icon} />
+        <Icon type="ArrowRight" color="grey400" className={style.icon} />
       </PageController>
 
       <PageController
@@ -97,7 +97,7 @@ const Pagination = ({ total, activePage, routerQueryKey }: PaginationProps) => {
         disabled={total === activePage}
         className={style.pageController}
       >
-        <Icon type="DoubleArrowRight" color="grey500" className={style.icon} />
+        <Icon type="DoubleArrowRight" color="grey400" className={style.icon} />
       </PageController>
     </Flex>
   )

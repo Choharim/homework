@@ -4,15 +4,14 @@ import React, {
   forwardRef,
 } from 'react'
 import * as style from './style.css'
-import { assignInlineVars } from '@vanilla-extract/dynamic'
-import { COLOR_TYPE_BY_VARIETY } from './style.css'
 import { combineClassName } from '@/styles/mixin'
+import { assignInlineVars } from '@vanilla-extract/dynamic'
 
 type Variety = 'solid' | 'soft' | 'surface' | 'outline'
 type Size = 's' | 'm' | 'l'
-type Color = 'grey' | 'primary'
+type Color = 'primary'
 
-export type Theme = {
+export type ChipStyle = {
   variety: Variety
   size: Size
   color: Color
@@ -20,19 +19,14 @@ export type Theme = {
 
 interface Props
   extends Omit<ComponentPropsWithoutRef<'span'>, 'color'>,
-    Theme {}
+    ChipStyle {}
 
 const Chip = (
-  { children, className, variety, size, color, ...rest }: Props,
+  { variety, size, color, children, className, ...rest }: Props,
   forwardedRef: ForwardedRef<HTMLSpanElement>
 ) => {
-  const { accent, accentContrast, accentHalf } = COLOR_TYPE_BY_VARIETY[color]
-  const _className = combineClassName(
-    className,
-    style.wrapper,
-    style.size[size],
-    style.variety[variety]
-  )
+  const _className = combineClassName(className, style.chip({ variety, size }))
+  const colorVariant = style.COLOR_VARIANT[color]
 
   return (
     <span
@@ -40,9 +34,9 @@ const Chip = (
       className={_className}
       ref={forwardedRef}
       style={assignInlineVars({
-        [style.accentVar]: accent,
-        [style.accentContrastVar]: accentContrast,
-        [style.accentHalfVar]: accentHalf,
+        [style.vars.accent]: colorVariant.accent,
+        [style.vars.accentContrast]: colorVariant.accentContrast,
+        [style.vars.accentHalf]: colorVariant.accentHalf,
       })}
     >
       {children}

@@ -52,6 +52,7 @@ globalStyle(`${base} strong`, {
 globalStyle(`${base} ol, ul, li`, {
   listStylePosition: 'inside',
   paddingInlineStart: 1,
+  color: COLOR.grey900,
 })
 
 globalStyle(`${base} ol`, {
@@ -70,8 +71,8 @@ globalStyle(`${base} blockquote`, {
   padding: '8px 10px 8px 20px',
   margin: '20px 0',
   ...FONT.title_2,
-  borderLeft: `4px solid ${COLOR.primary500}`,
-  backgroundColor: COLOR.grey100,
+  borderLeft: `4px solid ${COLOR.primary400}`,
+  backgroundColor: COLOR.grey50,
   borderRadius: '4px',
 })
 
@@ -88,7 +89,7 @@ globalStyle(`${base} .notion-callout`, {
   backgroundColor: COLOR.white,
   margin: '15px 0',
   padding: '15px 20px',
-  border: `1.5px dashed ${COLOR.primary400}`,
+  border: `2px dashed ${COLOR.primary400}`,
   borderRadius: '15px',
 })
 
