@@ -1,12 +1,6 @@
-export const KO_NAME = {
-  first: '하림',
-  last: '조',
-} as const
-
-export const EN_NAME = {
-  first: 'harim',
-  last: 'Cho',
-} as const
+export const AUTHOR_NAME = {
+  en: 'Harim Cho',
+}
 
 export const BLOG = {
   shortName: 'RIM',

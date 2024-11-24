@@ -5,17 +5,32 @@ import React, { Suspense } from 'react'
 import * as style from 'src/feature/post/components/style/cardListFrame.css'
 import PostList from './_components/PostList'
 import { Metadata } from 'next'
+import StructuredData from '@/feature/seo/components/StructuredData'
+import { getCollectionPageContext } from '@/feature/seo/constants/jsonLd'
+import AppFeature from '@/feature/application'
+import { BLOG } from '@/feature/application/constants/owner'
 
 async function Page() {
   const all = await notionAPI.getPublishedPostFrontMatters()
   const frontMatters = postEntity.getPostFrontMattersSortedByNewest(all)
 
   return (
-    <CardListFrame className={style.topGap}>
-      <Suspense>
-        <PostList frontMatters={frontMatters} />
-      </Suspense>
-    </CardListFrame>
+    <>
+      <StructuredData
+        data={getCollectionPageContext({
+          frontMatters,
+          url: `${BLOG.domain}${AppFeature.getAppURI({
+            name: 'main',
+          })}`,
+        })}
+      />
+
+      <CardListFrame className={style.topGap}>
+        <Suspense>
+          <PostList frontMatters={frontMatters} />
+        </Suspense>
+      </CardListFrame>
+    </>
   )
 }
 

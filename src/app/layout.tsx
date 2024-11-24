@@ -1,5 +1,5 @@
-import { BLOG, EN_NAME } from '@/feature/application/constants/owner'
-import { METADATA } from '@/feature/seo/constants.ts/metadata'
+import { BLOG, AUTHOR_NAME } from '@/feature/application/constants/owner'
+import { METADATA } from '@/feature/seo/constants/metadata'
 import type { Metadata } from 'next'
 
 import localFont from 'next/font/local'
@@ -29,24 +29,17 @@ export const metadata: Metadata = {
     template: `%s | ${METADATA.title}`,
     default: `${METADATA.title}`,
   },
-  keywords: [
-    '블로그',
-    '기술 블로그',
-    '프론트엔드',
-    'Frontend',
-    '개발',
-    '웹 개발',
-  ],
-  applicationName: `${METADATA.title}`,
-  authors: [{ name: `${EN_NAME.first} ${EN_NAME.last}`, url: BLOG.domain }],
+  keywords: METADATA.keword,
+  applicationName: METADATA.title,
+  authors: [{ name: AUTHOR_NAME.en, url: BLOG.domain }],
   openGraph: {
     title: {
       template: `%s | ${METADATA.title}`,
-      default: `${METADATA.title}`,
+      default: METADATA.title,
     },
     locale: 'ko_KR',
     type: 'website',
-    siteName: `${METADATA.title}`,
+    siteName: METADATA.title,
   },
   metadataBase: new URL(BLOG.domain),
   robots: {

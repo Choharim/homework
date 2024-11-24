@@ -5,13 +5,17 @@ import CardListFrame from '@/feature/post/components/CardListFrame'
 import CategoryFilter from '@/feature/post/components/CategoryFilter'
 
 import postEntity from '@/entity/post'
-import PostCardList from './_components/PostCardList'
 import { AppPageProps } from '@/feature/application/types/navigation'
 import * as style from 'src/feature/post/components/style/cardListFrame.css'
 import { Suspense } from 'react'
 import { Metadata } from 'next'
 import postFeature from '@/feature/post'
 import { toPascalCase } from '@/shared/utils/string'
+import PostList from '../../_components/PostList'
+import StructuredData from '@/feature/seo/components/StructuredData'
+import { getCollectionPageContext } from '@/feature/seo/constants/jsonLd'
+import AppFeature from '@/feature/application'
+import { BLOG } from '@/feature/application/constants/owner'
 
 async function CategoryPage({
   params: { category },
@@ -21,6 +25,17 @@ async function CategoryPage({
 
   return (
     <>
+      <StructuredData
+        data={getCollectionPageContext({
+          category: category,
+          frontMatters,
+          url: `${BLOG.domain}${AppFeature.getAppURI({
+            name: 'category',
+            pathParams: { category: category },
+          })}`,
+        })}
+      />
+
       <CategoryFilter>
         <CategoryFilter.Chip isSeleted={!category}>전체</CategoryFilter.Chip>
         {categoryList.map((c) => (
@@ -34,7 +49,7 @@ async function CategoryPage({
 
       <CardListFrame className={style.topGap}>
         <Suspense>
-          <PostCardList frontMatters={frontMatters} />
+          <PostList frontMatters={frontMatters} />
         </Suspense>
       </CardListFrame>
     </>

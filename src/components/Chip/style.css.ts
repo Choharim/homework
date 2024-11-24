@@ -8,9 +8,9 @@ import { createThemeContract } from '@vanilla-extract/css'
 import { createObjectByFormatter } from '@/shared/utils/object'
 
 const SIZE: Record<ChipStyle['size'], CSSProperties> = {
-  s: { padding: '2px 6px', borderRadius: 8, ...FONT.subtitle_3 },
-  m: { padding: '3px 8px', borderRadius: 10, ...FONT.subtitle_2 },
-  l: { padding: '3px 10px', borderRadius: 12, ...FONT.subtitle_1 },
+  s: { padding: '2px 6px', borderRadius: 8, ...FONT.caption_1 },
+  m: { padding: '2px 8px', borderRadius: 10, ...FONT.subtitle_3 },
+  l: { padding: '4px 10px', borderRadius: 12, ...FONT.subtitle_2 },
 }
 
 type ColorVariant = 'accent' | 'accentHalf' | 'accentContrast'
