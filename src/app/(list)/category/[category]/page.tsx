@@ -12,6 +12,9 @@ import { Metadata } from 'next'
 import postFeature from '@/feature/post'
 import { toPascalCase } from '@/shared/utils/string'
 import PostList from '../../_components/PostList'
+import StructuredData from '@/feature/seo/components/StructuredData'
+import { getCollectionPageContext } from '@/feature/seo/constants/jsonLd'
+import AppFeature from '@/feature/application'
 
 async function CategoryPage({
   params: { category },
@@ -21,6 +24,17 @@ async function CategoryPage({
 
   return (
     <>
+      <StructuredData
+        data={getCollectionPageContext({
+          category: category,
+          frontMatters,
+          url: AppFeature.getAppURI({
+            name: 'category',
+            pathParams: { category: category },
+          }),
+        })}
+      />
+
       <CategoryFilter>
         <CategoryFilter.Chip isSeleted={!category}>전체</CategoryFilter.Chip>
         {categoryList.map((c) => (

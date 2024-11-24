@@ -8,6 +8,8 @@ import CustomStyleProvider from '@/feature/post/components/PostTemplate/CustomSt
 import React from 'react'
 import Renderer from './_components/Renderer'
 import { Metadata } from 'next'
+import StructuredData from '@/feature/seo/components/StructuredData'
+import { getBlogPostingContext } from '@/feature/seo/constants/jsonLd'
 
 async function PostDetail({ params: { id } }: AppPageProps<'blogDetails'>) {
   const frontMatter = await getFrontMatters(id)
@@ -17,11 +19,22 @@ async function PostDetail({ params: { id } }: AppPageProps<'blogDetails'>) {
   const post = await getPost(id)
 
   return (
-    <PostTemplate frontMatter={frontMatter}>
-      <CustomStyleProvider>
-        <Renderer post={post} />
-      </CustomStyleProvider>
-    </PostTemplate>
+    <>
+      <StructuredData
+        data={getBlogPostingContext({
+          title: frontMatter.title,
+          desc: frontMatter.description,
+          category: frontMatter.category,
+          datePublished: frontMatter.create_date,
+          id,
+        })}
+      />
+      <PostTemplate frontMatter={frontMatter}>
+        <CustomStyleProvider>
+          <Renderer post={post} />
+        </CustomStyleProvider>
+      </PostTemplate>
+    </>
   )
 }
 
