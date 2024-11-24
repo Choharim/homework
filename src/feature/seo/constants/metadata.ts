@@ -13,5 +13,11 @@ export const METADATA = {
     'Development',
     '웹 개발',
     'Web Development',
+    'Javascript',
+    'js',
+    '자바스크립트',
+    'Typescript',
+    'ts',
+    '타입스크립트',
   ],
 }
