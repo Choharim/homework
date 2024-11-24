@@ -2,10 +2,10 @@ import Portal from '../Portal'
 import ToastBox from './ToastBox'
 import Flex from '../Flex'
 
-import { DESC, TOAST_PORTAL_ID } from './constant'
-import { Toast } from './type'
+import { DESC, TOAST_PORTAL_ID } from './_constants'
+import { Toast } from './_types'
 
-import * as style from './style/tostPortal.css'
+import * as style from './tostPortal.css'
 
 type Props = {
   toasts: Toast[]

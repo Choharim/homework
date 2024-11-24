@@ -1,21 +1,20 @@
 import notionAPI from '@/adapter/notion'
 import { PostCategory } from '@/entity/post/type'
 
-import CardListFrame from '@/feature/post/components/CardListFrame'
-import CategoryFilter from '@/feature/post/components/CategoryFilter'
+import CardListFrame from '@/feature/post/_components/CardListFrame'
+import CategoryFilter from '@/feature/post/_components/CategoryFilter'
 
-import postEntity from '@/entity/post'
-import { AppPageProps } from '@/feature/application/types/navigation'
-import * as style from 'src/feature/post/components/style/cardListFrame.css'
+import PostEntity from '@/entity/post'
+import { AppPageProps } from '@/feature/application/_types/navigation'
+import * as style from '@/feature/post/_components/cardListFrame.css'
 import { Suspense } from 'react'
 import { Metadata } from 'next'
-import postFeature from '@/feature/post'
-import { toPascalCase } from '@/shared/utils/string'
+import PostFeature from '@/feature/post'
+import { toPascalCase } from '@/shared/_utils'
 import PostList from '../../_components/PostList'
-import StructuredData from '@/feature/seo/components/StructuredData'
-import { getCollectionPageContext } from '@/feature/seo/constants/jsonLd'
+import StructuredData from '@/feature/seo/_components/StructuredData'
 import AppFeature from '@/feature/application'
-import { BLOG } from '@/feature/application/constants/owner'
+import SEOFeature from '@/feature/seo'
 
 async function CategoryPage({
   params: { category },
@@ -26,10 +25,10 @@ async function CategoryPage({
   return (
     <>
       <StructuredData
-        data={getCollectionPageContext({
+        data={SEOFeature.getCollectionPageContext({
           category: category,
           frontMatters,
-          url: `${BLOG.domain}${AppFeature.getAppURI({
+          url: `${AppFeature.URL.domain}${AppFeature.getAppURI({
             name: 'category',
             pathParams: { category: category },
           })}`,
@@ -68,11 +67,8 @@ export async function generateStaticParams() {
 
 async function getFrontMatters(category: PostCategory) {
   const all = await notionAPI.getPublishedPostFrontMatters()
-  const categorized = postEntity.getPostFrontMattersByCategory({
-    posts: all,
-    category,
-  })
-  const frontMatters = postEntity.getPostFrontMattersSortedByNewest(categorized)
+  const categorized = PostEntity.findFrontMattersByCategory(all, category)
+  const frontMatters = PostEntity.sortFrontMattersByNewest(categorized)
 
   return frontMatters
 }
@@ -89,10 +85,10 @@ export async function generateMetadata({
   const category = (await params).category
 
   return {
-    title: `${postFeature.getCategoryName(category)}(${toPascalCase(
+    title: `${PostFeature.getCategoryName(category)}(${toPascalCase(
       category
     )}) 글 목록`,
-    description: `${postFeature.getCategoryName(
+    description: `${PostFeature.getCategoryName(
       category
     )} 개발에 관한 인사이트를 제공해요.`,
   }

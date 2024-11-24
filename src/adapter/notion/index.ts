@@ -1,4 +1,4 @@
-import postEntity from '@/entity/post'
+import PostEntity from '@/entity/post'
 import { PostCategory, PostFrontMatter } from '@/entity/post/type'
 import { NotionAPI as NotionClient } from 'notion-client'
 
@@ -20,7 +20,7 @@ class NotionAPI {
   }
   public async getPublishedPostFrontMatters(): Promise<PostFrontMatter[]> {
     const all = await this.getPostFrontMatters()
-    return postEntity.getPublishedPostFrontMatters(all)
+    return PostEntity.getPublishedFrontMatters(all)
   }
 
   public async getPost(id: string) {

@@ -5,10 +5,10 @@ import { NotionRenderer } from 'react-notion-x'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
-import Outlink from '@/feature/post/components/PostTemplate/Outlink'
+import Outlink from '@/feature/post/_components/PostTemplate/Outlink'
 
 const Code = dynamic(
-  () => import('@/feature/post/components/PostTemplate/Code'),
+  () => import('@/feature/post/_components/PostTemplate/Code'),
   { ssr: false }
 )
 

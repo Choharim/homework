@@ -5,7 +5,7 @@ import PageController from './PageController'
 
 import Flex from '../Flex'
 
-import * as style from './pagination.css'
+import * as style from './index.css'
 import { combineClassName } from '@/styles/mixin'
 import Typo from '../Typo'
 

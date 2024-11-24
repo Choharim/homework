@@ -1,11 +1,13 @@
-import { POST_CATEGORY_LIST, PostCategory, PostFrontMatter } from './type'
+import { PostCategory, PostFrontMatter } from './type'
 
 class PostEntity {
-  public getPublishedPostFrontMatters(posts: PostFrontMatter[]) {
+  // published 된 fontMatters
+  public static getPublishedFrontMatters(posts: PostFrontMatter[]) {
     return posts.filter((post) => post.published)
   }
 
-  public getPostFrontMattersSortedByNewest(posts: PostFrontMatter[]) {
+  // 최신순으로 나열된 frontMatters
+  public static sortFrontMattersByNewest(posts: PostFrontMatter[]) {
     const copiedPosts = [...posts]
 
     copiedPosts.sort((a, b) => {
@@ -15,34 +17,37 @@ class PostEntity {
     return copiedPosts
   }
 
-  public getPostIDs(posts: PostFrontMatter[]) {
+  public static getPostIDs(posts: PostFrontMatter[]) {
     return posts.map((post) => post.id)
   }
 
-  public getPostFrontMatter({
-    posts,
-    id,
-  }: {
-    posts: PostFrontMatter[]
+  public static findFrontMatter(
+    posts: PostFrontMatter[],
     id: string
-  }): PostFrontMatter | undefined {
+  ): PostFrontMatter | undefined {
     return posts.find((post) => post.id === id)
   }
 
-  public getPostFrontMattersByCategory({
-    posts,
-    category,
-  }: {
-    posts: PostFrontMatter[]
+  public static findFrontMattersByCategory(
+    posts: PostFrontMatter[],
     category: PostCategory
-  }) {
+  ) {
     return posts.filter((post) => post.category === category)
   }
 
-  public isCategory(category: string) {
-    return POST_CATEGORY_LIST.includes(category as PostCategory)
+  public static readonly CATEGORY_LIST = [
+    'network',
+    'data-structure',
+    'algorithms',
+    'operating-system',
+    'typescript',
+    'javascript',
+    'webview',
+    'frontend',
+  ] as const
+  public static isCategory(category: string) {
+    return this.CATEGORY_LIST.includes(category as PostCategory)
   }
 }
 
-const postEntity = new PostEntity()
-export default postEntity
+export default PostEntity

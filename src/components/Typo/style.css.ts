@@ -1,4 +1,4 @@
-import { createObjectByFormatter, getObjectKeys } from '@/shared/utils/object'
+import { createObjectByFormatter, getObjectKeys } from '@/shared/_utils'
 import COLOR from '@/styles/color'
 import FONT, { getResponsiveFont } from '@/styles/font'
 import { recipe } from '@vanilla-extract/recipes'

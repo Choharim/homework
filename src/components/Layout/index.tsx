@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 import Flex from '../Flex'
 import Frame from './Frame'
-import * as style from './layout.css'
+import * as style from './index.css'
 interface Props extends Pick<ComponentProps<'div'>, 'className'> {
   resetFrameStyle?: boolean
 }

@@ -1,25 +1,24 @@
 import notionAPI from '@/adapter/notion'
-import postEntity from '@/entity/post'
-import CardListFrame from '@/feature/post/components/CardListFrame'
+import PostEntity from '@/entity/post'
+import CardListFrame from '@/feature/post/_components/CardListFrame'
 import React, { Suspense } from 'react'
-import * as style from 'src/feature/post/components/style/cardListFrame.css'
+import * as style from '@/feature/post/_components/cardListFrame.css'
 import PostList from './_components/PostList'
 import { Metadata } from 'next'
-import StructuredData from '@/feature/seo/components/StructuredData'
-import { getCollectionPageContext } from '@/feature/seo/constants/jsonLd'
+import StructuredData from '@/feature/seo/_components/StructuredData'
 import AppFeature from '@/feature/application'
-import { BLOG } from '@/feature/application/constants/owner'
+import SEOFeature from '@/feature/seo'
 
 async function Page() {
   const all = await notionAPI.getPublishedPostFrontMatters()
-  const frontMatters = postEntity.getPostFrontMattersSortedByNewest(all)
+  const frontMatters = PostEntity.sortFrontMattersByNewest(all)
 
   return (
     <>
       <StructuredData
-        data={getCollectionPageContext({
+        data={SEOFeature.getCollectionPageContext({
           frontMatters,
-          url: `${BLOG.domain}${AppFeature.getAppURI({
+          url: `${AppFeature.URL.domain}${AppFeature.getAppURI({
             name: 'main',
           })}`,
         })}

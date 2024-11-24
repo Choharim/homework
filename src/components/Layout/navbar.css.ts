@@ -1,4 +1,4 @@
-import { convertHEXToRGB } from '@/shared/utils/string'
+import { convertHEXToRGB } from '@/shared/_utils'
 import COLOR from '@/styles/color'
 import Z_INDEX from '@/styles/zIndex'
 import { createVar, style } from '@vanilla-extract/css'

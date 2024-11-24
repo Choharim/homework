@@ -1,19 +1,48 @@
-import { getSearchParamString } from '@/shared/utils/url'
+import { getSearchParamString } from '@/shared/_utils'
 import {
   AppPageName,
   AppPagePathParams,
   AppPageSearchParams,
-} from './types/navigation'
-import { APP_URL } from './constants/navigation'
+} from './_types/navigation'
 
 class AppFeature {
-  static getAppURI = <Name extends AppPageName>(
+  static readonly AUTHOR_NAME = {
+    en: 'Harim Cho',
+  }
+
+  static readonly BLOG_NAME = {
+    shortName: 'RIM',
+    fullName: 'RootInMeaningful',
+  }
+
+  static readonly URL = {
+    github: 'https://github.com/Choharim',
+    domain: 'https://rootinmeaningful.vercel.app',
+  }
+
+  private static APP_URL: {
+    [Name in AppPageName]: keyof AppPagePathParams<Name> extends never
+      ? () => string
+      : (params: AppPagePathParams<Name>) => string
+  } = {
+    main() {
+      return '/'
+    },
+    blogDetails({ id }) {
+      return `/blog/${id}`
+    },
+    category({ category }) {
+      return `/category/${category}`
+    },
+  }
+
+  public static getAppURI = <Name extends AppPageName>(
     page: keyof AppPagePathParams<Name> extends never
       ? { name: Name }
       : { name: Name; pathParams: AppPagePathParams<Name> },
     searchParams?: AppPageSearchParams<Name>
   ) => {
-    const getURL = APP_URL[page.name]
+    const getURL = this.APP_URL[page.name]
 
     let pathname
 
@@ -30,7 +59,7 @@ class AppFeature {
     }`
   }
 
-  static isLocal = process.env.NEXT_PUBLIC_MODE === 'local'
-  static isProduction = process.env.NEXT_PUBLIC_MODE === 'production'
+  public static isLocal = process.env.NEXT_PUBLIC_MODE === 'local'
+  public static isProduction = process.env.NEXT_PUBLIC_MODE === 'production'
 }
 export default AppFeature

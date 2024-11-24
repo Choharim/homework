@@ -1,7 +1,7 @@
 import { PostCategory, PostTag } from '@/entity/post/type'
 
 class PostFeature {
-  private POST_CATEGORY_NAME: Record<PostCategory, string> = {
+  private static readonly CATEGORY_NAME: Record<PostCategory, string> = {
     algorithms: '알고리즘',
     'data-structure': '자료구조',
     frontend: '프론트엔드',
@@ -12,22 +12,20 @@ class PostFeature {
     webview: '웹뷰',
   }
 
-  private POST_TAG_NAME: Record<PostTag, string> = {
+  public static getCategoryName(category: PostCategory) {
+    return this.CATEGORY_NAME[category] ?? ''
+  }
+
+  private static readonly TAG_NAME: Record<PostTag, string> = {
     theory: '이론',
     'problem-solving': '문제풀이',
     'trouble-shooting': '이슈해결',
     thinking: '생각',
   }
 
-  public getCategoryName(category: PostCategory) {
-    return this.POST_CATEGORY_NAME[category] ?? ''
-  }
-
-  public getTagName(tag: PostTag) {
-    return this.POST_TAG_NAME[tag] ?? ''
+  public static getTagName(tag: PostTag) {
+    return this.TAG_NAME[tag] ?? ''
   }
 }
 
-const postFeature = new PostFeature()
-
-export default postFeature
+export default PostFeature

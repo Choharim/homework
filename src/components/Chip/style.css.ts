@@ -5,7 +5,7 @@ import COLOR from '@/styles/color'
 import { recipe } from '@vanilla-extract/recipes'
 import { CSSProperties } from 'react'
 import { createThemeContract } from '@vanilla-extract/css'
-import { createObjectByFormatter } from '@/shared/utils/object'
+import { createObjectByFormatter } from '@/shared/_utils'
 
 const SIZE: Record<ChipStyle['size'], CSSProperties> = {
   s: { padding: '2px 6px', borderRadius: 8, ...FONT.caption_1 },

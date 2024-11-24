@@ -1,13 +1,14 @@
 // app/sitemap.ts
 import notionAPI from '@/adapter/notion'
-import { BLOG } from '@/feature/application/constants/owner'
+import AppFeature from '@/feature/application'
+
 import { MetadataRoute } from 'next'
 
 // https://rootinmeaningful.vercel.app/sitemap.xml 에서 확인
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: `${BLOG.domain}`,
+      url: `${AppFeature.URL.domain}`,
       lastModified: new Date().toISOString(),
     },
   ]
@@ -22,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (categoryListResult.status === 'fulfilled') {
     dynamicRoutes.push(
       ...categoryListResult.value.map((category) => ({
-        url: `${BLOG.domain}/category/${category}`,
+        url: `${AppFeature.URL.domain}/category/${category}`,
         lastModified: new Date().toISOString(),
       }))
     )
@@ -31,7 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (postResult.status === 'fulfilled') {
     dynamicRoutes.push(
       ...postResult.value.map((post) => ({
-        url: `${BLOG.domain}/blog/${post.id}`,
+        url: `${AppFeature.URL.domain}/blog/${post.id}`,
         lastModified: new Date().toISOString(),
       }))
     )
