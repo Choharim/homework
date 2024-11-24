@@ -15,6 +15,7 @@ import PostList from '../../_components/PostList'
 import StructuredData from '@/feature/seo/components/StructuredData'
 import { getCollectionPageContext } from '@/feature/seo/constants/jsonLd'
 import AppFeature from '@/feature/application'
+import { BLOG } from '@/feature/application/constants/owner'
 
 async function CategoryPage({
   params: { category },
@@ -28,10 +29,10 @@ async function CategoryPage({
         data={getCollectionPageContext({
           category: category,
           frontMatters,
-          url: AppFeature.getAppURI({
+          url: `${BLOG.domain}${AppFeature.getAppURI({
             name: 'category',
             pathParams: { category: category },
-          }),
+          })}`,
         })}
       />
 

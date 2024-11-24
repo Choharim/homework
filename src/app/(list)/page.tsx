@@ -8,6 +8,7 @@ import { Metadata } from 'next'
 import StructuredData from '@/feature/seo/components/StructuredData'
 import { getCollectionPageContext } from '@/feature/seo/constants/jsonLd'
 import AppFeature from '@/feature/application'
+import { BLOG } from '@/feature/application/constants/owner'
 
 async function Page() {
   const all = await notionAPI.getPublishedPostFrontMatters()
@@ -18,9 +19,9 @@ async function Page() {
       <StructuredData
         data={getCollectionPageContext({
           frontMatters,
-          url: AppFeature.getAppURI({
+          url: `${BLOG.domain}${AppFeature.getAppURI({
             name: 'main',
-          }),
+          })}`,
         })}
       />
 
