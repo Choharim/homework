@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -34,13 +34,6 @@ const Navbar = () => {
   const direction = useScrollDirection(SCROLL_THRESHOLD)
   const isScrollTop = useScrollTop()
 
-  useEffect(() => {
-    console.log(
-      console.log(
-        window?.document?.querySelector('script[type="application/ld+json"]')
-      )
-    )
-  }, [])
   return (
     <nav
       className={style.navigation}
