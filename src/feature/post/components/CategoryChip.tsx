@@ -17,7 +17,7 @@ const CategoryChip = ({ children: category, size }: Props) => {
       })}
       className={styles.link}
     >
-      <Chip color="primary" size={size} variety="soft">
+      <Chip color="primary" size={size} variety="surface">
         {postFeature.getCategoryName(category)}
       </Chip>
     </Link>

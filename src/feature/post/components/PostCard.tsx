@@ -3,9 +3,6 @@ import React, { ComponentProps, PropsWithChildren } from 'react'
 import Typo from '@/components/Typo'
 import Flex from '@/components/Flex'
 
-import { PostTag } from '@/entity/post/type'
-import postFeature from '..'
-
 import * as style from './style/postCard.css'
 
 const PostCard = ({ children }: PropsWithChildren) => {
@@ -25,7 +22,6 @@ export default Object.assign(PostCard, {
   Title,
   Desc,
   Date,
-  Tag,
   LabelSection,
   Content,
 })
@@ -52,22 +48,17 @@ function Desc({ children }: PropsWithChildren) {
   )
 }
 
-function Tag({ children: tag }: { children: PostTag }) {
-  return (
-    <Typo
-      responsive={false}
-      as="span"
-      variety="subtitle_2"
-      color="grey700"
-      className={style.tag}
-    >
-      {postFeature.getTagName(tag)}
-    </Typo>
-  )
-}
-
 function LabelSection({ children }: PropsWithChildren) {
-  return <section className={style.labelContainer}>{children}</section>
+  return (
+    <Flex
+      as="section"
+      align="center"
+      gap={'8px'}
+      className={style.labelContainer}
+    >
+      {children}
+    </Flex>
+  )
 }
 
 function Content({ children }: PropsWithChildren) {
@@ -80,13 +71,7 @@ function Content({ children }: PropsWithChildren) {
 
 function Date({ dateTime }: Pick<ComponentProps<'time'>, 'dateTime'>) {
   return (
-    <Typo
-      as="time"
-      dateTime={dateTime}
-      variety="subtitle_2"
-      color="grey600"
-      className={style.date}
-    >
+    <Typo as="time" dateTime={dateTime} variety="subtitle_2" color="grey600">
       {dateTime}
     </Typo>
   )

@@ -5,13 +5,13 @@ import CardListFrame from '@/feature/post/components/CardListFrame'
 import CategoryFilter from '@/feature/post/components/CategoryFilter'
 
 import postEntity from '@/entity/post'
-import PostCardList from './_components/PostCardList'
 import { AppPageProps } from '@/feature/application/types/navigation'
 import * as style from 'src/feature/post/components/style/cardListFrame.css'
 import { Suspense } from 'react'
 import { Metadata } from 'next'
 import postFeature from '@/feature/post'
 import { toPascalCase } from '@/shared/utils/string'
+import PostList from '../../_components/PostList'
 
 async function CategoryPage({
   params: { category },
@@ -34,7 +34,7 @@ async function CategoryPage({
 
       <CardListFrame className={style.topGap}>
         <Suspense>
-          <PostCardList frontMatters={frontMatters} />
+          <PostList frontMatters={frontMatters} />
         </Suspense>
       </CardListFrame>
     </>

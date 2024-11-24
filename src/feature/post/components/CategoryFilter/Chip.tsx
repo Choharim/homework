@@ -52,7 +52,7 @@ const Chip = (
         {...props}
         size="l"
         color="primary"
-        variety={isSeleted ? 'solid' : 'surface'}
+        variety={isSeleted ? 'solid' : 'soft'}
         ref={forwardedRef}
       >
         {category ? postFeature.getCategoryName(category) : children}

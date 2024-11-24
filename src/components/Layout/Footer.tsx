@@ -1,6 +1,6 @@
 import React, { HtmlHTMLAttributes } from 'react'
 
-import { EN_NAME } from '@/feature/application/constants/owner'
+import { AUTHOR_NAME } from '@/feature/application/constants/owner'
 import Flex from '../Flex'
 
 import * as style from './footer.css'
@@ -13,8 +13,7 @@ const Footer = ({ className }: Props) => {
   return (
     <Flex as="footer" align="center" className={_className}>
       <Typo variety="subtitle_1" color="grey700">
-        &copy; 2022 by {EN_NAME.last}
-        {EN_NAME.first}
+        &copy; 2022 by {AUTHOR_NAME.en}
       </Typo>
     </Flex>
   )
