@@ -8,6 +8,7 @@ import {
 class AppFeature {
   static readonly AUTHOR_NAME = {
     en: 'Harim Cho',
+    ko: '조하림',
   }
 
   static readonly BLOG_NAME = {

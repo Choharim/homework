@@ -23,7 +23,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (categoryListResult.status === 'fulfilled') {
     dynamicRoutes.push(
       ...categoryListResult.value.map((category) => ({
-        url: `${AppFeature.URL.domain}/category/${category}`,
+        url: `${AppFeature.URL.domain}${AppFeature.getAppURI({
+          name: 'category',
+          pathParams: { category },
+        })}`,
         lastModified: new Date().toISOString(),
       }))
     )
@@ -32,8 +35,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (postResult.status === 'fulfilled') {
     dynamicRoutes.push(
       ...postResult.value.map((post) => ({
-        url: `${AppFeature.URL.domain}/blog/${post.id}`,
-        lastModified: new Date().toISOString(),
+        url: `${AppFeature.URL.domain}${AppFeature.getAppURI({
+          name: 'blogDetails',
+          pathParams: {
+            id: post.id,
+          },
+        })}`,
+        lastModified: new Date(post.update_date).toISOString(),
       }))
     )
   }
