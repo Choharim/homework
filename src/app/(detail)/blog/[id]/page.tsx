@@ -1,15 +1,15 @@
 import notionAPI from '@/adapter/notion'
 import NoResult from '@/components/StatusResult/NoResult'
-import postEntity from '@/entity/post'
-import { AppPageProps } from '@/feature/application/types/navigation'
-import PostTemplate from '@/feature/post/components/PostTemplate'
-import CustomStyleProvider from '@/feature/post/components/PostTemplate/CustomStyleProvider'
+import PostEntity from '@/entity/post'
+import { AppPageProps } from '@/feature/application/_types/navigation'
+import PostTemplate from '@/feature/post/_components/PostTemplate'
+import CustomStyleProvider from '@/feature/post/_components/PostTemplate/CustomStyleProvider'
 
 import React from 'react'
 import Renderer from './_components/Renderer'
 import { Metadata } from 'next'
-import StructuredData from '@/feature/seo/components/StructuredData'
-import { getBlogPostingContext } from '@/feature/seo/constants/jsonLd'
+import StructuredData from '@/feature/seo/_components/StructuredData'
+import SEOFeature from '@/feature/seo'
 
 async function PostDetail({ params: { id } }: AppPageProps<'blogDetails'>) {
   const frontMatter = await getFrontMatters(id)
@@ -21,7 +21,7 @@ async function PostDetail({ params: { id } }: AppPageProps<'blogDetails'>) {
   return (
     <>
       <StructuredData
-        data={getBlogPostingContext({
+        data={SEOFeature.getBlogPostingContext({
           title: frontMatter.title,
           desc: frontMatter.description,
           category: frontMatter.category,
@@ -42,7 +42,7 @@ export default PostDetail
 
 export async function generateStaticParams() {
   const all = await notionAPI.getPublishedPostFrontMatters()
-  const ids = postEntity.getPostIDs(all)
+  const ids = PostEntity.getPostIDs(all)
 
   const paths = ids.map((id) => {
     return {
@@ -57,7 +57,7 @@ export async function generateStaticParams() {
 
 async function getFrontMatters(id: string) {
   const all = await notionAPI.getPublishedPostFrontMatters()
-  const frontMatter = postEntity.getPostFrontMatter({ posts: all, id })
+  const frontMatter = PostEntity.findFrontMatter(all, id)
 
   return frontMatter
 }

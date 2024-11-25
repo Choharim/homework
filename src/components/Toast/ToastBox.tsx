@@ -3,8 +3,8 @@ import React from 'react'
 import Flex from '../Flex'
 import Typo from '../Typo'
 
-import { Variety } from './type'
-import * as style from './style/toastBox.css'
+import { Variety } from './_types'
+import * as style from './toastBox.css'
 import { combineClassName } from '@/styles/mixin'
 export interface ToastBoxStyle {
   variety: Variety

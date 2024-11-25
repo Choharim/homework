@@ -5,7 +5,7 @@ import {
   PolymorphicComponentProps,
   PolymorphicComponentPropsWithRef,
   PolymorphicRef,
-} from '@/shared/types/polymorphic'
+} from '@/shared/_types'
 import { combineClassName } from '@/styles/mixin'
 import * as style from './style.css'
 import { assignInlineVars } from '@vanilla-extract/dynamic'

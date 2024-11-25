@@ -1,7 +1,7 @@
 import { recipe } from '@vanilla-extract/recipes'
 import { FlexStyle } from '.'
 import { createThemeContract, CSSProperties } from '@vanilla-extract/css'
-import { createObjectByFormatter } from '@/shared/utils/object'
+import { createObjectByFormatter } from '@/shared/_utils'
 
 const JUSTIFY: Record<FlexStyle['justify'], CSSProperties['justifyContent']> = {
   start: 'start',

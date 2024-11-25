@@ -3,13 +3,13 @@
 import usePagination from '@/components/Pagination/usePagination'
 import { PostFrontMatter } from '@/entity/post/type'
 import AppFeature from '@/feature/application'
-import CategoryChip from '@/feature/post/components/CategoryChip'
-import CategoryTag from '@/feature/post/components/CategoryTag'
-import PostCard from '@/feature/post/components/PostCard'
+import CategoryChip from '@/feature/post/_components/CategoryChip'
+import CategoryTag from '@/feature/post/_components/CategoryTag'
+import PostCard from '@/feature/post/_components/PostCard'
 import Link from 'next/link'
 import React from 'react'
 
-import * as style from 'src/feature/post/components/style/cardListFrame.css'
+import * as style from '@/feature/post/_components/cardListFrame.css'
 
 interface Props {
   frontMatters: PostFrontMatter[]

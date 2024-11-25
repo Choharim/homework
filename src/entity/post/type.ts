@@ -1,14 +1,6 @@
-export const POST_CATEGORY_LIST = [
-  'network',
-  'data-structure',
-  'algorithms',
-  'operating-system',
-  'typescript',
-  'javascript',
-  'webview',
-  'frontend',
-] as const
-export type PostCategory = typeof POST_CATEGORY_LIST[number]
+import PostEntity from '.'
+
+export type PostCategory = typeof PostEntity.CATEGORY_LIST[number]
 
 export type PostTag =
   | 'theory'

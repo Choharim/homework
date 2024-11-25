@@ -8,11 +8,11 @@ import Logo from '../Logo'
 import Flex from '../Flex'
 import Typo from '../Typo'
 
-import { GITHUB_URL } from '@/feature/application/constants/owner'
 import useScrollDirection from '@/hooks/useScrollDirection'
 import useScrollTop from '@/hooks/useScrollTop'
 import * as style from './navbar.css'
 import { assignInlineVars } from '@vanilla-extract/dynamic'
+import AppFeature from '@/feature/application'
 
 type TextMenu = {
   href: string
@@ -22,7 +22,7 @@ type TextMenu = {
 
 const MENUS: Readonly<Array<TextMenu>> = [
   {
-    href: GITHUB_URL,
+    href: AppFeature.URL.github,
     isOutlink: true,
     label: 'Github',
   },

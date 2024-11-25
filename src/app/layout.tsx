@@ -1,5 +1,6 @@
-import { BLOG, AUTHOR_NAME } from '@/feature/application/constants/owner'
-import { METADATA } from '@/feature/seo/constants/metadata'
+import AppFeature from '@/feature/application'
+import SEOFeature from '@/feature/seo'
+
 import type { Metadata } from 'next'
 
 import localFont from 'next/font/local'
@@ -26,22 +27,22 @@ const pretendardFont = localFont({
 
 export const metadata: Metadata = {
   title: {
-    template: `%s | ${METADATA.title}`,
-    default: `${METADATA.title}`,
+    template: `%s | ${SEOFeature.METADATA.title}`,
+    default: `${SEOFeature.METADATA.title}`,
   },
-  keywords: METADATA.keword,
-  applicationName: METADATA.title,
-  authors: [{ name: AUTHOR_NAME.en, url: BLOG.domain }],
+  keywords: SEOFeature.METADATA.keword,
+  applicationName: SEOFeature.METADATA.title,
+  authors: [{ name: AppFeature.AUTHOR_NAME.en, url: AppFeature.URL.domain }],
   openGraph: {
     title: {
-      template: `%s | ${METADATA.title}`,
-      default: METADATA.title,
+      template: `%s | ${SEOFeature.METADATA.title}`,
+      default: SEOFeature.METADATA.title,
     },
     locale: 'ko_KR',
     type: 'website',
-    siteName: METADATA.title,
+    siteName: SEOFeature.METADATA.title,
   },
-  metadataBase: new URL(BLOG.domain),
+  metadataBase: new URL(AppFeature.URL.domain),
   robots: {
     index: true,
     follow: true,
@@ -49,8 +50,6 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({
-  // 레이아웃은 children prop을 받아야 합니다.
-  // 이는 중첩된 레이아웃 또는 페이지로 채워집니다.
   children,
 }: {
   children: React.ReactNode

@@ -1,9 +1,6 @@
 import { ElementType, forwardRef } from 'react'
 
-import {
-  PolymorphicComponentProps,
-  PolymorphicRef,
-} from '@/shared/types/polymorphic'
+import { PolymorphicComponentProps, PolymorphicRef } from '@/shared/_types'
 import { ColorKey, FontKey } from '@/styles/type'
 
 import { combineClassName, limitTextLine } from '@/styles/mixin'
