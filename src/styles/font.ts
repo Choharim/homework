@@ -62,22 +62,22 @@ const FONT = {
 
   // 본문
   body_1: {
+    fontSize: '1.125rem',
+    lineHeight: '1.7',
+    fontWeight: 400,
+  },
+  body_2: {
     fontSize: '1rem',
     lineHeight: '1.8',
     fontWeight: 400,
   },
-  body_2: {
+  detail_1: {
     fontSize: '0.875rem',
     lineHeight: '1.8',
     fontWeight: 400,
   },
-  detail_1: {
-    fontSize: '0.75rem',
-    lineHeight: '1.8',
-    fontWeight: 400,
-  },
   detail_2: {
-    fontSize: '0.6875rem',
+    fontSize: '0.75rem',
     lineHeight: '1.8',
     fontWeight: 400,
   },

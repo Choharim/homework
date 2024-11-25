@@ -18,7 +18,7 @@ function CategoryTag({ children: tag, size }: Props) {
     <Typo
       responsive={false}
       as="span"
-      variety={size === 's' ? 'subtitle_3' : 'subtitle_2'}
+      variety={size === 's' ? 'detail_1' : 'body_2'}
       color="grey700"
       className={style.base}
     >

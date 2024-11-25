@@ -29,8 +29,8 @@ export default Object.assign(PostCard, {
 function Title({ children }: PropsWithChildren) {
   return (
     <Typo
-      as="h3"
-      variety="header_2"
+      as="span"
+      variety="title_1"
       color="grey900"
       lineClamp={2}
       className={style.title}
@@ -42,7 +42,7 @@ function Title({ children }: PropsWithChildren) {
 
 function Desc({ children }: PropsWithChildren) {
   return (
-    <Typo as="p" variety="title_3" color="grey800" lineClamp={2}>
+    <Typo as="p" variety="body_1" color="grey800" lineClamp={2}>
       {children}
     </Typo>
   )
@@ -71,7 +71,7 @@ function Content({ children }: PropsWithChildren) {
 
 function Date({ dateTime }: Pick<ComponentProps<'time'>, 'dateTime'>) {
   return (
-    <Typo as="time" dateTime={dateTime} variety="subtitle_2" color="grey600">
+    <Typo as="time" dateTime={dateTime} variety="detail_1" color="grey700">
       {dateTime}
     </Typo>
   )

@@ -49,24 +49,29 @@ globalStyle(`${base} strong`, {
   color: COLOR.primary500,
 })
 
-globalStyle(`${base} ol, ul, li`, {
+globalStyle(`${base} ol, ul`, {
+  ...FONT.body_1,
   listStylePosition: 'inside',
   paddingInlineStart: 1,
   color: COLOR.grey900,
+  display: 'grid',
+  padding: 0,
 })
 
 globalStyle(`${base} ol`, {
   listStyleType: 'decimal',
-  display: 'grid',
 })
 
 globalStyle(`${base} ul`, {
   listStyleType: 'disc',
-  display: 'grid',
 })
 
 globalStyle(`${base} li::marker`, {
-  ...FONT.subtitle_1,
+  ...FONT.body_1,
+})
+
+globalStyle(`${base} .notion-list li`, {
+  padding: '2px 0',
 })
 
 globalStyle(`${base} blockquote`, {
