@@ -5,5 +5,5 @@ export const wrapper = style({
 })
 
 export const extra = style({
-  marginTop: 16,
+  marginTop: 12,
 })

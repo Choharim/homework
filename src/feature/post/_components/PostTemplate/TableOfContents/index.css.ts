@@ -83,7 +83,7 @@ export const liRecipe = recipe({
     headerType: {
       h2: {
         color: COLOR.grey800,
-        ...FONT.subtitle_1,
+        ...FONT.subtitle_2,
       },
       h3: {
         marginLeft: 10,
@@ -94,8 +94,8 @@ export const liRecipe = recipe({
       h4: {
         marginLeft: 10,
         paddingLeft: 25,
-        color: COLOR.grey700,
-        ...FONT.subtitle_3,
+        color: COLOR.grey600,
+        ...FONT.subtitle_2,
       },
     },
     highlight: {
@@ -107,7 +107,7 @@ export const liRecipe = recipe({
         borderLeft: `2px solid ${COLOR.primary300}`,
       },
       false: {
-        borderLeft: `2px solid ${COLOR.grey100}`,
+        borderLeft: `2px solid ${COLOR.grey200}`,
       },
     },
   },
