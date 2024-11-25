@@ -25,13 +25,14 @@ const base = style({
 export const page = style([
   base,
   {
-    color: COLOR.grey500,
+    color: COLOR.grey600,
 
     selectors: {
       '&[data-active="true"]': {
         pointerEvents: 'none',
 
-        color: COLOR.primary400,
+        color: COLOR.primary500,
+        backgroundColor: COLOR.primary50,
       },
     },
   },
@@ -54,7 +55,7 @@ export const icon = style({
 
   selectors: {
     [`${pageController}[data-disabled="true"] &`]: {
-      color: COLOR.grey200,
+      color: COLOR.grey300,
     },
   },
 })

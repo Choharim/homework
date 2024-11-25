@@ -46,7 +46,7 @@ const Pagination = ({ total, activePage, routerQueryKey }: PaginationProps) => {
   if (total === 1) return null
 
   return (
-    <Flex align="center" gap="4px" className={style.wrapper}>
+    <Flex align="center" gap="8px" className={style.wrapper}>
       <PageController
         routerQueryKey={routerQueryKey}
         value={1}
@@ -56,7 +56,7 @@ const Pagination = ({ total, activePage, routerQueryKey }: PaginationProps) => {
         <Icon
           className={combineClassName(style.icon, style.iconRotate)}
           type="DoubleArrowRight"
-          color="grey400"
+          color="grey500"
         />
       </PageController>
       <PageController
@@ -68,7 +68,7 @@ const Pagination = ({ total, activePage, routerQueryKey }: PaginationProps) => {
         <Icon
           className={combineClassName(style.icon, style.iconRotate)}
           type="ArrowRight"
-          color="grey400"
+          color="grey500"
         />
       </PageController>
 
@@ -79,7 +79,7 @@ const Pagination = ({ total, activePage, routerQueryKey }: PaginationProps) => {
           key={page}
           href={{ query: { [routerQueryKey]: page } }}
         >
-          <Typo variety="title_3" color="inherit">
+          <Typo variety="body_1" color="inherit">
             {page}
           </Typo>
         </Link>
@@ -91,7 +91,7 @@ const Pagination = ({ total, activePage, routerQueryKey }: PaginationProps) => {
         disabled={total === activePage}
         className={style.pageController}
       >
-        <Icon type="ArrowRight" color="grey400" className={style.icon} />
+        <Icon type="ArrowRight" color="grey500" className={style.icon} />
       </PageController>
 
       <PageController
@@ -100,7 +100,7 @@ const Pagination = ({ total, activePage, routerQueryKey }: PaginationProps) => {
         disabled={total === activePage}
         className={style.pageController}
       >
-        <Icon type="DoubleArrowRight" color="grey400" className={style.icon} />
+        <Icon type="DoubleArrowRight" color="grey500" className={style.icon} />
       </PageController>
     </Flex>
   )
