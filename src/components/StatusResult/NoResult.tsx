@@ -31,9 +31,14 @@ function NoResult(props: Props, forwardedRef: ForwardedRef<HTMLElement>) {
         width={56}
         height={56}
       />
-      <Typo as="h1" variety="title_1" color="grey800">
-        요청하신 컨텐츠를 찾을 수 없어요
-      </Typo>
+      <Flex direction="column" gap={'2px'} align="center">
+        <Typo as="h1" variety="title_1" color="grey900">
+          요청하신 컨텐츠를 찾을 수 없어요
+        </Typo>
+        <Typo variety="subtitle_1" color="grey600">
+          페이지 주소를 확인해주세요
+        </Typo>
+      </Flex>
     </Flex>
   )
 }

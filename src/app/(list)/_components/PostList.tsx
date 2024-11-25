@@ -10,6 +10,7 @@ import Link from 'next/link'
 import React from 'react'
 
 import * as style from '@/feature/post/_components/cardListFrame.css'
+import { notFound } from 'next/navigation'
 
 interface Props {
   frontMatters: PostFrontMatter[]
@@ -18,6 +19,10 @@ function PostList({ frontMatters }: Props) {
   const { Pagination, paginatedPosts } = usePagination({
     posts: frontMatters,
   })
+
+  if (!paginatedPosts.length) {
+    notFound()
+  }
 
   return (
     <>

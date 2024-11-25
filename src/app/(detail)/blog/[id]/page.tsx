@@ -1,5 +1,4 @@
 import notionAPI from '@/adapter/notion'
-import NoResult from '@/components/StatusResult/NoResult'
 import PostEntity from '@/entity/post'
 import { AppPageProps } from '@/feature/application/_types/navigation'
 import PostTemplate from '@/feature/post/_components/PostTemplate'
@@ -10,11 +9,14 @@ import Renderer from './_components/Renderer'
 import { Metadata } from 'next'
 import StructuredData from '@/feature/seo/_components/StructuredData'
 import SEOFeature from '@/feature/seo'
+import { notFound } from 'next/navigation'
 
 async function PostDetail({ params: { id } }: AppPageProps<'blogDetails'>) {
   const frontMatter = await getFrontMatters(id)
 
-  if (!frontMatter) return <NoResult />
+  if (!frontMatter) {
+    notFound()
+  }
 
   const post = await getPost(id)
 
