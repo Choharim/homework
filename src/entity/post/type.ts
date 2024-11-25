@@ -17,5 +17,6 @@ export type PostFrontMatter = {
   category: PostCategory
   tag: PostTag[]
   create_date: CreateDate
+  update_date: CreateDate
   published: boolean
 }

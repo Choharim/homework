@@ -44,12 +44,12 @@ class SEOFeature {
     return {
       author: {
         '@type': 'Person',
-        name: AppFeature.AUTHOR_NAME.en,
+        name: AppFeature.AUTHOR_NAME.ko,
         url: AppFeature.URL.github,
       },
       publisher: {
         '@type': 'Person',
-        name: AppFeature.AUTHOR_NAME.en,
+        name: AppFeature.AUTHOR_NAME.ko,
       },
       url: `${AppFeature.URL.domain}${AppFeature.getAppURI({
         name: 'blogDetails',
