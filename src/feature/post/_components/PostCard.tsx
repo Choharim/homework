@@ -4,8 +4,14 @@ import Typo from '@/components/Typo'
 import Flex from '@/components/Flex'
 
 import * as style from './postCard.css'
+import { PostFrontMatter } from '@/entity/post/type'
+import Link from 'next/link'
+import AppFeature from '@/feature/application'
 
-const PostCard = ({ children }: PropsWithChildren) => {
+interface Props {
+  id: PostFrontMatter['id']
+}
+const PostCard = ({ children, id }: PropsWithChildren<Props>) => {
   return (
     <Flex
       direction="column"
@@ -14,6 +20,13 @@ const PostCard = ({ children }: PropsWithChildren) => {
       className={style.wrapper}
     >
       {children}
+      <Link
+        href={AppFeature.getAppURI({
+          name: 'blogDetails',
+          pathParams: { id },
+        })}
+        className={style.link}
+      />
     </Flex>
   )
 }
@@ -23,7 +36,8 @@ export default Object.assign(PostCard, {
   Desc,
   Date,
   LabelSection,
-  Content,
+  Body,
+  Footer,
 })
 
 function Title({ children }: PropsWithChildren) {
@@ -50,20 +64,23 @@ function Desc({ children }: PropsWithChildren) {
 
 function LabelSection({ children }: PropsWithChildren) {
   return (
-    <Flex
-      as="section"
-      align="center"
-      gap={'8px'}
-      className={style.labelContainer}
-    >
+    <Flex align="center" gap={'8px'}>
       {children}
     </Flex>
   )
 }
 
-function Content({ children }: PropsWithChildren) {
+function Body({ children }: PropsWithChildren) {
   return (
-    <Flex direction="column" gap="8px" as="section">
+    <Flex direction="column" gap="8px">
+      {children}
+    </Flex>
+  )
+}
+
+function Footer({ children }: PropsWithChildren) {
+  return (
+    <Flex justify="between" align="end" gap={'10px'} className={style.footer}>
       {children}
     </Flex>
   )

@@ -59,11 +59,11 @@ const Typo = forwardRef(
     return (
       <Component
         {...attributes}
-        className={_className}
         style={{
           ...attributes.style,
           ...(lineClamp ? limitTextLine(lineClamp) : {}),
         }}
+        className={_className}
         data-responsive={responsive}
         ref={forwardRef}
         as={as}

@@ -10,12 +10,5 @@ export const wrapper = style([
 ])
 
 export const topGap = style({
-  marginTop: 28,
-})
-
-export const link = style({
-  minHeight: 100,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
+  marginTop: 24,
 })
