@@ -18,7 +18,7 @@ class AppFeature {
 
   static readonly URL = {
     github: 'https://github.com/Choharim',
-    domain: 'https://rootinmeaningful.vercel.app',
+    domain: 'https://root-in-meaningful.vercel.app',
   }
 
   private static APP_URL: {

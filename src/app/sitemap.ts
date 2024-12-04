@@ -4,7 +4,7 @@ import AppFeature from '@/feature/application'
 
 import { MetadataRoute } from 'next'
 
-// https://rootinmeaningful.vercel.app/sitemap.xml 에서 확인
+// https://root-in-meaningful.vercel.app/sitemap.xml 에서 확인
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     {
