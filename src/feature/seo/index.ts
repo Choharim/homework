@@ -14,24 +14,6 @@ type GetBlogPostingParams = {
 class SEOFeature {
   public static readonly METADATA = {
     title: `${AppFeature.BLOG_NAME.fullName} 기술 블로그, ${AppFeature.BLOG_NAME.shortName} 테크`,
-    keword: [
-      '블로그',
-      'Blog',
-      '기술 블로그',
-      'Tech Blog',
-      '프론트엔드',
-      'Frontend',
-      '개발',
-      'Development',
-      '웹 개발',
-      'Web Development',
-      'Javascript',
-      'js',
-      '자바스크립트',
-      'Typescript',
-      'ts',
-      '타입스크립트',
-    ],
   }
 
   private static getBlogPosting = ({
@@ -61,7 +43,25 @@ class SEOFeature {
       name: title,
       description: desc,
       articleSection: [category, PostFeature.getCategoryName(category)],
-      keywords: [...SEOFeature.METADATA.keword, category].join(','),
+      keywords: [
+        '블로그',
+        'Blog',
+        '기술 블로그',
+        'Tech Blog',
+        '프론트엔드',
+        'Frontend',
+        '개발',
+        'Development',
+        '웹 개발',
+        'Web Development',
+        'Javascript',
+        'js',
+        '자바스크립트',
+        'Typescript',
+        'ts',
+        '타입스크립트',
+        category,
+      ].join(','),
       dateModified: new Date().toISOString(),
       datePublished: new Date(datePublished).toISOString(),
 

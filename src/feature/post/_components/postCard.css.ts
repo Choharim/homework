@@ -4,7 +4,9 @@ import { style } from '@vanilla-extract/css'
 
 export const wrapper = style([
   {
+    position: 'relative',
     padding: '20px 16px',
+    minHeight: 100,
     borderRadius: 12,
     cursor: 'pointer',
 
@@ -18,18 +20,24 @@ export const wrapper = style([
   },
 ])
 
-export const title = style([
-  {
-    transition: 'color 0.2s ease-in-out',
+export const link = style({
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  width: '100%',
+  height: '100%',
+})
 
-    selectors: {
-      [`${wrapper}:hover &`]: {
-        color: COLOR.primary400,
-      },
+export const title = style({
+  transition: 'color 0.2s ease-in-out',
+
+  selectors: {
+    [`${wrapper}:hover &`]: {
+      color: COLOR.primary400,
     },
   },
-])
+})
 
-export const labelContainer = style({
+export const footer = style({
   marginTop: 16,
 })
