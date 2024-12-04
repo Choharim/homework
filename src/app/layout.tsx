@@ -30,7 +30,6 @@ export const metadata: Metadata = {
     template: `%s | ${SEOFeature.METADATA.title}`,
     default: `${SEOFeature.METADATA.title}`,
   },
-  keywords: SEOFeature.METADATA.keword,
   applicationName: SEOFeature.METADATA.title,
   authors: [{ name: AppFeature.AUTHOR_NAME.en, url: AppFeature.URL.domain }],
   openGraph: {
