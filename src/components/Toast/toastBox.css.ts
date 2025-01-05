@@ -6,31 +6,26 @@ import {
 } from '@vanilla-extract/css'
 import { ToastBoxStyle } from './ToastBox'
 import COLOR from '@/styles/color'
-import { TOAST_TIMEOUT, TOAST_TOP_POSITION } from './_constants'
 
-const ANIMATED_DURATION = 300
+export const TOAST_TOP_POSITION = 40
 
-const fadeIn = keyframes({
-  '0%': { opacity: 0 },
-})
+export const TOAST_TIMEOUT = 3000
 
-const fadeOut = keyframes({
-  '100%': { opacity: 0 },
-})
-
-const slideIn = keyframes({
-  '100%': { transform: `translateY(${TOAST_TOP_POSITION})` },
+const toastAnimation = keyframes({
+  '0%': { opacity: 0, transform: 'translateY(-100%)' }, // TOAST_TIMEOUT의 10% = 0.3초 동안 나옴
+  '10%': { opacity: 1, transform: `translateY(${TOAST_TOP_POSITION}px)` },
+  '90%': { opacity: 1, transform: `translateY(${TOAST_TOP_POSITION}px)` },
+  '100%': { opacity: 0, transform: 'translateY(-100%)' }, // TOAST_TIMEOUT의 10% = 0.3초 동안 사라짐
 })
 
 export const wrapper = style({
   padding: '10px 12px',
-  minWidth: '200px',
-  minHeight: '32px',
-  borderRadius: '4px',
+  minWidth: 200,
+  minHeight: 32,
+  borderRadius: 4,
+  pointerEvents: 'auto',
 
-  animation: `${fadeIn} ${ANIMATED_DURATION}ms ease, ${slideIn} ${ANIMATED_DURATION}ms ease, ${fadeOut} ${ANIMATED_DURATION}ms ease, ${
-    TOAST_TIMEOUT - ANIMATED_DURATION
-  }ms`,
+  animation: `${toastAnimation} ${TOAST_TIMEOUT}ms ease forwards`,
 })
 
 const VARIETY: Record<ToastBoxStyle['variety'], ComplexStyleRule> = {

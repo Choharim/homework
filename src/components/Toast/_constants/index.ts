@@ -7,6 +7,3 @@ export const DESC: Readonly<Record<Variety, string>> = {
   error: '❗ 오류가 발생했습니다.',
   normal: '',
 }
-
-export const TOAST_TOP_POSITION = 80
-export const TOAST_TIMEOUT = 3000
