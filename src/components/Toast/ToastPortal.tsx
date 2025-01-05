@@ -13,7 +13,7 @@ type Props = {
 
 const ToastPortal = ({ toasts }: Props) => {
   return (
-    <Portal id={TOAST_PORTAL_ID}>
+    <Portal container={document.getElementById(TOAST_PORTAL_ID)}>
       <Flex direction="column-reverse" gap="10px" className={style.wrapper}>
         {toasts.map(({ id, variety, desc }) => (
           <ToastBox key={id} variety={variety}>
