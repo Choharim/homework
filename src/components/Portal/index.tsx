@@ -1,15 +1,24 @@
-import { PropsWithChildren } from 'react'
-import { createPortal } from 'react-dom'
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-type Props = {
-  id: string
+interface PortalProps {
+  container?: HTMLElement | null
 }
-const Portal = ({ children, id }: PropsWithChildren<Props>) => {
-  const parent = typeof window !== 'undefined' && document.getElementById(id)
+function Portal({
+  children,
+  container: _container,
+}: React.PropsWithChildren<PortalProps>) {
+  const [isMounted, setIsMounted] = React.useState(false)
 
-  if (!parent) return <>{children}</>
+  React.useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
-  return <>{createPortal(children, parent)}</>
+  const container = _container || (isMounted ? document?.body : null)
+
+  if (!container) return <></>
+
+  return ReactDOM.createPortal(children, container)
 }
 
 export default Portal
