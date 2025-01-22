@@ -13,8 +13,8 @@ export async function GET(req: NextRequest) {
 
   try {
     revalidatePath('/')
-    revalidatePath(`/category/[category]`)
-    revalidatePath(`/blog/[id]`)
+    revalidatePath(`/category/[category]`, 'page')
+    revalidatePath(`/blog/[id]`, 'page')
 
     return new Response('revalidated', {
       status: 200,
