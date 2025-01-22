@@ -6,6 +6,7 @@ import { DESC, TOAST_PORTAL_ID } from './_constants'
 import { Toast } from './_types'
 
 import * as style from './tostPortal.css'
+import { getElementById } from '@/shared/_utils'
 
 type Props = {
   toasts: Toast[]
@@ -13,7 +14,7 @@ type Props = {
 
 const ToastPortal = ({ toasts }: Props) => {
   return (
-    <Portal id={TOAST_PORTAL_ID}>
+    <Portal container={getElementById(TOAST_PORTAL_ID)}>
       <Flex direction="column-reverse" gap="10px" className={style.wrapper}>
         {toasts.map(({ id, variety, desc }) => (
           <ToastBox key={id} variety={variety}>

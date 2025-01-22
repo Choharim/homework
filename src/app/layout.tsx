@@ -1,3 +1,5 @@
+import { TOAST_PORTAL_ID } from '@/components/Toast/_constants'
+import ToastProvider from '@/components/Toast/_store/ToastProvider'
 import AppFeature from '@/feature/application'
 import SEOFeature from '@/feature/seo'
 
@@ -65,7 +67,10 @@ export default function RootLayout({
         name="google-site-verification"
         content={process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION}
       />
-      <body className={pretendardFont.className}>{children}</body>
+      <ToastProvider>
+        <body className={pretendardFont.className}>{children}</body>
+      </ToastProvider>
+      <div id={TOAST_PORTAL_ID} />
     </html>
   )
 }
