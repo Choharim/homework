@@ -15,13 +15,15 @@ type Props = {
 const ToastPortal = ({ toasts }: Props) => {
   return (
     <Portal container={getElementById(TOAST_PORTAL_ID)}>
-      <Flex direction="column-reverse" gap="10px" className={style.wrapper}>
-        {toasts.map(({ id, variety, desc }) => (
-          <ToastBox key={id} variety={variety}>
-            {DESC[variety] || desc}
-          </ToastBox>
-        ))}
-      </Flex>
+      {toasts.length > 0 && (
+        <Flex direction="column-reverse" gap="10px" className={style.wrapper}>
+          {toasts.map(({ id, variety, desc }) => (
+            <ToastBox key={id} variety={variety}>
+              {DESC[variety] || desc}
+            </ToastBox>
+          ))}
+        </Flex>
+      )}
     </Portal>
   )
 }
