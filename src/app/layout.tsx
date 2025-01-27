@@ -67,10 +67,10 @@ export default function RootLayout({
         name="google-site-verification"
         content={process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION}
       />
-      <ToastProvider>
-        <body className={pretendardFont.className}>{children}</body>
-      </ToastProvider>
-      <div id={TOAST_PORTAL_ID} />
+      <body className={pretendardFont.className}>
+        <ToastProvider>{children}</ToastProvider>
+        <div id={TOAST_PORTAL_ID} />
+      </body>
     </html>
   )
 }
