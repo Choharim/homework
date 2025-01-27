@@ -13,8 +13,13 @@ export async function GET(req: NextRequest) {
 
   try {
     revalidatePath('/')
-    revalidatePath(`/category/[category]`, 'page')
-    revalidatePath(`/blog/[id]`, 'page')
+    revalidatePath(`/category/[category]`)
+
+    const id = searchParams.get('id')
+
+    if (id) {
+      revalidatePath(`/blog/${id}`)
+    }
 
     return new Response('revalidated', {
       status: 200,
