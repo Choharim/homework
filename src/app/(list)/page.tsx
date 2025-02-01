@@ -8,6 +8,7 @@ import { Metadata } from 'next'
 import StructuredData from '@/feature/seo/_components/StructuredData'
 import AppFeature from '@/feature/application'
 import SEOFeature from '@/feature/seo'
+import IntroCard from './_components/IntroCard'
 
 async function Page() {
   const all = await notionAPI.getPublishedPostFrontMatters()
@@ -25,6 +26,8 @@ async function Page() {
       />
 
       <CardListFrame className={style.topGap}>
+        <IntroCard />
+
         <Suspense>
           <PostList frontMatters={frontMatters} />
         </Suspense>
