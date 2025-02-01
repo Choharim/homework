@@ -5,7 +5,7 @@ import { style } from '@vanilla-extract/css'
 export const wrapper = style([
   {
     position: 'relative',
-    padding: '20px 16px',
+    padding: '20px',
     minHeight: 100,
     borderRadius: 12,
     cursor: 'pointer',
