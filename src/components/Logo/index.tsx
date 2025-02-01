@@ -1,23 +1,18 @@
-import React, { ComponentProps } from 'react'
+import React from 'react'
 import Link from 'next/link'
 
 import Typo from '../Typo'
 import Flex from '../Flex'
 
 import * as style from './style.css'
-import { assignInlineVars } from '@vanilla-extract/dynamic'
 import AppFeature from '@/feature/application'
 
-interface Props extends ComponentProps<typeof Typo> {
-  isFold: boolean
+const alphabets = AppFeature.BLOG_NAME.fullName.split('')
+const isInitial = (alphabet: string) => {
+  return alphabet.toUpperCase() === alphabet
 }
-const Logo = ({ isFold, ...typoProps }: Props) => {
-  const alphabets = AppFeature.BLOG_NAME.fullName.split('')
 
-  const isInitial = (alphabet: string) => {
-    return alphabet.toUpperCase() === alphabet
-  }
-
+const Logo = () => {
   return (
     <Link href={AppFeature.getAppURI({ name: 'main' })}>
       <Flex>
@@ -28,12 +23,8 @@ const Logo = ({ isFold, ...typoProps }: Props) => {
             className={
               style.wrapper[isInitial(alphabet) ? 'initial' : 'fullname']
             }
-            style={assignInlineVars({
-              [style.isFoldVar]: isFold ? 'fold' : '',
-            })}
-            variety={typoProps.variety ?? 'header_3'}
+            variety={'header_2'}
             color="primary400"
-            {...typoProps}
           >
             {alphabet}
           </Typo>
