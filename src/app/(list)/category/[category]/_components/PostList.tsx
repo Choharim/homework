@@ -1,17 +1,30 @@
+'use client'
+
+import usePagination from '@/components/Pagination/usePagination'
 import { PostFrontMatter } from '@/entity/post/type'
 import CategoryChip from '@/feature/post/_components/CategoryChip'
 import CategoryTag from '@/feature/post/_components/CategoryTag'
+import PostCard from '@/feature/post/_components/PostCard'
 import React from 'react'
-import PostCard from './PostCard'
+
+import { notFound } from 'next/navigation'
 
 interface Props {
   frontMatters: PostFrontMatter[]
 }
 function PostList({ frontMatters }: Props) {
+  const { Pagination, paginatedPosts } = usePagination({
+    posts: frontMatters,
+  })
+
+  if (!paginatedPosts.length) {
+    notFound()
+  }
+
   return (
     <>
-      {frontMatters.map((post) => {
-        const { id, title, description, category, tag } = post
+      {paginatedPosts.map((post) => {
+        const { id, title, description, create_date, category, tag } = post
 
         return (
           <PostCard key={id} id={id}>
@@ -22,19 +35,22 @@ function PostList({ frontMatters }: Props) {
 
             <PostCard.Footer>
               <PostCard.LabelSection>
-                <CategoryChip size="m" variety="soft">
+                <CategoryChip size="s" variety="surface">
                   {category}
                 </CategoryChip>
                 {tag.map((t, i) => (
-                  <CategoryTag size="m" key={`${t}-${i}`}>
+                  <CategoryTag size="s" key={`${t}-${i}`}>
                     {t}
                   </CategoryTag>
                 ))}
               </PostCard.LabelSection>
+              <PostCard.Date dateTime={create_date} />
             </PostCard.Footer>
           </PostCard>
         )
       })}
+
+      <Pagination />
     </>
   )
 }

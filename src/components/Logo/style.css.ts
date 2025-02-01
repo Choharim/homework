@@ -1,5 +1,5 @@
 import COLOR from '@/styles/color'
-import { createVar, keyframes, styleVariants } from '@vanilla-extract/css'
+import { keyframes, styleVariants } from '@vanilla-extract/css'
 
 const accordion = keyframes({
   '0%': {
@@ -14,16 +14,12 @@ const accordion = keyframes({
     width: '100%',
   },
 })
-
-export const isFoldVar = createVar()
-
 export const wrapper = styleVariants({
-  initial: {
-    color: COLOR.primary400,
-  },
+  initial: {},
   fullname: {
-    animation: `${accordion} 3s ease-in-out 0.5s ${
-      !!isFoldVar && 'reverse forwards'
-    }`,
+    background: `linear-gradient(-225deg, ${COLOR.primary300} 0%, ${COLOR.primary400} 30%, #fbc8d4 100%)`,
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    animation: `${accordion} 3s ease-in-out 0.8s reverse forwards`,
   },
 })

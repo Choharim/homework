@@ -14,13 +14,23 @@ class NotionAPI {
   private BASE_URL = 'https://notion-api.splitbee.io/v1'
 
   private async getPostFrontMatters(): Promise<PostFrontMatter[]> {
-    return await fetch(
-      `${this.BASE_URL}/table/${this.NOTION_ID.page.blog}`
-    ).then((res) => res.json())
+    return await fetch(`${this.BASE_URL}/table/${this.NOTION_ID.page.blog}`, {
+      headers: {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+      },
+    }).then((res) => res.json())
   }
   public async getPublishedPostFrontMatters(): Promise<PostFrontMatter[]> {
     const all = await this.getPostFrontMatters()
-    return PostEntity.getPublishedFrontMatters(all)
+
+    return PostEntity.filterPublishedFrontMatters(all)
+  }
+
+  public async getRecommandPostFrontMatters(): Promise<PostFrontMatter[]> {
+    const all = await this.getPostFrontMatters()
+
+    return PostEntity.filterRecommandFrontMatters(all)
   }
 
   public async getPost(id: string) {

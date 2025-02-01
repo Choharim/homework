@@ -1,17 +1,17 @@
 import notionAPI from '@/adapter/notion'
 import { PostCategory } from '@/entity/post/type'
 
-import CardListFrame from '@/feature/post/_components/CardListFrame'
+import CardListFrame from '@/app/(list)/category/[category]/_components/CardListFrame'
 import CategoryFilter from '@/feature/post/_components/CategoryFilter'
 
 import PostEntity from '@/entity/post'
 import { AppPageProps } from '@/feature/application/_types/navigation'
-import * as style from '@/feature/post/_components/cardListFrame.css'
+import * as style from '@/app/(list)/category/[category]/_components/cardListFrame.css'
 import { Suspense } from 'react'
 import { Metadata } from 'next'
 import PostFeature from '@/feature/post'
 import { toPascalCase } from '@/shared/_utils'
-import PostList from '../../_components/PostList'
+import PostList from './_components/PostList'
 import StructuredData from '@/feature/seo/_components/StructuredData'
 import AppFeature from '@/feature/application'
 import SEOFeature from '@/feature/seo'
@@ -67,7 +67,7 @@ export async function generateStaticParams() {
 
 async function getFrontMatters(category: PostCategory) {
   const all = await notionAPI.getPublishedPostFrontMatters()
-  const categorized = PostEntity.findFrontMattersByCategory(all, category)
+  const categorized = PostEntity.filterFrontMattersByCategory(all, category)
   const frontMatters = PostEntity.sortFrontMattersByNewest(categorized)
 
   return frontMatters

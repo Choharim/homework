@@ -44,7 +44,7 @@ const Chip = (
               name: 'category',
               pathParams: { category },
             })
-          : AppFeature.getAppURI({ name: 'main' })
+          : AppFeature.getAppURI({ name: 'categoryMain' })
       }
       className={_className}
     >

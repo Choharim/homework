@@ -11,7 +11,6 @@ import Typo from '../Typo'
 import useScrollDirection from '@/hooks/useScrollDirection'
 import useScrollTop from '@/hooks/useScrollTop'
 import * as style from './navbar.css'
-import { assignInlineVars } from '@vanilla-extract/dynamic'
 import AppFeature from '@/feature/application'
 
 type TextMenu = {
@@ -37,15 +36,10 @@ const Navbar = () => {
   return (
     <nav
       className={style.navigation}
-      style={assignInlineVars({
-        [style.navigationYVar]:
-          direction === 'down' && !isScrollTop
-            ? style.NAV_Y.hidden
-            : style.NAV_Y.show,
-      })}
+      data-hidden={direction === 'down' && !isScrollTop}
     >
       <Frame className={style.navigationFrame}>
-        <Logo isFold />
+        <Logo />
         <Navbar.Menu />
       </Frame>
     </nav>
