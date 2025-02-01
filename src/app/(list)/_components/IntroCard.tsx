@@ -5,11 +5,11 @@ import * as styles from './IntroCard.css'
 
 function IntroCard() {
   return (
-    <article className={styles.bg}>
-      <div className={styles.card}>
-        <div className={styles.image}>👧🏻</div>
+    <div className={styles.frame}>
+      <div className={styles.image}>👧🏻</div>
 
-        <div className={styles.content}>
+      <article className={styles.bg}>
+        <div className={styles.card}>
           <Typo as="h1" variety="title_2" color="grey700">
             꾸밈 꾸밈꾸밈꾸밈꾸밈꾸밈꾸밈꾸밈꾸밈꾸밈
             <br />
@@ -27,8 +27,8 @@ function IntroCard() {
             설명설명 설명 설명 설명설명 설명 설명 설명
           </Typo>
         </div>
-      </div>
-    </article>
+      </article>
+    </div>
   )
 }
 

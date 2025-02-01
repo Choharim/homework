@@ -1,6 +1,13 @@
 import COLOR from '@/styles/color'
 import { keyframes, style } from '@vanilla-extract/css'
 
+export const frame = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 40,
+  margin: '40px 0',
+})
+
 const BORDER_WIDTH = 3
 const BORDER_RADIUS = 24
 
@@ -11,7 +18,6 @@ const gradient = keyframes({
 })
 
 export const bg = style({
-  margin: '20px 0',
   position: 'relative',
 
   selectors: {
@@ -39,15 +45,10 @@ export const card = style({
   margin: BORDER_WIDTH,
 
   display: 'flex',
-  gap: 28,
+  flexDirection: 'column',
+  gap: 12,
 })
 
 export const image = style({
   fontSize: 120,
-})
-
-export const content = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 12,
 })
