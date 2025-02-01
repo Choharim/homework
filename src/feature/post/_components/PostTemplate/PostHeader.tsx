@@ -31,7 +31,9 @@ const PostHeader = ({ frontMatter }: Props) => {
       </Flex>
 
       <Flex align="center" gap={'12px'} className={style.extra}>
-        <CategoryChip size="m">{category}</CategoryChip>
+        <CategoryChip size="m" variety="surface">
+          {category}
+        </CategoryChip>
         {tag.map((t, i) => (
           <CategoryTag size="m" key={`${t}-${i}`}>
             {t}

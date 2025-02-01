@@ -5,10 +5,10 @@ import AppFeature from '@/feature/application'
 import Link from 'next/link'
 import * as styles from './categoryChip.css'
 import { ComponentProps } from 'react'
-interface Props extends Pick<ComponentProps<typeof Chip>, 'size'> {
+interface Props extends Pick<ComponentProps<typeof Chip>, 'size' | 'variety'> {
   children: PostCategory
 }
-const CategoryChip = ({ children: category, size }: Props) => {
+const CategoryChip = ({ children: category, size, variety }: Props) => {
   return (
     <Link
       href={AppFeature.getAppURI({
@@ -17,7 +17,7 @@ const CategoryChip = ({ children: category, size }: Props) => {
       })}
       className={styles.link}
     >
-      <Chip color="primary" size={size} variety="surface">
+      <Chip color="primary" size={size} variety={variety}>
         {PostFeature.getCategoryName(category)}
       </Chip>
     </Link>
